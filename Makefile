@@ -39,3 +39,15 @@ gtags: $(GTAGS_FILES)
 
 $(GTAGS_FILES): $(shell find . -name '*.[ch]')
 	gtags -v
+
+# Build wireshark with dissector provided by mprivozn
+mprivozn-build:
+	cd $(WIRESHARK_DIR) && \
+	patch -p1 --no-backup-if-mismatch < ../patch/dissector-mprivozn.patch
+
+	touch $(WIRESHARK_DIR)/configure
+	CONFIGURE_OPTS="--program-suffix=-mprivozn" \
+	  $(MAKE) wireshark
+
+	cd $(WIRESHARK_DIR) && \
+	patch -p1 --no-backup-if-mismatch -R < ../patch/dissector-mprivozn.patch
