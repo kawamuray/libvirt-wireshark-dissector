@@ -376,7 +376,7 @@ proto_register_libvirt(void)
         &ett_libvirt
     };
 
-    proto_libvirt = proto_register_protocol (
+    proto_libvirt = proto_register_protocol(
         "Libvirt", /* name */
         "libvirt", /* short name */
         "libvirt"  /* abbrev */
