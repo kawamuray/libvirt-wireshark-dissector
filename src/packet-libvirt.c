@@ -157,7 +157,6 @@ find_field_def(guint32 proc, vir_pld_def_t *defs, gint length)
 
 static vir_pld_field_def_t *
 payload_dispatch_type(guint32 prog, guint32 proc, guint32 type)
-                      
 {
     switch (type) {
     case VIR_NET_CALL:
