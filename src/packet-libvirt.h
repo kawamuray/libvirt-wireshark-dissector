@@ -10,12 +10,12 @@
 typedef struct vir_pld_field_def vir_pld_field_def_t;
 struct vir_pld_field_def {
     const char      *name;
-    enum xdr_type    type;
+    const guint      type;
     const uintptr_t  data;
 };
 typedef struct vir_pld_anon_field_def vir_pld_anon_field_def_t;
 struct vir_pld_anon_field_def {
-    enum xdr_type   type;
+    const guint     type;
     const uintptr_t data;
 };
 
@@ -25,7 +25,8 @@ struct vir_pld_def {
     vir_pld_field_def_t *def;
 };
 
-#define VIR_PLD_DEF_NULL { NULL, XDR_INT, 0 }
+#define VIR_PLD_DEF_NULL { NULL, 0, 0 }
+#define VIR_PLD_ANON_DEF_NULL { 0, 0 }
 
 #define VIR_PLD_DEF_TOANON(def) ((vir_pld_anon_field_def_t *)&(def)->type)
 #define VIR_ARR_W_SIZE(ary) (ary), array_length(ary)

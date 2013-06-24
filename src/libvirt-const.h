@@ -2,7 +2,7 @@
 #define _LIBVIRT_CONST_H_
 
 enum xdr_type {
-    XDR_INT,
+    XDR_INT = 1,
     XDR_UINT,
     XDR_ENUM,
     XDR_BOOL,
