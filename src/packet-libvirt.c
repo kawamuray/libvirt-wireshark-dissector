@@ -28,6 +28,8 @@ static gint ett_libvirt = -1;
 /*         proto_item_append_text(ti, "(unkown)"); \ */
 /*     } */
 
+static void describe_dispatch(vir_pld_anon_field_def_t *def, XDR *xdrs, proto_item *ti);
+
 static void
 describe_xdr_int(vir_pld_anon_field_def_t *def __attribute__((unused)), XDR *xdrs, proto_item *ti)
 {
@@ -67,8 +69,7 @@ describe_xdr_string(vir_pld_anon_field_def_t *def __attribute__((unused)), XDR *
 
 static void
 describe_xdr_pointer(vir_pld_anon_field_def_t *def __attribute__((unused)),
-                     XDR *xdrs, proto_item *ti,
-                     void (*func)(vir_pld_anon_field_def_t*, XDR*, proto_item*))
+                     XDR *xdrs, proto_item *ti)
 {
     bool_t isnull;
 
@@ -78,25 +79,63 @@ describe_xdr_pointer(vir_pld_anon_field_def_t *def __attribute__((unused)),
     if (isnull) {
         proto_item_append_text(ti, "(null)");
     } else {
-        func(def, xdrs, ti);
+        describe_dispatch(def, xdrs, ti);
     }
 }
 
 static void
-describe_field(vir_pld_field_def_t *def, XDR *xdrs, proto_item *ti)
+describe_xdr_struct(vir_pld_anon_field_def_t *def, XDR *xdrs, proto_item *ti)
+{
+    vir_pld_field_def_t *field;
+
+    for (field = (vir_pld_field_def_t *)def->data; field->name != NULL; field++) {
+        proto_item_append_text(ti, " [%s] = ", field->name);
+        describe_dispatch(VIR_PLD_DEF_TOANON(field), xdrs, ti);
+    }
+}
+
+static void
+describe_xdr_array(vir_pld_anon_field_def_t *def, XDR *xdrs, proto_item *ti)
+{
+    int length;
+
+    if (xdr_int(xdrs, &length)) {
+        vir_pld_anon_field_def_t *subdef;
+        guint pos = 0;
+        subdef = (vir_pld_anon_field_def_t *)def->data;
+        proto_item_append_text(ti, "[ ");
+        while (pos < length) {
+            describe_dispatch(subdef, xdrs, ti);
+            pos = xdr_getpos(xdrs);
+        }
+        proto_item_append_text(ti, " ]");
+        return;
+    }
+
+    proto_item_append_text(ti, "(unkown)");
+}
+
+static void
+describe_dispatch(vir_pld_anon_field_def_t *def, XDR *xdrs, proto_item *ti)
 {
     switch (def->type) {
     case XDR_INT:
-        describe_xdr_int(VIR_PLD_DEF_TOANON(def), xdrs, ti);
+        describe_xdr_int(def, xdrs, ti);
         break;
     case XDR_UINT:
-        describe_xdr_uint(VIR_PLD_DEF_TOANON(def), xdrs, ti);
+        describe_xdr_uint(def, xdrs, ti);
         break;
     case XDR_STRING:
-        describe_xdr_string(VIR_PLD_DEF_TOANON(def), xdrs, ti);
+        describe_xdr_string(def, xdrs, ti);
         break;
     case XDR_POINTER:
-        describe_xdr_pointer(VIR_PLD_DEF_TOANON(def), xdrs, ti, describe_xdr_string);
+        describe_xdr_pointer(def, xdrs, ti);
+        break;
+    case XDR_STRUCT:
+        describe_xdr_struct(def, xdrs, ti);
+        break;
+    case XDR_ARRAY:
+        describe_xdr_array(def, xdrs, ti);
         break;
     default:
         proto_item_append_text(ti, "UNIMPLEMENTED TYPE APPEARED!!!");
@@ -109,6 +148,7 @@ describe_payload(tvbuff_t *tvb, proto_item *ti,
 {
     guint8 *payload;
     XDR xdrs;
+    vir_pld_anon_field_def_t dmdef = { XDR_STRUCT, (uintptr_t)def };
 
     g_print("Payload length = %u", length);
 
@@ -119,11 +159,7 @@ describe_payload(tvbuff_t *tvb, proto_item *ti,
 
     xdrmem_create(&xdrs, (caddr_t)payload, length, XDR_DECODE);
 
-    while (def != NULL && def->name != NULL) {
-        proto_item_append_text(ti, " [%s] = ", def->name);
-        describe_field(def, &xdrs, ti);
-        def++;
-    }
+    describe_xdr_struct(&dmdef, &xdrs, ti);
 
     xdr_destroy(&xdrs);
     g_free(payload);
