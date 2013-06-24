@@ -360,15 +360,15 @@ proto_register_libvirt(void)
         },
         { &hf_qemu_procedure,
           { "procedure", "libvirt.procedure",
-          FT_INT32, BASE_DEC,
-          VALS(qemu_procedure_strings), 0x0,
-          NULL, HFILL}
+            FT_INT32, BASE_DEC,
+            VALS(qemu_procedure_strings), 0x0,
+            NULL, HFILL}
         },
         { &hf_libvirt_payload,
           { "payload", "libvirt.payload",
-          FT_STRING, BASE_NONE,
-          NULL, 0x0,
-          NULL, HFILL}
+            FT_STRING, BASE_NONE,
+            NULL, 0x0,
+            NULL, HFILL}
         }
     };
 
