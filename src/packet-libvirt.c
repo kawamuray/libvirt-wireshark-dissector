@@ -47,7 +47,7 @@ describe_xdr_uint(vir_pld_anon_field_def_t *def __attribute__((unused)), XDR *xd
 {
     unsigned int val;
 
-    if (xdr_int(xdrs, (int *)&val)) {
+    if (xdr_u_int(xdrs, &val)) {
         proto_item_append_text(ti, "%u", val);
     } else {
         proto_item_append_text(ti, "(unkown)");
