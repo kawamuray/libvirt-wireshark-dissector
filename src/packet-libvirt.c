@@ -394,21 +394,3 @@ proto_reg_handoff_libvirt(void)
     libvirt_handle = create_dissector_handle(dissect_libvirt, proto_libvirt);
     dissector_add_uint("tcp.port", LIBVIRT_PORT, libvirt_handle);
 }
-
-/* static bool_t */
-/* describe_xdr_array(vir_pld_anon_field_def_t *def, XDR *xdrs) */
-/* { */
-/*     vir_pld_anon_field_def_t *indef; */
-/*     char *array; */
-/*     size_t length; */
-
-/*     indef = (vir_pld_anon_field_def_t *)def->data; */
-/*     XDRDEF_EXTENDED_DEF(xdrs) = indef; */
-
-/*     if (!xdr_array(xdrs, &array, &length, 999999999, */
-/*                    compute_xdrdef_size(indef), (xdrproc_t)xdr_general_array_each)) { */
-/*         return FALSE; */
-/*     } */
-/*     return TRUE; */
-/* } */
-
