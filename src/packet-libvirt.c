@@ -1,3 +1,22 @@
+/* packet-libvirt.c --- Libvirt packet dissector routines.
+ *
+ * Copyright (C) 2013 Yuto Kawamura(kawamuray) <kawamuray.dadada@gmail.com>
+ *
+ * Author: Michal Privoznik <mprivozn redhat com>, enhanced by Yuto Kawamura(kawamuray)
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 3
+ * of the License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
+ */
 #ifdef HAVE_CONFIG_H
 # include "config.h"
 #endif
@@ -13,144 +32,318 @@ static int proto_libvirt = -1;
 static int hf_libvirt_length = -1;
 static int hf_libvirt_program = -1;
 static int hf_libvirt_version = -1;
-static int hf_libvirt_procedure = -1;
 static int hf_libvirt_type = -1;
 static int hf_libvirt_serial = -1;
 static int hf_libvirt_status = -1;
-static int hf_qemu_procedure = -1;
 static int hf_libvirt_payload = -1;
 static gint ett_libvirt = -1;
 
-/* #define DESCRIBE_XDR_IFNULL(bool, fmt, val)     \ */
-/*     if ((bool)) {                               \ */
-/*         proto_item_append_text(ti, "%d", val);  \ */
-/*     } else {                                    \ */
-/*         proto_item_append_text(ti, "(unkown)"); \ */
-/*     } */
+static gboolean describe_dispatch(const vir_xdrdef_t *def, XDR *xdrs, proto_item *ti);
 
-static void describe_dispatch(vir_pld_anon_field_def_t *def, XDR *xdrs, proto_item *ti);
-
-static void
-describe_xdr_int(vir_pld_anon_field_def_t *def __attribute__((unused)), XDR *xdrs, proto_item *ti)
-{
-    int val;
-
-    if (xdr_int(xdrs, &val)) {
-        proto_item_append_text(ti, "%d", val);
-    } else {
-        proto_item_append_text(ti, "(unkown)");
+#define XDR_PRIMITIVE_DESCRIBER(name, ctype, fmt)                       \
+    static gboolean                                                     \
+    describe_xdr_##name(const vir_xdrdef_t *def __attribute__((unused)), \
+                        XDR *xdrs, proto_item *ti)                      \
+    {                                                                   \
+        ctype val;                                                      \
+        if (xdr_##name(xdrs, &val)) {                                   \
+            proto_item_append_text(ti, fmt, val);                       \
+            return TRUE;                                                \
+        } else {                                                        \
+            proto_item_append_text(ti, "(unkown)");                     \
+            return FALSE;                                               \
+        }                                                               \
     }
-}
 
-static void
-describe_xdr_uint(vir_pld_anon_field_def_t *def __attribute__((unused)), XDR *xdrs, proto_item *ti)
+XDR_PRIMITIVE_DESCRIBER(int,     gint32,  "%d")
+XDR_PRIMITIVE_DESCRIBER(u_int,   guint32, "%u")
+XDR_PRIMITIVE_DESCRIBER(short,   gshort,  "%d")
+XDR_PRIMITIVE_DESCRIBER(u_short, gushort, "%u")
+XDR_PRIMITIVE_DESCRIBER(char,    gchar,   "%02x")
+XDR_PRIMITIVE_DESCRIBER(u_char,  guchar,  "%02x")
+XDR_PRIMITIVE_DESCRIBER(hyper,   gint64,  "%lld")
+XDR_PRIMITIVE_DESCRIBER(u_hyper, guint64, "%llu")
+XDR_PRIMITIVE_DESCRIBER(float,   gfloat,  "%f")
+XDR_PRIMITIVE_DESCRIBER(double,  gdouble, "%lf")
+
+static gboolean
+describe_xdr_string(const vir_xdrdef_t *def, XDR *xdrs, proto_item *ti)
 {
-    unsigned int val;
+    gchar *val = NULL;
 
-    if (xdr_u_int(xdrs, &val)) {
-        proto_item_append_text(ti, "%u", val);
-    } else {
-        proto_item_append_text(ti, "(unkown)");
-    }
-}
-
-static void
-describe_xdr_string(vir_pld_anon_field_def_t *def __attribute__((unused)), XDR *xdrs, proto_item *ti)
-{
-    char *val = NULL;
-
-    if (xdr_string(xdrs, &val, 4194304)) {
+    if (xdr_string(xdrs, &val, def->metainfo)) {
         proto_item_append_text(ti, "%s", (val) ? val : "(null)");
         xdr_free((xdrproc_t)xdr_string, (char *)&val);
+        return TRUE;
     } else {
         proto_item_append_text(ti, "(unkown)");
+        return FALSE;
     }
 }
 
-static void
-describe_xdr_pointer(vir_pld_anon_field_def_t *def __attribute__((unused)),
-                     XDR *xdrs, proto_item *ti)
+static gboolean
+describe_xdr_opaque(const vir_xdrdef_t *def, XDR *xdrs, proto_item *ti)
+{
+    gboolean rc;
+    guint8 *val;
+
+    val = g_malloc(def->metainfo);
+    if (val == NULL) {
+        g_print("ERROR: memory allocation failed\n");
+        return FALSE;
+    }
+
+    if ((rc = xdr_opaque(xdrs, (caddr_t)val, def->metainfo))) {
+        gint i;
+        /* TODO: buffering */
+        for (i = 0; i < def->metainfo; i++) {
+            if (!i) proto_item_append_text(ti, " ");
+            proto_item_append_text(ti, "%02x ", val[i]);
+        }
+    } else {
+        proto_item_append_text(ti, "(unkown)");
+    }
+
+    g_free(val);
+    return rc;
+}
+
+static gboolean
+describe_xdr_bytes(const vir_xdrdef_t *def, XDR *xdrs, proto_item *ti)
+{
+    guint8 *val = NULL;
+    guint length;
+
+    if (xdr_bytes(xdrs, (char **)&val, &length, def->metainfo)) {
+        gint i;
+        /* g_print("DEBUG: xdr_bytes length = %u, val = %p\n", length, val); */
+        /* TODO: buffering */
+        for (i = 0; i < length; i++) {
+            if (!i) proto_item_append_text(ti, " ");
+            proto_item_append_text(ti, "%02x", val[i]);
+        }
+        /* XXX: maybe this is wrong way */
+        xdrs->x_op = XDR_FREE;
+        xdr_bytes(xdrs, (char **)&val, &length, def->metainfo);
+        /* xdr_free((xdrproc_t)xdr_bytes, (char *)&val); */
+        xdrs->x_op = XDR_DECODE;
+        return TRUE;
+    } else {
+        proto_item_append_text(ti, "(unkown)");
+        return FALSE;
+    }
+}
+
+static gboolean
+describe_xdr_pointer(const vir_xdrdef_t *def, XDR *xdrs, proto_item *ti)
 {
     bool_t isnull;
 
     if (!xdr_bool(xdrs, &isnull)) {
-        return;
+        return FALSE;
     }
     if (isnull) {
         proto_item_append_text(ti, "(null)");
     } else {
-        describe_dispatch(def, xdrs, ti);
+        if (!describe_dispatch(def->typeref, xdrs, ti)) {
+            return FALSE;
+        }
+    }
+    return TRUE;
+}
+
+static gboolean
+describe_xdr_enum(const vir_xdrdef_t *def, XDR *xdrs, proto_item *ti)
+{
+    const vir_named_xdrdef_t *field;
+    enum { DUMMY } es;
+
+    if (xdr_enum(xdrs, (enum_t *)&es)) {
+        for (field = def->typeref; field->name != NULL; field++) {
+            if (field->metainfo == (gintptr)es) {
+                proto_item_append_text(ti, "%s(%u)", field->name, es);
+                return TRUE;
+            }
+        }
+    } else {
+        proto_item_append_text(ti, "(unkown)");
+    }
+    return FALSE;
+}
+
+static gboolean
+describe_xdr_bool(const vir_xdrdef_t *def, XDR *xdrs, proto_item *ti)
+{
+    bool_t bool;
+
+    if (xdr_bool(xdrs, &bool)) {
+        proto_item_append_text(ti, "%s", bool ? "TRUE" : "FALSE");
+        return TRUE;
+    } else {
+        proto_item_append_text(ti, "(unkown)");
+        return FALSE;
     }
 }
 
-static void
-describe_xdr_struct(vir_pld_anon_field_def_t *def, XDR *xdrs, proto_item *ti)
+static gboolean
+describe_xdr_struct(const vir_xdrdef_t *def, XDR *xdrs, proto_item *ti)
 {
-    vir_pld_field_def_t *field;
+    gboolean rc = TRUE;
+    const vir_named_xdrdef_t *field;
 
-    for (field = (vir_pld_field_def_t *)def->data; field->name != NULL; field++) {
+    proto_item_append_text(ti, "{ ");
+    for (field = def->typeref; field->name != NULL; field++) {
         proto_item_append_text(ti, " [%s] = ", field->name);
-        describe_dispatch(VIR_PLD_DEF_TOANON(field), xdrs, ti);
+        if (!(rc = describe_dispatch(VIR_XDRDEF_STRIP(field), xdrs, ti))) {
+            proto_item_append_text(ti, "<<UNABLE TO CONTINUE>>");
+            break;
+        }
     }
+    proto_item_append_text(ti, " }");
+    return rc;
 }
 
-static void
-describe_xdr_array(vir_pld_anon_field_def_t *def, XDR *xdrs, proto_item *ti)
+static gboolean
+describe_xdr_array(const vir_xdrdef_t *def, XDR *xdrs, proto_item *ti)
 {
-    int length;
+    gint length;
 
     if (xdr_int(xdrs, &length)) {
-        vir_pld_anon_field_def_t *subdef;
-        guint pos = 0;
-        subdef = (vir_pld_anon_field_def_t *)def->data;
+        const vir_xdrdef_t *subdef;
+        gint i;
+        if (length > def->metainfo)
+            return FALSE;
+
+        subdef = def->typeref;
         proto_item_append_text(ti, "[ ");
-        while (pos < length) {
-            describe_dispatch(subdef, xdrs, ti);
-            pos = xdr_getpos(xdrs);
+        for (i = 0; i < length; i++) {
+            if (!describe_dispatch(subdef, xdrs, ti)) {
+                g_print("ERROR: failed decoding on iteration %d\n", i);
+                return FALSE;
+            }
         }
         proto_item_append_text(ti, " ]");
-        return;
+        return TRUE;
+    } else {
+        proto_item_append_text(ti, "(unkown)");
+        return FALSE;
     }
-
-    proto_item_append_text(ti, "(unkown)");
 }
 
-static void
-describe_dispatch(vir_pld_anon_field_def_t *def, XDR *xdrs, proto_item *ti)
+static gboolean
+describe_xdr_vector(const vir_xdrdef_t *def, XDR *xdrs, proto_item *ti)
+{
+    const vir_xdrdef_t *subdef;
+    gint i;
+
+    subdef = def->typeref;
+    proto_item_append_text(ti, "[ ");
+    for (i = 0; i < def->metainfo; i++) {
+        if (!describe_dispatch(subdef, xdrs, ti)) {
+            g_print("ERROR: failed decoding on iteration %d\n", i);
+            return FALSE;
+        }
+    }
+    proto_item_append_text(ti, " ]");
+    return TRUE;
+}
+
+static gboolean
+describe_xdr_union(const vir_xdrdef_t *def, XDR *xdrs, proto_item *ti)
+{
+    const vir_named_xdrdef_t *mp;
+    void *index;
+    bool_t (*xdr_func)(XDR *, caddr_t);
+    guint size;
+    gboolean rc = FALSE;
+
+    mp = def->typeref;
+    xdr_func = mp->typeref;
+    size = mp->metainfo;
+
+    index = g_malloc(size);
+    if (index == NULL) {
+        g_print("ERROR: memory allocation fail\n");
+        return FALSE;
+    }
+
+    if (!xdr_func(xdrs, index)) {
+        g_print("ERROR: cannot extract union index\n");
+        goto done;
+    }
+    while ((++mp)->type) {
+        if (!memcmp(index, (void *)mp->metainfo, size)) {
+            rc = describe_dispatch(VIR_XDRDEF_STRIP(mp), xdrs, ti);
+            break;
+        }
+    }
+
+done:
+    g_free(index);
+    return rc;
+}
+
+static gboolean
+describe_dispatch(const vir_xdrdef_t *def, XDR *xdrs, proto_item *ti)
 {
     switch (def->type) {
     case XDR_INT:
-        describe_xdr_int(def, xdrs, ti);
-        break;
+        return describe_xdr_int(def, xdrs, ti);
     case XDR_UINT:
-        describe_xdr_uint(def, xdrs, ti);
-        break;
+        return describe_xdr_u_int(def, xdrs, ti);
+    case XDR_ENUM:
+        return describe_xdr_enum(def, xdrs, ti);
+    case XDR_BOOL:
+        return describe_xdr_bool(def, xdrs, ti);
+    case XDR_SHORT:
+        return describe_xdr_short(def, xdrs, ti);
+    case XDR_USHORT:
+        return describe_xdr_u_short(def, xdrs, ti);
+    case XDR_HYPER:
+        return describe_xdr_hyper(def, xdrs, ti);
+    case XDR_UHYPER:
+        return describe_xdr_u_hyper(def, xdrs, ti);
+    case XDR_CHAR:
+        return describe_xdr_char(def, xdrs, ti);
+    case XDR_UCHAR:
+        return describe_xdr_u_char(def, xdrs, ti);
+    case XDR_FLOAT:
+        return describe_xdr_float(def, xdrs, ti);
+    case XDR_DOUBLE:
+        return describe_xdr_double(def, xdrs, ti);
+    case XDR_OPAQUE:
+        return describe_xdr_opaque(def, xdrs, ti);
+    case XDR_BYTES:
+        return describe_xdr_bytes(def, xdrs, ti);
     case XDR_STRING:
-        describe_xdr_string(def, xdrs, ti);
-        break;
-    case XDR_POINTER:
-        describe_xdr_pointer(def, xdrs, ti);
-        break;
-    case XDR_STRUCT:
-        describe_xdr_struct(def, xdrs, ti);
-        break;
+        return describe_xdr_string(def, xdrs, ti);
+    case XDR_VECTOR:
+        return describe_xdr_vector(def, xdrs, ti);
     case XDR_ARRAY:
-        describe_xdr_array(def, xdrs, ti);
-        break;
+        return describe_xdr_array(def, xdrs, ti);
+    case XDR_STRUCT:
+        return describe_xdr_struct(def, xdrs, ti);
+    case XDR_UNION:
+        return describe_xdr_union(def, xdrs, ti);
+    case XDR_POINTER:
+        return describe_xdr_pointer(def, xdrs, ti);
     default:
         proto_item_append_text(ti, "UNIMPLEMENTED TYPE APPEARED!!!");
+        /* return FALSE; */
+        /* XXX: temporaily */
+        return TRUE;
     }
 }
 
 static void
 describe_payload(tvbuff_t *tvb, proto_item *ti,
-                 size_t length, vir_pld_field_def_t *def)
+                 size_t length, vir_named_xdrdef_t *def)
 {
     guint8 *payload;
     XDR xdrs;
-    vir_pld_anon_field_def_t dmdef = { XDR_STRUCT, (uintptr_t)def };
+    const vir_xdrdef_t dmdef = { XDR_STRUCT, def, 0 };
 
-    g_print("Payload length = %u", length);
+    g_print("Payload length = %u\n", length);
 
     payload = (guint8 *)tvb_memdup(tvb, 28, length);
     if (payload == NULL) {
@@ -165,60 +358,78 @@ describe_payload(tvbuff_t *tvb, proto_item *ti,
     g_free(payload);
 }
 
-static vir_pld_field_def_t *
-find_field_def(guint32 proc, vir_pld_def_t *defs, gint length)
+static const vir_proc_payload_t *
+find_payload_def(guint32 proc, const vir_proc_payload_t *defs, gsize length)
 {
-    gint i;
+    const vir_proc_payload_t *def;
+    guint32 first, last, direction;
 
-    for (i = 0; i < length; i++) {
-        if (defs[i].proc == proc) {
-            return defs[i].def;
-        }
-    }
-    return NULL;
-}
-
-#define SWITCH_PROG(ts, prog, proc)                                     \
-    switch (prog) {                                                     \
-    case VIR_PROG_REMOTE:                                               \
-        return find_field_def(proc, VIR_ARR_W_SIZE(vir_remote_##ts##_payload_defs)); \
-    case VIR_PROG_QEMU:                                                 \
-        return find_field_def(proc, VIR_ARR_W_SIZE(vir_qemu_##ts##_payload_defs)); \
-    case VIR_PROG_LXC:                                                  \
-        return find_field_def(proc, VIR_ARR_W_SIZE(vir_lxc_##ts##_payload_defs)); \
-    default:                                                            \
-        g_print("ERROR: prog = %u is not implemented", prog);           \
-        return NULL;                                                    \
-    }
-
-static vir_pld_field_def_t *
-payload_dispatch_type(guint32 prog, guint32 proc, guint32 type)
-{
-    switch (type) {
-    case VIR_NET_CALL:
-        SWITCH_PROG(args, prog, proc);
-    case VIR_NET_REPLY:
-        SWITCH_PROG(ret, prog, proc);
-    case VIR_NET_MESSAGE:
-    case VIR_NET_STREAM:
-    case VIR_NET_CALL_WITH_FDS:
-    case VIR_NET_REPLY_WITH_FDS:
-    default:
-        g_print("ERROR: type = %u is not implemented", type);
+    if (length < 1) {
         return NULL;
     }
+
+    first = defs[0].proc;
+    last = defs[length-1].proc;
+    if (proc < first || proc > last) {
+        return NULL;
+    }
+
+    def = &defs[proc-first];
+    /* There is no guarantee to proc numbers has no gap */
+    if (def->proc == proc)
+        return def;
+
+    direction = (def->proc < proc) ? 1 : -1;
+    while (def->proc != proc) {
+        if (def->proc == first || def->proc == last)
+            return NULL;
+        def += direction;
+    }
+
+    return def;
 }
-#undef SWITCH_PROG
+
+static vir_named_xdrdef_t *
+payload_dispatch_type(guint32 prog, guint32 proc, guint32 type)
+{
+    if (type == VIR_NET_STREAM) {
+        /* NOP */
+    } else {
+        const vir_proc_payload_t *pd;
+#define VIR_PROG_CASE(ps) pd = find_payload_def(proc, VIR_ARR_W_SIZE(ps##_payload_def))
+        VIR_PROG_SWITCH(prog);
+#undef VIR_PROG_CASE
+
+        if (pd == NULL) {
+            g_print("ERROR: cannot find payload definition: Prog=%u, Proc=%u\n", prog, proc);
+            return NULL;
+        }
+        switch (type) {
+        case VIR_NET_CALL_WITH_FDS:
+            /* TODO: dissect number of fds */
+            break; /* fall through in the feature */
+        case VIR_NET_CALL:
+            return pd->args;
+        case VIR_NET_REPLY_WITH_FDS:
+            /* TODO: dissect number of fds */
+            break; /* fall through in the feature */
+        case VIR_NET_REPLY:
+            return pd->ret;
+        }
+    }
+
+    g_print("ERROR: type = %u is not implemented\n", type);
+    return NULL;
+}
 
 static void
 dissect_libvirt_payload(tvbuff_t *tvb, proto_item *ti, gint length,
                         guint32 prog, guint32 proc,
                         guint32 type, guint32 status)
 {
-    vir_pld_field_def_t *def;
-
     switch (status) {
-    case VIR_NET_OK:
+    case VIR_NET_OK: {
+        vir_named_xdrdef_t *def;
         def = payload_dispatch_type(prog, proc, type);
         if (def == NULL) {
             proto_item_set_text(ti, "(unkown payload)");
@@ -226,9 +437,9 @@ dissect_libvirt_payload(tvbuff_t *tvb, proto_item *ti, gint length,
             describe_payload(tvb, ti, length, def);
         }
         break;
+    }
     case VIR_NET_ERROR:
-        /* TODO: error handler */
-        g_print("ERROR: received error");
+        describe_payload(tvb, ti, length, VIR_ERROR_MESSAGE_PAYLOAD_DEF);
         break;
     case VIR_NET_CONTINUE:
     default:
@@ -248,16 +459,20 @@ dissect_libvirt_message(tvbuff_t *tvb, packet_info *pinfo, proto_tree *tree)
     guint32 type = tvb_get_ntohl(tvb, 16);
     guint32 serial = tvb_get_ntohl(tvb, 20);
     guint32 status = tvb_get_ntohl(tvb, 24);
+    const value_string *vs = NULL;
 
     col_set_str(pinfo->cinfo, COL_PROTOCOL, "Libvirt");
-    col_clear(pinfo->cinfo,COL_INFO);
-    if (prog == VIR_PROG_REMOTE)
-        col_add_fstr(pinfo->cinfo, COL_INFO, "Proc=%s ", val_to_str(proc, remote_procedure_strings, "%d"));
-    else if (prog == VIR_PROG_QEMU)
-        col_add_fstr(pinfo->cinfo, COL_INFO, "Proc=%s ", val_to_str(proc, qemu_procedure_strings, "%d"));
-    else
-        /* unhandeld program */
+    col_clear(pinfo->cinfo, COL_INFO);
+
+#define VIR_PROG_CASE(ps) vs = ps##_procedure_strings
+    VIR_PROG_SWITCH(prog);
+#undef VIR_PROG_CASE
+
+    if (vs == NULL) {
         col_add_fstr(pinfo->cinfo, COL_INFO, "Proc=%u ", proc);
+    } else {
+        col_add_fstr(pinfo->cinfo, COL_INFO, "Proc=%s ", val_to_str(proc, vs, "%d"));
+    }
 
     col_append_fstr(pinfo->cinfo, COL_INFO, "Type=%s Status=%s Prog=%s Serial=%u",
         val_to_str(type, type_strings, "%d"),
@@ -266,6 +481,7 @@ dissect_libvirt_message(tvbuff_t *tvb, packet_info *pinfo, proto_tree *tree)
         serial);
 
     if (tree) {
+        int hf_proc = -1;
         proto_item *ti = NULL;
         proto_tree *libvirt_tree = NULL;
         gint pld_length;
@@ -275,13 +491,17 @@ dissect_libvirt_message(tvbuff_t *tvb, packet_info *pinfo, proto_tree *tree)
         proto_tree_add_item(libvirt_tree, hf_libvirt_length, tvb, offset, 4, FALSE); offset += 4;
         proto_tree_add_item(libvirt_tree, hf_libvirt_program, tvb, offset, 4, FALSE); offset += 4;
         proto_tree_add_item(libvirt_tree, hf_libvirt_version, tvb, offset, 4, FALSE); offset += 4;
-        if (prog == VIR_PROG_REMOTE)
-            proto_tree_add_item(libvirt_tree, hf_libvirt_procedure, tvb, offset, 4, FALSE);
-        else if (prog == VIR_PROG_QEMU)
-            proto_tree_add_item(libvirt_tree, hf_qemu_procedure, tvb, offset, 4, FALSE);
-        else
-            /* unhandeld program */
+
+#define VIR_PROG_CASE(ps) hf_proc = hf_##ps##_procedure
+        VIR_PROG_SWITCH(prog);
+#undef VIR_PROG_CASE
+
+        if (hf_proc == -1) {
             proto_tree_add_none_format(libvirt_tree, -1, tvb, offset, 4, "Unknown proc: %u", proc);
+        } else {
+            proto_tree_add_item(libvirt_tree, hf_proc, tvb, offset, 4, FALSE);
+        }
+
         offset += 4;
         proto_tree_add_item(libvirt_tree, hf_libvirt_type, tvb, offset, 4, FALSE); offset += 4;
         proto_tree_add_item(libvirt_tree, hf_libvirt_serial, tvb, offset, 4, FALSE); offset += 4;
@@ -299,7 +519,8 @@ dissect_libvirt_message(tvbuff_t *tvb, packet_info *pinfo, proto_tree *tree)
     }
 }
 
-static guint32 get_message_len(packet_info *pinfo __attribute__((unused)), tvbuff_t *tvb, int offset)
+static guint32
+get_message_len(packet_info *pinfo __attribute__((unused)), tvbuff_t *tvb, int offset)
 {
     return tvb_get_ntohl(tvb, offset);
 }
@@ -334,12 +555,6 @@ proto_register_libvirt(void)
             NULL, 0x0,
             NULL, HFILL}
         },
-        { &hf_libvirt_procedure,
-          { "procedure", "libvirt.procedure",
-            FT_INT32, BASE_DEC,
-            VALS(remote_procedure_strings), 0x0,
-            NULL, HFILL}
-        },
         { &hf_libvirt_type,
           { "type", "libvirt.type",
             FT_INT32, BASE_DEC,
@@ -358,12 +573,9 @@ proto_register_libvirt(void)
             VALS(status_strings), 0x0,
             NULL, HFILL}
         },
-        { &hf_qemu_procedure,
-          { "procedure", "libvirt.procedure",
-            FT_INT32, BASE_DEC,
-            VALS(qemu_procedure_strings), 0x0,
-            NULL, HFILL}
-        },
+
+        VIR_PROCEDURES_HEADERSET
+
         { &hf_libvirt_payload,
           { "payload", "libvirt.payload",
             FT_STRING, BASE_NONE,
