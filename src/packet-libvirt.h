@@ -49,8 +49,6 @@ struct vir_proc_payload {
     vir_named_xdrdef_t *msg;
 };
 
-#define VIR_ARR_W_SIZE(ary) (ary), array_length(ary)
-
 enum vir_net_message_type {
     VIR_NET_CALL           = 0,
     VIR_NET_REPLY          = 1,

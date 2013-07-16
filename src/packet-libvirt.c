@@ -396,7 +396,7 @@ payload_dispatch_type(guint32 prog, guint32 proc, guint32 type)
         /* NOP */
     } else {
         const vir_proc_payload_t *pd;
-#define VIR_PROG_CASE(ps) pd = find_payload_def(proc, VIR_ARR_W_SIZE(ps##_payload_def))
+#define VIR_PROG_CASE(ps) pd = find_payload_def(proc, ps##_payload_def, array_length(ps##_payload_def))
         VIR_PROG_SWITCH(prog);
 #undef VIR_PROG_CASE
 
