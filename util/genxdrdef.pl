@@ -1,23 +1,23 @@
 #!/usr/bin/env perl
 # genxdrdef.pl --- Generate C header file which used by packet-libvirt.[ch]
-
+#
 # Copyright (C) 2013 Yuto Kawamura(kawamuray) <kawamuray.dadada@gmail.com>
-
+#
 # Author: Yuto Kawamura(kawamuray)
-
+#
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License
 # as published by the Free Software Foundation; either version 3
 # of the License, or (at your option) any later version.
-
+#
 # This program is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
-
+#
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
-
+#
 # For XDR syntax, see http://tools.ietf.org/html/rfc4506#section-6.3
 # This script does not strictly check syntax of xdr protocol specification.
 # Make sure the specification files you have are correctly compilable with rpcgen(1).
