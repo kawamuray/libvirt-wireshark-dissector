@@ -72,7 +72,7 @@ describe_xdr_string(const vir_xdrdef_t *def, XDR *xdrs, proto_item *ti)
     gchar *val = NULL;
 
     if (xdr_string(xdrs, &val, def->metainfo)) {
-        proto_item_append_text(ti, "%s", (val) ? val : "(null)");
+        proto_item_append_text(ti, "\"%s\"", (val) ? val : "(null)");
         xdr_free((xdrproc_t)xdr_string, (char *)&val);
         return TRUE;
     } else {
@@ -193,7 +193,7 @@ describe_xdr_struct(const vir_xdrdef_t *def, XDR *xdrs, proto_item *ti)
 
     proto_item_append_text(ti, "{ ");
     for (field = def->typeref; field->name != NULL; field++) {
-        proto_item_append_text(ti, " [%s] = ", field->name);
+        proto_item_append_text(ti, " .%s = ", field->name);
         if (!(rc = describe_dispatch(VIR_XDRDEF_STRIP(field), xdrs, ti))) {
             proto_item_append_text(ti, "<<UNABLE TO CONTINUE>>");
             break;
