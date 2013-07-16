@@ -1,0 +1,6 @@
+This is the project of Google Summer of Code 2013 accepted by QEMU.org and libvirt community.
+The goal of this project is, provide Wireshark dissector for Libvirt RPC protocol. It will provide Libvirt packet overview/detail analysing in Wireshark. Furthermore, it will be able to build(generated) from RPC protocol definition placed in Libvirt source tree to support latest protocol specification.
+
+See also:
+- http://www.google-melange.com/gsoc/project/google/gsoc2013/kawamuray/7001
+- http://wiki.qemu.org/Features/LibvirtWiresharkDissector
