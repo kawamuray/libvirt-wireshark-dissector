@@ -395,7 +395,7 @@ payload_dispatch_type(guint32 prog, guint32 proc, guint32 type)
     if (type == VIR_NET_STREAM) {
         /* NOP */
     } else {
-        const vir_proc_payload_t *pd;
+        const vir_proc_payload_t *pd = NULL;
 #define VIR_PROG_CASE(ps) pd = find_payload_def(proc, ps##_payload_def, array_length(ps##_payload_def))
         VIR_PROG_SWITCH(prog);
 #undef VIR_PROG_CASE
