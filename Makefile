@@ -18,8 +18,8 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 LIBVIRTDIR        = libvirt
 
-WIRESHARK_VERSION := $(shell wireshark --version | head -1 | cut -f 2 -d ' ')
-INSTALLDIR        = $(HOME)/.wireshark/plugins/$(WIRESHARK_VERSION)
+# WIRESHARK_VERSION := $(shell wireshark --version | head -1 | cut -f 2 -d ' ')
+INSTALLDIR        = $(HOME)/.wireshark/plugins
 
 UTILDIR           = util
 
