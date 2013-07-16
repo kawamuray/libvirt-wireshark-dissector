@@ -19,7 +19,7 @@
 CC                = gcc
 CFLAGS            = -Wall -O2 -g
 LIBS              = -lwireshark
-INCLUDES          = -I../local/include -I../wireshark -I../wireshark/epan/dissectors -I/usr/include/glib-2.0 -I/usr/lib/glib-2.0/include -I.
+INCLUDES          = $(shell pkg-config --cflags glib-2.0) -I/usr/include/wireshark -I.
 
 XDRFILES          = $(patsubst %, $(LIBVIRTDIR)/src/%, remote/remote_protocol.x remote/qemu_protocol.x remote/lxc_protocol.x rpc/virkeepaliveprotocol.x)
 

@@ -22,10 +22,10 @@
 #endif
 
 #include <wireshark/config.h>
-#include <epan/packet.h>
+#include <wireshark/epan/packet.h>
+#include <wireshark/epan/dissectors/packet-tcp.h>
 #include <glib.h>
 #include <rpc/xdr.h>
-#include "packet-tcp.h"
 #include "packet-libvirt.h"
 
 static int proto_libvirt = -1;
