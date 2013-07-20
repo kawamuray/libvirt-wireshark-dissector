@@ -59,8 +59,8 @@ static gboolean describe_dispatch(const vir_xdrdef_t *def, XDR *xdrs, proto_item
 
 XDR_PRIMITIVE_DESCRIBER(int,     gint32,  "%d")
 XDR_PRIMITIVE_DESCRIBER(u_int,   guint32, "%u")
-XDR_PRIMITIVE_DESCRIBER(short,   gshort,  "%d")
-XDR_PRIMITIVE_DESCRIBER(u_short, gushort, "%u")
+XDR_PRIMITIVE_DESCRIBER(short,   gint16,  "%d")
+XDR_PRIMITIVE_DESCRIBER(u_short, guint16, "%u")
 XDR_PRIMITIVE_DESCRIBER(char,    gchar,   "%02x")
 XDR_PRIMITIVE_DESCRIBER(u_char,  guchar,  "%02x")
 XDR_PRIMITIVE_DESCRIBER(hyper,   gint64,  "%lld")
