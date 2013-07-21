@@ -51,7 +51,8 @@ AC_ARG_ENABLE([genproto], [AC_HELP_STRING([--enable-genproto=/path/to/libvirt/di
 ])
 AM_CONDITIONAL([ENABLE_GENPROTO], test -n "$enable_genproto")
 
-AC_ARG_WITH([protofiles], [AC_HELP_STRING([--with-protofiles="remote/remote_protocol.x rpc/virkeepaliveprotocol.x"], [specify libvirt protocol definition files that will used to generate dissector.(default: remote/(remote|qemu|lxc)_protocol.x, rpc/virkeepaliveprotocol.x)])],
+AC_ARG_WITH([protofiles], [AC_HELP_STRING([--with-protofiles="remote/remote_protocol.x rpc/virkeepaliveprotocol.x"],
+                                          [specify libvirt protocol definition files that will used to generate dissector.(default: remote/(remote|qemu|lxc)_protocol.x, rpc/virkeepaliveprotocol.x)])],
 [
     if test -z "$enable_genproto"; then
         AC_MSG_WARN([Specifying --with-protofiles without specifying --enable-genproto feature has no effect])
