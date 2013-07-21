@@ -16,27 +16,11 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
-LIBVIRTDIR        = libvirt
+SUBDIRS              = src
 
-# WIRESHARK_VERSION := $(shell wireshark --version | head -1 | cut -f 2 -d ' ')
-INSTALLDIR        = $(HOME)/.wireshark/plugins
-
-UTILDIR           = util
-
-SRCDIR            = src
-LIBVIRT_SO        = $(SRCDIR)/libvirt.so
-
-all: $(LIBVIRT_SO)
-
-.PHONY: $(LIBVIRT_SO)
-$(LIBVIRT_SO):
-	LIBVIRTDIR=$(abspath $(LIBVIRTDIR)) \
-	UTILDIR=$(abspath $(UTILDIR)) \
-	  $(MAKE) -C $(SRCDIR) all
-
-install: all
-	mkdir -p $(INSTALLDIR)
-	cp $(LIBVIRT_SO) $(INSTALLDIR)
-
-clean:
-	$(MAKE) -C $(SRCDIR) clean
+# I think wireshark plugin is special case that
+# doesn't need to install *.la(libtool archive) files.
+# Maybe each plugin functionality should correspond to one file in plugins directory.
+# So this does keep plugins directory clean.
+install-exec-hook:
+	rm -f $(DESTDIR)$(plugindir)/libvirt.la 

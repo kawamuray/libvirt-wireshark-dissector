@@ -16,31 +16,51 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
-CC                = gcc
-CFLAGS            = -Wall -O2 -g
-LIBS              = -lwireshark
-INCLUDES          = $(shell pkg-config --cflags glib-2.0) -I/usr/include/wireshark -I.
+AM_CPPFLAGS               = $(shell pkg-config --cflags glib-2.0) -I. -I/usr/include/wireshark
 
-XDRFILES          = $(patsubst %, $(LIBVIRTDIR)/src/%, remote/remote_protocol.x remote/qemu_protocol.x remote/lxc_protocol.x rpc/virkeepaliveprotocol.x)
+plugin_LTLIBRARIES        = libvirt.la
+libvirt_la_SOURCES        = packet-libvirt.c plugin.c
+libvirt_la_LDFLAGS        = -avoid-version
 
-objects           = packet-libvirt.o plugin.o
-LIBVIRT_SO        = libvirt.so
-
-all: $(LIBVIRT_SO)
-
-$(LIBVIRT_SO): $(objects)
-	$(CC) $(LIBS) $(CFLAGS) -fPIC -shared -Wl,-soname=libvirt.so -o $@ $(objects)
-
-.c.o:
-	$(CC) $(CFLAGS) $(INCLUDES) -fPIC -c $< -o $@
-
-packet-libvirt.c: packet-libvirt.h libvirt/protocol.h
+packet-libvirt.c: packet-libvirt.h libvirt
 
 plugin.c: packet-libvirt.c
-	$(UTILDIR)/make-dissector-reg.py . plugin $<
+	$(PYTHON) $(UTILDIR)/make-dissector-reg.py . plugin $<
 
-libvirt/protocol.h: $(UTILDIR)/genxdrdef.pl $(XDRFILES)
-	$(UTILDIR)/genxdrdef.pl $(XDRFILES)
+.PHONY: libvirt # Need to overwrite symlink if ENABLE_GENPROTO has been reversed
+if ENABLE_GENPROTO
+libvirt:
+	mkdir -p libvirt.gen
+	ln -sfT libvirt.gen libvirt
 
-clean:
-	-rm -rf *.o *.so libvirt/*.h plugin.c
+protofiles = $(addprefix $(LIBVIRT_DISTDIR)/src/, $(PROTOFILES))
+libvirt/protocol.h: $(UTILDIR)/genxdrdef.pl $(protofiles)
+	$(PERL) $(UTILDIR)/genxdrdef.pl $(protofiles)
+else
+libvirt:
+	ln -sfT libvirt.dist libvirt
+endif
+
+clean-local:
+	-rm -rf libvirt libvirt.gen plugin.c
+
+# CC                = gcc
+# CFLAGS            = -Wall -O2 -g
+# LIBS              = -lwireshark
+# INCLUDES          = $(shell pkg-config --cflags glib-2.0) -I/usr/include/wireshark -I.
+
+# XDRFILES          = $(patsubst %, $(LIBVIRTDIR)/src/%, remote/remote_protocol.x remote/qemu_protocol.x remote/lxc_protocol.x rpc/virkeepaliveprotocol.x)
+
+# objects           = packet-libvirt.o plugin.o
+# LIBVIRT_SO        = libvirt.so
+
+# all: $(LIBVIRT_SO)
+
+# $(LIBVIRT_SO): $(objects)
+# 	$(CC) $(LIBS) $(CFLAGS) -fPIC -shared -Wl,-soname=libvirt.so -o $@ $(objects)
+
+# .c.o:
+# 	$(CC) $(CFLAGS) $(INCLUDES) -fPIC -c $< -o $@
+
+# clean:
+# 	-rm -rf *.o *.so libvirt/*.h plugin.c

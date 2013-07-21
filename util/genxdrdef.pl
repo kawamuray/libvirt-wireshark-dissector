@@ -31,6 +31,7 @@ use File::Spec;
 # TODO: add prefixes for needed things
 # TODO: dependencies graph
 # TODO: inteligent error message
+# TODO: add libvirt version info in header of protocol.h
 
 {
     sub mk_accessor {
