@@ -271,7 +271,7 @@ use File::Spec;
         for my $header (@{ $self->{headers} || [] }) {
             my ($name, $contents) = @$header;
             my $file = File::Spec->catfile(
-                $ENV{PWD}, qw/ src libvirt /, "$name.h");
+                $ENV{PWD}, qw/ libvirt.gen /, "$name.h");
             open my $fh, '>', $file
                 or die "Cannot open file $file: $!";
             # use Data::Dumper;
