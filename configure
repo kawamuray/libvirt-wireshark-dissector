@@ -11483,7 +11483,7 @@ fi
     if test -z "$PERL"; then
         as_fn_error $? "Cannot find perl executable" "$LINENO" 5
     fi
-    LIBVIRT_DISTDIR=`realpath "$enableval"`
+    LIBVIRT_DISTDIR=`echo "$enableval" | perl -MFile::Spec -pne 'File::Spec->rel2abs($_)'`
 
 
 fi

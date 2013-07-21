@@ -47,7 +47,7 @@ AC_ARG_ENABLE([genproto], [AC_HELP_STRING([--enable-genproto=/path/to/libvirt/di
     if test -z "$PERL"; then
         AC_MSG_ERROR([Cannot find perl executable])
     fi
-    AC_SUBST([LIBVIRT_DISTDIR], [`realpath "$enableval"`])
+    AC_SUBST([LIBVIRT_DISTDIR], [`echo "$enableval" | perl -MFile::Spec -pne 'File::Spec->rel2abs($_)'`])
 ])
 AM_CONDITIONAL([ENABLE_GENPROTO], test -n "$enable_genproto")
 
