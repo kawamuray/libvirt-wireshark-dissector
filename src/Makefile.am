@@ -16,7 +16,6 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
-AM_CPPFLAGS               = $(shell pkg-config --cflags glib-2.0) -I. -I/usr/include/wireshark
 
 plugin_LTLIBRARIES        = libvirt.la
 libvirt_la_SOURCES        = packet-libvirt.c plugin.c

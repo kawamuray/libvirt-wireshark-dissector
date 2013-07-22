@@ -30,6 +30,13 @@
 /* Define to 1 if you have the <unistd.h> header file. */
 #undef HAVE_UNISTD_H
 
+/* Define to 1 if you have the <wireshark/epan/dissectors/packet-tcp.h> header
+   file. */
+#undef HAVE_WIRESHARK_EPAN_DISSECTORS_PACKET_TCP_H
+
+/* Define to 1 if you have the <wireshark/epan/packet.h> header file. */
+#undef HAVE_WIRESHARK_EPAN_PACKET_H
+
 /* Define to 1 if the system has the type `_Bool'. */
 #undef HAVE__BOOL
 

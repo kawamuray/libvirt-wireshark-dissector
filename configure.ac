@@ -81,10 +81,19 @@ AC_ARG_WITH([plugindir], [AC_HELP_STRING([--with-plugindir],
 AC_SUBST([plugindir])
 
 # Checks for libraries.
+PKG_CHECK_MODULES([GLIB], [glib-2.0])
 
 # Checks for header files.
-# AC_CHECK_HEADERS([ glib.h rpc/xdr.h \
-#     wireshark/config.h wireshark/epan/packet.h wireshark/epan/dissectors/packet-tcp.h ])
+CPPFLAGS_save="$CPPFLAGS"
+CPPFLAGS="$CPPFLAGS -I/usr/include/wireshark "`pkg-config --cflags glib-2.0`
+AC_CHECK_HEADER([rpc/xdr.h], [], [AC_MSG_ERROR([Cannot find header file rpc/xdr.h])])
+AC_CHECK_HEADER([glib.h], [], [AC_MSG_ERROR([Cannot find header file glib.h])])
+AC_CHECK_HEADER([wireshark/config.h], [], [AC_MSG_ERROR([Cannot find header file wireshark/config.h])])
+AC_CHECK_HEADERS([ wireshark/epan/packet.h wireshark/epan/dissectors/packet-tcp.h ], [],
+                 [AC_MSG_ERROR([Cannot find header file wireshark/epan/packet.h wireshark/epan/dissectors/packet-tcp.h])],
+		 [#include <wireshark/config.h>])
+AC_SUBST([AM_CPPFLAGS], ["$CPPFLAGS -I. -Wall"])
+CPPFLAGS="$CPPFLAGS_save"
 
 # Checks for typedefs, structures, and compiler characteristics.
 AC_CHECK_HEADER_STDBOOL
