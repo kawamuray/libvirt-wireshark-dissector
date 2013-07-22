@@ -29,20 +29,23 @@ plugin.c: packet-libvirt.c
 
 .PHONY: libvirt # Need to overwrite symlink if ENABLE_GENPROTO has been reversed
 if ENABLE_GENPROTO
-libvirt:
+libvirt: clean-symlink
 	mkdir -p libvirt.gen
-	ln -sfT libvirt.gen libvirt
+	ln -sf libvirt.gen libvirt
 
 protofiles = $(addprefix $(LIBVIRT_DISTDIR)/src/, $(PROTOFILES))
 libvirt/protocol.h: $(UTILDIR)/genxdrdef.pl $(protofiles)
 	$(PERL) $(UTILDIR)/genxdrdef.pl $(protofiles)
 else
-libvirt:
-	ln -sfT libvirt.dist libvirt
+libvirt: clean-symlink
+	ln -sf libvirt.dist libvirt
 endif
 
-clean-local:
-	-rm -rf libvirt libvirt.gen plugin.c
+clean-symlink:
+	-rm -f libvirt
+
+clean-local: clean-symlink
+	-rm -rf libvirt.gen plugin.c
 
 # CC                = gcc
 # CFLAGS            = -Wall -O2 -g

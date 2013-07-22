@@ -614,16 +614,19 @@ plugin.c: packet-libvirt.c
 	$(PYTHON) $(UTILDIR)/make-dissector-reg.py . plugin $<
 
 .PHONY: libvirt # Need to overwrite symlink if ENABLE_GENPROTO has been reversed
-@ENABLE_GENPROTO_TRUE@libvirt:
+@ENABLE_GENPROTO_TRUE@libvirt: clean-symlink
 @ENABLE_GENPROTO_TRUE@	mkdir -p libvirt.gen
-@ENABLE_GENPROTO_TRUE@	ln -sfT libvirt.gen libvirt
+@ENABLE_GENPROTO_TRUE@	ln -sf libvirt.gen libvirt
 @ENABLE_GENPROTO_TRUE@libvirt/protocol.h: $(UTILDIR)/genxdrdef.pl $(protofiles)
 @ENABLE_GENPROTO_TRUE@	$(PERL) $(UTILDIR)/genxdrdef.pl $(protofiles)
-@ENABLE_GENPROTO_FALSE@libvirt:
-@ENABLE_GENPROTO_FALSE@	ln -sfT libvirt.dist libvirt
+@ENABLE_GENPROTO_FALSE@libvirt: clean-symlink
+@ENABLE_GENPROTO_FALSE@	ln -sf libvirt.dist libvirt
 
-clean-local:
-	-rm -rf libvirt libvirt.gen plugin.c
+clean-symlink:
+	-rm -f libvirt
+
+clean-local: clean-symlink
+	-rm -rf libvirt.gen plugin.c
 
 # CC                = gcc
 # CFLAGS            = -Wall -O2 -g
