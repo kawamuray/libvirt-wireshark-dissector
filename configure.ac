@@ -36,7 +36,7 @@ AC_PROG_LIBTOOL
 
 AC_PATH_PROG([PYTHON], [python])
 if test -z "$PYTHON"; then
-    AC_MSG_ERROR([Cannot find python executable])
+    AC_MSG_ERROR([python is required in order to build wireshark plugin])
 fi
 
 # Arguments handling
@@ -45,7 +45,7 @@ AC_ARG_ENABLE([genproto], [AC_HELP_STRING([--enable-genproto=/path/to/libvirt/di
 [
     AC_PATH_PROG([PERL], [perl])
     if test -z "$PERL"; then
-        AC_MSG_ERROR([Cannot find perl executable])
+        AC_MSG_ERROR([perl is required in order to build dissector from protocol files])
     fi
     AC_SUBST([LIBVIRT_DISTDIR], [`echo "$enableval" | perl -MFile::Spec -ne 'print File::Spec->rel2abs($_)'`])
 ])
@@ -67,18 +67,16 @@ AC_SUBST([PROTOFILES])
 AC_PATH_PROG([WIRESHARK], [wireshark])
 AC_PATH_PROG([WIRESHARK], [tshark])
 if test -z "$WIRESHARK"; then
-    AC_MSG_ERROR([Cannot find executable wireshark or tshark])
+    AC_MSG_ERROR([command wireshark or tshark not found])
 fi
 
 # Determine Wiresharks plugins directory from option or libwireshark location
 AC_ARG_WITH([plugindir], [AC_HELP_STRING([--with-plugindir],
-	                  [specify Wireshark plugins directory you want to install this dissector])],
+                          [specify Wireshark plugins directory you want to install this dissector])],
 [ plugindir=$withval ],
 [
     wireshark_version=`$WIRESHARK -v | grep -iE 'wireshark|tshark' | head -1 | cut -f 2 -d' '`
-    AC_CHECK_LIB([wireshark], [proto_register_field_array], [
-        plugindir=`dirname $WIRESHARK`/../lib/wireshark/plugins/$wireshark_version
-    ], [AC_MSG_ERROR([Cannot find a Wireshark library])])
+    plugindir=`dirname $WIRESHARK`/../lib/wireshark/plugins/$wireshark_version
 ])
 AC_SUBST([plugindir])
 
@@ -90,15 +88,15 @@ CPPFLAGS_save="$CPPFLAGS"
 # TODO: consider more better way
 CPPFLAGS="$CPPFLAGS `pkg-config --cflags glib-2.0` -I`dirname $WIRESHARK`/../include/wireshark"
 AC_CHECK_HEADERS([rpc/types.h])
-AC_CHECK_HEADERS([rpc/xdr.h], [], [AC_MSG_ERROR([Cannot find header file rpc/xdr.h])],
+AC_CHECK_HEADERS([rpc/xdr.h], [], [AC_MSG_ERROR([rpc/xdr.h is required in order to compile libvirt dissector])],
                 [#ifdef HAVE_RPC_TYPES_H
-		 #include <rpc/types.h>
-		 #endif])
-AC_CHECK_HEADERS([glib.h], [], [AC_MSG_ERROR([Cannot find header file glib.h])])
-AC_CHECK_HEADERS([wireshark/config.h], [], [AC_MSG_ERROR([Cannot find header file wireshark/config.h])])
+                 #include <rpc/types.h>
+                 #endif])
+AC_CHECK_HEADERS([glib.h], [], [AC_MSG_ERROR([glib.h is required in order to compile dissector])])
+AC_CHECK_HEADERS([wireshark/config.h], [], [AC_MSG_ERROR([wireshark/config.h is required in order to compile dissector])])
 AC_CHECK_HEADERS([wireshark/epan/packet.h wireshark/epan/dissectors/packet-tcp.h], [],
-                 [AC_MSG_ERROR([Cannot find header file wireshark/epan/packet.h and wireshark/epan/dissectors/packet-tcp.h])],
-		 [#include <wireshark/config.h>])
+                 [AC_MSG_ERROR([wireshark/epan/packet.h and wireshark/epan/dissectors/packet-tcp.h are required in order to compile dissector])],
+                 [#include <wireshark/config.h>])
 AC_SUBST([AM_CPPFLAGS], ["$CPPFLAGS -I. -Wall"])
 CPPFLAGS="$CPPFLAGS_save"
 

@@ -11542,7 +11542,7 @@ fi
 
 
 if test -z "$PYTHON"; then
-    as_fn_error $? "Cannot find python executable" "$LINENO" 5
+    as_fn_error $? "python is required in order to build wireshark plugin" "$LINENO" 5
 fi
 
 # Arguments handling
@@ -11590,7 +11590,7 @@ fi
 
 
     if test -z "$PERL"; then
-        as_fn_error $? "Cannot find perl executable" "$LINENO" 5
+        as_fn_error $? "perl is required in order to build dissector from protocol files" "$LINENO" 5
     fi
     LIBVIRT_DISTDIR=`echo "$enableval" | perl -MFile::Spec -ne 'print File::Spec->rel2abs($_)'`
 
@@ -11706,7 +11706,7 @@ fi
 
 
 if test -z "$WIRESHARK"; then
-    as_fn_error $? "Cannot find executable wireshark or tshark" "$LINENO" 5
+    as_fn_error $? "command wireshark or tshark not found" "$LINENO" 5
 fi
 
 # Determine Wiresharks plugins directory from option or libwireshark location
@@ -11717,50 +11717,7 @@ if test "${with_plugindir+set}" = set; then :
 else
 
     wireshark_version=`$WIRESHARK -v | grep -iE 'wireshark|tshark' | head -1 | cut -f 2 -d' '`
-    { $as_echo "$as_me:${as_lineno-$LINENO}: checking for proto_register_field_array in -lwireshark" >&5
-$as_echo_n "checking for proto_register_field_array in -lwireshark... " >&6; }
-if ${ac_cv_lib_wireshark_proto_register_field_array+:} false; then :
-  $as_echo_n "(cached) " >&6
-else
-  ac_check_lib_save_LIBS=$LIBS
-LIBS="-lwireshark  $LIBS"
-cat confdefs.h - <<_ACEOF >conftest.$ac_ext
-/* end confdefs.h.  */
-
-/* Override any GCC internal prototype to avoid an error.
-   Use char because int might match the return type of a GCC
-   builtin and then its argument prototype would still apply.  */
-#ifdef __cplusplus
-extern "C"
-#endif
-char proto_register_field_array ();
-int
-main ()
-{
-return proto_register_field_array ();
-  ;
-  return 0;
-}
-_ACEOF
-if ac_fn_c_try_link "$LINENO"; then :
-  ac_cv_lib_wireshark_proto_register_field_array=yes
-else
-  ac_cv_lib_wireshark_proto_register_field_array=no
-fi
-rm -f core conftest.err conftest.$ac_objext \
-    conftest$ac_exeext conftest.$ac_ext
-LIBS=$ac_check_lib_save_LIBS
-fi
-{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $ac_cv_lib_wireshark_proto_register_field_array" >&5
-$as_echo "$ac_cv_lib_wireshark_proto_register_field_array" >&6; }
-if test "x$ac_cv_lib_wireshark_proto_register_field_array" = xyes; then :
-
-        plugindir=`dirname $WIRESHARK`/../lib/wireshark/plugins/$wireshark_version
-
-else
-  as_fn_error $? "Cannot find a Wireshark library" "$LINENO" 5
-fi
-
+    plugindir=`dirname $WIRESHARK`/../lib/wireshark/plugins/$wireshark_version
 
 fi
 
@@ -11998,8 +11955,8 @@ done
 for ac_header in rpc/xdr.h
 do :
   ac_fn_c_check_header_compile "$LINENO" "rpc/xdr.h" "ac_cv_header_rpc_xdr_h" "#ifdef HAVE_RPC_TYPES_H
-		 #include <rpc/types.h>
-		 #endif
+                 #include <rpc/types.h>
+                 #endif
 "
 if test "x$ac_cv_header_rpc_xdr_h" = xyes; then :
   cat >>confdefs.h <<_ACEOF
@@ -12007,7 +11964,7 @@ if test "x$ac_cv_header_rpc_xdr_h" = xyes; then :
 _ACEOF
 
 else
-  as_fn_error $? "Cannot find header file rpc/xdr.h" "$LINENO" 5
+  as_fn_error $? "rpc/xdr.h is required in order to compile libvirt dissector" "$LINENO" 5
 fi
 
 done
@@ -12021,7 +11978,7 @@ if test "x$ac_cv_header_glib_h" = xyes; then :
 _ACEOF
 
 else
-  as_fn_error $? "Cannot find header file glib.h" "$LINENO" 5
+  as_fn_error $? "glib.h is required in order to compile dissector" "$LINENO" 5
 fi
 
 done
@@ -12035,7 +11992,7 @@ if test "x$ac_cv_header_wireshark_config_h" = xyes; then :
 _ACEOF
 
 else
-  as_fn_error $? "Cannot find header file wireshark/config.h" "$LINENO" 5
+  as_fn_error $? "wireshark/config.h is required in order to compile dissector" "$LINENO" 5
 fi
 
 done
@@ -12051,7 +12008,7 @@ if eval test \"x\$"$as_ac_Header"\" = x"yes"; then :
 _ACEOF
 
 else
-  as_fn_error $? "Cannot find header file wireshark/epan/packet.h and wireshark/epan/dissectors/packet-tcp.h" "$LINENO" 5
+  as_fn_error $? "wireshark/epan/packet.h and wireshark/epan/dissectors/packet-tcp.h are required in order to compile dissector" "$LINENO" 5
 fi
 
 done
