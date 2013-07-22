@@ -613,7 +613,7 @@ uninstall-am: uninstall-pluginLTLIBRARIES
 	uninstall-am uninstall-pluginLTLIBRARIES
 
 
-packet-libvirt.c: packet-libvirt.h libvirt
+packet-libvirt.c: packet-libvirt.h libvirt libvirt/protocol.h
 
 plugin.c: packet-libvirt.c
 	$(PYTHON) $(UTILDIR)/make-dissector-reg.py . plugin $<

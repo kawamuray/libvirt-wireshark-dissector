@@ -21,7 +21,7 @@ plugin_LTLIBRARIES        = libvirt.la
 libvirt_la_SOURCES        = packet-libvirt.c plugin.c
 libvirt_la_LDFLAGS        = -avoid-version
 
-packet-libvirt.c: packet-libvirt.h libvirt
+packet-libvirt.c: packet-libvirt.h libvirt libvirt/protocol.h
 
 plugin.c: packet-libvirt.c
 	$(PYTHON) $(UTILDIR)/make-dissector-reg.py . plugin $<
