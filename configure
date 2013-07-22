@@ -11979,7 +11979,9 @@ fi
 
 # Checks for header files.
 CPPFLAGS_save="$CPPFLAGS"
-CPPFLAGS="$CPPFLAGS -I/usr/include/wireshark "`pkg-config --cflags glib-2.0`
+# TODO: consider more better way
+CPPFLAGS="$CPPFLAGS `pkg-config --cflags glib-2.0` -I`dirname $WIRESHARK`/../include/wireshark"
+echo "$CPPFLAGS"
 ac_fn_c_check_header_mongrel "$LINENO" "rpc/xdr.h" "ac_cv_header_rpc_xdr_h" "$ac_includes_default"
 if test "x$ac_cv_header_rpc_xdr_h" = xyes; then :
 
@@ -12004,7 +12006,7 @@ else
 fi
 
 
-for ac_header in  wireshark/epan/packet.h wireshark/epan/dissectors/packet-tcp.h
+for ac_header in wireshark/epan/packet.h wireshark/epan/dissectors/packet-tcp.h
 do :
   as_ac_Header=`$as_echo "ac_cv_header_$ac_header" | $as_tr_sh`
 ac_fn_c_check_header_compile "$LINENO" "$ac_header" "$as_ac_Header" "#include <wireshark/config.h>
@@ -12015,7 +12017,7 @@ if eval test \"x\$"$as_ac_Header"\" = x"yes"; then :
 _ACEOF
 
 else
-  as_fn_error $? "Cannot find header file wireshark/epan/packet.h wireshark/epan/dissectors/packet-tcp.h" "$LINENO" 5
+  as_fn_error $? "Cannot find header file wireshark/epan/packet.h and wireshark/epan/dissectors/packet-tcp.h" "$LINENO" 5
 fi
 
 done

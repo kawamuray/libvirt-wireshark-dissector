@@ -85,12 +85,13 @@ PKG_CHECK_MODULES([GLIB], [glib-2.0])
 
 # Checks for header files.
 CPPFLAGS_save="$CPPFLAGS"
-CPPFLAGS="$CPPFLAGS -I/usr/include/wireshark "`pkg-config --cflags glib-2.0`
+# TODO: consider more better way
+CPPFLAGS="$CPPFLAGS `pkg-config --cflags glib-2.0` -I`dirname $WIRESHARK`/../include/wireshark"
 AC_CHECK_HEADER([rpc/xdr.h], [], [AC_MSG_ERROR([Cannot find header file rpc/xdr.h])])
 AC_CHECK_HEADER([glib.h], [], [AC_MSG_ERROR([Cannot find header file glib.h])])
 AC_CHECK_HEADER([wireshark/config.h], [], [AC_MSG_ERROR([Cannot find header file wireshark/config.h])])
-AC_CHECK_HEADERS([ wireshark/epan/packet.h wireshark/epan/dissectors/packet-tcp.h ], [],
-                 [AC_MSG_ERROR([Cannot find header file wireshark/epan/packet.h wireshark/epan/dissectors/packet-tcp.h])],
+AC_CHECK_HEADERS([wireshark/epan/packet.h wireshark/epan/dissectors/packet-tcp.h], [],
+                 [AC_MSG_ERROR([Cannot find header file wireshark/epan/packet.h and wireshark/epan/dissectors/packet-tcp.h])],
 		 [#include <wireshark/config.h>])
 AC_SUBST([AM_CPPFLAGS], ["$CPPFLAGS -I. -Wall"])
 CPPFLAGS="$CPPFLAGS_save"
