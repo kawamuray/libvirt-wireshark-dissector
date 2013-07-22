@@ -11981,30 +11981,62 @@ fi
 CPPFLAGS_save="$CPPFLAGS"
 # TODO: consider more better way
 CPPFLAGS="$CPPFLAGS `pkg-config --cflags glib-2.0` -I`dirname $WIRESHARK`/../include/wireshark"
-echo "$CPPFLAGS"
-ac_fn_c_check_header_mongrel "$LINENO" "rpc/xdr.h" "ac_cv_header_rpc_xdr_h" "$ac_includes_default"
+for ac_header in rpc/types.h
+do :
+  ac_fn_c_check_header_mongrel "$LINENO" "rpc/types.h" "ac_cv_header_rpc_types_h" "$ac_includes_default"
+if test "x$ac_cv_header_rpc_types_h" = xyes; then :
+  cat >>confdefs.h <<_ACEOF
+#define HAVE_RPC_TYPES_H 1
+_ACEOF
+
+fi
+
+done
+
+for ac_header in rpc/xdr.h
+do :
+  ac_fn_c_check_header_compile "$LINENO" "rpc/xdr.h" "ac_cv_header_rpc_xdr_h" "#ifdef HAVE_RPC_TYPES_H
+		 #include <rpc/types.h>
+		 #endif
+"
 if test "x$ac_cv_header_rpc_xdr_h" = xyes; then :
+  cat >>confdefs.h <<_ACEOF
+#define HAVE_RPC_XDR_H 1
+_ACEOF
 
 else
   as_fn_error $? "Cannot find header file rpc/xdr.h" "$LINENO" 5
 fi
 
+done
 
-ac_fn_c_check_header_mongrel "$LINENO" "glib.h" "ac_cv_header_glib_h" "$ac_includes_default"
+for ac_header in glib.h
+do :
+  ac_fn_c_check_header_mongrel "$LINENO" "glib.h" "ac_cv_header_glib_h" "$ac_includes_default"
 if test "x$ac_cv_header_glib_h" = xyes; then :
+  cat >>confdefs.h <<_ACEOF
+#define HAVE_GLIB_H 1
+_ACEOF
 
 else
   as_fn_error $? "Cannot find header file glib.h" "$LINENO" 5
 fi
 
+done
 
-ac_fn_c_check_header_mongrel "$LINENO" "wireshark/config.h" "ac_cv_header_wireshark_config_h" "$ac_includes_default"
+for ac_header in wireshark/config.h
+do :
+  ac_fn_c_check_header_mongrel "$LINENO" "wireshark/config.h" "ac_cv_header_wireshark_config_h" "$ac_includes_default"
 if test "x$ac_cv_header_wireshark_config_h" = xyes; then :
+  cat >>confdefs.h <<_ACEOF
+#define HAVE_WIRESHARK_CONFIG_H 1
+_ACEOF
 
 else
   as_fn_error $? "Cannot find header file wireshark/config.h" "$LINENO" 5
 fi
 
+done
 
 for ac_header in wireshark/epan/packet.h wireshark/epan/dissectors/packet-tcp.h
 do :
