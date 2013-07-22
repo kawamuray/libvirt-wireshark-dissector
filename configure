@@ -11592,7 +11592,7 @@ fi
     if test -z "$PERL"; then
         as_fn_error $? "Cannot find perl executable" "$LINENO" 5
     fi
-    LIBVIRT_DISTDIR=`echo "$enableval" | perl -MFile::Spec -pne 'File::Spec->rel2abs($_)'`
+    LIBVIRT_DISTDIR=`echo "$enableval" | perl -MFile::Spec -ne 'print File::Spec->rel2abs($_)'`
 
 
 fi
@@ -11624,14 +11624,8 @@ fi
 
 
 
-# Determine Wiresharks plugins directory from option or libwireshark location
-
-# Check whether --with-plugindir was given.
-if test "${with_plugindir+set}" = set; then :
-  withval=$with_plugindir;  plugindir=$withval
-else
-
-    # Extract the first word of "wireshark", so it can be a program name with args.
+# Find wireshark or tshark executable
+# Extract the first word of "wireshark", so it can be a program name with args.
 set dummy wireshark; ac_word=$2
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking for $ac_word" >&5
 $as_echo_n "checking for $ac_word... " >&6; }
@@ -11671,7 +11665,7 @@ $as_echo "no" >&6; }
 fi
 
 
-    # Extract the first word of "tshark", so it can be a program name with args.
+# Extract the first word of "tshark", so it can be a program name with args.
 set dummy tshark; ac_word=$2
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking for $ac_word" >&5
 $as_echo_n "checking for $ac_word... " >&6; }
@@ -11711,9 +11705,17 @@ $as_echo "no" >&6; }
 fi
 
 
-    if test -z "$WIRESHARK"; then
-        as_fn_error $? "Cannot find executable wireshark or tshark" "$LINENO" 5
-    fi
+if test -z "$WIRESHARK"; then
+    as_fn_error $? "Cannot find executable wireshark or tshark" "$LINENO" 5
+fi
+
+# Determine Wiresharks plugins directory from option or libwireshark location
+
+# Check whether --with-plugindir was given.
+if test "${with_plugindir+set}" = set; then :
+  withval=$with_plugindir;  plugindir=$withval
+else
+
     wireshark_version=`$WIRESHARK -v | grep -iE 'wireshark|tshark' | head -1 | cut -f 2 -d' '`
     { $as_echo "$as_me:${as_lineno-$LINENO}: checking for proto_register_field_array in -lwireshark" >&5
 $as_echo_n "checking for proto_register_field_array in -lwireshark... " >&6; }

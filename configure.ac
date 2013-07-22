@@ -47,7 +47,7 @@ AC_ARG_ENABLE([genproto], [AC_HELP_STRING([--enable-genproto=/path/to/libvirt/di
     if test -z "$PERL"; then
         AC_MSG_ERROR([Cannot find perl executable])
     fi
-    AC_SUBST([LIBVIRT_DISTDIR], [`echo "$enableval" | perl -MFile::Spec -pne 'File::Spec->rel2abs($_)'`])
+    AC_SUBST([LIBVIRT_DISTDIR], [`echo "$enableval" | perl -MFile::Spec -ne 'print File::Spec->rel2abs($_)'`])
 ])
 AM_CONDITIONAL([ENABLE_GENPROTO], test -n "$enable_genproto")
 
@@ -63,16 +63,18 @@ AC_ARG_WITH([protofiles], [AC_HELP_STRING([--with-protofiles="remote/remote_prot
 ])
 AC_SUBST([PROTOFILES])
 
+# Find wireshark or tshark executable
+AC_PATH_PROG([WIRESHARK], [wireshark])
+AC_PATH_PROG([WIRESHARK], [tshark])
+if test -z "$WIRESHARK"; then
+    AC_MSG_ERROR([Cannot find executable wireshark or tshark])
+fi
+
 # Determine Wiresharks plugins directory from option or libwireshark location
 AC_ARG_WITH([plugindir], [AC_HELP_STRING([--with-plugindir],
 	                  [specify Wireshark plugins directory you want to install this dissector])],
 [ plugindir=$withval ],
 [
-    AC_PATH_PROG([WIRESHARK], [wireshark])
-    AC_PATH_PROG([WIRESHARK], [tshark])
-    if test -z "$WIRESHARK"; then
-        AC_MSG_ERROR([Cannot find executable wireshark or tshark])
-    fi
     wireshark_version=`$WIRESHARK -v | grep -iE 'wireshark|tshark' | head -1 | cut -f 2 -d' '`
     AC_CHECK_LIB([wireshark], [proto_register_field_array], [
         plugindir=`dirname $WIRESHARK`/../lib/wireshark/plugins/$wireshark_version
