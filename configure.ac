@@ -68,14 +68,14 @@ AC_ARG_WITH([plugindir], [AC_HELP_STRING([--with-plugindir],
 	                  [specify Wireshark plugins directory you want to install this dissector])],
 [ plugindir=$withval ],
 [
-    AC_CHECK_PROG([WIRESHARK], [wireshark], [wireshark])
-    AC_CHECK_PROG([WIRESHARK], [tshark], [tshark])
+    AC_PATH_PROG([WIRESHARK], [wireshark])
+    AC_PATH_PROG([WIRESHARK], [tshark])
     if test -z "$WIRESHARK"; then
         AC_MSG_ERROR([Cannot find executable wireshark or tshark])
     fi
-    wireshark_version=`$WIRESHARK -v | grep -i $WIRESHARK | head -1 | cut -f 2 -d' '`
+    wireshark_version=`$WIRESHARK -v | grep -iE 'wireshark|tshark' | head -1 | cut -f 2 -d' '`
     AC_CHECK_LIB([wireshark], [proto_register_field_array], [
-        plugindir=`ld -M -lwireshark 2>/dev/null | grep LOAD | grep wireshark | cut -f 2 -d' ' | xargs dirname`/wireshark/plugins/$wireshark_version
+        plugindir=`dirname $WIRESHARK`/../lib/wireshark/plugins/$wireshark_version
     ], [AC_MSG_ERROR([Cannot find a Wireshark library])])
 ])
 AC_SUBST([plugindir])
