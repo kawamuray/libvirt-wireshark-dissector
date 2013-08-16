@@ -3,7 +3,7 @@
 #define _KEEPALIVE_H_
 #define KEEPALIVE_PROGRAM (0x6b656570)
 #define KEEPALIVE_PROTOCOL_VERSION (1)
-static const vir_proc_payload_t keepalive_payload_def[] = {
+static const vir_proc_payload_t keepalive_dissectors[] = {
     { 1, NULL, NULL, NULL },
     { 2, NULL, NULL, NULL },
 };

@@ -2,9 +2,14 @@
 #ifndef _REMOTE_H_
 #define _REMOTE_H_
 #define REMOTE_STRING_MAX (4194304)
-static vir_xdrdef_t remote_nonnull_string_def = {
-    XDR_STRING, 0, REMOTE_STRING_MAX /* remote_nonnull_string */
-};
+static gboolean dissect_xdr_remote_nonnull_string(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    return dissect_xdr_string(tvb, ti, xdrs, hf, REMOTE_STRING_MAX);
+}
+static gboolean dissect_xdr_remote_string(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    return dissect_xdr_pointer(tvb, ti, xdrs, hf, dissect_xdr_remote_nonnull_string);
+}
 #define REMOTE_DOMAIN_ID_LIST_MAX (16384)
 #define REMOTE_DOMAIN_NAME_LIST_MAX (16384)
 #define REMOTE_CPUMAP_MAX (2048)
@@ -47,2840 +52,13238 @@ static vir_xdrdef_t remote_nonnull_string_def = {
 #define REMOTE_DOMAIN_GET_CPU_STATS_MAX (2048)
 #define REMOTE_DOMAIN_DISK_ERRORS_MAX (256)
 #define REMOTE_NODE_MEMORY_PARAMETERS_MAX (64)
-static vir_named_xdrdef_t struct_remote_nonnull_domain_members_def[] = {
-    { "name", XDR_STRING, 0, REMOTE_STRING_MAX /* remote_nonnull_string */ },
-    { "uuid", XDR_OPAQUE, 0, VIR_UUID_BUFLEN /* remote_uuid */ },
-    { "id", XDR_INT, NULL, 0 /* int */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_xdrdef_t remote_nonnull_domain_def = {
-    XDR_STRUCT, struct_remote_nonnull_domain_members_def, 0 /* remote_nonnull_domain */
-};
-static vir_named_xdrdef_t struct_remote_nonnull_network_members_def[] = {
-    { "name", XDR_STRING, 0, REMOTE_STRING_MAX /* remote_nonnull_string */ },
-    { "uuid", XDR_OPAQUE, 0, VIR_UUID_BUFLEN /* remote_uuid */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_xdrdef_t remote_nonnull_network_def = {
-    XDR_STRUCT, struct_remote_nonnull_network_members_def, 0 /* remote_nonnull_network */
-};
-static vir_named_xdrdef_t struct_remote_nonnull_nwfilter_members_def[] = {
-    { "name", XDR_STRING, 0, REMOTE_STRING_MAX /* remote_nonnull_string */ },
-    { "uuid", XDR_OPAQUE, 0, VIR_UUID_BUFLEN /* remote_uuid */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_xdrdef_t remote_nonnull_nwfilter_def = {
-    XDR_STRUCT, struct_remote_nonnull_nwfilter_members_def, 0 /* remote_nonnull_nwfilter */
-};
-static vir_named_xdrdef_t struct_remote_nonnull_interface_members_def[] = {
-    { "name", XDR_STRING, 0, REMOTE_STRING_MAX /* remote_nonnull_string */ },
-    { "mac", XDR_STRING, 0, REMOTE_STRING_MAX /* remote_nonnull_string */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_xdrdef_t remote_nonnull_interface_def = {
-    XDR_STRUCT, struct_remote_nonnull_interface_members_def, 0 /* remote_nonnull_interface */
-};
-static vir_named_xdrdef_t struct_remote_nonnull_storage_pool_members_def[] = {
-    { "name", XDR_STRING, 0, REMOTE_STRING_MAX /* remote_nonnull_string */ },
-    { "uuid", XDR_OPAQUE, 0, VIR_UUID_BUFLEN /* remote_uuid */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_xdrdef_t remote_nonnull_storage_pool_def = {
-    XDR_STRUCT, struct_remote_nonnull_storage_pool_members_def, 0 /* remote_nonnull_storage_pool */
-};
-static vir_named_xdrdef_t struct_remote_nonnull_storage_vol_members_def[] = {
-    { "pool", XDR_STRING, 0, REMOTE_STRING_MAX /* remote_nonnull_string */ },
-    { "name", XDR_STRING, 0, REMOTE_STRING_MAX /* remote_nonnull_string */ },
-    { "key", XDR_STRING, 0, REMOTE_STRING_MAX /* remote_nonnull_string */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_xdrdef_t remote_nonnull_storage_vol_def = {
-    XDR_STRUCT, struct_remote_nonnull_storage_vol_members_def, 0 /* remote_nonnull_storage_vol */
-};
-static vir_named_xdrdef_t struct_remote_nonnull_node_device_members_def[] = {
-    { "name", XDR_STRING, 0, REMOTE_STRING_MAX /* remote_nonnull_string */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_xdrdef_t remote_nonnull_node_device_def = {
-    XDR_STRUCT, struct_remote_nonnull_node_device_members_def, 0 /* remote_nonnull_node_device */
-};
-static vir_named_xdrdef_t struct_remote_nonnull_secret_members_def[] = {
-    { "uuid", XDR_OPAQUE, 0, VIR_UUID_BUFLEN /* remote_uuid */ },
-    { "usageType", XDR_INT, NULL, 0 /* int */ },
-    { "usageID", XDR_STRING, 0, REMOTE_STRING_MAX /* remote_nonnull_string */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_xdrdef_t remote_nonnull_secret_def = {
-    XDR_STRUCT, struct_remote_nonnull_secret_members_def, 0 /* remote_nonnull_secret */
-};
-static vir_named_xdrdef_t struct_remote_nonnull_domain_snapshot_members_def[] = {
-    { "name", XDR_STRING, 0, REMOTE_STRING_MAX /* remote_nonnull_string */ },
-    { "dom", XDR_STRUCT, struct_remote_nonnull_domain_members_def, 0 /* remote_nonnull_domain */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_xdrdef_t remote_nonnull_domain_snapshot_def = {
-    XDR_STRUCT, struct_remote_nonnull_domain_snapshot_members_def, 0 /* remote_nonnull_domain_snapshot */
-};
-static vir_named_xdrdef_t struct_remote_error_members_def[] = {
-    { "code", XDR_INT, NULL, 0 /* int */ },
-    { "domain", XDR_INT, NULL, 0 /* int */ },
-    { "message", XDR_POINTER, &remote_nonnull_string_def, 0 /* remote_string */ },
-    { "level", XDR_INT, NULL, 0 /* int */ },
-    { "dom", XDR_POINTER, &remote_nonnull_domain_def, 0 /* remote_domain */ },
-    { "str1", XDR_POINTER, &remote_nonnull_string_def, 0 /* remote_string */ },
-    { "str2", XDR_POINTER, &remote_nonnull_string_def, 0 /* remote_string */ },
-    { "str3", XDR_POINTER, &remote_nonnull_string_def, 0 /* remote_string */ },
-    { "int1", XDR_INT, NULL, 0 /* int */ },
-    { "int2", XDR_INT, NULL, 0 /* int */ },
-    { "net", XDR_POINTER, &remote_nonnull_network_def, 0 /* remote_network */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t enum_remote_auth_type_members_def[] = {
-    { "REMOTE_AUTH_NONE", XDR_INT, 0, 0 },
-    { "REMOTE_AUTH_SASL", XDR_INT, 0, 1 },
-    { "REMOTE_AUTH_POLKIT", XDR_INT, 0, 2 },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_xdrdef_t remote_auth_type_def = {
-    XDR_ENUM, enum_remote_auth_type_members_def, 0 /* remote_auth_type */
-};
-static vir_named_xdrdef_t struct_remote_vcpu_info_members_def[] = {
-    { "number", XDR_UINT, NULL, 0 /* uint */ },
-    { "state", XDR_INT, NULL, 0 /* int */ },
-    { "cpu_time", XDR_UHYPER, NULL, 0 /* uhyper */ },
-    { "cpu", XDR_INT, NULL, 0 /* int */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_xdrdef_t remote_vcpu_info_def = {
-    XDR_STRUCT, struct_remote_vcpu_info_members_def, 0 /* remote_vcpu_info */
-};
-static const int union_remote_typed_param_value_members_branch_values_def[] = {
-    VIR_TYPED_PARAM_INT,
-    VIR_TYPED_PARAM_UINT,
-    VIR_TYPED_PARAM_LLONG,
-    VIR_TYPED_PARAM_ULLONG,
-    VIR_TYPED_PARAM_DOUBLE,
-    VIR_TYPED_PARAM_BOOLEAN,
-    VIR_TYPED_PARAM_STRING,
-};
-static vir_named_xdrdef_t union_remote_typed_param_value_members_def[] = {
-    { "type", XDR_INT, xdr_int, sizeof(int) },
-    { "i", XDR_INT, &int_def, (uintptr_t)union_remote_typed_param_value_members_branch_values_def+0 },
-    { "ui", XDR_INT, &uint_def, (uintptr_t)union_remote_typed_param_value_members_branch_values_def+1 },
-    { "l", XDR_INT, &hyper_def, (uintptr_t)union_remote_typed_param_value_members_branch_values_def+2 },
-    { "ul", XDR_INT, &uhyper_def, (uintptr_t)union_remote_typed_param_value_members_branch_values_def+3 },
-    { "d", XDR_INT, &double_def, (uintptr_t)union_remote_typed_param_value_members_branch_values_def+4 },
-    { "b", XDR_INT, &int_def, (uintptr_t)union_remote_typed_param_value_members_branch_values_def+5 },
-    { "s", XDR_INT, &remote_nonnull_string_def, (uintptr_t)union_remote_typed_param_value_members_branch_values_def+6 },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_typed_param_members_def[] = {
-    { "field", XDR_STRING, 0, REMOTE_STRING_MAX /* remote_nonnull_string */ },
-    { "value", XDR_UNION, union_remote_typed_param_value_members_def, 0 /* remote_typed_param_value */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_xdrdef_t remote_typed_param_def = {
-    XDR_STRUCT, struct_remote_typed_param_members_def, 0 /* remote_typed_param */
-};
-static vir_named_xdrdef_t struct_remote_node_get_cpu_stats_members_def[] = {
-    { "field", XDR_STRING, 0, REMOTE_STRING_MAX /* remote_nonnull_string */ },
-    { "value", XDR_UHYPER, NULL, 0 /* uhyper */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_xdrdef_t remote_node_get_cpu_stats_def = {
-    XDR_STRUCT, struct_remote_node_get_cpu_stats_members_def, 0 /* remote_node_get_cpu_stats */
-};
-static vir_named_xdrdef_t struct_remote_node_get_memory_stats_members_def[] = {
-    { "field", XDR_STRING, 0, REMOTE_STRING_MAX /* remote_nonnull_string */ },
-    { "value", XDR_UHYPER, NULL, 0 /* uhyper */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_xdrdef_t remote_node_get_memory_stats_def = {
-    XDR_STRUCT, struct_remote_node_get_memory_stats_members_def, 0 /* remote_node_get_memory_stats */
-};
-static vir_named_xdrdef_t struct_remote_domain_disk_error_members_def[] = {
-    { "disk", XDR_STRING, 0, REMOTE_STRING_MAX /* remote_nonnull_string */ },
-    { "error", XDR_INT, NULL, 0 /* int */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_xdrdef_t remote_domain_disk_error_def = {
-    XDR_STRUCT, struct_remote_domain_disk_error_members_def, 0 /* remote_domain_disk_error */
-};
-static vir_named_xdrdef_t struct_remote_connect_open_args_members_def[] = {
-    { "name", XDR_POINTER, &remote_nonnull_string_def, 0 /* remote_string */ },
-    { "flags", XDR_UINT, NULL, 0 /* uint */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_connect_supports_feature_args_members_def[] = {
-    { "feature", XDR_INT, NULL, 0 /* int */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_connect_supports_feature_ret_members_def[] = {
-    { "supported", XDR_INT, NULL, 0 /* int */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_connect_get_type_ret_members_def[] = {
-    { "type", XDR_INT, NULL, 0 /* int */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_connect_get_version_ret_members_def[] = {
-    { "hv_ver", XDR_UHYPER, NULL, 0 /* uhyper */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_connect_get_lib_version_ret_members_def[] = {
-    { "lib_ver", XDR_UHYPER, NULL, 0 /* uhyper */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_connect_get_hostname_ret_members_def[] = {
-    { "hostname", XDR_STRING, 0, REMOTE_STRING_MAX /* remote_nonnull_string */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_connect_get_sysinfo_args_members_def[] = {
-    { "flags", XDR_UINT, NULL, 0 /* uint */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_connect_get_sysinfo_ret_members_def[] = {
-    { "sysinfo", XDR_STRING, 0, REMOTE_STRING_MAX /* remote_nonnull_string */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_connect_get_uri_ret_members_def[] = {
-    { "uri", XDR_STRING, 0, REMOTE_STRING_MAX /* remote_nonnull_string */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_connect_get_max_vcpus_args_members_def[] = {
-    { "type", XDR_INT, NULL, 0 /* int */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_connect_get_max_vcpus_ret_members_def[] = {
-    { "max_vcpus", XDR_INT, NULL, 0 /* int */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_node_get_info_ret_members_def[] = {
-    { "model", XDR_VECTOR, &char_def, 32 /* remote_node_get_info_ret_ANON_0 */ },
-    { "memory", XDR_UHYPER, NULL, 0 /* uhyper */ },
-    { "cpus", XDR_INT, NULL, 0 /* int */ },
-    { "mhz", XDR_INT, NULL, 0 /* int */ },
-    { "nodes", XDR_INT, NULL, 0 /* int */ },
-    { "sockets", XDR_INT, NULL, 0 /* int */ },
-    { "cores", XDR_INT, NULL, 0 /* int */ },
-    { "threads", XDR_INT, NULL, 0 /* int */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_connect_get_capabilities_ret_members_def[] = {
-    { "capabilities", XDR_STRING, 0, REMOTE_STRING_MAX /* remote_nonnull_string */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_node_get_cpu_stats_args_members_def[] = {
-    { "cpuNum", XDR_INT, NULL, 0 /* int */ },
-    { "nparams", XDR_INT, NULL, 0 /* int */ },
-    { "flags", XDR_UINT, NULL, 0 /* uint */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_node_get_cpu_stats_ret_members_def[] = {
-    { "params", XDR_ARRAY, &remote_node_get_cpu_stats_def, REMOTE_NODE_CPU_STATS_MAX /* remote_node_get_cpu_stats_ret_ANON_0 */ },
-    { "nparams", XDR_INT, NULL, 0 /* int */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_node_get_memory_stats_args_members_def[] = {
-    { "nparams", XDR_INT, NULL, 0 /* int */ },
-    { "cellNum", XDR_INT, NULL, 0 /* int */ },
-    { "flags", XDR_UINT, NULL, 0 /* uint */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_node_get_memory_stats_ret_members_def[] = {
-    { "params", XDR_ARRAY, &remote_node_get_memory_stats_def, REMOTE_NODE_MEMORY_STATS_MAX /* remote_node_get_memory_stats_ret_ANON_0 */ },
-    { "nparams", XDR_INT, NULL, 0 /* int */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_node_get_cells_free_memory_args_members_def[] = {
-    { "startCell", XDR_INT, NULL, 0 /* int */ },
-    { "maxcells", XDR_INT, NULL, 0 /* int */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_node_get_cells_free_memory_ret_members_def[] = {
-    { "cells", XDR_ARRAY, &uhyper_def, REMOTE_NODE_MAX_CELLS /* remote_node_get_cells_free_memory_ret_ANON_0 */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_node_get_free_memory_ret_members_def[] = {
-    { "freeMem", XDR_UHYPER, NULL, 0 /* uhyper */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_get_scheduler_type_args_members_def[] = {
-    { "dom", XDR_STRUCT, struct_remote_nonnull_domain_members_def, 0 /* remote_nonnull_domain */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_get_scheduler_type_ret_members_def[] = {
-    { "type", XDR_INT, NULL, 0 /* int */ },
-    { "nparams", XDR_INT, NULL, 0 /* int */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_get_scheduler_parameters_args_members_def[] = {
-    { "dom", XDR_STRUCT, struct_remote_nonnull_domain_members_def, 0 /* remote_nonnull_domain */ },
-    { "nparams", XDR_INT, NULL, 0 /* int */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_get_scheduler_parameters_ret_members_def[] = {
-    { "params", XDR_ARRAY, &remote_typed_param_def, REMOTE_DOMAIN_SCHEDULER_PARAMETERS_MAX /* remote_domain_get_scheduler_parameters_ret_ANON_0 */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_get_scheduler_parameters_flags_args_members_def[] = {
-    { "dom", XDR_STRUCT, struct_remote_nonnull_domain_members_def, 0 /* remote_nonnull_domain */ },
-    { "nparams", XDR_INT, NULL, 0 /* int */ },
-    { "flags", XDR_UINT, NULL, 0 /* uint */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_get_scheduler_parameters_flags_ret_members_def[] = {
-    { "params", XDR_ARRAY, &remote_typed_param_def, REMOTE_DOMAIN_SCHEDULER_PARAMETERS_MAX /* remote_domain_get_scheduler_parameters_flags_ret_ANON_0 */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_set_scheduler_parameters_args_members_def[] = {
-    { "dom", XDR_STRUCT, struct_remote_nonnull_domain_members_def, 0 /* remote_nonnull_domain */ },
-    { "params", XDR_ARRAY, &remote_typed_param_def, REMOTE_DOMAIN_SCHEDULER_PARAMETERS_MAX /* remote_domain_set_scheduler_parameters_args_ANON_0 */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_set_scheduler_parameters_flags_args_members_def[] = {
-    { "dom", XDR_STRUCT, struct_remote_nonnull_domain_members_def, 0 /* remote_nonnull_domain */ },
-    { "params", XDR_ARRAY, &remote_typed_param_def, REMOTE_DOMAIN_SCHEDULER_PARAMETERS_MAX /* remote_domain_set_scheduler_parameters_flags_args_ANON_0 */ },
-    { "flags", XDR_UINT, NULL, 0 /* uint */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_set_blkio_parameters_args_members_def[] = {
-    { "dom", XDR_STRUCT, struct_remote_nonnull_domain_members_def, 0 /* remote_nonnull_domain */ },
-    { "params", XDR_ARRAY, &remote_typed_param_def, REMOTE_DOMAIN_BLKIO_PARAMETERS_MAX /* remote_domain_set_blkio_parameters_args_ANON_0 */ },
-    { "flags", XDR_UINT, NULL, 0 /* uint */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_get_blkio_parameters_args_members_def[] = {
-    { "dom", XDR_STRUCT, struct_remote_nonnull_domain_members_def, 0 /* remote_nonnull_domain */ },
-    { "nparams", XDR_INT, NULL, 0 /* int */ },
-    { "flags", XDR_UINT, NULL, 0 /* uint */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_get_blkio_parameters_ret_members_def[] = {
-    { "params", XDR_ARRAY, &remote_typed_param_def, REMOTE_DOMAIN_BLKIO_PARAMETERS_MAX /* remote_domain_get_blkio_parameters_ret_ANON_0 */ },
-    { "nparams", XDR_INT, NULL, 0 /* int */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_set_memory_parameters_args_members_def[] = {
-    { "dom", XDR_STRUCT, struct_remote_nonnull_domain_members_def, 0 /* remote_nonnull_domain */ },
-    { "params", XDR_ARRAY, &remote_typed_param_def, REMOTE_DOMAIN_MEMORY_PARAMETERS_MAX /* remote_domain_set_memory_parameters_args_ANON_0 */ },
-    { "flags", XDR_UINT, NULL, 0 /* uint */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_get_memory_parameters_args_members_def[] = {
-    { "dom", XDR_STRUCT, struct_remote_nonnull_domain_members_def, 0 /* remote_nonnull_domain */ },
-    { "nparams", XDR_INT, NULL, 0 /* int */ },
-    { "flags", XDR_UINT, NULL, 0 /* uint */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_get_memory_parameters_ret_members_def[] = {
-    { "params", XDR_ARRAY, &remote_typed_param_def, REMOTE_DOMAIN_MEMORY_PARAMETERS_MAX /* remote_domain_get_memory_parameters_ret_ANON_0 */ },
-    { "nparams", XDR_INT, NULL, 0 /* int */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_block_resize_args_members_def[] = {
-    { "dom", XDR_STRUCT, struct_remote_nonnull_domain_members_def, 0 /* remote_nonnull_domain */ },
-    { "disk", XDR_STRING, 0, REMOTE_STRING_MAX /* remote_nonnull_string */ },
-    { "size", XDR_UHYPER, NULL, 0 /* uhyper */ },
-    { "flags", XDR_UINT, NULL, 0 /* uint */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_set_numa_parameters_args_members_def[] = {
-    { "dom", XDR_STRUCT, struct_remote_nonnull_domain_members_def, 0 /* remote_nonnull_domain */ },
-    { "params", XDR_ARRAY, &remote_typed_param_def, REMOTE_DOMAIN_NUMA_PARAMETERS_MAX /* remote_domain_set_numa_parameters_args_ANON_0 */ },
-    { "flags", XDR_UINT, NULL, 0 /* uint */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_get_numa_parameters_args_members_def[] = {
-    { "dom", XDR_STRUCT, struct_remote_nonnull_domain_members_def, 0 /* remote_nonnull_domain */ },
-    { "nparams", XDR_INT, NULL, 0 /* int */ },
-    { "flags", XDR_UINT, NULL, 0 /* uint */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_get_numa_parameters_ret_members_def[] = {
-    { "params", XDR_ARRAY, &remote_typed_param_def, REMOTE_DOMAIN_NUMA_PARAMETERS_MAX /* remote_domain_get_numa_parameters_ret_ANON_0 */ },
-    { "nparams", XDR_INT, NULL, 0 /* int */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_block_stats_args_members_def[] = {
-    { "dom", XDR_STRUCT, struct_remote_nonnull_domain_members_def, 0 /* remote_nonnull_domain */ },
-    { "path", XDR_STRING, 0, REMOTE_STRING_MAX /* remote_nonnull_string */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_block_stats_ret_members_def[] = {
-    { "rd_req", XDR_HYPER, NULL, 0 /* hyper */ },
-    { "rd_bytes", XDR_HYPER, NULL, 0 /* hyper */ },
-    { "wr_req", XDR_HYPER, NULL, 0 /* hyper */ },
-    { "wr_bytes", XDR_HYPER, NULL, 0 /* hyper */ },
-    { "errs", XDR_HYPER, NULL, 0 /* hyper */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_block_stats_flags_args_members_def[] = {
-    { "dom", XDR_STRUCT, struct_remote_nonnull_domain_members_def, 0 /* remote_nonnull_domain */ },
-    { "path", XDR_STRING, 0, REMOTE_STRING_MAX /* remote_nonnull_string */ },
-    { "nparams", XDR_INT, NULL, 0 /* int */ },
-    { "flags", XDR_UINT, NULL, 0 /* uint */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_block_stats_flags_ret_members_def[] = {
-    { "params", XDR_ARRAY, &remote_typed_param_def, REMOTE_DOMAIN_BLOCK_STATS_PARAMETERS_MAX /* remote_domain_block_stats_flags_ret_ANON_0 */ },
-    { "nparams", XDR_INT, NULL, 0 /* int */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_interface_stats_args_members_def[] = {
-    { "dom", XDR_STRUCT, struct_remote_nonnull_domain_members_def, 0 /* remote_nonnull_domain */ },
-    { "path", XDR_STRING, 0, REMOTE_STRING_MAX /* remote_nonnull_string */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_interface_stats_ret_members_def[] = {
-    { "rx_bytes", XDR_HYPER, NULL, 0 /* hyper */ },
-    { "rx_packets", XDR_HYPER, NULL, 0 /* hyper */ },
-    { "rx_errs", XDR_HYPER, NULL, 0 /* hyper */ },
-    { "rx_drop", XDR_HYPER, NULL, 0 /* hyper */ },
-    { "tx_bytes", XDR_HYPER, NULL, 0 /* hyper */ },
-    { "tx_packets", XDR_HYPER, NULL, 0 /* hyper */ },
-    { "tx_errs", XDR_HYPER, NULL, 0 /* hyper */ },
-    { "tx_drop", XDR_HYPER, NULL, 0 /* hyper */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_set_interface_parameters_args_members_def[] = {
-    { "dom", XDR_STRUCT, struct_remote_nonnull_domain_members_def, 0 /* remote_nonnull_domain */ },
-    { "device", XDR_STRING, 0, REMOTE_STRING_MAX /* remote_nonnull_string */ },
-    { "params", XDR_ARRAY, &remote_typed_param_def, REMOTE_DOMAIN_INTERFACE_PARAMETERS_MAX /* remote_domain_set_interface_parameters_args_ANON_0 */ },
-    { "flags", XDR_UINT, NULL, 0 /* uint */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_get_interface_parameters_args_members_def[] = {
-    { "dom", XDR_STRUCT, struct_remote_nonnull_domain_members_def, 0 /* remote_nonnull_domain */ },
-    { "device", XDR_STRING, 0, REMOTE_STRING_MAX /* remote_nonnull_string */ },
-    { "nparams", XDR_INT, NULL, 0 /* int */ },
-    { "flags", XDR_UINT, NULL, 0 /* uint */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_get_interface_parameters_ret_members_def[] = {
-    { "params", XDR_ARRAY, &remote_typed_param_def, REMOTE_DOMAIN_INTERFACE_PARAMETERS_MAX /* remote_domain_get_interface_parameters_ret_ANON_0 */ },
-    { "nparams", XDR_INT, NULL, 0 /* int */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_memory_stats_args_members_def[] = {
-    { "dom", XDR_STRUCT, struct_remote_nonnull_domain_members_def, 0 /* remote_nonnull_domain */ },
-    { "maxStats", XDR_UINT, NULL, 0 /* uint */ },
-    { "flags", XDR_UINT, NULL, 0 /* uint */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_memory_stat_members_def[] = {
-    { "tag", XDR_INT, NULL, 0 /* int */ },
-    { "val", XDR_UHYPER, NULL, 0 /* uhyper */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_xdrdef_t remote_domain_memory_stat_def = {
-    XDR_STRUCT, struct_remote_domain_memory_stat_members_def, 0 /* remote_domain_memory_stat */
-};
-static vir_named_xdrdef_t struct_remote_domain_memory_stats_ret_members_def[] = {
-    { "stats", XDR_ARRAY, &remote_domain_memory_stat_def, REMOTE_DOMAIN_MEMORY_STATS_MAX /* remote_domain_memory_stats_ret_ANON_0 */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_block_peek_args_members_def[] = {
-    { "dom", XDR_STRUCT, struct_remote_nonnull_domain_members_def, 0 /* remote_nonnull_domain */ },
-    { "path", XDR_STRING, 0, REMOTE_STRING_MAX /* remote_nonnull_string */ },
-    { "offset", XDR_UHYPER, NULL, 0 /* uhyper */ },
-    { "size", XDR_UINT, NULL, 0 /* uint */ },
-    { "flags", XDR_UINT, NULL, 0 /* uint */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_block_peek_ret_members_def[] = {
-    { "buffer", XDR_BYTES, 0, REMOTE_DOMAIN_BLOCK_PEEK_BUFFER_MAX /* remote_domain_block_peek_ret_ANON_0 */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_memory_peek_args_members_def[] = {
-    { "dom", XDR_STRUCT, struct_remote_nonnull_domain_members_def, 0 /* remote_nonnull_domain */ },
-    { "offset", XDR_UHYPER, NULL, 0 /* uhyper */ },
-    { "size", XDR_UINT, NULL, 0 /* uint */ },
-    { "flags", XDR_UINT, NULL, 0 /* uint */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_memory_peek_ret_members_def[] = {
-    { "buffer", XDR_BYTES, 0, REMOTE_DOMAIN_MEMORY_PEEK_BUFFER_MAX /* remote_domain_memory_peek_ret_ANON_0 */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_get_block_info_args_members_def[] = {
-    { "dom", XDR_STRUCT, struct_remote_nonnull_domain_members_def, 0 /* remote_nonnull_domain */ },
-    { "path", XDR_STRING, 0, REMOTE_STRING_MAX /* remote_nonnull_string */ },
-    { "flags", XDR_UINT, NULL, 0 /* uint */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_get_block_info_ret_members_def[] = {
-    { "allocation", XDR_UHYPER, NULL, 0 /* uhyper */ },
-    { "capacity", XDR_UHYPER, NULL, 0 /* uhyper */ },
-    { "physical", XDR_UHYPER, NULL, 0 /* uhyper */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_connect_list_domains_args_members_def[] = {
-    { "maxids", XDR_INT, NULL, 0 /* int */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_connect_list_domains_ret_members_def[] = {
-    { "ids", XDR_ARRAY, &int_def, REMOTE_DOMAIN_ID_LIST_MAX /* remote_connect_list_domains_ret_ANON_0 */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_connect_num_of_domains_ret_members_def[] = {
-    { "num", XDR_INT, NULL, 0 /* int */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_create_xml_args_members_def[] = {
-    { "xml_desc", XDR_STRING, 0, REMOTE_STRING_MAX /* remote_nonnull_string */ },
-    { "flags", XDR_UINT, NULL, 0 /* uint */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_create_xml_ret_members_def[] = {
-    { "dom", XDR_STRUCT, struct_remote_nonnull_domain_members_def, 0 /* remote_nonnull_domain */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_lookup_by_id_args_members_def[] = {
-    { "id", XDR_INT, NULL, 0 /* int */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_lookup_by_id_ret_members_def[] = {
-    { "dom", XDR_STRUCT, struct_remote_nonnull_domain_members_def, 0 /* remote_nonnull_domain */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_lookup_by_uuid_args_members_def[] = {
-    { "uuid", XDR_OPAQUE, 0, VIR_UUID_BUFLEN /* remote_uuid */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_lookup_by_uuid_ret_members_def[] = {
-    { "dom", XDR_STRUCT, struct_remote_nonnull_domain_members_def, 0 /* remote_nonnull_domain */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_lookup_by_name_args_members_def[] = {
-    { "name", XDR_STRING, 0, REMOTE_STRING_MAX /* remote_nonnull_string */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_lookup_by_name_ret_members_def[] = {
-    { "dom", XDR_STRUCT, struct_remote_nonnull_domain_members_def, 0 /* remote_nonnull_domain */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_suspend_args_members_def[] = {
-    { "dom", XDR_STRUCT, struct_remote_nonnull_domain_members_def, 0 /* remote_nonnull_domain */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_resume_args_members_def[] = {
-    { "dom", XDR_STRUCT, struct_remote_nonnull_domain_members_def, 0 /* remote_nonnull_domain */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_pm_suspend_for_duration_args_members_def[] = {
-    { "dom", XDR_STRUCT, struct_remote_nonnull_domain_members_def, 0 /* remote_nonnull_domain */ },
-    { "target", XDR_UINT, NULL, 0 /* uint */ },
-    { "duration", XDR_UHYPER, NULL, 0 /* uhyper */ },
-    { "flags", XDR_UINT, NULL, 0 /* uint */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_pm_wakeup_args_members_def[] = {
-    { "dom", XDR_STRUCT, struct_remote_nonnull_domain_members_def, 0 /* remote_nonnull_domain */ },
-    { "flags", XDR_UINT, NULL, 0 /* uint */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_shutdown_args_members_def[] = {
-    { "dom", XDR_STRUCT, struct_remote_nonnull_domain_members_def, 0 /* remote_nonnull_domain */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_reboot_args_members_def[] = {
-    { "dom", XDR_STRUCT, struct_remote_nonnull_domain_members_def, 0 /* remote_nonnull_domain */ },
-    { "flags", XDR_UINT, NULL, 0 /* uint */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_reset_args_members_def[] = {
-    { "dom", XDR_STRUCT, struct_remote_nonnull_domain_members_def, 0 /* remote_nonnull_domain */ },
-    { "flags", XDR_UINT, NULL, 0 /* uint */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_destroy_args_members_def[] = {
-    { "dom", XDR_STRUCT, struct_remote_nonnull_domain_members_def, 0 /* remote_nonnull_domain */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_destroy_flags_args_members_def[] = {
-    { "dom", XDR_STRUCT, struct_remote_nonnull_domain_members_def, 0 /* remote_nonnull_domain */ },
-    { "flags", XDR_UINT, NULL, 0 /* uint */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_get_os_type_args_members_def[] = {
-    { "dom", XDR_STRUCT, struct_remote_nonnull_domain_members_def, 0 /* remote_nonnull_domain */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_get_os_type_ret_members_def[] = {
-    { "type", XDR_INT, NULL, 0 /* int */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_get_max_memory_args_members_def[] = {
-    { "dom", XDR_STRUCT, struct_remote_nonnull_domain_members_def, 0 /* remote_nonnull_domain */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_get_max_memory_ret_members_def[] = {
-    { "memory", XDR_UHYPER, NULL, 0 /* uhyper */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_set_max_memory_args_members_def[] = {
-    { "dom", XDR_STRUCT, struct_remote_nonnull_domain_members_def, 0 /* remote_nonnull_domain */ },
-    { "memory", XDR_UHYPER, NULL, 0 /* uhyper */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_set_memory_args_members_def[] = {
-    { "dom", XDR_STRUCT, struct_remote_nonnull_domain_members_def, 0 /* remote_nonnull_domain */ },
-    { "memory", XDR_UHYPER, NULL, 0 /* uhyper */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_set_memory_flags_args_members_def[] = {
-    { "dom", XDR_STRUCT, struct_remote_nonnull_domain_members_def, 0 /* remote_nonnull_domain */ },
-    { "memory", XDR_UHYPER, NULL, 0 /* uhyper */ },
-    { "flags", XDR_UINT, NULL, 0 /* uint */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_get_info_args_members_def[] = {
-    { "dom", XDR_STRUCT, struct_remote_nonnull_domain_members_def, 0 /* remote_nonnull_domain */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_get_info_ret_members_def[] = {
-    { "state", XDR_UCHAR, NULL, 0 /* uchar */ },
-    { "maxMem", XDR_UHYPER, NULL, 0 /* uhyper */ },
-    { "memory", XDR_UHYPER, NULL, 0 /* uhyper */ },
-    { "nrVirtCpu", XDR_USHORT, NULL, 0 /* ushort */ },
-    { "cpuTime", XDR_UHYPER, NULL, 0 /* uhyper */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_save_args_members_def[] = {
-    { "dom", XDR_STRUCT, struct_remote_nonnull_domain_members_def, 0 /* remote_nonnull_domain */ },
-    { "to", XDR_STRING, 0, REMOTE_STRING_MAX /* remote_nonnull_string */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_save_flags_args_members_def[] = {
-    { "dom", XDR_STRUCT, struct_remote_nonnull_domain_members_def, 0 /* remote_nonnull_domain */ },
-    { "to", XDR_STRING, 0, REMOTE_STRING_MAX /* remote_nonnull_string */ },
-    { "dxml", XDR_POINTER, &remote_nonnull_string_def, 0 /* remote_string */ },
-    { "flags", XDR_UINT, NULL, 0 /* uint */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_restore_args_members_def[] = {
-    { "from", XDR_STRING, 0, REMOTE_STRING_MAX /* remote_nonnull_string */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_restore_flags_args_members_def[] = {
-    { "from", XDR_STRING, 0, REMOTE_STRING_MAX /* remote_nonnull_string */ },
-    { "dxml", XDR_POINTER, &remote_nonnull_string_def, 0 /* remote_string */ },
-    { "flags", XDR_UINT, NULL, 0 /* uint */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_save_image_get_xml_desc_args_members_def[] = {
-    { "file", XDR_STRING, 0, REMOTE_STRING_MAX /* remote_nonnull_string */ },
-    { "flags", XDR_UINT, NULL, 0 /* uint */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_save_image_get_xml_desc_ret_members_def[] = {
-    { "xml", XDR_STRING, 0, REMOTE_STRING_MAX /* remote_nonnull_string */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_save_image_define_xml_args_members_def[] = {
-    { "file", XDR_STRING, 0, REMOTE_STRING_MAX /* remote_nonnull_string */ },
-    { "dxml", XDR_STRING, 0, REMOTE_STRING_MAX /* remote_nonnull_string */ },
-    { "flags", XDR_UINT, NULL, 0 /* uint */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_core_dump_args_members_def[] = {
-    { "dom", XDR_STRUCT, struct_remote_nonnull_domain_members_def, 0 /* remote_nonnull_domain */ },
-    { "to", XDR_STRING, 0, REMOTE_STRING_MAX /* remote_nonnull_string */ },
-    { "flags", XDR_UINT, NULL, 0 /* uint */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_screenshot_args_members_def[] = {
-    { "dom", XDR_STRUCT, struct_remote_nonnull_domain_members_def, 0 /* remote_nonnull_domain */ },
-    { "screen", XDR_UINT, NULL, 0 /* uint */ },
-    { "flags", XDR_UINT, NULL, 0 /* uint */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_screenshot_ret_members_def[] = {
-    { "mime", XDR_POINTER, &remote_nonnull_string_def, 0 /* remote_string */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_get_xml_desc_args_members_def[] = {
-    { "dom", XDR_STRUCT, struct_remote_nonnull_domain_members_def, 0 /* remote_nonnull_domain */ },
-    { "flags", XDR_UINT, NULL, 0 /* uint */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_get_xml_desc_ret_members_def[] = {
-    { "xml", XDR_STRING, 0, REMOTE_STRING_MAX /* remote_nonnull_string */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_migrate_prepare_args_members_def[] = {
-    { "uri_in", XDR_POINTER, &remote_nonnull_string_def, 0 /* remote_string */ },
-    { "flags", XDR_UHYPER, NULL, 0 /* uhyper */ },
-    { "dname", XDR_POINTER, &remote_nonnull_string_def, 0 /* remote_string */ },
-    { "resource", XDR_UHYPER, NULL, 0 /* uhyper */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_migrate_prepare_ret_members_def[] = {
-    { "cookie", XDR_BYTES, 0, REMOTE_MIGRATE_COOKIE_MAX /* remote_domain_migrate_prepare_ret_ANON_0 */ },
-    { "uri_out", XDR_POINTER, &remote_nonnull_string_def, 0 /* remote_string */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_migrate_perform_args_members_def[] = {
-    { "dom", XDR_STRUCT, struct_remote_nonnull_domain_members_def, 0 /* remote_nonnull_domain */ },
-    { "cookie", XDR_BYTES, 0, REMOTE_MIGRATE_COOKIE_MAX /* remote_domain_migrate_perform_args_ANON_0 */ },
-    { "uri", XDR_STRING, 0, REMOTE_STRING_MAX /* remote_nonnull_string */ },
-    { "flags", XDR_UHYPER, NULL, 0 /* uhyper */ },
-    { "dname", XDR_POINTER, &remote_nonnull_string_def, 0 /* remote_string */ },
-    { "resource", XDR_UHYPER, NULL, 0 /* uhyper */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_migrate_finish_args_members_def[] = {
-    { "dname", XDR_STRING, 0, REMOTE_STRING_MAX /* remote_nonnull_string */ },
-    { "cookie", XDR_BYTES, 0, REMOTE_MIGRATE_COOKIE_MAX /* remote_domain_migrate_finish_args_ANON_0 */ },
-    { "uri", XDR_STRING, 0, REMOTE_STRING_MAX /* remote_nonnull_string */ },
-    { "flags", XDR_UHYPER, NULL, 0 /* uhyper */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_migrate_finish_ret_members_def[] = {
-    { "ddom", XDR_STRUCT, struct_remote_nonnull_domain_members_def, 0 /* remote_nonnull_domain */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_migrate_prepare2_args_members_def[] = {
-    { "uri_in", XDR_POINTER, &remote_nonnull_string_def, 0 /* remote_string */ },
-    { "flags", XDR_UHYPER, NULL, 0 /* uhyper */ },
-    { "dname", XDR_POINTER, &remote_nonnull_string_def, 0 /* remote_string */ },
-    { "resource", XDR_UHYPER, NULL, 0 /* uhyper */ },
-    { "dom_xml", XDR_STRING, 0, REMOTE_STRING_MAX /* remote_nonnull_string */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_migrate_prepare2_ret_members_def[] = {
-    { "cookie", XDR_BYTES, 0, REMOTE_MIGRATE_COOKIE_MAX /* remote_domain_migrate_prepare2_ret_ANON_0 */ },
-    { "uri_out", XDR_POINTER, &remote_nonnull_string_def, 0 /* remote_string */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_migrate_finish2_args_members_def[] = {
-    { "dname", XDR_STRING, 0, REMOTE_STRING_MAX /* remote_nonnull_string */ },
-    { "cookie", XDR_BYTES, 0, REMOTE_MIGRATE_COOKIE_MAX /* remote_domain_migrate_finish2_args_ANON_0 */ },
-    { "uri", XDR_STRING, 0, REMOTE_STRING_MAX /* remote_nonnull_string */ },
-    { "flags", XDR_UHYPER, NULL, 0 /* uhyper */ },
-    { "retcode", XDR_INT, NULL, 0 /* int */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_migrate_finish2_ret_members_def[] = {
-    { "ddom", XDR_STRUCT, struct_remote_nonnull_domain_members_def, 0 /* remote_nonnull_domain */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_connect_list_defined_domains_args_members_def[] = {
-    { "maxnames", XDR_INT, NULL, 0 /* int */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_connect_list_defined_domains_ret_members_def[] = {
-    { "names", XDR_ARRAY, &remote_nonnull_string_def, REMOTE_DOMAIN_NAME_LIST_MAX /* remote_connect_list_defined_domains_ret_ANON_0 */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_connect_num_of_defined_domains_ret_members_def[] = {
-    { "num", XDR_INT, NULL, 0 /* int */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_create_args_members_def[] = {
-    { "dom", XDR_STRUCT, struct_remote_nonnull_domain_members_def, 0 /* remote_nonnull_domain */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_create_with_flags_args_members_def[] = {
-    { "dom", XDR_STRUCT, struct_remote_nonnull_domain_members_def, 0 /* remote_nonnull_domain */ },
-    { "flags", XDR_UINT, NULL, 0 /* uint */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_create_with_flags_ret_members_def[] = {
-    { "dom", XDR_STRUCT, struct_remote_nonnull_domain_members_def, 0 /* remote_nonnull_domain */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_define_xml_args_members_def[] = {
-    { "xml", XDR_STRING, 0, REMOTE_STRING_MAX /* remote_nonnull_string */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_define_xml_ret_members_def[] = {
-    { "dom", XDR_STRUCT, struct_remote_nonnull_domain_members_def, 0 /* remote_nonnull_domain */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_undefine_args_members_def[] = {
-    { "dom", XDR_STRUCT, struct_remote_nonnull_domain_members_def, 0 /* remote_nonnull_domain */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_undefine_flags_args_members_def[] = {
-    { "dom", XDR_STRUCT, struct_remote_nonnull_domain_members_def, 0 /* remote_nonnull_domain */ },
-    { "flags", XDR_UINT, NULL, 0 /* uint */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_inject_nmi_args_members_def[] = {
-    { "dom", XDR_STRUCT, struct_remote_nonnull_domain_members_def, 0 /* remote_nonnull_domain */ },
-    { "flags", XDR_UINT, NULL, 0 /* uint */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_send_key_args_members_def[] = {
-    { "dom", XDR_STRUCT, struct_remote_nonnull_domain_members_def, 0 /* remote_nonnull_domain */ },
-    { "codeset", XDR_UINT, NULL, 0 /* uint */ },
-    { "holdtime", XDR_UINT, NULL, 0 /* uint */ },
-    { "keycodes", XDR_ARRAY, &uint_def, REMOTE_DOMAIN_SEND_KEY_MAX /* remote_domain_send_key_args_ANON_0 */ },
-    { "flags", XDR_UINT, NULL, 0 /* uint */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_send_process_signal_args_members_def[] = {
-    { "dom", XDR_STRUCT, struct_remote_nonnull_domain_members_def, 0 /* remote_nonnull_domain */ },
-    { "pid_value", XDR_HYPER, NULL, 0 /* hyper */ },
-    { "signum", XDR_UINT, NULL, 0 /* uint */ },
-    { "flags", XDR_UINT, NULL, 0 /* uint */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_set_vcpus_args_members_def[] = {
-    { "dom", XDR_STRUCT, struct_remote_nonnull_domain_members_def, 0 /* remote_nonnull_domain */ },
-    { "nvcpus", XDR_UINT, NULL, 0 /* uint */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_set_vcpus_flags_args_members_def[] = {
-    { "dom", XDR_STRUCT, struct_remote_nonnull_domain_members_def, 0 /* remote_nonnull_domain */ },
-    { "nvcpus", XDR_UINT, NULL, 0 /* uint */ },
-    { "flags", XDR_UINT, NULL, 0 /* uint */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_get_vcpus_flags_args_members_def[] = {
-    { "dom", XDR_STRUCT, struct_remote_nonnull_domain_members_def, 0 /* remote_nonnull_domain */ },
-    { "flags", XDR_UINT, NULL, 0 /* uint */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_get_vcpus_flags_ret_members_def[] = {
-    { "num", XDR_INT, NULL, 0 /* int */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_pin_vcpu_args_members_def[] = {
-    { "dom", XDR_STRUCT, struct_remote_nonnull_domain_members_def, 0 /* remote_nonnull_domain */ },
-    { "vcpu", XDR_UINT, NULL, 0 /* uint */ },
-    { "cpumap", XDR_BYTES, 0, REMOTE_CPUMAP_MAX /* remote_domain_pin_vcpu_args_ANON_0 */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_pin_vcpu_flags_args_members_def[] = {
-    { "dom", XDR_STRUCT, struct_remote_nonnull_domain_members_def, 0 /* remote_nonnull_domain */ },
-    { "vcpu", XDR_UINT, NULL, 0 /* uint */ },
-    { "cpumap", XDR_BYTES, 0, REMOTE_CPUMAP_MAX /* remote_domain_pin_vcpu_flags_args_ANON_0 */ },
-    { "flags", XDR_UINT, NULL, 0 /* uint */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_get_vcpu_pin_info_args_members_def[] = {
-    { "dom", XDR_STRUCT, struct_remote_nonnull_domain_members_def, 0 /* remote_nonnull_domain */ },
-    { "ncpumaps", XDR_INT, NULL, 0 /* int */ },
-    { "maplen", XDR_INT, NULL, 0 /* int */ },
-    { "flags", XDR_UINT, NULL, 0 /* uint */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_get_vcpu_pin_info_ret_members_def[] = {
-    { "cpumaps", XDR_BYTES, 0, REMOTE_CPUMAPS_MAX /* remote_domain_get_vcpu_pin_info_ret_ANON_0 */ },
-    { "num", XDR_INT, NULL, 0 /* int */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_pin_emulator_args_members_def[] = {
-    { "dom", XDR_STRUCT, struct_remote_nonnull_domain_members_def, 0 /* remote_nonnull_domain */ },
-    { "cpumap", XDR_BYTES, 0, REMOTE_CPUMAP_MAX /* remote_domain_pin_emulator_args_ANON_0 */ },
-    { "flags", XDR_UINT, NULL, 0 /* uint */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_get_emulator_pin_info_args_members_def[] = {
-    { "dom", XDR_STRUCT, struct_remote_nonnull_domain_members_def, 0 /* remote_nonnull_domain */ },
-    { "maplen", XDR_INT, NULL, 0 /* int */ },
-    { "flags", XDR_UINT, NULL, 0 /* uint */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_get_emulator_pin_info_ret_members_def[] = {
-    { "cpumaps", XDR_BYTES, 0, REMOTE_CPUMAPS_MAX /* remote_domain_get_emulator_pin_info_ret_ANON_0 */ },
-    { "ret", XDR_INT, NULL, 0 /* int */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_get_vcpus_args_members_def[] = {
-    { "dom", XDR_STRUCT, struct_remote_nonnull_domain_members_def, 0 /* remote_nonnull_domain */ },
-    { "maxinfo", XDR_INT, NULL, 0 /* int */ },
-    { "maplen", XDR_INT, NULL, 0 /* int */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_get_vcpus_ret_members_def[] = {
-    { "info", XDR_ARRAY, &remote_vcpu_info_def, REMOTE_VCPUINFO_MAX /* remote_domain_get_vcpus_ret_ANON_0 */ },
-    { "cpumaps", XDR_BYTES, 0, REMOTE_CPUMAPS_MAX /* remote_domain_get_vcpus_ret_ANON_1 */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_get_max_vcpus_args_members_def[] = {
-    { "dom", XDR_STRUCT, struct_remote_nonnull_domain_members_def, 0 /* remote_nonnull_domain */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_get_max_vcpus_ret_members_def[] = {
-    { "num", XDR_INT, NULL, 0 /* int */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_get_security_label_args_members_def[] = {
-    { "dom", XDR_STRUCT, struct_remote_nonnull_domain_members_def, 0 /* remote_nonnull_domain */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_get_security_label_ret_members_def[] = {
-    { "label", XDR_ARRAY, &char_def, REMOTE_SECURITY_LABEL_MAX /* remote_domain_get_security_label_ret_ANON_0 */ },
-    { "enforcing", XDR_INT, NULL, 0 /* int */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_xdrdef_t remote_domain_get_security_label_ret_def = {
-    XDR_STRUCT, struct_remote_domain_get_security_label_ret_members_def, 0 /* remote_domain_get_security_label_ret */
-};
-static vir_named_xdrdef_t struct_remote_domain_get_security_label_list_args_members_def[] = {
-    { "dom", XDR_STRUCT, struct_remote_nonnull_domain_members_def, 0 /* remote_nonnull_domain */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_get_security_label_list_ret_members_def[] = {
-    { "labels", XDR_ARRAY, &remote_domain_get_security_label_ret_def, REMOTE_SECURITY_LABEL_LIST_MAX /* remote_domain_get_security_label_list_ret_ANON_0 */ },
-    { "ret", XDR_INT, NULL, 0 /* int */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_node_get_security_model_ret_members_def[] = {
-    { "model", XDR_ARRAY, &char_def, REMOTE_SECURITY_MODEL_MAX /* remote_node_get_security_model_ret_ANON_0 */ },
-    { "doi", XDR_ARRAY, &char_def, REMOTE_SECURITY_DOI_MAX /* remote_node_get_security_model_ret_ANON_1 */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_attach_device_args_members_def[] = {
-    { "dom", XDR_STRUCT, struct_remote_nonnull_domain_members_def, 0 /* remote_nonnull_domain */ },
-    { "xml", XDR_STRING, 0, REMOTE_STRING_MAX /* remote_nonnull_string */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_attach_device_flags_args_members_def[] = {
-    { "dom", XDR_STRUCT, struct_remote_nonnull_domain_members_def, 0 /* remote_nonnull_domain */ },
-    { "xml", XDR_STRING, 0, REMOTE_STRING_MAX /* remote_nonnull_string */ },
-    { "flags", XDR_UINT, NULL, 0 /* uint */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_detach_device_args_members_def[] = {
-    { "dom", XDR_STRUCT, struct_remote_nonnull_domain_members_def, 0 /* remote_nonnull_domain */ },
-    { "xml", XDR_STRING, 0, REMOTE_STRING_MAX /* remote_nonnull_string */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_detach_device_flags_args_members_def[] = {
-    { "dom", XDR_STRUCT, struct_remote_nonnull_domain_members_def, 0 /* remote_nonnull_domain */ },
-    { "xml", XDR_STRING, 0, REMOTE_STRING_MAX /* remote_nonnull_string */ },
-    { "flags", XDR_UINT, NULL, 0 /* uint */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_update_device_flags_args_members_def[] = {
-    { "dom", XDR_STRUCT, struct_remote_nonnull_domain_members_def, 0 /* remote_nonnull_domain */ },
-    { "xml", XDR_STRING, 0, REMOTE_STRING_MAX /* remote_nonnull_string */ },
-    { "flags", XDR_UINT, NULL, 0 /* uint */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_get_autostart_args_members_def[] = {
-    { "dom", XDR_STRUCT, struct_remote_nonnull_domain_members_def, 0 /* remote_nonnull_domain */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_get_autostart_ret_members_def[] = {
-    { "autostart", XDR_INT, NULL, 0 /* int */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_set_autostart_args_members_def[] = {
-    { "dom", XDR_STRUCT, struct_remote_nonnull_domain_members_def, 0 /* remote_nonnull_domain */ },
-    { "autostart", XDR_INT, NULL, 0 /* int */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_set_metadata_args_members_def[] = {
-    { "dom", XDR_STRUCT, struct_remote_nonnull_domain_members_def, 0 /* remote_nonnull_domain */ },
-    { "type", XDR_INT, NULL, 0 /* int */ },
-    { "metadata", XDR_POINTER, &remote_nonnull_string_def, 0 /* remote_string */ },
-    { "key", XDR_POINTER, &remote_nonnull_string_def, 0 /* remote_string */ },
-    { "uri", XDR_POINTER, &remote_nonnull_string_def, 0 /* remote_string */ },
-    { "flags", XDR_UINT, NULL, 0 /* uint */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_get_metadata_args_members_def[] = {
-    { "dom", XDR_STRUCT, struct_remote_nonnull_domain_members_def, 0 /* remote_nonnull_domain */ },
-    { "type", XDR_INT, NULL, 0 /* int */ },
-    { "uri", XDR_POINTER, &remote_nonnull_string_def, 0 /* remote_string */ },
-    { "flags", XDR_UINT, NULL, 0 /* uint */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_get_metadata_ret_members_def[] = {
-    { "metadata", XDR_STRING, 0, REMOTE_STRING_MAX /* remote_nonnull_string */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_block_job_abort_args_members_def[] = {
-    { "dom", XDR_STRUCT, struct_remote_nonnull_domain_members_def, 0 /* remote_nonnull_domain */ },
-    { "path", XDR_STRING, 0, REMOTE_STRING_MAX /* remote_nonnull_string */ },
-    { "flags", XDR_UINT, NULL, 0 /* uint */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_get_block_job_info_args_members_def[] = {
-    { "dom", XDR_STRUCT, struct_remote_nonnull_domain_members_def, 0 /* remote_nonnull_domain */ },
-    { "path", XDR_STRING, 0, REMOTE_STRING_MAX /* remote_nonnull_string */ },
-    { "flags", XDR_UINT, NULL, 0 /* uint */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_get_block_job_info_ret_members_def[] = {
-    { "found", XDR_INT, NULL, 0 /* int */ },
-    { "type", XDR_INT, NULL, 0 /* int */ },
-    { "bandwidth", XDR_UHYPER, NULL, 0 /* uhyper */ },
-    { "cur", XDR_UHYPER, NULL, 0 /* uhyper */ },
-    { "end", XDR_UHYPER, NULL, 0 /* uhyper */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_block_job_set_speed_args_members_def[] = {
-    { "dom", XDR_STRUCT, struct_remote_nonnull_domain_members_def, 0 /* remote_nonnull_domain */ },
-    { "path", XDR_STRING, 0, REMOTE_STRING_MAX /* remote_nonnull_string */ },
-    { "bandwidth", XDR_UHYPER, NULL, 0 /* uhyper */ },
-    { "flags", XDR_UINT, NULL, 0 /* uint */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_block_pull_args_members_def[] = {
-    { "dom", XDR_STRUCT, struct_remote_nonnull_domain_members_def, 0 /* remote_nonnull_domain */ },
-    { "path", XDR_STRING, 0, REMOTE_STRING_MAX /* remote_nonnull_string */ },
-    { "bandwidth", XDR_UHYPER, NULL, 0 /* uhyper */ },
-    { "flags", XDR_UINT, NULL, 0 /* uint */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_block_rebase_args_members_def[] = {
-    { "dom", XDR_STRUCT, struct_remote_nonnull_domain_members_def, 0 /* remote_nonnull_domain */ },
-    { "path", XDR_STRING, 0, REMOTE_STRING_MAX /* remote_nonnull_string */ },
-    { "base", XDR_POINTER, &remote_nonnull_string_def, 0 /* remote_string */ },
-    { "bandwidth", XDR_UHYPER, NULL, 0 /* uhyper */ },
-    { "flags", XDR_UINT, NULL, 0 /* uint */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_block_commit_args_members_def[] = {
-    { "dom", XDR_STRUCT, struct_remote_nonnull_domain_members_def, 0 /* remote_nonnull_domain */ },
-    { "disk", XDR_STRING, 0, REMOTE_STRING_MAX /* remote_nonnull_string */ },
-    { "base", XDR_POINTER, &remote_nonnull_string_def, 0 /* remote_string */ },
-    { "top", XDR_POINTER, &remote_nonnull_string_def, 0 /* remote_string */ },
-    { "bandwidth", XDR_UHYPER, NULL, 0 /* uhyper */ },
-    { "flags", XDR_UINT, NULL, 0 /* uint */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_set_block_io_tune_args_members_def[] = {
-    { "dom", XDR_STRUCT, struct_remote_nonnull_domain_members_def, 0 /* remote_nonnull_domain */ },
-    { "disk", XDR_STRING, 0, REMOTE_STRING_MAX /* remote_nonnull_string */ },
-    { "params", XDR_ARRAY, &remote_typed_param_def, REMOTE_DOMAIN_BLOCK_IO_TUNE_PARAMETERS_MAX /* remote_domain_set_block_io_tune_args_ANON_0 */ },
-    { "flags", XDR_UINT, NULL, 0 /* uint */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_get_block_io_tune_args_members_def[] = {
-    { "dom", XDR_STRUCT, struct_remote_nonnull_domain_members_def, 0 /* remote_nonnull_domain */ },
-    { "disk", XDR_POINTER, &remote_nonnull_string_def, 0 /* remote_string */ },
-    { "nparams", XDR_INT, NULL, 0 /* int */ },
-    { "flags", XDR_UINT, NULL, 0 /* uint */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_get_block_io_tune_ret_members_def[] = {
-    { "params", XDR_ARRAY, &remote_typed_param_def, REMOTE_DOMAIN_BLOCK_IO_TUNE_PARAMETERS_MAX /* remote_domain_get_block_io_tune_ret_ANON_0 */ },
-    { "nparams", XDR_INT, NULL, 0 /* int */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_get_cpu_stats_args_members_def[] = {
-    { "dom", XDR_STRUCT, struct_remote_nonnull_domain_members_def, 0 /* remote_nonnull_domain */ },
-    { "nparams", XDR_UINT, NULL, 0 /* uint */ },
-    { "start_cpu", XDR_INT, NULL, 0 /* int */ },
-    { "ncpus", XDR_UINT, NULL, 0 /* uint */ },
-    { "flags", XDR_UINT, NULL, 0 /* uint */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_get_cpu_stats_ret_members_def[] = {
-    { "params", XDR_ARRAY, &remote_typed_param_def, REMOTE_DOMAIN_GET_CPU_STATS_MAX /* remote_domain_get_cpu_stats_ret_ANON_0 */ },
-    { "nparams", XDR_INT, NULL, 0 /* int */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_get_hostname_args_members_def[] = {
-    { "dom", XDR_STRUCT, struct_remote_nonnull_domain_members_def, 0 /* remote_nonnull_domain */ },
-    { "flags", XDR_UINT, NULL, 0 /* uint */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_get_hostname_ret_members_def[] = {
-    { "hostname", XDR_STRING, 0, REMOTE_STRING_MAX /* remote_nonnull_string */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_connect_num_of_networks_ret_members_def[] = {
-    { "num", XDR_INT, NULL, 0 /* int */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_connect_list_networks_args_members_def[] = {
-    { "maxnames", XDR_INT, NULL, 0 /* int */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_connect_list_networks_ret_members_def[] = {
-    { "names", XDR_ARRAY, &remote_nonnull_string_def, REMOTE_NETWORK_NAME_LIST_MAX /* remote_connect_list_networks_ret_ANON_0 */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_connect_num_of_defined_networks_ret_members_def[] = {
-    { "num", XDR_INT, NULL, 0 /* int */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_connect_list_defined_networks_args_members_def[] = {
-    { "maxnames", XDR_INT, NULL, 0 /* int */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_connect_list_defined_networks_ret_members_def[] = {
-    { "names", XDR_ARRAY, &remote_nonnull_string_def, REMOTE_NETWORK_NAME_LIST_MAX /* remote_connect_list_defined_networks_ret_ANON_0 */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_network_lookup_by_uuid_args_members_def[] = {
-    { "uuid", XDR_OPAQUE, 0, VIR_UUID_BUFLEN /* remote_uuid */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_network_lookup_by_uuid_ret_members_def[] = {
-    { "net", XDR_STRUCT, struct_remote_nonnull_network_members_def, 0 /* remote_nonnull_network */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_network_lookup_by_name_args_members_def[] = {
-    { "name", XDR_STRING, 0, REMOTE_STRING_MAX /* remote_nonnull_string */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_network_lookup_by_name_ret_members_def[] = {
-    { "net", XDR_STRUCT, struct_remote_nonnull_network_members_def, 0 /* remote_nonnull_network */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_network_create_xml_args_members_def[] = {
-    { "xml", XDR_STRING, 0, REMOTE_STRING_MAX /* remote_nonnull_string */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_network_create_xml_ret_members_def[] = {
-    { "net", XDR_STRUCT, struct_remote_nonnull_network_members_def, 0 /* remote_nonnull_network */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_network_define_xml_args_members_def[] = {
-    { "xml", XDR_STRING, 0, REMOTE_STRING_MAX /* remote_nonnull_string */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_network_define_xml_ret_members_def[] = {
-    { "net", XDR_STRUCT, struct_remote_nonnull_network_members_def, 0 /* remote_nonnull_network */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_network_undefine_args_members_def[] = {
-    { "net", XDR_STRUCT, struct_remote_nonnull_network_members_def, 0 /* remote_nonnull_network */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_network_update_args_members_def[] = {
-    { "net", XDR_STRUCT, struct_remote_nonnull_network_members_def, 0 /* remote_nonnull_network */ },
-    { "command", XDR_UINT, NULL, 0 /* uint */ },
-    { "section", XDR_UINT, NULL, 0 /* uint */ },
-    { "parentIndex", XDR_INT, NULL, 0 /* int */ },
-    { "xml", XDR_STRING, 0, REMOTE_STRING_MAX /* remote_nonnull_string */ },
-    { "flags", XDR_UINT, NULL, 0 /* uint */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_network_create_args_members_def[] = {
-    { "net", XDR_STRUCT, struct_remote_nonnull_network_members_def, 0 /* remote_nonnull_network */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_network_destroy_args_members_def[] = {
-    { "net", XDR_STRUCT, struct_remote_nonnull_network_members_def, 0 /* remote_nonnull_network */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_network_get_xml_desc_args_members_def[] = {
-    { "net", XDR_STRUCT, struct_remote_nonnull_network_members_def, 0 /* remote_nonnull_network */ },
-    { "flags", XDR_UINT, NULL, 0 /* uint */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_network_get_xml_desc_ret_members_def[] = {
-    { "xml", XDR_STRING, 0, REMOTE_STRING_MAX /* remote_nonnull_string */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_network_get_bridge_name_args_members_def[] = {
-    { "net", XDR_STRUCT, struct_remote_nonnull_network_members_def, 0 /* remote_nonnull_network */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_network_get_bridge_name_ret_members_def[] = {
-    { "name", XDR_STRING, 0, REMOTE_STRING_MAX /* remote_nonnull_string */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_network_get_autostart_args_members_def[] = {
-    { "net", XDR_STRUCT, struct_remote_nonnull_network_members_def, 0 /* remote_nonnull_network */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_network_get_autostart_ret_members_def[] = {
-    { "autostart", XDR_INT, NULL, 0 /* int */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_network_set_autostart_args_members_def[] = {
-    { "net", XDR_STRUCT, struct_remote_nonnull_network_members_def, 0 /* remote_nonnull_network */ },
-    { "autostart", XDR_INT, NULL, 0 /* int */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_connect_num_of_nwfilters_ret_members_def[] = {
-    { "num", XDR_INT, NULL, 0 /* int */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_connect_list_nwfilters_args_members_def[] = {
-    { "maxnames", XDR_INT, NULL, 0 /* int */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_connect_list_nwfilters_ret_members_def[] = {
-    { "names", XDR_ARRAY, &remote_nonnull_string_def, REMOTE_NWFILTER_NAME_LIST_MAX /* remote_connect_list_nwfilters_ret_ANON_0 */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_nwfilter_lookup_by_uuid_args_members_def[] = {
-    { "uuid", XDR_OPAQUE, 0, VIR_UUID_BUFLEN /* remote_uuid */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_nwfilter_lookup_by_uuid_ret_members_def[] = {
-    { "nwfilter", XDR_STRUCT, struct_remote_nonnull_nwfilter_members_def, 0 /* remote_nonnull_nwfilter */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_nwfilter_lookup_by_name_args_members_def[] = {
-    { "name", XDR_STRING, 0, REMOTE_STRING_MAX /* remote_nonnull_string */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_nwfilter_lookup_by_name_ret_members_def[] = {
-    { "nwfilter", XDR_STRUCT, struct_remote_nonnull_nwfilter_members_def, 0 /* remote_nonnull_nwfilter */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_nwfilter_define_xml_args_members_def[] = {
-    { "xml", XDR_STRING, 0, REMOTE_STRING_MAX /* remote_nonnull_string */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_nwfilter_define_xml_ret_members_def[] = {
-    { "nwfilter", XDR_STRUCT, struct_remote_nonnull_nwfilter_members_def, 0 /* remote_nonnull_nwfilter */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_nwfilter_undefine_args_members_def[] = {
-    { "nwfilter", XDR_STRUCT, struct_remote_nonnull_nwfilter_members_def, 0 /* remote_nonnull_nwfilter */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_nwfilter_get_xml_desc_args_members_def[] = {
-    { "nwfilter", XDR_STRUCT, struct_remote_nonnull_nwfilter_members_def, 0 /* remote_nonnull_nwfilter */ },
-    { "flags", XDR_UINT, NULL, 0 /* uint */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_nwfilter_get_xml_desc_ret_members_def[] = {
-    { "xml", XDR_STRING, 0, REMOTE_STRING_MAX /* remote_nonnull_string */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_connect_num_of_interfaces_ret_members_def[] = {
-    { "num", XDR_INT, NULL, 0 /* int */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_connect_list_interfaces_args_members_def[] = {
-    { "maxnames", XDR_INT, NULL, 0 /* int */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_connect_list_interfaces_ret_members_def[] = {
-    { "names", XDR_ARRAY, &remote_nonnull_string_def, REMOTE_INTERFACE_NAME_LIST_MAX /* remote_connect_list_interfaces_ret_ANON_0 */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_connect_num_of_defined_interfaces_ret_members_def[] = {
-    { "num", XDR_INT, NULL, 0 /* int */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_connect_list_defined_interfaces_args_members_def[] = {
-    { "maxnames", XDR_INT, NULL, 0 /* int */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_connect_list_defined_interfaces_ret_members_def[] = {
-    { "names", XDR_ARRAY, &remote_nonnull_string_def, REMOTE_DEFINED_INTERFACE_NAME_LIST_MAX /* remote_connect_list_defined_interfaces_ret_ANON_0 */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_interface_lookup_by_name_args_members_def[] = {
-    { "name", XDR_STRING, 0, REMOTE_STRING_MAX /* remote_nonnull_string */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_interface_lookup_by_name_ret_members_def[] = {
-    { "iface", XDR_STRUCT, struct_remote_nonnull_interface_members_def, 0 /* remote_nonnull_interface */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_interface_lookup_by_mac_string_args_members_def[] = {
-    { "mac", XDR_STRING, 0, REMOTE_STRING_MAX /* remote_nonnull_string */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_interface_lookup_by_mac_string_ret_members_def[] = {
-    { "iface", XDR_STRUCT, struct_remote_nonnull_interface_members_def, 0 /* remote_nonnull_interface */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_interface_get_xml_desc_args_members_def[] = {
-    { "iface", XDR_STRUCT, struct_remote_nonnull_interface_members_def, 0 /* remote_nonnull_interface */ },
-    { "flags", XDR_UINT, NULL, 0 /* uint */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_interface_get_xml_desc_ret_members_def[] = {
-    { "xml", XDR_STRING, 0, REMOTE_STRING_MAX /* remote_nonnull_string */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_interface_define_xml_args_members_def[] = {
-    { "xml", XDR_STRING, 0, REMOTE_STRING_MAX /* remote_nonnull_string */ },
-    { "flags", XDR_UINT, NULL, 0 /* uint */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_interface_define_xml_ret_members_def[] = {
-    { "iface", XDR_STRUCT, struct_remote_nonnull_interface_members_def, 0 /* remote_nonnull_interface */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_interface_undefine_args_members_def[] = {
-    { "iface", XDR_STRUCT, struct_remote_nonnull_interface_members_def, 0 /* remote_nonnull_interface */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_interface_create_args_members_def[] = {
-    { "iface", XDR_STRUCT, struct_remote_nonnull_interface_members_def, 0 /* remote_nonnull_interface */ },
-    { "flags", XDR_UINT, NULL, 0 /* uint */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_interface_destroy_args_members_def[] = {
-    { "iface", XDR_STRUCT, struct_remote_nonnull_interface_members_def, 0 /* remote_nonnull_interface */ },
-    { "flags", XDR_UINT, NULL, 0 /* uint */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_interface_change_begin_args_members_def[] = {
-    { "flags", XDR_UINT, NULL, 0 /* uint */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_interface_change_commit_args_members_def[] = {
-    { "flags", XDR_UINT, NULL, 0 /* uint */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_interface_change_rollback_args_members_def[] = {
-    { "flags", XDR_UINT, NULL, 0 /* uint */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_auth_list_ret_members_def[] = {
-    { "types", XDR_ARRAY, &remote_auth_type_def, REMOTE_AUTH_TYPE_LIST_MAX /* remote_auth_list_ret_ANON_0 */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_auth_sasl_init_ret_members_def[] = {
-    { "mechlist", XDR_STRING, 0, REMOTE_STRING_MAX /* remote_nonnull_string */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_auth_sasl_start_args_members_def[] = {
-    { "mech", XDR_STRING, 0, REMOTE_STRING_MAX /* remote_nonnull_string */ },
-    { "nil", XDR_INT, NULL, 0 /* int */ },
-    { "data", XDR_ARRAY, &char_def, REMOTE_AUTH_SASL_DATA_MAX /* remote_auth_sasl_start_args_ANON_0 */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_auth_sasl_start_ret_members_def[] = {
-    { "complete", XDR_INT, NULL, 0 /* int */ },
-    { "nil", XDR_INT, NULL, 0 /* int */ },
-    { "data", XDR_ARRAY, &char_def, REMOTE_AUTH_SASL_DATA_MAX /* remote_auth_sasl_start_ret_ANON_0 */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_auth_sasl_step_args_members_def[] = {
-    { "nil", XDR_INT, NULL, 0 /* int */ },
-    { "data", XDR_ARRAY, &char_def, REMOTE_AUTH_SASL_DATA_MAX /* remote_auth_sasl_step_args_ANON_0 */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_auth_sasl_step_ret_members_def[] = {
-    { "complete", XDR_INT, NULL, 0 /* int */ },
-    { "nil", XDR_INT, NULL, 0 /* int */ },
-    { "data", XDR_ARRAY, &char_def, REMOTE_AUTH_SASL_DATA_MAX /* remote_auth_sasl_step_ret_ANON_0 */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_auth_polkit_ret_members_def[] = {
-    { "complete", XDR_INT, NULL, 0 /* int */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_connect_num_of_storage_pools_ret_members_def[] = {
-    { "num", XDR_INT, NULL, 0 /* int */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_connect_list_storage_pools_args_members_def[] = {
-    { "maxnames", XDR_INT, NULL, 0 /* int */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_connect_list_storage_pools_ret_members_def[] = {
-    { "names", XDR_ARRAY, &remote_nonnull_string_def, REMOTE_STORAGE_POOL_NAME_LIST_MAX /* remote_connect_list_storage_pools_ret_ANON_0 */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_connect_num_of_defined_storage_pools_ret_members_def[] = {
-    { "num", XDR_INT, NULL, 0 /* int */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_connect_list_defined_storage_pools_args_members_def[] = {
-    { "maxnames", XDR_INT, NULL, 0 /* int */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_connect_list_defined_storage_pools_ret_members_def[] = {
-    { "names", XDR_ARRAY, &remote_nonnull_string_def, REMOTE_STORAGE_POOL_NAME_LIST_MAX /* remote_connect_list_defined_storage_pools_ret_ANON_0 */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_connect_find_storage_pool_sources_args_members_def[] = {
-    { "type", XDR_INT, NULL, 0 /* int */ },
-    { "srcSpec", XDR_POINTER, &remote_nonnull_string_def, 0 /* remote_string */ },
-    { "flags", XDR_UINT, NULL, 0 /* uint */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_connect_find_storage_pool_sources_ret_members_def[] = {
-    { "xml", XDR_STRING, 0, REMOTE_STRING_MAX /* remote_nonnull_string */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_storage_pool_lookup_by_uuid_args_members_def[] = {
-    { "uuid", XDR_OPAQUE, 0, VIR_UUID_BUFLEN /* remote_uuid */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_storage_pool_lookup_by_uuid_ret_members_def[] = {
-    { "pool", XDR_STRUCT, struct_remote_nonnull_storage_pool_members_def, 0 /* remote_nonnull_storage_pool */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_storage_pool_lookup_by_name_args_members_def[] = {
-    { "name", XDR_STRING, 0, REMOTE_STRING_MAX /* remote_nonnull_string */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_storage_pool_lookup_by_name_ret_members_def[] = {
-    { "pool", XDR_STRUCT, struct_remote_nonnull_storage_pool_members_def, 0 /* remote_nonnull_storage_pool */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_storage_pool_lookup_by_volume_args_members_def[] = {
-    { "vol", XDR_STRUCT, struct_remote_nonnull_storage_vol_members_def, 0 /* remote_nonnull_storage_vol */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_storage_pool_lookup_by_volume_ret_members_def[] = {
-    { "pool", XDR_STRUCT, struct_remote_nonnull_storage_pool_members_def, 0 /* remote_nonnull_storage_pool */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_storage_pool_create_xml_args_members_def[] = {
-    { "xml", XDR_STRING, 0, REMOTE_STRING_MAX /* remote_nonnull_string */ },
-    { "flags", XDR_UINT, NULL, 0 /* uint */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_storage_pool_create_xml_ret_members_def[] = {
-    { "pool", XDR_STRUCT, struct_remote_nonnull_storage_pool_members_def, 0 /* remote_nonnull_storage_pool */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_storage_pool_define_xml_args_members_def[] = {
-    { "xml", XDR_STRING, 0, REMOTE_STRING_MAX /* remote_nonnull_string */ },
-    { "flags", XDR_UINT, NULL, 0 /* uint */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_storage_pool_define_xml_ret_members_def[] = {
-    { "pool", XDR_STRUCT, struct_remote_nonnull_storage_pool_members_def, 0 /* remote_nonnull_storage_pool */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_storage_pool_build_args_members_def[] = {
-    { "pool", XDR_STRUCT, struct_remote_nonnull_storage_pool_members_def, 0 /* remote_nonnull_storage_pool */ },
-    { "flags", XDR_UINT, NULL, 0 /* uint */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_storage_pool_undefine_args_members_def[] = {
-    { "pool", XDR_STRUCT, struct_remote_nonnull_storage_pool_members_def, 0 /* remote_nonnull_storage_pool */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_storage_pool_create_args_members_def[] = {
-    { "pool", XDR_STRUCT, struct_remote_nonnull_storage_pool_members_def, 0 /* remote_nonnull_storage_pool */ },
-    { "flags", XDR_UINT, NULL, 0 /* uint */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_storage_pool_destroy_args_members_def[] = {
-    { "pool", XDR_STRUCT, struct_remote_nonnull_storage_pool_members_def, 0 /* remote_nonnull_storage_pool */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_storage_pool_delete_args_members_def[] = {
-    { "pool", XDR_STRUCT, struct_remote_nonnull_storage_pool_members_def, 0 /* remote_nonnull_storage_pool */ },
-    { "flags", XDR_UINT, NULL, 0 /* uint */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_storage_pool_refresh_args_members_def[] = {
-    { "pool", XDR_STRUCT, struct_remote_nonnull_storage_pool_members_def, 0 /* remote_nonnull_storage_pool */ },
-    { "flags", XDR_UINT, NULL, 0 /* uint */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_storage_pool_get_xml_desc_args_members_def[] = {
-    { "pool", XDR_STRUCT, struct_remote_nonnull_storage_pool_members_def, 0 /* remote_nonnull_storage_pool */ },
-    { "flags", XDR_UINT, NULL, 0 /* uint */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_storage_pool_get_xml_desc_ret_members_def[] = {
-    { "xml", XDR_STRING, 0, REMOTE_STRING_MAX /* remote_nonnull_string */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_storage_pool_get_info_args_members_def[] = {
-    { "pool", XDR_STRUCT, struct_remote_nonnull_storage_pool_members_def, 0 /* remote_nonnull_storage_pool */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_storage_pool_get_info_ret_members_def[] = {
-    { "state", XDR_UCHAR, NULL, 0 /* uchar */ },
-    { "capacity", XDR_UHYPER, NULL, 0 /* uhyper */ },
-    { "allocation", XDR_UHYPER, NULL, 0 /* uhyper */ },
-    { "available", XDR_UHYPER, NULL, 0 /* uhyper */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_storage_pool_get_autostart_args_members_def[] = {
-    { "pool", XDR_STRUCT, struct_remote_nonnull_storage_pool_members_def, 0 /* remote_nonnull_storage_pool */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_storage_pool_get_autostart_ret_members_def[] = {
-    { "autostart", XDR_INT, NULL, 0 /* int */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_storage_pool_set_autostart_args_members_def[] = {
-    { "pool", XDR_STRUCT, struct_remote_nonnull_storage_pool_members_def, 0 /* remote_nonnull_storage_pool */ },
-    { "autostart", XDR_INT, NULL, 0 /* int */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_storage_pool_num_of_volumes_args_members_def[] = {
-    { "pool", XDR_STRUCT, struct_remote_nonnull_storage_pool_members_def, 0 /* remote_nonnull_storage_pool */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_storage_pool_num_of_volumes_ret_members_def[] = {
-    { "num", XDR_INT, NULL, 0 /* int */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_storage_pool_list_volumes_args_members_def[] = {
-    { "pool", XDR_STRUCT, struct_remote_nonnull_storage_pool_members_def, 0 /* remote_nonnull_storage_pool */ },
-    { "maxnames", XDR_INT, NULL, 0 /* int */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_storage_pool_list_volumes_ret_members_def[] = {
-    { "names", XDR_ARRAY, &remote_nonnull_string_def, REMOTE_STORAGE_VOL_NAME_LIST_MAX /* remote_storage_pool_list_volumes_ret_ANON_0 */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_storage_vol_lookup_by_name_args_members_def[] = {
-    { "pool", XDR_STRUCT, struct_remote_nonnull_storage_pool_members_def, 0 /* remote_nonnull_storage_pool */ },
-    { "name", XDR_STRING, 0, REMOTE_STRING_MAX /* remote_nonnull_string */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_storage_vol_lookup_by_name_ret_members_def[] = {
-    { "vol", XDR_STRUCT, struct_remote_nonnull_storage_vol_members_def, 0 /* remote_nonnull_storage_vol */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_storage_vol_lookup_by_key_args_members_def[] = {
-    { "key", XDR_STRING, 0, REMOTE_STRING_MAX /* remote_nonnull_string */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_storage_vol_lookup_by_key_ret_members_def[] = {
-    { "vol", XDR_STRUCT, struct_remote_nonnull_storage_vol_members_def, 0 /* remote_nonnull_storage_vol */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_storage_vol_lookup_by_path_args_members_def[] = {
-    { "path", XDR_STRING, 0, REMOTE_STRING_MAX /* remote_nonnull_string */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_storage_vol_lookup_by_path_ret_members_def[] = {
-    { "vol", XDR_STRUCT, struct_remote_nonnull_storage_vol_members_def, 0 /* remote_nonnull_storage_vol */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_storage_vol_create_xml_args_members_def[] = {
-    { "pool", XDR_STRUCT, struct_remote_nonnull_storage_pool_members_def, 0 /* remote_nonnull_storage_pool */ },
-    { "xml", XDR_STRING, 0, REMOTE_STRING_MAX /* remote_nonnull_string */ },
-    { "flags", XDR_UINT, NULL, 0 /* uint */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_storage_vol_create_xml_ret_members_def[] = {
-    { "vol", XDR_STRUCT, struct_remote_nonnull_storage_vol_members_def, 0 /* remote_nonnull_storage_vol */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_storage_vol_create_xml_from_args_members_def[] = {
-    { "pool", XDR_STRUCT, struct_remote_nonnull_storage_pool_members_def, 0 /* remote_nonnull_storage_pool */ },
-    { "xml", XDR_STRING, 0, REMOTE_STRING_MAX /* remote_nonnull_string */ },
-    { "clonevol", XDR_STRUCT, struct_remote_nonnull_storage_vol_members_def, 0 /* remote_nonnull_storage_vol */ },
-    { "flags", XDR_UINT, NULL, 0 /* uint */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_storage_vol_create_xml_from_ret_members_def[] = {
-    { "vol", XDR_STRUCT, struct_remote_nonnull_storage_vol_members_def, 0 /* remote_nonnull_storage_vol */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_storage_vol_delete_args_members_def[] = {
-    { "vol", XDR_STRUCT, struct_remote_nonnull_storage_vol_members_def, 0 /* remote_nonnull_storage_vol */ },
-    { "flags", XDR_UINT, NULL, 0 /* uint */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_storage_vol_wipe_args_members_def[] = {
-    { "vol", XDR_STRUCT, struct_remote_nonnull_storage_vol_members_def, 0 /* remote_nonnull_storage_vol */ },
-    { "flags", XDR_UINT, NULL, 0 /* uint */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_storage_vol_wipe_pattern_args_members_def[] = {
-    { "vol", XDR_STRUCT, struct_remote_nonnull_storage_vol_members_def, 0 /* remote_nonnull_storage_vol */ },
-    { "algorithm", XDR_UINT, NULL, 0 /* uint */ },
-    { "flags", XDR_UINT, NULL, 0 /* uint */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_storage_vol_get_xml_desc_args_members_def[] = {
-    { "vol", XDR_STRUCT, struct_remote_nonnull_storage_vol_members_def, 0 /* remote_nonnull_storage_vol */ },
-    { "flags", XDR_UINT, NULL, 0 /* uint */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_storage_vol_get_xml_desc_ret_members_def[] = {
-    { "xml", XDR_STRING, 0, REMOTE_STRING_MAX /* remote_nonnull_string */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_storage_vol_get_info_args_members_def[] = {
-    { "vol", XDR_STRUCT, struct_remote_nonnull_storage_vol_members_def, 0 /* remote_nonnull_storage_vol */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_storage_vol_get_info_ret_members_def[] = {
-    { "type", XDR_INT, NULL, 0 /* int */ },
-    { "capacity", XDR_UHYPER, NULL, 0 /* uhyper */ },
-    { "allocation", XDR_UHYPER, NULL, 0 /* uhyper */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_storage_vol_get_path_args_members_def[] = {
-    { "vol", XDR_STRUCT, struct_remote_nonnull_storage_vol_members_def, 0 /* remote_nonnull_storage_vol */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_storage_vol_get_path_ret_members_def[] = {
-    { "name", XDR_STRING, 0, REMOTE_STRING_MAX /* remote_nonnull_string */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_storage_vol_resize_args_members_def[] = {
-    { "vol", XDR_STRUCT, struct_remote_nonnull_storage_vol_members_def, 0 /* remote_nonnull_storage_vol */ },
-    { "capacity", XDR_UHYPER, NULL, 0 /* uhyper */ },
-    { "flags", XDR_UINT, NULL, 0 /* uint */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_node_num_of_devices_args_members_def[] = {
-    { "cap", XDR_POINTER, &remote_nonnull_string_def, 0 /* remote_string */ },
-    { "flags", XDR_UINT, NULL, 0 /* uint */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_node_num_of_devices_ret_members_def[] = {
-    { "num", XDR_INT, NULL, 0 /* int */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_node_list_devices_args_members_def[] = {
-    { "cap", XDR_POINTER, &remote_nonnull_string_def, 0 /* remote_string */ },
-    { "maxnames", XDR_INT, NULL, 0 /* int */ },
-    { "flags", XDR_UINT, NULL, 0 /* uint */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_node_list_devices_ret_members_def[] = {
-    { "names", XDR_ARRAY, &remote_nonnull_string_def, REMOTE_NODE_DEVICE_NAME_LIST_MAX /* remote_node_list_devices_ret_ANON_0 */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_node_device_lookup_by_name_args_members_def[] = {
-    { "name", XDR_STRING, 0, REMOTE_STRING_MAX /* remote_nonnull_string */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_node_device_lookup_by_name_ret_members_def[] = {
-    { "dev", XDR_STRUCT, struct_remote_nonnull_node_device_members_def, 0 /* remote_nonnull_node_device */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_node_device_lookup_scsi_host_by_wwn_args_members_def[] = {
-    { "wwnn", XDR_STRING, 0, REMOTE_STRING_MAX /* remote_nonnull_string */ },
-    { "wwpn", XDR_STRING, 0, REMOTE_STRING_MAX /* remote_nonnull_string */ },
-    { "flags", XDR_UINT, NULL, 0 /* uint */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_node_device_lookup_scsi_host_by_wwn_ret_members_def[] = {
-    { "dev", XDR_STRUCT, struct_remote_nonnull_node_device_members_def, 0 /* remote_nonnull_node_device */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_node_device_get_xml_desc_args_members_def[] = {
-    { "name", XDR_STRING, 0, REMOTE_STRING_MAX /* remote_nonnull_string */ },
-    { "flags", XDR_UINT, NULL, 0 /* uint */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_node_device_get_xml_desc_ret_members_def[] = {
-    { "xml", XDR_STRING, 0, REMOTE_STRING_MAX /* remote_nonnull_string */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_node_device_get_parent_args_members_def[] = {
-    { "name", XDR_STRING, 0, REMOTE_STRING_MAX /* remote_nonnull_string */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_node_device_get_parent_ret_members_def[] = {
-    { "parent", XDR_POINTER, &remote_nonnull_string_def, 0 /* remote_string */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_node_device_num_of_caps_args_members_def[] = {
-    { "name", XDR_STRING, 0, REMOTE_STRING_MAX /* remote_nonnull_string */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_node_device_num_of_caps_ret_members_def[] = {
-    { "num", XDR_INT, NULL, 0 /* int */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_node_device_list_caps_args_members_def[] = {
-    { "name", XDR_STRING, 0, REMOTE_STRING_MAX /* remote_nonnull_string */ },
-    { "maxnames", XDR_INT, NULL, 0 /* int */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_node_device_list_caps_ret_members_def[] = {
-    { "names", XDR_ARRAY, &remote_nonnull_string_def, REMOTE_NODE_DEVICE_CAPS_LIST_MAX /* remote_node_device_list_caps_ret_ANON_0 */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_node_device_dettach_args_members_def[] = {
-    { "name", XDR_STRING, 0, REMOTE_STRING_MAX /* remote_nonnull_string */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_node_device_detach_flags_args_members_def[] = {
-    { "name", XDR_STRING, 0, REMOTE_STRING_MAX /* remote_nonnull_string */ },
-    { "driverName", XDR_POINTER, &remote_nonnull_string_def, 0 /* remote_string */ },
-    { "flags", XDR_UINT, NULL, 0 /* uint */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_node_device_re_attach_args_members_def[] = {
-    { "name", XDR_STRING, 0, REMOTE_STRING_MAX /* remote_nonnull_string */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_node_device_reset_args_members_def[] = {
-    { "name", XDR_STRING, 0, REMOTE_STRING_MAX /* remote_nonnull_string */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_node_device_create_xml_args_members_def[] = {
-    { "xml_desc", XDR_STRING, 0, REMOTE_STRING_MAX /* remote_nonnull_string */ },
-    { "flags", XDR_UINT, NULL, 0 /* uint */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_node_device_create_xml_ret_members_def[] = {
-    { "dev", XDR_STRUCT, struct_remote_nonnull_node_device_members_def, 0 /* remote_nonnull_node_device */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_node_device_destroy_args_members_def[] = {
-    { "name", XDR_STRING, 0, REMOTE_STRING_MAX /* remote_nonnull_string */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_connect_domain_event_register_ret_members_def[] = {
-    { "cb_registered", XDR_INT, NULL, 0 /* int */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_connect_domain_event_deregister_ret_members_def[] = {
-    { "cb_registered", XDR_INT, NULL, 0 /* int */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_event_lifecycle_msg_members_def[] = {
-    { "dom", XDR_STRUCT, struct_remote_nonnull_domain_members_def, 0 /* remote_nonnull_domain */ },
-    { "event", XDR_INT, NULL, 0 /* int */ },
-    { "detail", XDR_INT, NULL, 0 /* int */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_connect_domain_xml_from_native_args_members_def[] = {
-    { "nativeFormat", XDR_STRING, 0, REMOTE_STRING_MAX /* remote_nonnull_string */ },
-    { "nativeConfig", XDR_STRING, 0, REMOTE_STRING_MAX /* remote_nonnull_string */ },
-    { "flags", XDR_UINT, NULL, 0 /* uint */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_connect_domain_xml_from_native_ret_members_def[] = {
-    { "domainXml", XDR_STRING, 0, REMOTE_STRING_MAX /* remote_nonnull_string */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_connect_domain_xml_to_native_args_members_def[] = {
-    { "nativeFormat", XDR_STRING, 0, REMOTE_STRING_MAX /* remote_nonnull_string */ },
-    { "domainXml", XDR_STRING, 0, REMOTE_STRING_MAX /* remote_nonnull_string */ },
-    { "flags", XDR_UINT, NULL, 0 /* uint */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_connect_domain_xml_to_native_ret_members_def[] = {
-    { "nativeConfig", XDR_STRING, 0, REMOTE_STRING_MAX /* remote_nonnull_string */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_connect_num_of_secrets_ret_members_def[] = {
-    { "num", XDR_INT, NULL, 0 /* int */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_connect_list_secrets_args_members_def[] = {
-    { "maxuuids", XDR_INT, NULL, 0 /* int */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_connect_list_secrets_ret_members_def[] = {
-    { "uuids", XDR_ARRAY, &remote_nonnull_string_def, REMOTE_SECRET_UUID_LIST_MAX /* remote_connect_list_secrets_ret_ANON_0 */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_secret_lookup_by_uuid_args_members_def[] = {
-    { "uuid", XDR_OPAQUE, 0, VIR_UUID_BUFLEN /* remote_uuid */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_secret_lookup_by_uuid_ret_members_def[] = {
-    { "secret", XDR_STRUCT, struct_remote_nonnull_secret_members_def, 0 /* remote_nonnull_secret */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_secret_define_xml_args_members_def[] = {
-    { "xml", XDR_STRING, 0, REMOTE_STRING_MAX /* remote_nonnull_string */ },
-    { "flags", XDR_UINT, NULL, 0 /* uint */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_secret_define_xml_ret_members_def[] = {
-    { "secret", XDR_STRUCT, struct_remote_nonnull_secret_members_def, 0 /* remote_nonnull_secret */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_secret_get_xml_desc_args_members_def[] = {
-    { "secret", XDR_STRUCT, struct_remote_nonnull_secret_members_def, 0 /* remote_nonnull_secret */ },
-    { "flags", XDR_UINT, NULL, 0 /* uint */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_secret_get_xml_desc_ret_members_def[] = {
-    { "xml", XDR_STRING, 0, REMOTE_STRING_MAX /* remote_nonnull_string */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_secret_set_value_args_members_def[] = {
-    { "secret", XDR_STRUCT, struct_remote_nonnull_secret_members_def, 0 /* remote_nonnull_secret */ },
-    { "value", XDR_BYTES, 0, REMOTE_SECRET_VALUE_MAX /* remote_secret_set_value_args_ANON_0 */ },
-    { "flags", XDR_UINT, NULL, 0 /* uint */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_secret_get_value_args_members_def[] = {
-    { "secret", XDR_STRUCT, struct_remote_nonnull_secret_members_def, 0 /* remote_nonnull_secret */ },
-    { "flags", XDR_UINT, NULL, 0 /* uint */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_secret_get_value_ret_members_def[] = {
-    { "value", XDR_BYTES, 0, REMOTE_SECRET_VALUE_MAX /* remote_secret_get_value_ret_ANON_0 */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_secret_undefine_args_members_def[] = {
-    { "secret", XDR_STRUCT, struct_remote_nonnull_secret_members_def, 0 /* remote_nonnull_secret */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_secret_lookup_by_usage_args_members_def[] = {
-    { "usageType", XDR_INT, NULL, 0 /* int */ },
-    { "usageID", XDR_STRING, 0, REMOTE_STRING_MAX /* remote_nonnull_string */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_secret_lookup_by_usage_ret_members_def[] = {
-    { "secret", XDR_STRUCT, struct_remote_nonnull_secret_members_def, 0 /* remote_nonnull_secret */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_migrate_prepare_tunnel_args_members_def[] = {
-    { "flags", XDR_UHYPER, NULL, 0 /* uhyper */ },
-    { "dname", XDR_POINTER, &remote_nonnull_string_def, 0 /* remote_string */ },
-    { "resource", XDR_UHYPER, NULL, 0 /* uhyper */ },
-    { "dom_xml", XDR_STRING, 0, REMOTE_STRING_MAX /* remote_nonnull_string */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_connect_is_secure_ret_members_def[] = {
-    { "secure", XDR_INT, NULL, 0 /* int */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_is_active_args_members_def[] = {
-    { "dom", XDR_STRUCT, struct_remote_nonnull_domain_members_def, 0 /* remote_nonnull_domain */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_is_active_ret_members_def[] = {
-    { "active", XDR_INT, NULL, 0 /* int */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_is_persistent_args_members_def[] = {
-    { "dom", XDR_STRUCT, struct_remote_nonnull_domain_members_def, 0 /* remote_nonnull_domain */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_is_persistent_ret_members_def[] = {
-    { "persistent", XDR_INT, NULL, 0 /* int */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_is_updated_args_members_def[] = {
-    { "dom", XDR_STRUCT, struct_remote_nonnull_domain_members_def, 0 /* remote_nonnull_domain */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_is_updated_ret_members_def[] = {
-    { "updated", XDR_INT, NULL, 0 /* int */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_network_is_active_args_members_def[] = {
-    { "net", XDR_STRUCT, struct_remote_nonnull_network_members_def, 0 /* remote_nonnull_network */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_network_is_active_ret_members_def[] = {
-    { "active", XDR_INT, NULL, 0 /* int */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_network_is_persistent_args_members_def[] = {
-    { "net", XDR_STRUCT, struct_remote_nonnull_network_members_def, 0 /* remote_nonnull_network */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_network_is_persistent_ret_members_def[] = {
-    { "persistent", XDR_INT, NULL, 0 /* int */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_storage_pool_is_active_args_members_def[] = {
-    { "pool", XDR_STRUCT, struct_remote_nonnull_storage_pool_members_def, 0 /* remote_nonnull_storage_pool */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_storage_pool_is_active_ret_members_def[] = {
-    { "active", XDR_INT, NULL, 0 /* int */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_storage_pool_is_persistent_args_members_def[] = {
-    { "pool", XDR_STRUCT, struct_remote_nonnull_storage_pool_members_def, 0 /* remote_nonnull_storage_pool */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_storage_pool_is_persistent_ret_members_def[] = {
-    { "persistent", XDR_INT, NULL, 0 /* int */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_interface_is_active_args_members_def[] = {
-    { "iface", XDR_STRUCT, struct_remote_nonnull_interface_members_def, 0 /* remote_nonnull_interface */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_interface_is_active_ret_members_def[] = {
-    { "active", XDR_INT, NULL, 0 /* int */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_connect_compare_cpu_args_members_def[] = {
-    { "xml", XDR_STRING, 0, REMOTE_STRING_MAX /* remote_nonnull_string */ },
-    { "flags", XDR_UINT, NULL, 0 /* uint */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_connect_compare_cpu_ret_members_def[] = {
-    { "result", XDR_INT, NULL, 0 /* int */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_connect_baseline_cpu_args_members_def[] = {
-    { "xmlCPUs", XDR_ARRAY, &remote_nonnull_string_def, REMOTE_CPU_BASELINE_MAX /* remote_connect_baseline_cpu_args_ANON_0 */ },
-    { "flags", XDR_UINT, NULL, 0 /* uint */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_connect_baseline_cpu_ret_members_def[] = {
-    { "cpu", XDR_STRING, 0, REMOTE_STRING_MAX /* remote_nonnull_string */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_get_job_info_args_members_def[] = {
-    { "dom", XDR_STRUCT, struct_remote_nonnull_domain_members_def, 0 /* remote_nonnull_domain */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_get_job_info_ret_members_def[] = {
-    { "type", XDR_INT, NULL, 0 /* int */ },
-    { "timeElapsed", XDR_UHYPER, NULL, 0 /* uhyper */ },
-    { "timeRemaining", XDR_UHYPER, NULL, 0 /* uhyper */ },
-    { "dataTotal", XDR_UHYPER, NULL, 0 /* uhyper */ },
-    { "dataProcessed", XDR_UHYPER, NULL, 0 /* uhyper */ },
-    { "dataRemaining", XDR_UHYPER, NULL, 0 /* uhyper */ },
-    { "memTotal", XDR_UHYPER, NULL, 0 /* uhyper */ },
-    { "memProcessed", XDR_UHYPER, NULL, 0 /* uhyper */ },
-    { "memRemaining", XDR_UHYPER, NULL, 0 /* uhyper */ },
-    { "fileTotal", XDR_UHYPER, NULL, 0 /* uhyper */ },
-    { "fileProcessed", XDR_UHYPER, NULL, 0 /* uhyper */ },
-    { "fileRemaining", XDR_UHYPER, NULL, 0 /* uhyper */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_get_job_stats_args_members_def[] = {
-    { "dom", XDR_STRUCT, struct_remote_nonnull_domain_members_def, 0 /* remote_nonnull_domain */ },
-    { "flags", XDR_UINT, NULL, 0 /* uint */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_get_job_stats_ret_members_def[] = {
-    { "type", XDR_INT, NULL, 0 /* int */ },
-    { "params", XDR_ARRAY, &remote_typed_param_def, 0 /* remote_domain_get_job_stats_ret_ANON_0 */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_abort_job_args_members_def[] = {
-    { "dom", XDR_STRUCT, struct_remote_nonnull_domain_members_def, 0 /* remote_nonnull_domain */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_migrate_set_max_downtime_args_members_def[] = {
-    { "dom", XDR_STRUCT, struct_remote_nonnull_domain_members_def, 0 /* remote_nonnull_domain */ },
-    { "downtime", XDR_UHYPER, NULL, 0 /* uhyper */ },
-    { "flags", XDR_UINT, NULL, 0 /* uint */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_migrate_get_compression_cache_args_members_def[] = {
-    { "dom", XDR_STRUCT, struct_remote_nonnull_domain_members_def, 0 /* remote_nonnull_domain */ },
-    { "flags", XDR_UINT, NULL, 0 /* uint */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_migrate_get_compression_cache_ret_members_def[] = {
-    { "cacheSize", XDR_UHYPER, NULL, 0 /* uhyper */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_migrate_set_compression_cache_args_members_def[] = {
-    { "dom", XDR_STRUCT, struct_remote_nonnull_domain_members_def, 0 /* remote_nonnull_domain */ },
-    { "cacheSize", XDR_UHYPER, NULL, 0 /* uhyper */ },
-    { "flags", XDR_UINT, NULL, 0 /* uint */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_migrate_set_max_speed_args_members_def[] = {
-    { "dom", XDR_STRUCT, struct_remote_nonnull_domain_members_def, 0 /* remote_nonnull_domain */ },
-    { "bandwidth", XDR_UHYPER, NULL, 0 /* uhyper */ },
-    { "flags", XDR_UINT, NULL, 0 /* uint */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_migrate_get_max_speed_args_members_def[] = {
-    { "dom", XDR_STRUCT, struct_remote_nonnull_domain_members_def, 0 /* remote_nonnull_domain */ },
-    { "flags", XDR_UINT, NULL, 0 /* uint */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_migrate_get_max_speed_ret_members_def[] = {
-    { "bandwidth", XDR_UHYPER, NULL, 0 /* uhyper */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_connect_domain_event_register_any_args_members_def[] = {
-    { "eventID", XDR_INT, NULL, 0 /* int */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_connect_domain_event_deregister_any_args_members_def[] = {
-    { "eventID", XDR_INT, NULL, 0 /* int */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_event_reboot_msg_members_def[] = {
-    { "dom", XDR_STRUCT, struct_remote_nonnull_domain_members_def, 0 /* remote_nonnull_domain */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_event_rtc_change_msg_members_def[] = {
-    { "dom", XDR_STRUCT, struct_remote_nonnull_domain_members_def, 0 /* remote_nonnull_domain */ },
-    { "offset", XDR_HYPER, NULL, 0 /* hyper */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_event_watchdog_msg_members_def[] = {
-    { "dom", XDR_STRUCT, struct_remote_nonnull_domain_members_def, 0 /* remote_nonnull_domain */ },
-    { "action", XDR_INT, NULL, 0 /* int */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_event_io_error_msg_members_def[] = {
-    { "dom", XDR_STRUCT, struct_remote_nonnull_domain_members_def, 0 /* remote_nonnull_domain */ },
-    { "srcPath", XDR_STRING, 0, REMOTE_STRING_MAX /* remote_nonnull_string */ },
-    { "devAlias", XDR_STRING, 0, REMOTE_STRING_MAX /* remote_nonnull_string */ },
-    { "action", XDR_INT, NULL, 0 /* int */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_event_io_error_reason_msg_members_def[] = {
-    { "dom", XDR_STRUCT, struct_remote_nonnull_domain_members_def, 0 /* remote_nonnull_domain */ },
-    { "srcPath", XDR_STRING, 0, REMOTE_STRING_MAX /* remote_nonnull_string */ },
-    { "devAlias", XDR_STRING, 0, REMOTE_STRING_MAX /* remote_nonnull_string */ },
-    { "action", XDR_INT, NULL, 0 /* int */ },
-    { "reason", XDR_STRING, 0, REMOTE_STRING_MAX /* remote_nonnull_string */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_event_graphics_address_members_def[] = {
-    { "family", XDR_INT, NULL, 0 /* int */ },
-    { "node", XDR_STRING, 0, REMOTE_STRING_MAX /* remote_nonnull_string */ },
-    { "service", XDR_STRING, 0, REMOTE_STRING_MAX /* remote_nonnull_string */ },
-    VIR_NAMED_XDRDEF_NULL
-};
+static gboolean dissect_xdr_remote_uuid(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    return dissect_xdr_opaque(tvb, ti, xdrs, hf, VIR_UUID_BUFLEN);
+}
+static int hf_remote_nonnull_domain = -1;
+static gint ett_remote_nonnull_domain = -1;
+static gboolean dissect_xdr_remote_nonnull_domain(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_nonnull_domain);
+    hf = hf_remote_nonnull_domain;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "name: ");
+    if (!dissect_xdr_remote_nonnull_string(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "uuid: ");
+    if (!dissect_xdr_remote_uuid(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "id: ");
+    if (!dissect_xdr_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_nonnull_network = -1;
+static gint ett_remote_nonnull_network = -1;
+static gboolean dissect_xdr_remote_nonnull_network(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_nonnull_network);
+    hf = hf_remote_nonnull_network;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "name: ");
+    if (!dissect_xdr_remote_nonnull_string(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "uuid: ");
+    if (!dissect_xdr_remote_uuid(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_nonnull_nwfilter = -1;
+static gint ett_remote_nonnull_nwfilter = -1;
+static gboolean dissect_xdr_remote_nonnull_nwfilter(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_nonnull_nwfilter);
+    hf = hf_remote_nonnull_nwfilter;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "name: ");
+    if (!dissect_xdr_remote_nonnull_string(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "uuid: ");
+    if (!dissect_xdr_remote_uuid(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_nonnull_interface = -1;
+static gint ett_remote_nonnull_interface = -1;
+static gboolean dissect_xdr_remote_nonnull_interface(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_nonnull_interface);
+    hf = hf_remote_nonnull_interface;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "name: ");
+    if (!dissect_xdr_remote_nonnull_string(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "mac: ");
+    if (!dissect_xdr_remote_nonnull_string(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_nonnull_storage_pool = -1;
+static gint ett_remote_nonnull_storage_pool = -1;
+static gboolean dissect_xdr_remote_nonnull_storage_pool(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_nonnull_storage_pool);
+    hf = hf_remote_nonnull_storage_pool;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "name: ");
+    if (!dissect_xdr_remote_nonnull_string(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "uuid: ");
+    if (!dissect_xdr_remote_uuid(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_nonnull_storage_vol = -1;
+static gint ett_remote_nonnull_storage_vol = -1;
+static gboolean dissect_xdr_remote_nonnull_storage_vol(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_nonnull_storage_vol);
+    hf = hf_remote_nonnull_storage_vol;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "pool: ");
+    if (!dissect_xdr_remote_nonnull_string(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "name: ");
+    if (!dissect_xdr_remote_nonnull_string(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "key: ");
+    if (!dissect_xdr_remote_nonnull_string(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_nonnull_node_device = -1;
+static gint ett_remote_nonnull_node_device = -1;
+static gboolean dissect_xdr_remote_nonnull_node_device(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_nonnull_node_device);
+    hf = hf_remote_nonnull_node_device;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "name: ");
+    if (!dissect_xdr_remote_nonnull_string(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_nonnull_secret = -1;
+static gint ett_remote_nonnull_secret = -1;
+static gboolean dissect_xdr_remote_nonnull_secret(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_nonnull_secret);
+    hf = hf_remote_nonnull_secret;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "uuid: ");
+    if (!dissect_xdr_remote_uuid(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "usageType: ");
+    if (!dissect_xdr_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "usageID: ");
+    if (!dissect_xdr_remote_nonnull_string(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_nonnull_domain_snapshot = -1;
+static gint ett_remote_nonnull_domain_snapshot = -1;
+static gboolean dissect_xdr_remote_nonnull_domain_snapshot(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_nonnull_domain_snapshot);
+    hf = hf_remote_nonnull_domain_snapshot;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "name: ");
+    if (!dissect_xdr_remote_nonnull_string(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "dom: ");
+    if (!dissect_xdr_remote_nonnull_domain(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static gboolean dissect_xdr_remote_domain(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    return dissect_xdr_pointer(tvb, ti, xdrs, hf, dissect_xdr_remote_nonnull_domain);
+}
+static gboolean dissect_xdr_remote_network(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    return dissect_xdr_pointer(tvb, ti, xdrs, hf, dissect_xdr_remote_nonnull_network);
+}
+static int hf_remote_error = -1;
+static gint ett_remote_error = -1;
+static gboolean dissect_xdr_remote_error(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_error);
+    hf = hf_remote_error;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "code: ");
+    if (!dissect_xdr_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "domain: ");
+    if (!dissect_xdr_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "message: ");
+    if (!dissect_xdr_remote_string(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "level: ");
+    if (!dissect_xdr_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "dom: ");
+    if (!dissect_xdr_remote_domain(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "str1: ");
+    if (!dissect_xdr_remote_string(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "str2: ");
+    if (!dissect_xdr_remote_string(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "str3: ");
+    if (!dissect_xdr_remote_string(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "int1: ");
+    if (!dissect_xdr_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "int2: ");
+    if (!dissect_xdr_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "net: ");
+    if (!dissect_xdr_remote_network(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static gboolean dissect_xdr_remote_auth_type(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    enum { DUMMY } es;
+    
+    if (xdr_enum(xdrs, (enum_t *)&es)) {
+        switch ((guint)es) {
+        case 0:
+            proto_item_append_text(ti, "REMOTE_AUTH_NONE(0)");
+            return TRUE;
+        case 1:
+            proto_item_append_text(ti, "REMOTE_AUTH_SASL(1)");
+            return TRUE;
+        case 2:
+            proto_item_append_text(ti, "REMOTE_AUTH_POLKIT(2)");
+            return TRUE;
+        }
+    } else {
+        proto_item_append_text(ti, "(unknown)");
+    }
+    return FALSE;
+}
+static int hf_remote_vcpu_info = -1;
+static gint ett_remote_vcpu_info = -1;
+static gboolean dissect_xdr_remote_vcpu_info(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_vcpu_info);
+    hf = hf_remote_vcpu_info;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "number: ");
+    if (!dissect_xdr_u_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "state: ");
+    if (!dissect_xdr_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "cpu_time: ");
+    if (!dissect_xdr_u_hyper(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "cpu: ");
+    if (!dissect_xdr_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static gboolean dissect_xdr_remote_typed_param_value(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    gboolean rc = TRUE;
+    goffset start;
+    int type = 0;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    if (!xdr_int(xdrs, &type))
+        return FALSE;
+    switch (type) {
+    case VIR_TYPED_PARAM_INT:
+        rc = dissect_xdr_int(tvb, ti, xdrs, hf); break;
+    case VIR_TYPED_PARAM_UINT:
+        rc = dissect_xdr_u_int(tvb, ti, xdrs, hf); break;
+    case VIR_TYPED_PARAM_LLONG:
+        rc = dissect_xdr_hyper(tvb, ti, xdrs, hf); break;
+    case VIR_TYPED_PARAM_ULLONG:
+        rc = dissect_xdr_u_hyper(tvb, ti, xdrs, hf); break;
+    case VIR_TYPED_PARAM_DOUBLE:
+        rc = dissect_xdr_double(tvb, ti, xdrs, hf); break;
+    case VIR_TYPED_PARAM_BOOLEAN:
+        rc = dissect_xdr_int(tvb, ti, xdrs, hf); break;
+    case VIR_TYPED_PARAM_STRING:
+        rc = dissect_xdr_remote_nonnull_string(tvb, ti, xdrs, hf); break;
+    }
+    if (rc) {
+        proto_item_set_len(ti, xdr_getpos(xdrs) - start + VIR_HEADER_LEN);
+    } else {
+        proto_item_append_text(ti, "(unknown)");
+    }
+    return rc;
+}
+static int hf_remote_typed_param = -1;
+static gint ett_remote_typed_param = -1;
+static gboolean dissect_xdr_remote_typed_param(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_typed_param);
+    hf = hf_remote_typed_param;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "field: ");
+    if (!dissect_xdr_remote_nonnull_string(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "value: ");
+    if (!dissect_xdr_remote_typed_param_value(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_node_get_cpu_stats = -1;
+static gint ett_remote_node_get_cpu_stats = -1;
+static gboolean dissect_xdr_remote_node_get_cpu_stats(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_node_get_cpu_stats);
+    hf = hf_remote_node_get_cpu_stats;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "field: ");
+    if (!dissect_xdr_remote_nonnull_string(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "value: ");
+    if (!dissect_xdr_u_hyper(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_node_get_memory_stats = -1;
+static gint ett_remote_node_get_memory_stats = -1;
+static gboolean dissect_xdr_remote_node_get_memory_stats(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_node_get_memory_stats);
+    hf = hf_remote_node_get_memory_stats;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "field: ");
+    if (!dissect_xdr_remote_nonnull_string(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "value: ");
+    if (!dissect_xdr_u_hyper(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_disk_error = -1;
+static gint ett_remote_domain_disk_error = -1;
+static gboolean dissect_xdr_remote_domain_disk_error(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_disk_error);
+    hf = hf_remote_domain_disk_error;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "disk: ");
+    if (!dissect_xdr_remote_nonnull_string(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "error: ");
+    if (!dissect_xdr_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_connect_open_args = -1;
+static gint ett_remote_connect_open_args = -1;
+static gboolean dissect_xdr_remote_connect_open_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_connect_open_args);
+    hf = hf_remote_connect_open_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "name: ");
+    if (!dissect_xdr_remote_string(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "flags: ");
+    if (!dissect_xdr_u_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_connect_supports_feature_args = -1;
+static gint ett_remote_connect_supports_feature_args = -1;
+static gboolean dissect_xdr_remote_connect_supports_feature_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_connect_supports_feature_args);
+    hf = hf_remote_connect_supports_feature_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "feature: ");
+    if (!dissect_xdr_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_connect_supports_feature_ret = -1;
+static gint ett_remote_connect_supports_feature_ret = -1;
+static gboolean dissect_xdr_remote_connect_supports_feature_ret(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_connect_supports_feature_ret);
+    hf = hf_remote_connect_supports_feature_ret;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "supported: ");
+    if (!dissect_xdr_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_connect_get_type_ret = -1;
+static gint ett_remote_connect_get_type_ret = -1;
+static gboolean dissect_xdr_remote_connect_get_type_ret(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_connect_get_type_ret);
+    hf = hf_remote_connect_get_type_ret;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "type: ");
+    if (!dissect_xdr_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_connect_get_version_ret = -1;
+static gint ett_remote_connect_get_version_ret = -1;
+static gboolean dissect_xdr_remote_connect_get_version_ret(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_connect_get_version_ret);
+    hf = hf_remote_connect_get_version_ret;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "hv_ver: ");
+    if (!dissect_xdr_u_hyper(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_connect_get_lib_version_ret = -1;
+static gint ett_remote_connect_get_lib_version_ret = -1;
+static gboolean dissect_xdr_remote_connect_get_lib_version_ret(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_connect_get_lib_version_ret);
+    hf = hf_remote_connect_get_lib_version_ret;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "lib_ver: ");
+    if (!dissect_xdr_u_hyper(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_connect_get_hostname_ret = -1;
+static gint ett_remote_connect_get_hostname_ret = -1;
+static gboolean dissect_xdr_remote_connect_get_hostname_ret(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_connect_get_hostname_ret);
+    hf = hf_remote_connect_get_hostname_ret;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "hostname: ");
+    if (!dissect_xdr_remote_nonnull_string(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_connect_get_sysinfo_args = -1;
+static gint ett_remote_connect_get_sysinfo_args = -1;
+static gboolean dissect_xdr_remote_connect_get_sysinfo_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_connect_get_sysinfo_args);
+    hf = hf_remote_connect_get_sysinfo_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "flags: ");
+    if (!dissect_xdr_u_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_connect_get_sysinfo_ret = -1;
+static gint ett_remote_connect_get_sysinfo_ret = -1;
+static gboolean dissect_xdr_remote_connect_get_sysinfo_ret(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_connect_get_sysinfo_ret);
+    hf = hf_remote_connect_get_sysinfo_ret;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "sysinfo: ");
+    if (!dissect_xdr_remote_nonnull_string(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_connect_get_uri_ret = -1;
+static gint ett_remote_connect_get_uri_ret = -1;
+static gboolean dissect_xdr_remote_connect_get_uri_ret(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_connect_get_uri_ret);
+    hf = hf_remote_connect_get_uri_ret;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "uri: ");
+    if (!dissect_xdr_remote_nonnull_string(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_connect_get_max_vcpus_args = -1;
+static gint ett_remote_connect_get_max_vcpus_args = -1;
+static gboolean dissect_xdr_remote_connect_get_max_vcpus_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_connect_get_max_vcpus_args);
+    hf = hf_remote_connect_get_max_vcpus_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "type: ");
+    if (!dissect_xdr_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_connect_get_max_vcpus_ret = -1;
+static gint ett_remote_connect_get_max_vcpus_ret = -1;
+static gboolean dissect_xdr_remote_connect_get_max_vcpus_ret(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_connect_get_max_vcpus_ret);
+    hf = hf_remote_connect_get_max_vcpus_ret;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "max_vcpus: ");
+    if (!dissect_xdr_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_node_get_info_ret_ANONTYPE_model = -1;
+static gint ett_remote_node_get_info_ret_ANONTYPE_model = -1;
+static int hf_remote_node_get_info_ret = -1;
+static gint ett_remote_node_get_info_ret = -1;
+static gboolean dissect_xdr_remote_node_get_info_ret(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_node_get_info_ret);
+    hf = hf_remote_node_get_info_ret;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "model: ");
+    if (!dissect_xdr_vector(tvb, ti, xdrs, hf_remote_node_get_info_ret_ANONTYPE_model, ett_remote_node_get_info_ret_ANONTYPE_model, 32, dissect_xdr_char)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "memory: ");
+    if (!dissect_xdr_u_hyper(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "cpus: ");
+    if (!dissect_xdr_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "mhz: ");
+    if (!dissect_xdr_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "nodes: ");
+    if (!dissect_xdr_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "sockets: ");
+    if (!dissect_xdr_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "cores: ");
+    if (!dissect_xdr_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "threads: ");
+    if (!dissect_xdr_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_connect_get_capabilities_ret = -1;
+static gint ett_remote_connect_get_capabilities_ret = -1;
+static gboolean dissect_xdr_remote_connect_get_capabilities_ret(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_connect_get_capabilities_ret);
+    hf = hf_remote_connect_get_capabilities_ret;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "capabilities: ");
+    if (!dissect_xdr_remote_nonnull_string(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_node_get_cpu_stats_args = -1;
+static gint ett_remote_node_get_cpu_stats_args = -1;
+static gboolean dissect_xdr_remote_node_get_cpu_stats_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_node_get_cpu_stats_args);
+    hf = hf_remote_node_get_cpu_stats_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "cpuNum: ");
+    if (!dissect_xdr_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "nparams: ");
+    if (!dissect_xdr_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "flags: ");
+    if (!dissect_xdr_u_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_node_get_cpu_stats_ret_ANONTYPE_params = -1;
+static gint ett_remote_node_get_cpu_stats_ret_ANONTYPE_params = -1;
+static int hf_remote_node_get_cpu_stats_ret = -1;
+static gint ett_remote_node_get_cpu_stats_ret = -1;
+static gboolean dissect_xdr_remote_node_get_cpu_stats_ret(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_node_get_cpu_stats_ret);
+    hf = hf_remote_node_get_cpu_stats_ret;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "params: ");
+    if (!dissect_xdr_array(tvb, ti, xdrs, hf_remote_node_get_cpu_stats_ret_ANONTYPE_params, ett_remote_node_get_cpu_stats_ret_ANONTYPE_params, REMOTE_NODE_CPU_STATS_MAX, dissect_xdr_remote_node_get_cpu_stats)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "nparams: ");
+    if (!dissect_xdr_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_node_get_memory_stats_args = -1;
+static gint ett_remote_node_get_memory_stats_args = -1;
+static gboolean dissect_xdr_remote_node_get_memory_stats_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_node_get_memory_stats_args);
+    hf = hf_remote_node_get_memory_stats_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "nparams: ");
+    if (!dissect_xdr_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "cellNum: ");
+    if (!dissect_xdr_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "flags: ");
+    if (!dissect_xdr_u_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_node_get_memory_stats_ret_ANONTYPE_params = -1;
+static gint ett_remote_node_get_memory_stats_ret_ANONTYPE_params = -1;
+static int hf_remote_node_get_memory_stats_ret = -1;
+static gint ett_remote_node_get_memory_stats_ret = -1;
+static gboolean dissect_xdr_remote_node_get_memory_stats_ret(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_node_get_memory_stats_ret);
+    hf = hf_remote_node_get_memory_stats_ret;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "params: ");
+    if (!dissect_xdr_array(tvb, ti, xdrs, hf_remote_node_get_memory_stats_ret_ANONTYPE_params, ett_remote_node_get_memory_stats_ret_ANONTYPE_params, REMOTE_NODE_MEMORY_STATS_MAX, dissect_xdr_remote_node_get_memory_stats)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "nparams: ");
+    if (!dissect_xdr_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_node_get_cells_free_memory_args = -1;
+static gint ett_remote_node_get_cells_free_memory_args = -1;
+static gboolean dissect_xdr_remote_node_get_cells_free_memory_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_node_get_cells_free_memory_args);
+    hf = hf_remote_node_get_cells_free_memory_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "startCell: ");
+    if (!dissect_xdr_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "maxcells: ");
+    if (!dissect_xdr_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_node_get_cells_free_memory_ret_ANONTYPE_cells = -1;
+static gint ett_remote_node_get_cells_free_memory_ret_ANONTYPE_cells = -1;
+static int hf_remote_node_get_cells_free_memory_ret = -1;
+static gint ett_remote_node_get_cells_free_memory_ret = -1;
+static gboolean dissect_xdr_remote_node_get_cells_free_memory_ret(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_node_get_cells_free_memory_ret);
+    hf = hf_remote_node_get_cells_free_memory_ret;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "cells: ");
+    if (!dissect_xdr_array(tvb, ti, xdrs, hf_remote_node_get_cells_free_memory_ret_ANONTYPE_cells, ett_remote_node_get_cells_free_memory_ret_ANONTYPE_cells, REMOTE_NODE_MAX_CELLS, dissect_xdr_u_hyper)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_node_get_free_memory_ret = -1;
+static gint ett_remote_node_get_free_memory_ret = -1;
+static gboolean dissect_xdr_remote_node_get_free_memory_ret(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_node_get_free_memory_ret);
+    hf = hf_remote_node_get_free_memory_ret;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "freeMem: ");
+    if (!dissect_xdr_u_hyper(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_get_scheduler_type_args = -1;
+static gint ett_remote_domain_get_scheduler_type_args = -1;
+static gboolean dissect_xdr_remote_domain_get_scheduler_type_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_get_scheduler_type_args);
+    hf = hf_remote_domain_get_scheduler_type_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "dom: ");
+    if (!dissect_xdr_remote_nonnull_domain(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_get_scheduler_type_ret = -1;
+static gint ett_remote_domain_get_scheduler_type_ret = -1;
+static gboolean dissect_xdr_remote_domain_get_scheduler_type_ret(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_get_scheduler_type_ret);
+    hf = hf_remote_domain_get_scheduler_type_ret;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "type: ");
+    if (!dissect_xdr_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "nparams: ");
+    if (!dissect_xdr_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_get_scheduler_parameters_args = -1;
+static gint ett_remote_domain_get_scheduler_parameters_args = -1;
+static gboolean dissect_xdr_remote_domain_get_scheduler_parameters_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_get_scheduler_parameters_args);
+    hf = hf_remote_domain_get_scheduler_parameters_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "dom: ");
+    if (!dissect_xdr_remote_nonnull_domain(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "nparams: ");
+    if (!dissect_xdr_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_get_scheduler_parameters_ret_ANONTYPE_params = -1;
+static gint ett_remote_domain_get_scheduler_parameters_ret_ANONTYPE_params = -1;
+static int hf_remote_domain_get_scheduler_parameters_ret = -1;
+static gint ett_remote_domain_get_scheduler_parameters_ret = -1;
+static gboolean dissect_xdr_remote_domain_get_scheduler_parameters_ret(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_get_scheduler_parameters_ret);
+    hf = hf_remote_domain_get_scheduler_parameters_ret;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "params: ");
+    if (!dissect_xdr_array(tvb, ti, xdrs, hf_remote_domain_get_scheduler_parameters_ret_ANONTYPE_params, ett_remote_domain_get_scheduler_parameters_ret_ANONTYPE_params, REMOTE_DOMAIN_SCHEDULER_PARAMETERS_MAX, dissect_xdr_remote_typed_param)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_get_scheduler_parameters_flags_args = -1;
+static gint ett_remote_domain_get_scheduler_parameters_flags_args = -1;
+static gboolean dissect_xdr_remote_domain_get_scheduler_parameters_flags_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_get_scheduler_parameters_flags_args);
+    hf = hf_remote_domain_get_scheduler_parameters_flags_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "dom: ");
+    if (!dissect_xdr_remote_nonnull_domain(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "nparams: ");
+    if (!dissect_xdr_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "flags: ");
+    if (!dissect_xdr_u_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_get_scheduler_parameters_flags_ret_ANONTYPE_params = -1;
+static gint ett_remote_domain_get_scheduler_parameters_flags_ret_ANONTYPE_params = -1;
+static int hf_remote_domain_get_scheduler_parameters_flags_ret = -1;
+static gint ett_remote_domain_get_scheduler_parameters_flags_ret = -1;
+static gboolean dissect_xdr_remote_domain_get_scheduler_parameters_flags_ret(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_get_scheduler_parameters_flags_ret);
+    hf = hf_remote_domain_get_scheduler_parameters_flags_ret;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "params: ");
+    if (!dissect_xdr_array(tvb, ti, xdrs, hf_remote_domain_get_scheduler_parameters_flags_ret_ANONTYPE_params, ett_remote_domain_get_scheduler_parameters_flags_ret_ANONTYPE_params, REMOTE_DOMAIN_SCHEDULER_PARAMETERS_MAX, dissect_xdr_remote_typed_param)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_set_scheduler_parameters_args_ANONTYPE_params = -1;
+static gint ett_remote_domain_set_scheduler_parameters_args_ANONTYPE_params = -1;
+static int hf_remote_domain_set_scheduler_parameters_args = -1;
+static gint ett_remote_domain_set_scheduler_parameters_args = -1;
+static gboolean dissect_xdr_remote_domain_set_scheduler_parameters_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_set_scheduler_parameters_args);
+    hf = hf_remote_domain_set_scheduler_parameters_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "dom: ");
+    if (!dissect_xdr_remote_nonnull_domain(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "params: ");
+    if (!dissect_xdr_array(tvb, ti, xdrs, hf_remote_domain_set_scheduler_parameters_args_ANONTYPE_params, ett_remote_domain_set_scheduler_parameters_args_ANONTYPE_params, REMOTE_DOMAIN_SCHEDULER_PARAMETERS_MAX, dissect_xdr_remote_typed_param)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_set_scheduler_parameters_flags_args_ANONTYPE_params = -1;
+static gint ett_remote_domain_set_scheduler_parameters_flags_args_ANONTYPE_params = -1;
+static int hf_remote_domain_set_scheduler_parameters_flags_args = -1;
+static gint ett_remote_domain_set_scheduler_parameters_flags_args = -1;
+static gboolean dissect_xdr_remote_domain_set_scheduler_parameters_flags_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_set_scheduler_parameters_flags_args);
+    hf = hf_remote_domain_set_scheduler_parameters_flags_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "dom: ");
+    if (!dissect_xdr_remote_nonnull_domain(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "params: ");
+    if (!dissect_xdr_array(tvb, ti, xdrs, hf_remote_domain_set_scheduler_parameters_flags_args_ANONTYPE_params, ett_remote_domain_set_scheduler_parameters_flags_args_ANONTYPE_params, REMOTE_DOMAIN_SCHEDULER_PARAMETERS_MAX, dissect_xdr_remote_typed_param)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "flags: ");
+    if (!dissect_xdr_u_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_set_blkio_parameters_args_ANONTYPE_params = -1;
+static gint ett_remote_domain_set_blkio_parameters_args_ANONTYPE_params = -1;
+static int hf_remote_domain_set_blkio_parameters_args = -1;
+static gint ett_remote_domain_set_blkio_parameters_args = -1;
+static gboolean dissect_xdr_remote_domain_set_blkio_parameters_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_set_blkio_parameters_args);
+    hf = hf_remote_domain_set_blkio_parameters_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "dom: ");
+    if (!dissect_xdr_remote_nonnull_domain(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "params: ");
+    if (!dissect_xdr_array(tvb, ti, xdrs, hf_remote_domain_set_blkio_parameters_args_ANONTYPE_params, ett_remote_domain_set_blkio_parameters_args_ANONTYPE_params, REMOTE_DOMAIN_BLKIO_PARAMETERS_MAX, dissect_xdr_remote_typed_param)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "flags: ");
+    if (!dissect_xdr_u_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_get_blkio_parameters_args = -1;
+static gint ett_remote_domain_get_blkio_parameters_args = -1;
+static gboolean dissect_xdr_remote_domain_get_blkio_parameters_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_get_blkio_parameters_args);
+    hf = hf_remote_domain_get_blkio_parameters_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "dom: ");
+    if (!dissect_xdr_remote_nonnull_domain(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "nparams: ");
+    if (!dissect_xdr_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "flags: ");
+    if (!dissect_xdr_u_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_get_blkio_parameters_ret_ANONTYPE_params = -1;
+static gint ett_remote_domain_get_blkio_parameters_ret_ANONTYPE_params = -1;
+static int hf_remote_domain_get_blkio_parameters_ret = -1;
+static gint ett_remote_domain_get_blkio_parameters_ret = -1;
+static gboolean dissect_xdr_remote_domain_get_blkio_parameters_ret(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_get_blkio_parameters_ret);
+    hf = hf_remote_domain_get_blkio_parameters_ret;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "params: ");
+    if (!dissect_xdr_array(tvb, ti, xdrs, hf_remote_domain_get_blkio_parameters_ret_ANONTYPE_params, ett_remote_domain_get_blkio_parameters_ret_ANONTYPE_params, REMOTE_DOMAIN_BLKIO_PARAMETERS_MAX, dissect_xdr_remote_typed_param)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "nparams: ");
+    if (!dissect_xdr_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_set_memory_parameters_args_ANONTYPE_params = -1;
+static gint ett_remote_domain_set_memory_parameters_args_ANONTYPE_params = -1;
+static int hf_remote_domain_set_memory_parameters_args = -1;
+static gint ett_remote_domain_set_memory_parameters_args = -1;
+static gboolean dissect_xdr_remote_domain_set_memory_parameters_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_set_memory_parameters_args);
+    hf = hf_remote_domain_set_memory_parameters_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "dom: ");
+    if (!dissect_xdr_remote_nonnull_domain(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "params: ");
+    if (!dissect_xdr_array(tvb, ti, xdrs, hf_remote_domain_set_memory_parameters_args_ANONTYPE_params, ett_remote_domain_set_memory_parameters_args_ANONTYPE_params, REMOTE_DOMAIN_MEMORY_PARAMETERS_MAX, dissect_xdr_remote_typed_param)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "flags: ");
+    if (!dissect_xdr_u_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_get_memory_parameters_args = -1;
+static gint ett_remote_domain_get_memory_parameters_args = -1;
+static gboolean dissect_xdr_remote_domain_get_memory_parameters_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_get_memory_parameters_args);
+    hf = hf_remote_domain_get_memory_parameters_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "dom: ");
+    if (!dissect_xdr_remote_nonnull_domain(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "nparams: ");
+    if (!dissect_xdr_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "flags: ");
+    if (!dissect_xdr_u_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_get_memory_parameters_ret_ANONTYPE_params = -1;
+static gint ett_remote_domain_get_memory_parameters_ret_ANONTYPE_params = -1;
+static int hf_remote_domain_get_memory_parameters_ret = -1;
+static gint ett_remote_domain_get_memory_parameters_ret = -1;
+static gboolean dissect_xdr_remote_domain_get_memory_parameters_ret(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_get_memory_parameters_ret);
+    hf = hf_remote_domain_get_memory_parameters_ret;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "params: ");
+    if (!dissect_xdr_array(tvb, ti, xdrs, hf_remote_domain_get_memory_parameters_ret_ANONTYPE_params, ett_remote_domain_get_memory_parameters_ret_ANONTYPE_params, REMOTE_DOMAIN_MEMORY_PARAMETERS_MAX, dissect_xdr_remote_typed_param)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "nparams: ");
+    if (!dissect_xdr_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_block_resize_args = -1;
+static gint ett_remote_domain_block_resize_args = -1;
+static gboolean dissect_xdr_remote_domain_block_resize_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_block_resize_args);
+    hf = hf_remote_domain_block_resize_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "dom: ");
+    if (!dissect_xdr_remote_nonnull_domain(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "disk: ");
+    if (!dissect_xdr_remote_nonnull_string(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "size: ");
+    if (!dissect_xdr_u_hyper(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "flags: ");
+    if (!dissect_xdr_u_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_set_numa_parameters_args_ANONTYPE_params = -1;
+static gint ett_remote_domain_set_numa_parameters_args_ANONTYPE_params = -1;
+static int hf_remote_domain_set_numa_parameters_args = -1;
+static gint ett_remote_domain_set_numa_parameters_args = -1;
+static gboolean dissect_xdr_remote_domain_set_numa_parameters_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_set_numa_parameters_args);
+    hf = hf_remote_domain_set_numa_parameters_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "dom: ");
+    if (!dissect_xdr_remote_nonnull_domain(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "params: ");
+    if (!dissect_xdr_array(tvb, ti, xdrs, hf_remote_domain_set_numa_parameters_args_ANONTYPE_params, ett_remote_domain_set_numa_parameters_args_ANONTYPE_params, REMOTE_DOMAIN_NUMA_PARAMETERS_MAX, dissect_xdr_remote_typed_param)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "flags: ");
+    if (!dissect_xdr_u_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_get_numa_parameters_args = -1;
+static gint ett_remote_domain_get_numa_parameters_args = -1;
+static gboolean dissect_xdr_remote_domain_get_numa_parameters_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_get_numa_parameters_args);
+    hf = hf_remote_domain_get_numa_parameters_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "dom: ");
+    if (!dissect_xdr_remote_nonnull_domain(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "nparams: ");
+    if (!dissect_xdr_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "flags: ");
+    if (!dissect_xdr_u_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_get_numa_parameters_ret_ANONTYPE_params = -1;
+static gint ett_remote_domain_get_numa_parameters_ret_ANONTYPE_params = -1;
+static int hf_remote_domain_get_numa_parameters_ret = -1;
+static gint ett_remote_domain_get_numa_parameters_ret = -1;
+static gboolean dissect_xdr_remote_domain_get_numa_parameters_ret(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_get_numa_parameters_ret);
+    hf = hf_remote_domain_get_numa_parameters_ret;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "params: ");
+    if (!dissect_xdr_array(tvb, ti, xdrs, hf_remote_domain_get_numa_parameters_ret_ANONTYPE_params, ett_remote_domain_get_numa_parameters_ret_ANONTYPE_params, REMOTE_DOMAIN_NUMA_PARAMETERS_MAX, dissect_xdr_remote_typed_param)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "nparams: ");
+    if (!dissect_xdr_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_block_stats_args = -1;
+static gint ett_remote_domain_block_stats_args = -1;
+static gboolean dissect_xdr_remote_domain_block_stats_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_block_stats_args);
+    hf = hf_remote_domain_block_stats_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "dom: ");
+    if (!dissect_xdr_remote_nonnull_domain(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "path: ");
+    if (!dissect_xdr_remote_nonnull_string(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_block_stats_ret = -1;
+static gint ett_remote_domain_block_stats_ret = -1;
+static gboolean dissect_xdr_remote_domain_block_stats_ret(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_block_stats_ret);
+    hf = hf_remote_domain_block_stats_ret;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "rd_req: ");
+    if (!dissect_xdr_hyper(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "rd_bytes: ");
+    if (!dissect_xdr_hyper(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "wr_req: ");
+    if (!dissect_xdr_hyper(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "wr_bytes: ");
+    if (!dissect_xdr_hyper(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "errs: ");
+    if (!dissect_xdr_hyper(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_block_stats_flags_args = -1;
+static gint ett_remote_domain_block_stats_flags_args = -1;
+static gboolean dissect_xdr_remote_domain_block_stats_flags_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_block_stats_flags_args);
+    hf = hf_remote_domain_block_stats_flags_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "dom: ");
+    if (!dissect_xdr_remote_nonnull_domain(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "path: ");
+    if (!dissect_xdr_remote_nonnull_string(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "nparams: ");
+    if (!dissect_xdr_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "flags: ");
+    if (!dissect_xdr_u_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_block_stats_flags_ret_ANONTYPE_params = -1;
+static gint ett_remote_domain_block_stats_flags_ret_ANONTYPE_params = -1;
+static int hf_remote_domain_block_stats_flags_ret = -1;
+static gint ett_remote_domain_block_stats_flags_ret = -1;
+static gboolean dissect_xdr_remote_domain_block_stats_flags_ret(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_block_stats_flags_ret);
+    hf = hf_remote_domain_block_stats_flags_ret;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "params: ");
+    if (!dissect_xdr_array(tvb, ti, xdrs, hf_remote_domain_block_stats_flags_ret_ANONTYPE_params, ett_remote_domain_block_stats_flags_ret_ANONTYPE_params, REMOTE_DOMAIN_BLOCK_STATS_PARAMETERS_MAX, dissect_xdr_remote_typed_param)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "nparams: ");
+    if (!dissect_xdr_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_interface_stats_args = -1;
+static gint ett_remote_domain_interface_stats_args = -1;
+static gboolean dissect_xdr_remote_domain_interface_stats_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_interface_stats_args);
+    hf = hf_remote_domain_interface_stats_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "dom: ");
+    if (!dissect_xdr_remote_nonnull_domain(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "path: ");
+    if (!dissect_xdr_remote_nonnull_string(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_interface_stats_ret = -1;
+static gint ett_remote_domain_interface_stats_ret = -1;
+static gboolean dissect_xdr_remote_domain_interface_stats_ret(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_interface_stats_ret);
+    hf = hf_remote_domain_interface_stats_ret;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "rx_bytes: ");
+    if (!dissect_xdr_hyper(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "rx_packets: ");
+    if (!dissect_xdr_hyper(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "rx_errs: ");
+    if (!dissect_xdr_hyper(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "rx_drop: ");
+    if (!dissect_xdr_hyper(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "tx_bytes: ");
+    if (!dissect_xdr_hyper(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "tx_packets: ");
+    if (!dissect_xdr_hyper(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "tx_errs: ");
+    if (!dissect_xdr_hyper(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "tx_drop: ");
+    if (!dissect_xdr_hyper(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_set_interface_parameters_args_ANONTYPE_params = -1;
+static gint ett_remote_domain_set_interface_parameters_args_ANONTYPE_params = -1;
+static int hf_remote_domain_set_interface_parameters_args = -1;
+static gint ett_remote_domain_set_interface_parameters_args = -1;
+static gboolean dissect_xdr_remote_domain_set_interface_parameters_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_set_interface_parameters_args);
+    hf = hf_remote_domain_set_interface_parameters_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "dom: ");
+    if (!dissect_xdr_remote_nonnull_domain(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "device: ");
+    if (!dissect_xdr_remote_nonnull_string(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "params: ");
+    if (!dissect_xdr_array(tvb, ti, xdrs, hf_remote_domain_set_interface_parameters_args_ANONTYPE_params, ett_remote_domain_set_interface_parameters_args_ANONTYPE_params, REMOTE_DOMAIN_INTERFACE_PARAMETERS_MAX, dissect_xdr_remote_typed_param)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "flags: ");
+    if (!dissect_xdr_u_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_get_interface_parameters_args = -1;
+static gint ett_remote_domain_get_interface_parameters_args = -1;
+static gboolean dissect_xdr_remote_domain_get_interface_parameters_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_get_interface_parameters_args);
+    hf = hf_remote_domain_get_interface_parameters_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "dom: ");
+    if (!dissect_xdr_remote_nonnull_domain(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "device: ");
+    if (!dissect_xdr_remote_nonnull_string(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "nparams: ");
+    if (!dissect_xdr_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "flags: ");
+    if (!dissect_xdr_u_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_get_interface_parameters_ret_ANONTYPE_params = -1;
+static gint ett_remote_domain_get_interface_parameters_ret_ANONTYPE_params = -1;
+static int hf_remote_domain_get_interface_parameters_ret = -1;
+static gint ett_remote_domain_get_interface_parameters_ret = -1;
+static gboolean dissect_xdr_remote_domain_get_interface_parameters_ret(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_get_interface_parameters_ret);
+    hf = hf_remote_domain_get_interface_parameters_ret;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "params: ");
+    if (!dissect_xdr_array(tvb, ti, xdrs, hf_remote_domain_get_interface_parameters_ret_ANONTYPE_params, ett_remote_domain_get_interface_parameters_ret_ANONTYPE_params, REMOTE_DOMAIN_INTERFACE_PARAMETERS_MAX, dissect_xdr_remote_typed_param)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "nparams: ");
+    if (!dissect_xdr_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_memory_stats_args = -1;
+static gint ett_remote_domain_memory_stats_args = -1;
+static gboolean dissect_xdr_remote_domain_memory_stats_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_memory_stats_args);
+    hf = hf_remote_domain_memory_stats_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "dom: ");
+    if (!dissect_xdr_remote_nonnull_domain(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "maxStats: ");
+    if (!dissect_xdr_u_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "flags: ");
+    if (!dissect_xdr_u_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_memory_stat = -1;
+static gint ett_remote_domain_memory_stat = -1;
+static gboolean dissect_xdr_remote_domain_memory_stat(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_memory_stat);
+    hf = hf_remote_domain_memory_stat;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "tag: ");
+    if (!dissect_xdr_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "val: ");
+    if (!dissect_xdr_u_hyper(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_memory_stats_ret_ANONTYPE_stats = -1;
+static gint ett_remote_domain_memory_stats_ret_ANONTYPE_stats = -1;
+static int hf_remote_domain_memory_stats_ret = -1;
+static gint ett_remote_domain_memory_stats_ret = -1;
+static gboolean dissect_xdr_remote_domain_memory_stats_ret(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_memory_stats_ret);
+    hf = hf_remote_domain_memory_stats_ret;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "stats: ");
+    if (!dissect_xdr_array(tvb, ti, xdrs, hf_remote_domain_memory_stats_ret_ANONTYPE_stats, ett_remote_domain_memory_stats_ret_ANONTYPE_stats, REMOTE_DOMAIN_MEMORY_STATS_MAX, dissect_xdr_remote_domain_memory_stat)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_block_peek_args = -1;
+static gint ett_remote_domain_block_peek_args = -1;
+static gboolean dissect_xdr_remote_domain_block_peek_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_block_peek_args);
+    hf = hf_remote_domain_block_peek_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "dom: ");
+    if (!dissect_xdr_remote_nonnull_domain(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "path: ");
+    if (!dissect_xdr_remote_nonnull_string(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "offset: ");
+    if (!dissect_xdr_u_hyper(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "size: ");
+    if (!dissect_xdr_u_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "flags: ");
+    if (!dissect_xdr_u_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_block_peek_ret = -1;
+static gint ett_remote_domain_block_peek_ret = -1;
+static gboolean dissect_xdr_remote_domain_block_peek_ret(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_block_peek_ret);
+    hf = hf_remote_domain_block_peek_ret;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "buffer: ");
+    if (!dissect_xdr_bytes(tvb, ti, xdrs, hf, REMOTE_DOMAIN_BLOCK_PEEK_BUFFER_MAX)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_memory_peek_args = -1;
+static gint ett_remote_domain_memory_peek_args = -1;
+static gboolean dissect_xdr_remote_domain_memory_peek_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_memory_peek_args);
+    hf = hf_remote_domain_memory_peek_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "dom: ");
+    if (!dissect_xdr_remote_nonnull_domain(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "offset: ");
+    if (!dissect_xdr_u_hyper(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "size: ");
+    if (!dissect_xdr_u_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "flags: ");
+    if (!dissect_xdr_u_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_memory_peek_ret = -1;
+static gint ett_remote_domain_memory_peek_ret = -1;
+static gboolean dissect_xdr_remote_domain_memory_peek_ret(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_memory_peek_ret);
+    hf = hf_remote_domain_memory_peek_ret;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "buffer: ");
+    if (!dissect_xdr_bytes(tvb, ti, xdrs, hf, REMOTE_DOMAIN_MEMORY_PEEK_BUFFER_MAX)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_get_block_info_args = -1;
+static gint ett_remote_domain_get_block_info_args = -1;
+static gboolean dissect_xdr_remote_domain_get_block_info_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_get_block_info_args);
+    hf = hf_remote_domain_get_block_info_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "dom: ");
+    if (!dissect_xdr_remote_nonnull_domain(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "path: ");
+    if (!dissect_xdr_remote_nonnull_string(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "flags: ");
+    if (!dissect_xdr_u_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_get_block_info_ret = -1;
+static gint ett_remote_domain_get_block_info_ret = -1;
+static gboolean dissect_xdr_remote_domain_get_block_info_ret(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_get_block_info_ret);
+    hf = hf_remote_domain_get_block_info_ret;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "allocation: ");
+    if (!dissect_xdr_u_hyper(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "capacity: ");
+    if (!dissect_xdr_u_hyper(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "physical: ");
+    if (!dissect_xdr_u_hyper(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_connect_list_domains_args = -1;
+static gint ett_remote_connect_list_domains_args = -1;
+static gboolean dissect_xdr_remote_connect_list_domains_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_connect_list_domains_args);
+    hf = hf_remote_connect_list_domains_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "maxids: ");
+    if (!dissect_xdr_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_connect_list_domains_ret_ANONTYPE_ids = -1;
+static gint ett_remote_connect_list_domains_ret_ANONTYPE_ids = -1;
+static int hf_remote_connect_list_domains_ret = -1;
+static gint ett_remote_connect_list_domains_ret = -1;
+static gboolean dissect_xdr_remote_connect_list_domains_ret(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_connect_list_domains_ret);
+    hf = hf_remote_connect_list_domains_ret;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "ids: ");
+    if (!dissect_xdr_array(tvb, ti, xdrs, hf_remote_connect_list_domains_ret_ANONTYPE_ids, ett_remote_connect_list_domains_ret_ANONTYPE_ids, REMOTE_DOMAIN_ID_LIST_MAX, dissect_xdr_int)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_connect_num_of_domains_ret = -1;
+static gint ett_remote_connect_num_of_domains_ret = -1;
+static gboolean dissect_xdr_remote_connect_num_of_domains_ret(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_connect_num_of_domains_ret);
+    hf = hf_remote_connect_num_of_domains_ret;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "num: ");
+    if (!dissect_xdr_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_create_xml_args = -1;
+static gint ett_remote_domain_create_xml_args = -1;
+static gboolean dissect_xdr_remote_domain_create_xml_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_create_xml_args);
+    hf = hf_remote_domain_create_xml_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "xml_desc: ");
+    if (!dissect_xdr_remote_nonnull_string(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "flags: ");
+    if (!dissect_xdr_u_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_create_xml_ret = -1;
+static gint ett_remote_domain_create_xml_ret = -1;
+static gboolean dissect_xdr_remote_domain_create_xml_ret(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_create_xml_ret);
+    hf = hf_remote_domain_create_xml_ret;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "dom: ");
+    if (!dissect_xdr_remote_nonnull_domain(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_lookup_by_id_args = -1;
+static gint ett_remote_domain_lookup_by_id_args = -1;
+static gboolean dissect_xdr_remote_domain_lookup_by_id_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_lookup_by_id_args);
+    hf = hf_remote_domain_lookup_by_id_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "id: ");
+    if (!dissect_xdr_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_lookup_by_id_ret = -1;
+static gint ett_remote_domain_lookup_by_id_ret = -1;
+static gboolean dissect_xdr_remote_domain_lookup_by_id_ret(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_lookup_by_id_ret);
+    hf = hf_remote_domain_lookup_by_id_ret;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "dom: ");
+    if (!dissect_xdr_remote_nonnull_domain(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_lookup_by_uuid_args = -1;
+static gint ett_remote_domain_lookup_by_uuid_args = -1;
+static gboolean dissect_xdr_remote_domain_lookup_by_uuid_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_lookup_by_uuid_args);
+    hf = hf_remote_domain_lookup_by_uuid_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "uuid: ");
+    if (!dissect_xdr_remote_uuid(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_lookup_by_uuid_ret = -1;
+static gint ett_remote_domain_lookup_by_uuid_ret = -1;
+static gboolean dissect_xdr_remote_domain_lookup_by_uuid_ret(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_lookup_by_uuid_ret);
+    hf = hf_remote_domain_lookup_by_uuid_ret;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "dom: ");
+    if (!dissect_xdr_remote_nonnull_domain(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_lookup_by_name_args = -1;
+static gint ett_remote_domain_lookup_by_name_args = -1;
+static gboolean dissect_xdr_remote_domain_lookup_by_name_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_lookup_by_name_args);
+    hf = hf_remote_domain_lookup_by_name_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "name: ");
+    if (!dissect_xdr_remote_nonnull_string(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_lookup_by_name_ret = -1;
+static gint ett_remote_domain_lookup_by_name_ret = -1;
+static gboolean dissect_xdr_remote_domain_lookup_by_name_ret(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_lookup_by_name_ret);
+    hf = hf_remote_domain_lookup_by_name_ret;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "dom: ");
+    if (!dissect_xdr_remote_nonnull_domain(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_suspend_args = -1;
+static gint ett_remote_domain_suspend_args = -1;
+static gboolean dissect_xdr_remote_domain_suspend_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_suspend_args);
+    hf = hf_remote_domain_suspend_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "dom: ");
+    if (!dissect_xdr_remote_nonnull_domain(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_resume_args = -1;
+static gint ett_remote_domain_resume_args = -1;
+static gboolean dissect_xdr_remote_domain_resume_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_resume_args);
+    hf = hf_remote_domain_resume_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "dom: ");
+    if (!dissect_xdr_remote_nonnull_domain(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_pm_suspend_for_duration_args = -1;
+static gint ett_remote_domain_pm_suspend_for_duration_args = -1;
+static gboolean dissect_xdr_remote_domain_pm_suspend_for_duration_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_pm_suspend_for_duration_args);
+    hf = hf_remote_domain_pm_suspend_for_duration_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "dom: ");
+    if (!dissect_xdr_remote_nonnull_domain(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "target: ");
+    if (!dissect_xdr_u_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "duration: ");
+    if (!dissect_xdr_u_hyper(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "flags: ");
+    if (!dissect_xdr_u_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_pm_wakeup_args = -1;
+static gint ett_remote_domain_pm_wakeup_args = -1;
+static gboolean dissect_xdr_remote_domain_pm_wakeup_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_pm_wakeup_args);
+    hf = hf_remote_domain_pm_wakeup_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "dom: ");
+    if (!dissect_xdr_remote_nonnull_domain(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "flags: ");
+    if (!dissect_xdr_u_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_shutdown_args = -1;
+static gint ett_remote_domain_shutdown_args = -1;
+static gboolean dissect_xdr_remote_domain_shutdown_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_shutdown_args);
+    hf = hf_remote_domain_shutdown_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "dom: ");
+    if (!dissect_xdr_remote_nonnull_domain(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_reboot_args = -1;
+static gint ett_remote_domain_reboot_args = -1;
+static gboolean dissect_xdr_remote_domain_reboot_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_reboot_args);
+    hf = hf_remote_domain_reboot_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "dom: ");
+    if (!dissect_xdr_remote_nonnull_domain(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "flags: ");
+    if (!dissect_xdr_u_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_reset_args = -1;
+static gint ett_remote_domain_reset_args = -1;
+static gboolean dissect_xdr_remote_domain_reset_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_reset_args);
+    hf = hf_remote_domain_reset_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "dom: ");
+    if (!dissect_xdr_remote_nonnull_domain(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "flags: ");
+    if (!dissect_xdr_u_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_destroy_args = -1;
+static gint ett_remote_domain_destroy_args = -1;
+static gboolean dissect_xdr_remote_domain_destroy_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_destroy_args);
+    hf = hf_remote_domain_destroy_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "dom: ");
+    if (!dissect_xdr_remote_nonnull_domain(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_destroy_flags_args = -1;
+static gint ett_remote_domain_destroy_flags_args = -1;
+static gboolean dissect_xdr_remote_domain_destroy_flags_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_destroy_flags_args);
+    hf = hf_remote_domain_destroy_flags_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "dom: ");
+    if (!dissect_xdr_remote_nonnull_domain(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "flags: ");
+    if (!dissect_xdr_u_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_get_os_type_args = -1;
+static gint ett_remote_domain_get_os_type_args = -1;
+static gboolean dissect_xdr_remote_domain_get_os_type_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_get_os_type_args);
+    hf = hf_remote_domain_get_os_type_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "dom: ");
+    if (!dissect_xdr_remote_nonnull_domain(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_get_os_type_ret = -1;
+static gint ett_remote_domain_get_os_type_ret = -1;
+static gboolean dissect_xdr_remote_domain_get_os_type_ret(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_get_os_type_ret);
+    hf = hf_remote_domain_get_os_type_ret;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "type: ");
+    if (!dissect_xdr_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_get_max_memory_args = -1;
+static gint ett_remote_domain_get_max_memory_args = -1;
+static gboolean dissect_xdr_remote_domain_get_max_memory_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_get_max_memory_args);
+    hf = hf_remote_domain_get_max_memory_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "dom: ");
+    if (!dissect_xdr_remote_nonnull_domain(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_get_max_memory_ret = -1;
+static gint ett_remote_domain_get_max_memory_ret = -1;
+static gboolean dissect_xdr_remote_domain_get_max_memory_ret(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_get_max_memory_ret);
+    hf = hf_remote_domain_get_max_memory_ret;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "memory: ");
+    if (!dissect_xdr_u_hyper(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_set_max_memory_args = -1;
+static gint ett_remote_domain_set_max_memory_args = -1;
+static gboolean dissect_xdr_remote_domain_set_max_memory_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_set_max_memory_args);
+    hf = hf_remote_domain_set_max_memory_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "dom: ");
+    if (!dissect_xdr_remote_nonnull_domain(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "memory: ");
+    if (!dissect_xdr_u_hyper(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_set_memory_args = -1;
+static gint ett_remote_domain_set_memory_args = -1;
+static gboolean dissect_xdr_remote_domain_set_memory_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_set_memory_args);
+    hf = hf_remote_domain_set_memory_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "dom: ");
+    if (!dissect_xdr_remote_nonnull_domain(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "memory: ");
+    if (!dissect_xdr_u_hyper(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_set_memory_flags_args = -1;
+static gint ett_remote_domain_set_memory_flags_args = -1;
+static gboolean dissect_xdr_remote_domain_set_memory_flags_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_set_memory_flags_args);
+    hf = hf_remote_domain_set_memory_flags_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "dom: ");
+    if (!dissect_xdr_remote_nonnull_domain(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "memory: ");
+    if (!dissect_xdr_u_hyper(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "flags: ");
+    if (!dissect_xdr_u_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_get_info_args = -1;
+static gint ett_remote_domain_get_info_args = -1;
+static gboolean dissect_xdr_remote_domain_get_info_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_get_info_args);
+    hf = hf_remote_domain_get_info_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "dom: ");
+    if (!dissect_xdr_remote_nonnull_domain(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_get_info_ret = -1;
+static gint ett_remote_domain_get_info_ret = -1;
+static gboolean dissect_xdr_remote_domain_get_info_ret(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_get_info_ret);
+    hf = hf_remote_domain_get_info_ret;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "state: ");
+    if (!dissect_xdr_u_char(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "maxMem: ");
+    if (!dissect_xdr_u_hyper(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "memory: ");
+    if (!dissect_xdr_u_hyper(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "nrVirtCpu: ");
+    if (!dissect_xdr_u_short(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "cpuTime: ");
+    if (!dissect_xdr_u_hyper(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_save_args = -1;
+static gint ett_remote_domain_save_args = -1;
+static gboolean dissect_xdr_remote_domain_save_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_save_args);
+    hf = hf_remote_domain_save_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "dom: ");
+    if (!dissect_xdr_remote_nonnull_domain(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "to: ");
+    if (!dissect_xdr_remote_nonnull_string(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_save_flags_args = -1;
+static gint ett_remote_domain_save_flags_args = -1;
+static gboolean dissect_xdr_remote_domain_save_flags_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_save_flags_args);
+    hf = hf_remote_domain_save_flags_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "dom: ");
+    if (!dissect_xdr_remote_nonnull_domain(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "to: ");
+    if (!dissect_xdr_remote_nonnull_string(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "dxml: ");
+    if (!dissect_xdr_remote_string(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "flags: ");
+    if (!dissect_xdr_u_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_restore_args = -1;
+static gint ett_remote_domain_restore_args = -1;
+static gboolean dissect_xdr_remote_domain_restore_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_restore_args);
+    hf = hf_remote_domain_restore_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "from: ");
+    if (!dissect_xdr_remote_nonnull_string(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_restore_flags_args = -1;
+static gint ett_remote_domain_restore_flags_args = -1;
+static gboolean dissect_xdr_remote_domain_restore_flags_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_restore_flags_args);
+    hf = hf_remote_domain_restore_flags_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "from: ");
+    if (!dissect_xdr_remote_nonnull_string(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "dxml: ");
+    if (!dissect_xdr_remote_string(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "flags: ");
+    if (!dissect_xdr_u_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_save_image_get_xml_desc_args = -1;
+static gint ett_remote_domain_save_image_get_xml_desc_args = -1;
+static gboolean dissect_xdr_remote_domain_save_image_get_xml_desc_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_save_image_get_xml_desc_args);
+    hf = hf_remote_domain_save_image_get_xml_desc_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "file: ");
+    if (!dissect_xdr_remote_nonnull_string(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "flags: ");
+    if (!dissect_xdr_u_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_save_image_get_xml_desc_ret = -1;
+static gint ett_remote_domain_save_image_get_xml_desc_ret = -1;
+static gboolean dissect_xdr_remote_domain_save_image_get_xml_desc_ret(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_save_image_get_xml_desc_ret);
+    hf = hf_remote_domain_save_image_get_xml_desc_ret;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "xml: ");
+    if (!dissect_xdr_remote_nonnull_string(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_save_image_define_xml_args = -1;
+static gint ett_remote_domain_save_image_define_xml_args = -1;
+static gboolean dissect_xdr_remote_domain_save_image_define_xml_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_save_image_define_xml_args);
+    hf = hf_remote_domain_save_image_define_xml_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "file: ");
+    if (!dissect_xdr_remote_nonnull_string(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "dxml: ");
+    if (!dissect_xdr_remote_nonnull_string(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "flags: ");
+    if (!dissect_xdr_u_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_core_dump_args = -1;
+static gint ett_remote_domain_core_dump_args = -1;
+static gboolean dissect_xdr_remote_domain_core_dump_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_core_dump_args);
+    hf = hf_remote_domain_core_dump_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "dom: ");
+    if (!dissect_xdr_remote_nonnull_domain(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "to: ");
+    if (!dissect_xdr_remote_nonnull_string(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "flags: ");
+    if (!dissect_xdr_u_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_screenshot_args = -1;
+static gint ett_remote_domain_screenshot_args = -1;
+static gboolean dissect_xdr_remote_domain_screenshot_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_screenshot_args);
+    hf = hf_remote_domain_screenshot_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "dom: ");
+    if (!dissect_xdr_remote_nonnull_domain(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "screen: ");
+    if (!dissect_xdr_u_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "flags: ");
+    if (!dissect_xdr_u_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_screenshot_ret = -1;
+static gint ett_remote_domain_screenshot_ret = -1;
+static gboolean dissect_xdr_remote_domain_screenshot_ret(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_screenshot_ret);
+    hf = hf_remote_domain_screenshot_ret;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "mime: ");
+    if (!dissect_xdr_remote_string(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_get_xml_desc_args = -1;
+static gint ett_remote_domain_get_xml_desc_args = -1;
+static gboolean dissect_xdr_remote_domain_get_xml_desc_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_get_xml_desc_args);
+    hf = hf_remote_domain_get_xml_desc_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "dom: ");
+    if (!dissect_xdr_remote_nonnull_domain(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "flags: ");
+    if (!dissect_xdr_u_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_get_xml_desc_ret = -1;
+static gint ett_remote_domain_get_xml_desc_ret = -1;
+static gboolean dissect_xdr_remote_domain_get_xml_desc_ret(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_get_xml_desc_ret);
+    hf = hf_remote_domain_get_xml_desc_ret;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "xml: ");
+    if (!dissect_xdr_remote_nonnull_string(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_migrate_prepare_args = -1;
+static gint ett_remote_domain_migrate_prepare_args = -1;
+static gboolean dissect_xdr_remote_domain_migrate_prepare_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_migrate_prepare_args);
+    hf = hf_remote_domain_migrate_prepare_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "uri_in: ");
+    if (!dissect_xdr_remote_string(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "flags: ");
+    if (!dissect_xdr_u_hyper(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "dname: ");
+    if (!dissect_xdr_remote_string(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "resource: ");
+    if (!dissect_xdr_u_hyper(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_migrate_prepare_ret = -1;
+static gint ett_remote_domain_migrate_prepare_ret = -1;
+static gboolean dissect_xdr_remote_domain_migrate_prepare_ret(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_migrate_prepare_ret);
+    hf = hf_remote_domain_migrate_prepare_ret;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "cookie: ");
+    if (!dissect_xdr_bytes(tvb, ti, xdrs, hf, REMOTE_MIGRATE_COOKIE_MAX)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "uri_out: ");
+    if (!dissect_xdr_remote_string(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_migrate_perform_args = -1;
+static gint ett_remote_domain_migrate_perform_args = -1;
+static gboolean dissect_xdr_remote_domain_migrate_perform_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_migrate_perform_args);
+    hf = hf_remote_domain_migrate_perform_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "dom: ");
+    if (!dissect_xdr_remote_nonnull_domain(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "cookie: ");
+    if (!dissect_xdr_bytes(tvb, ti, xdrs, hf, REMOTE_MIGRATE_COOKIE_MAX)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "uri: ");
+    if (!dissect_xdr_remote_nonnull_string(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "flags: ");
+    if (!dissect_xdr_u_hyper(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "dname: ");
+    if (!dissect_xdr_remote_string(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "resource: ");
+    if (!dissect_xdr_u_hyper(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_migrate_finish_args = -1;
+static gint ett_remote_domain_migrate_finish_args = -1;
+static gboolean dissect_xdr_remote_domain_migrate_finish_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_migrate_finish_args);
+    hf = hf_remote_domain_migrate_finish_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "dname: ");
+    if (!dissect_xdr_remote_nonnull_string(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "cookie: ");
+    if (!dissect_xdr_bytes(tvb, ti, xdrs, hf, REMOTE_MIGRATE_COOKIE_MAX)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "uri: ");
+    if (!dissect_xdr_remote_nonnull_string(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "flags: ");
+    if (!dissect_xdr_u_hyper(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_migrate_finish_ret = -1;
+static gint ett_remote_domain_migrate_finish_ret = -1;
+static gboolean dissect_xdr_remote_domain_migrate_finish_ret(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_migrate_finish_ret);
+    hf = hf_remote_domain_migrate_finish_ret;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "ddom: ");
+    if (!dissect_xdr_remote_nonnull_domain(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_migrate_prepare2_args = -1;
+static gint ett_remote_domain_migrate_prepare2_args = -1;
+static gboolean dissect_xdr_remote_domain_migrate_prepare2_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_migrate_prepare2_args);
+    hf = hf_remote_domain_migrate_prepare2_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "uri_in: ");
+    if (!dissect_xdr_remote_string(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "flags: ");
+    if (!dissect_xdr_u_hyper(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "dname: ");
+    if (!dissect_xdr_remote_string(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "resource: ");
+    if (!dissect_xdr_u_hyper(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "dom_xml: ");
+    if (!dissect_xdr_remote_nonnull_string(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_migrate_prepare2_ret = -1;
+static gint ett_remote_domain_migrate_prepare2_ret = -1;
+static gboolean dissect_xdr_remote_domain_migrate_prepare2_ret(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_migrate_prepare2_ret);
+    hf = hf_remote_domain_migrate_prepare2_ret;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "cookie: ");
+    if (!dissect_xdr_bytes(tvb, ti, xdrs, hf, REMOTE_MIGRATE_COOKIE_MAX)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "uri_out: ");
+    if (!dissect_xdr_remote_string(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_migrate_finish2_args = -1;
+static gint ett_remote_domain_migrate_finish2_args = -1;
+static gboolean dissect_xdr_remote_domain_migrate_finish2_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_migrate_finish2_args);
+    hf = hf_remote_domain_migrate_finish2_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "dname: ");
+    if (!dissect_xdr_remote_nonnull_string(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "cookie: ");
+    if (!dissect_xdr_bytes(tvb, ti, xdrs, hf, REMOTE_MIGRATE_COOKIE_MAX)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "uri: ");
+    if (!dissect_xdr_remote_nonnull_string(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "flags: ");
+    if (!dissect_xdr_u_hyper(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "retcode: ");
+    if (!dissect_xdr_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_migrate_finish2_ret = -1;
+static gint ett_remote_domain_migrate_finish2_ret = -1;
+static gboolean dissect_xdr_remote_domain_migrate_finish2_ret(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_migrate_finish2_ret);
+    hf = hf_remote_domain_migrate_finish2_ret;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "ddom: ");
+    if (!dissect_xdr_remote_nonnull_domain(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_connect_list_defined_domains_args = -1;
+static gint ett_remote_connect_list_defined_domains_args = -1;
+static gboolean dissect_xdr_remote_connect_list_defined_domains_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_connect_list_defined_domains_args);
+    hf = hf_remote_connect_list_defined_domains_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "maxnames: ");
+    if (!dissect_xdr_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_connect_list_defined_domains_ret_ANONTYPE_names = -1;
+static gint ett_remote_connect_list_defined_domains_ret_ANONTYPE_names = -1;
+static int hf_remote_connect_list_defined_domains_ret = -1;
+static gint ett_remote_connect_list_defined_domains_ret = -1;
+static gboolean dissect_xdr_remote_connect_list_defined_domains_ret(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_connect_list_defined_domains_ret);
+    hf = hf_remote_connect_list_defined_domains_ret;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "names: ");
+    if (!dissect_xdr_array(tvb, ti, xdrs, hf_remote_connect_list_defined_domains_ret_ANONTYPE_names, ett_remote_connect_list_defined_domains_ret_ANONTYPE_names, REMOTE_DOMAIN_NAME_LIST_MAX, dissect_xdr_remote_nonnull_string)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_connect_num_of_defined_domains_ret = -1;
+static gint ett_remote_connect_num_of_defined_domains_ret = -1;
+static gboolean dissect_xdr_remote_connect_num_of_defined_domains_ret(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_connect_num_of_defined_domains_ret);
+    hf = hf_remote_connect_num_of_defined_domains_ret;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "num: ");
+    if (!dissect_xdr_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_create_args = -1;
+static gint ett_remote_domain_create_args = -1;
+static gboolean dissect_xdr_remote_domain_create_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_create_args);
+    hf = hf_remote_domain_create_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "dom: ");
+    if (!dissect_xdr_remote_nonnull_domain(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_create_with_flags_args = -1;
+static gint ett_remote_domain_create_with_flags_args = -1;
+static gboolean dissect_xdr_remote_domain_create_with_flags_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_create_with_flags_args);
+    hf = hf_remote_domain_create_with_flags_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "dom: ");
+    if (!dissect_xdr_remote_nonnull_domain(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "flags: ");
+    if (!dissect_xdr_u_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_create_with_flags_ret = -1;
+static gint ett_remote_domain_create_with_flags_ret = -1;
+static gboolean dissect_xdr_remote_domain_create_with_flags_ret(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_create_with_flags_ret);
+    hf = hf_remote_domain_create_with_flags_ret;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "dom: ");
+    if (!dissect_xdr_remote_nonnull_domain(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_define_xml_args = -1;
+static gint ett_remote_domain_define_xml_args = -1;
+static gboolean dissect_xdr_remote_domain_define_xml_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_define_xml_args);
+    hf = hf_remote_domain_define_xml_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "xml: ");
+    if (!dissect_xdr_remote_nonnull_string(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_define_xml_ret = -1;
+static gint ett_remote_domain_define_xml_ret = -1;
+static gboolean dissect_xdr_remote_domain_define_xml_ret(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_define_xml_ret);
+    hf = hf_remote_domain_define_xml_ret;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "dom: ");
+    if (!dissect_xdr_remote_nonnull_domain(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_undefine_args = -1;
+static gint ett_remote_domain_undefine_args = -1;
+static gboolean dissect_xdr_remote_domain_undefine_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_undefine_args);
+    hf = hf_remote_domain_undefine_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "dom: ");
+    if (!dissect_xdr_remote_nonnull_domain(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_undefine_flags_args = -1;
+static gint ett_remote_domain_undefine_flags_args = -1;
+static gboolean dissect_xdr_remote_domain_undefine_flags_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_undefine_flags_args);
+    hf = hf_remote_domain_undefine_flags_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "dom: ");
+    if (!dissect_xdr_remote_nonnull_domain(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "flags: ");
+    if (!dissect_xdr_u_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_inject_nmi_args = -1;
+static gint ett_remote_domain_inject_nmi_args = -1;
+static gboolean dissect_xdr_remote_domain_inject_nmi_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_inject_nmi_args);
+    hf = hf_remote_domain_inject_nmi_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "dom: ");
+    if (!dissect_xdr_remote_nonnull_domain(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "flags: ");
+    if (!dissect_xdr_u_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_send_key_args_ANONTYPE_keycodes = -1;
+static gint ett_remote_domain_send_key_args_ANONTYPE_keycodes = -1;
+static int hf_remote_domain_send_key_args = -1;
+static gint ett_remote_domain_send_key_args = -1;
+static gboolean dissect_xdr_remote_domain_send_key_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_send_key_args);
+    hf = hf_remote_domain_send_key_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "dom: ");
+    if (!dissect_xdr_remote_nonnull_domain(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "codeset: ");
+    if (!dissect_xdr_u_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "holdtime: ");
+    if (!dissect_xdr_u_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "keycodes: ");
+    if (!dissect_xdr_array(tvb, ti, xdrs, hf_remote_domain_send_key_args_ANONTYPE_keycodes, ett_remote_domain_send_key_args_ANONTYPE_keycodes, REMOTE_DOMAIN_SEND_KEY_MAX, dissect_xdr_u_int)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "flags: ");
+    if (!dissect_xdr_u_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_send_process_signal_args = -1;
+static gint ett_remote_domain_send_process_signal_args = -1;
+static gboolean dissect_xdr_remote_domain_send_process_signal_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_send_process_signal_args);
+    hf = hf_remote_domain_send_process_signal_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "dom: ");
+    if (!dissect_xdr_remote_nonnull_domain(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "pid_value: ");
+    if (!dissect_xdr_hyper(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "signum: ");
+    if (!dissect_xdr_u_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "flags: ");
+    if (!dissect_xdr_u_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_set_vcpus_args = -1;
+static gint ett_remote_domain_set_vcpus_args = -1;
+static gboolean dissect_xdr_remote_domain_set_vcpus_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_set_vcpus_args);
+    hf = hf_remote_domain_set_vcpus_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "dom: ");
+    if (!dissect_xdr_remote_nonnull_domain(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "nvcpus: ");
+    if (!dissect_xdr_u_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_set_vcpus_flags_args = -1;
+static gint ett_remote_domain_set_vcpus_flags_args = -1;
+static gboolean dissect_xdr_remote_domain_set_vcpus_flags_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_set_vcpus_flags_args);
+    hf = hf_remote_domain_set_vcpus_flags_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "dom: ");
+    if (!dissect_xdr_remote_nonnull_domain(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "nvcpus: ");
+    if (!dissect_xdr_u_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "flags: ");
+    if (!dissect_xdr_u_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_get_vcpus_flags_args = -1;
+static gint ett_remote_domain_get_vcpus_flags_args = -1;
+static gboolean dissect_xdr_remote_domain_get_vcpus_flags_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_get_vcpus_flags_args);
+    hf = hf_remote_domain_get_vcpus_flags_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "dom: ");
+    if (!dissect_xdr_remote_nonnull_domain(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "flags: ");
+    if (!dissect_xdr_u_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_get_vcpus_flags_ret = -1;
+static gint ett_remote_domain_get_vcpus_flags_ret = -1;
+static gboolean dissect_xdr_remote_domain_get_vcpus_flags_ret(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_get_vcpus_flags_ret);
+    hf = hf_remote_domain_get_vcpus_flags_ret;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "num: ");
+    if (!dissect_xdr_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_pin_vcpu_args = -1;
+static gint ett_remote_domain_pin_vcpu_args = -1;
+static gboolean dissect_xdr_remote_domain_pin_vcpu_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_pin_vcpu_args);
+    hf = hf_remote_domain_pin_vcpu_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "dom: ");
+    if (!dissect_xdr_remote_nonnull_domain(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "vcpu: ");
+    if (!dissect_xdr_u_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "cpumap: ");
+    if (!dissect_xdr_bytes(tvb, ti, xdrs, hf, REMOTE_CPUMAP_MAX)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_pin_vcpu_flags_args = -1;
+static gint ett_remote_domain_pin_vcpu_flags_args = -1;
+static gboolean dissect_xdr_remote_domain_pin_vcpu_flags_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_pin_vcpu_flags_args);
+    hf = hf_remote_domain_pin_vcpu_flags_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "dom: ");
+    if (!dissect_xdr_remote_nonnull_domain(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "vcpu: ");
+    if (!dissect_xdr_u_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "cpumap: ");
+    if (!dissect_xdr_bytes(tvb, ti, xdrs, hf, REMOTE_CPUMAP_MAX)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "flags: ");
+    if (!dissect_xdr_u_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_get_vcpu_pin_info_args = -1;
+static gint ett_remote_domain_get_vcpu_pin_info_args = -1;
+static gboolean dissect_xdr_remote_domain_get_vcpu_pin_info_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_get_vcpu_pin_info_args);
+    hf = hf_remote_domain_get_vcpu_pin_info_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "dom: ");
+    if (!dissect_xdr_remote_nonnull_domain(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "ncpumaps: ");
+    if (!dissect_xdr_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "maplen: ");
+    if (!dissect_xdr_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "flags: ");
+    if (!dissect_xdr_u_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_get_vcpu_pin_info_ret = -1;
+static gint ett_remote_domain_get_vcpu_pin_info_ret = -1;
+static gboolean dissect_xdr_remote_domain_get_vcpu_pin_info_ret(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_get_vcpu_pin_info_ret);
+    hf = hf_remote_domain_get_vcpu_pin_info_ret;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "cpumaps: ");
+    if (!dissect_xdr_bytes(tvb, ti, xdrs, hf, REMOTE_CPUMAPS_MAX)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "num: ");
+    if (!dissect_xdr_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_pin_emulator_args = -1;
+static gint ett_remote_domain_pin_emulator_args = -1;
+static gboolean dissect_xdr_remote_domain_pin_emulator_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_pin_emulator_args);
+    hf = hf_remote_domain_pin_emulator_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "dom: ");
+    if (!dissect_xdr_remote_nonnull_domain(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "cpumap: ");
+    if (!dissect_xdr_bytes(tvb, ti, xdrs, hf, REMOTE_CPUMAP_MAX)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "flags: ");
+    if (!dissect_xdr_u_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_get_emulator_pin_info_args = -1;
+static gint ett_remote_domain_get_emulator_pin_info_args = -1;
+static gboolean dissect_xdr_remote_domain_get_emulator_pin_info_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_get_emulator_pin_info_args);
+    hf = hf_remote_domain_get_emulator_pin_info_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "dom: ");
+    if (!dissect_xdr_remote_nonnull_domain(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "maplen: ");
+    if (!dissect_xdr_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "flags: ");
+    if (!dissect_xdr_u_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_get_emulator_pin_info_ret = -1;
+static gint ett_remote_domain_get_emulator_pin_info_ret = -1;
+static gboolean dissect_xdr_remote_domain_get_emulator_pin_info_ret(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_get_emulator_pin_info_ret);
+    hf = hf_remote_domain_get_emulator_pin_info_ret;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "cpumaps: ");
+    if (!dissect_xdr_bytes(tvb, ti, xdrs, hf, REMOTE_CPUMAPS_MAX)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "ret: ");
+    if (!dissect_xdr_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_get_vcpus_args = -1;
+static gint ett_remote_domain_get_vcpus_args = -1;
+static gboolean dissect_xdr_remote_domain_get_vcpus_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_get_vcpus_args);
+    hf = hf_remote_domain_get_vcpus_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "dom: ");
+    if (!dissect_xdr_remote_nonnull_domain(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "maxinfo: ");
+    if (!dissect_xdr_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "maplen: ");
+    if (!dissect_xdr_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_get_vcpus_ret_ANONTYPE_info = -1;
+static gint ett_remote_domain_get_vcpus_ret_ANONTYPE_info = -1;
+static int hf_remote_domain_get_vcpus_ret = -1;
+static gint ett_remote_domain_get_vcpus_ret = -1;
+static gboolean dissect_xdr_remote_domain_get_vcpus_ret(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_get_vcpus_ret);
+    hf = hf_remote_domain_get_vcpus_ret;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "info: ");
+    if (!dissect_xdr_array(tvb, ti, xdrs, hf_remote_domain_get_vcpus_ret_ANONTYPE_info, ett_remote_domain_get_vcpus_ret_ANONTYPE_info, REMOTE_VCPUINFO_MAX, dissect_xdr_remote_vcpu_info)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "cpumaps: ");
+    if (!dissect_xdr_bytes(tvb, ti, xdrs, hf, REMOTE_CPUMAPS_MAX)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_get_max_vcpus_args = -1;
+static gint ett_remote_domain_get_max_vcpus_args = -1;
+static gboolean dissect_xdr_remote_domain_get_max_vcpus_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_get_max_vcpus_args);
+    hf = hf_remote_domain_get_max_vcpus_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "dom: ");
+    if (!dissect_xdr_remote_nonnull_domain(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_get_max_vcpus_ret = -1;
+static gint ett_remote_domain_get_max_vcpus_ret = -1;
+static gboolean dissect_xdr_remote_domain_get_max_vcpus_ret(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_get_max_vcpus_ret);
+    hf = hf_remote_domain_get_max_vcpus_ret;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "num: ");
+    if (!dissect_xdr_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_get_security_label_args = -1;
+static gint ett_remote_domain_get_security_label_args = -1;
+static gboolean dissect_xdr_remote_domain_get_security_label_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_get_security_label_args);
+    hf = hf_remote_domain_get_security_label_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "dom: ");
+    if (!dissect_xdr_remote_nonnull_domain(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_get_security_label_ret_ANONTYPE_label = -1;
+static gint ett_remote_domain_get_security_label_ret_ANONTYPE_label = -1;
+static int hf_remote_domain_get_security_label_ret = -1;
+static gint ett_remote_domain_get_security_label_ret = -1;
+static gboolean dissect_xdr_remote_domain_get_security_label_ret(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_get_security_label_ret);
+    hf = hf_remote_domain_get_security_label_ret;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "label: ");
+    if (!dissect_xdr_array(tvb, ti, xdrs, hf_remote_domain_get_security_label_ret_ANONTYPE_label, ett_remote_domain_get_security_label_ret_ANONTYPE_label, REMOTE_SECURITY_LABEL_MAX, dissect_xdr_char)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "enforcing: ");
+    if (!dissect_xdr_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_get_security_label_list_args = -1;
+static gint ett_remote_domain_get_security_label_list_args = -1;
+static gboolean dissect_xdr_remote_domain_get_security_label_list_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_get_security_label_list_args);
+    hf = hf_remote_domain_get_security_label_list_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "dom: ");
+    if (!dissect_xdr_remote_nonnull_domain(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_get_security_label_list_ret_ANONTYPE_labels = -1;
+static gint ett_remote_domain_get_security_label_list_ret_ANONTYPE_labels = -1;
+static int hf_remote_domain_get_security_label_list_ret = -1;
+static gint ett_remote_domain_get_security_label_list_ret = -1;
+static gboolean dissect_xdr_remote_domain_get_security_label_list_ret(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_get_security_label_list_ret);
+    hf = hf_remote_domain_get_security_label_list_ret;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "labels: ");
+    if (!dissect_xdr_array(tvb, ti, xdrs, hf_remote_domain_get_security_label_list_ret_ANONTYPE_labels, ett_remote_domain_get_security_label_list_ret_ANONTYPE_labels, REMOTE_SECURITY_LABEL_LIST_MAX, dissect_xdr_remote_domain_get_security_label_ret)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "ret: ");
+    if (!dissect_xdr_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_node_get_security_model_ret_ANONTYPE_model = -1;
+static gint ett_remote_node_get_security_model_ret_ANONTYPE_model = -1;
+static int hf_remote_node_get_security_model_ret_ANONTYPE_doi = -1;
+static gint ett_remote_node_get_security_model_ret_ANONTYPE_doi = -1;
+static int hf_remote_node_get_security_model_ret = -1;
+static gint ett_remote_node_get_security_model_ret = -1;
+static gboolean dissect_xdr_remote_node_get_security_model_ret(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_node_get_security_model_ret);
+    hf = hf_remote_node_get_security_model_ret;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "model: ");
+    if (!dissect_xdr_array(tvb, ti, xdrs, hf_remote_node_get_security_model_ret_ANONTYPE_model, ett_remote_node_get_security_model_ret_ANONTYPE_model, REMOTE_SECURITY_MODEL_MAX, dissect_xdr_char)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "doi: ");
+    if (!dissect_xdr_array(tvb, ti, xdrs, hf_remote_node_get_security_model_ret_ANONTYPE_doi, ett_remote_node_get_security_model_ret_ANONTYPE_doi, REMOTE_SECURITY_DOI_MAX, dissect_xdr_char)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_attach_device_args = -1;
+static gint ett_remote_domain_attach_device_args = -1;
+static gboolean dissect_xdr_remote_domain_attach_device_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_attach_device_args);
+    hf = hf_remote_domain_attach_device_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "dom: ");
+    if (!dissect_xdr_remote_nonnull_domain(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "xml: ");
+    if (!dissect_xdr_remote_nonnull_string(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_attach_device_flags_args = -1;
+static gint ett_remote_domain_attach_device_flags_args = -1;
+static gboolean dissect_xdr_remote_domain_attach_device_flags_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_attach_device_flags_args);
+    hf = hf_remote_domain_attach_device_flags_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "dom: ");
+    if (!dissect_xdr_remote_nonnull_domain(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "xml: ");
+    if (!dissect_xdr_remote_nonnull_string(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "flags: ");
+    if (!dissect_xdr_u_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_detach_device_args = -1;
+static gint ett_remote_domain_detach_device_args = -1;
+static gboolean dissect_xdr_remote_domain_detach_device_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_detach_device_args);
+    hf = hf_remote_domain_detach_device_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "dom: ");
+    if (!dissect_xdr_remote_nonnull_domain(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "xml: ");
+    if (!dissect_xdr_remote_nonnull_string(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_detach_device_flags_args = -1;
+static gint ett_remote_domain_detach_device_flags_args = -1;
+static gboolean dissect_xdr_remote_domain_detach_device_flags_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_detach_device_flags_args);
+    hf = hf_remote_domain_detach_device_flags_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "dom: ");
+    if (!dissect_xdr_remote_nonnull_domain(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "xml: ");
+    if (!dissect_xdr_remote_nonnull_string(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "flags: ");
+    if (!dissect_xdr_u_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_update_device_flags_args = -1;
+static gint ett_remote_domain_update_device_flags_args = -1;
+static gboolean dissect_xdr_remote_domain_update_device_flags_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_update_device_flags_args);
+    hf = hf_remote_domain_update_device_flags_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "dom: ");
+    if (!dissect_xdr_remote_nonnull_domain(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "xml: ");
+    if (!dissect_xdr_remote_nonnull_string(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "flags: ");
+    if (!dissect_xdr_u_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_get_autostart_args = -1;
+static gint ett_remote_domain_get_autostart_args = -1;
+static gboolean dissect_xdr_remote_domain_get_autostart_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_get_autostart_args);
+    hf = hf_remote_domain_get_autostart_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "dom: ");
+    if (!dissect_xdr_remote_nonnull_domain(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_get_autostart_ret = -1;
+static gint ett_remote_domain_get_autostart_ret = -1;
+static gboolean dissect_xdr_remote_domain_get_autostart_ret(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_get_autostart_ret);
+    hf = hf_remote_domain_get_autostart_ret;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "autostart: ");
+    if (!dissect_xdr_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_set_autostart_args = -1;
+static gint ett_remote_domain_set_autostart_args = -1;
+static gboolean dissect_xdr_remote_domain_set_autostart_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_set_autostart_args);
+    hf = hf_remote_domain_set_autostart_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "dom: ");
+    if (!dissect_xdr_remote_nonnull_domain(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "autostart: ");
+    if (!dissect_xdr_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_set_metadata_args = -1;
+static gint ett_remote_domain_set_metadata_args = -1;
+static gboolean dissect_xdr_remote_domain_set_metadata_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_set_metadata_args);
+    hf = hf_remote_domain_set_metadata_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "dom: ");
+    if (!dissect_xdr_remote_nonnull_domain(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "type: ");
+    if (!dissect_xdr_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "metadata: ");
+    if (!dissect_xdr_remote_string(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "key: ");
+    if (!dissect_xdr_remote_string(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "uri: ");
+    if (!dissect_xdr_remote_string(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "flags: ");
+    if (!dissect_xdr_u_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_get_metadata_args = -1;
+static gint ett_remote_domain_get_metadata_args = -1;
+static gboolean dissect_xdr_remote_domain_get_metadata_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_get_metadata_args);
+    hf = hf_remote_domain_get_metadata_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "dom: ");
+    if (!dissect_xdr_remote_nonnull_domain(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "type: ");
+    if (!dissect_xdr_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "uri: ");
+    if (!dissect_xdr_remote_string(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "flags: ");
+    if (!dissect_xdr_u_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_get_metadata_ret = -1;
+static gint ett_remote_domain_get_metadata_ret = -1;
+static gboolean dissect_xdr_remote_domain_get_metadata_ret(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_get_metadata_ret);
+    hf = hf_remote_domain_get_metadata_ret;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "metadata: ");
+    if (!dissect_xdr_remote_nonnull_string(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_block_job_abort_args = -1;
+static gint ett_remote_domain_block_job_abort_args = -1;
+static gboolean dissect_xdr_remote_domain_block_job_abort_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_block_job_abort_args);
+    hf = hf_remote_domain_block_job_abort_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "dom: ");
+    if (!dissect_xdr_remote_nonnull_domain(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "path: ");
+    if (!dissect_xdr_remote_nonnull_string(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "flags: ");
+    if (!dissect_xdr_u_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_get_block_job_info_args = -1;
+static gint ett_remote_domain_get_block_job_info_args = -1;
+static gboolean dissect_xdr_remote_domain_get_block_job_info_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_get_block_job_info_args);
+    hf = hf_remote_domain_get_block_job_info_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "dom: ");
+    if (!dissect_xdr_remote_nonnull_domain(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "path: ");
+    if (!dissect_xdr_remote_nonnull_string(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "flags: ");
+    if (!dissect_xdr_u_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_get_block_job_info_ret = -1;
+static gint ett_remote_domain_get_block_job_info_ret = -1;
+static gboolean dissect_xdr_remote_domain_get_block_job_info_ret(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_get_block_job_info_ret);
+    hf = hf_remote_domain_get_block_job_info_ret;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "found: ");
+    if (!dissect_xdr_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "type: ");
+    if (!dissect_xdr_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "bandwidth: ");
+    if (!dissect_xdr_u_hyper(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "cur: ");
+    if (!dissect_xdr_u_hyper(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "end: ");
+    if (!dissect_xdr_u_hyper(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_block_job_set_speed_args = -1;
+static gint ett_remote_domain_block_job_set_speed_args = -1;
+static gboolean dissect_xdr_remote_domain_block_job_set_speed_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_block_job_set_speed_args);
+    hf = hf_remote_domain_block_job_set_speed_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "dom: ");
+    if (!dissect_xdr_remote_nonnull_domain(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "path: ");
+    if (!dissect_xdr_remote_nonnull_string(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "bandwidth: ");
+    if (!dissect_xdr_u_hyper(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "flags: ");
+    if (!dissect_xdr_u_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_block_pull_args = -1;
+static gint ett_remote_domain_block_pull_args = -1;
+static gboolean dissect_xdr_remote_domain_block_pull_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_block_pull_args);
+    hf = hf_remote_domain_block_pull_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "dom: ");
+    if (!dissect_xdr_remote_nonnull_domain(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "path: ");
+    if (!dissect_xdr_remote_nonnull_string(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "bandwidth: ");
+    if (!dissect_xdr_u_hyper(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "flags: ");
+    if (!dissect_xdr_u_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_block_rebase_args = -1;
+static gint ett_remote_domain_block_rebase_args = -1;
+static gboolean dissect_xdr_remote_domain_block_rebase_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_block_rebase_args);
+    hf = hf_remote_domain_block_rebase_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "dom: ");
+    if (!dissect_xdr_remote_nonnull_domain(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "path: ");
+    if (!dissect_xdr_remote_nonnull_string(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "base: ");
+    if (!dissect_xdr_remote_string(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "bandwidth: ");
+    if (!dissect_xdr_u_hyper(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "flags: ");
+    if (!dissect_xdr_u_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_block_commit_args = -1;
+static gint ett_remote_domain_block_commit_args = -1;
+static gboolean dissect_xdr_remote_domain_block_commit_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_block_commit_args);
+    hf = hf_remote_domain_block_commit_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "dom: ");
+    if (!dissect_xdr_remote_nonnull_domain(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "disk: ");
+    if (!dissect_xdr_remote_nonnull_string(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "base: ");
+    if (!dissect_xdr_remote_string(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "top: ");
+    if (!dissect_xdr_remote_string(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "bandwidth: ");
+    if (!dissect_xdr_u_hyper(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "flags: ");
+    if (!dissect_xdr_u_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_set_block_io_tune_args_ANONTYPE_params = -1;
+static gint ett_remote_domain_set_block_io_tune_args_ANONTYPE_params = -1;
+static int hf_remote_domain_set_block_io_tune_args = -1;
+static gint ett_remote_domain_set_block_io_tune_args = -1;
+static gboolean dissect_xdr_remote_domain_set_block_io_tune_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_set_block_io_tune_args);
+    hf = hf_remote_domain_set_block_io_tune_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "dom: ");
+    if (!dissect_xdr_remote_nonnull_domain(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "disk: ");
+    if (!dissect_xdr_remote_nonnull_string(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "params: ");
+    if (!dissect_xdr_array(tvb, ti, xdrs, hf_remote_domain_set_block_io_tune_args_ANONTYPE_params, ett_remote_domain_set_block_io_tune_args_ANONTYPE_params, REMOTE_DOMAIN_BLOCK_IO_TUNE_PARAMETERS_MAX, dissect_xdr_remote_typed_param)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "flags: ");
+    if (!dissect_xdr_u_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_get_block_io_tune_args = -1;
+static gint ett_remote_domain_get_block_io_tune_args = -1;
+static gboolean dissect_xdr_remote_domain_get_block_io_tune_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_get_block_io_tune_args);
+    hf = hf_remote_domain_get_block_io_tune_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "dom: ");
+    if (!dissect_xdr_remote_nonnull_domain(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "disk: ");
+    if (!dissect_xdr_remote_string(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "nparams: ");
+    if (!dissect_xdr_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "flags: ");
+    if (!dissect_xdr_u_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_get_block_io_tune_ret_ANONTYPE_params = -1;
+static gint ett_remote_domain_get_block_io_tune_ret_ANONTYPE_params = -1;
+static int hf_remote_domain_get_block_io_tune_ret = -1;
+static gint ett_remote_domain_get_block_io_tune_ret = -1;
+static gboolean dissect_xdr_remote_domain_get_block_io_tune_ret(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_get_block_io_tune_ret);
+    hf = hf_remote_domain_get_block_io_tune_ret;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "params: ");
+    if (!dissect_xdr_array(tvb, ti, xdrs, hf_remote_domain_get_block_io_tune_ret_ANONTYPE_params, ett_remote_domain_get_block_io_tune_ret_ANONTYPE_params, REMOTE_DOMAIN_BLOCK_IO_TUNE_PARAMETERS_MAX, dissect_xdr_remote_typed_param)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "nparams: ");
+    if (!dissect_xdr_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_get_cpu_stats_args = -1;
+static gint ett_remote_domain_get_cpu_stats_args = -1;
+static gboolean dissect_xdr_remote_domain_get_cpu_stats_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_get_cpu_stats_args);
+    hf = hf_remote_domain_get_cpu_stats_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "dom: ");
+    if (!dissect_xdr_remote_nonnull_domain(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "nparams: ");
+    if (!dissect_xdr_u_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "start_cpu: ");
+    if (!dissect_xdr_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "ncpus: ");
+    if (!dissect_xdr_u_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "flags: ");
+    if (!dissect_xdr_u_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_get_cpu_stats_ret_ANONTYPE_params = -1;
+static gint ett_remote_domain_get_cpu_stats_ret_ANONTYPE_params = -1;
+static int hf_remote_domain_get_cpu_stats_ret = -1;
+static gint ett_remote_domain_get_cpu_stats_ret = -1;
+static gboolean dissect_xdr_remote_domain_get_cpu_stats_ret(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_get_cpu_stats_ret);
+    hf = hf_remote_domain_get_cpu_stats_ret;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "params: ");
+    if (!dissect_xdr_array(tvb, ti, xdrs, hf_remote_domain_get_cpu_stats_ret_ANONTYPE_params, ett_remote_domain_get_cpu_stats_ret_ANONTYPE_params, REMOTE_DOMAIN_GET_CPU_STATS_MAX, dissect_xdr_remote_typed_param)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "nparams: ");
+    if (!dissect_xdr_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_get_hostname_args = -1;
+static gint ett_remote_domain_get_hostname_args = -1;
+static gboolean dissect_xdr_remote_domain_get_hostname_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_get_hostname_args);
+    hf = hf_remote_domain_get_hostname_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "dom: ");
+    if (!dissect_xdr_remote_nonnull_domain(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "flags: ");
+    if (!dissect_xdr_u_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_get_hostname_ret = -1;
+static gint ett_remote_domain_get_hostname_ret = -1;
+static gboolean dissect_xdr_remote_domain_get_hostname_ret(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_get_hostname_ret);
+    hf = hf_remote_domain_get_hostname_ret;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "hostname: ");
+    if (!dissect_xdr_remote_nonnull_string(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_connect_num_of_networks_ret = -1;
+static gint ett_remote_connect_num_of_networks_ret = -1;
+static gboolean dissect_xdr_remote_connect_num_of_networks_ret(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_connect_num_of_networks_ret);
+    hf = hf_remote_connect_num_of_networks_ret;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "num: ");
+    if (!dissect_xdr_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_connect_list_networks_args = -1;
+static gint ett_remote_connect_list_networks_args = -1;
+static gboolean dissect_xdr_remote_connect_list_networks_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_connect_list_networks_args);
+    hf = hf_remote_connect_list_networks_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "maxnames: ");
+    if (!dissect_xdr_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_connect_list_networks_ret_ANONTYPE_names = -1;
+static gint ett_remote_connect_list_networks_ret_ANONTYPE_names = -1;
+static int hf_remote_connect_list_networks_ret = -1;
+static gint ett_remote_connect_list_networks_ret = -1;
+static gboolean dissect_xdr_remote_connect_list_networks_ret(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_connect_list_networks_ret);
+    hf = hf_remote_connect_list_networks_ret;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "names: ");
+    if (!dissect_xdr_array(tvb, ti, xdrs, hf_remote_connect_list_networks_ret_ANONTYPE_names, ett_remote_connect_list_networks_ret_ANONTYPE_names, REMOTE_NETWORK_NAME_LIST_MAX, dissect_xdr_remote_nonnull_string)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_connect_num_of_defined_networks_ret = -1;
+static gint ett_remote_connect_num_of_defined_networks_ret = -1;
+static gboolean dissect_xdr_remote_connect_num_of_defined_networks_ret(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_connect_num_of_defined_networks_ret);
+    hf = hf_remote_connect_num_of_defined_networks_ret;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "num: ");
+    if (!dissect_xdr_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_connect_list_defined_networks_args = -1;
+static gint ett_remote_connect_list_defined_networks_args = -1;
+static gboolean dissect_xdr_remote_connect_list_defined_networks_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_connect_list_defined_networks_args);
+    hf = hf_remote_connect_list_defined_networks_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "maxnames: ");
+    if (!dissect_xdr_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_connect_list_defined_networks_ret_ANONTYPE_names = -1;
+static gint ett_remote_connect_list_defined_networks_ret_ANONTYPE_names = -1;
+static int hf_remote_connect_list_defined_networks_ret = -1;
+static gint ett_remote_connect_list_defined_networks_ret = -1;
+static gboolean dissect_xdr_remote_connect_list_defined_networks_ret(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_connect_list_defined_networks_ret);
+    hf = hf_remote_connect_list_defined_networks_ret;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "names: ");
+    if (!dissect_xdr_array(tvb, ti, xdrs, hf_remote_connect_list_defined_networks_ret_ANONTYPE_names, ett_remote_connect_list_defined_networks_ret_ANONTYPE_names, REMOTE_NETWORK_NAME_LIST_MAX, dissect_xdr_remote_nonnull_string)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_network_lookup_by_uuid_args = -1;
+static gint ett_remote_network_lookup_by_uuid_args = -1;
+static gboolean dissect_xdr_remote_network_lookup_by_uuid_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_network_lookup_by_uuid_args);
+    hf = hf_remote_network_lookup_by_uuid_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "uuid: ");
+    if (!dissect_xdr_remote_uuid(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_network_lookup_by_uuid_ret = -1;
+static gint ett_remote_network_lookup_by_uuid_ret = -1;
+static gboolean dissect_xdr_remote_network_lookup_by_uuid_ret(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_network_lookup_by_uuid_ret);
+    hf = hf_remote_network_lookup_by_uuid_ret;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "net: ");
+    if (!dissect_xdr_remote_nonnull_network(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_network_lookup_by_name_args = -1;
+static gint ett_remote_network_lookup_by_name_args = -1;
+static gboolean dissect_xdr_remote_network_lookup_by_name_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_network_lookup_by_name_args);
+    hf = hf_remote_network_lookup_by_name_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "name: ");
+    if (!dissect_xdr_remote_nonnull_string(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_network_lookup_by_name_ret = -1;
+static gint ett_remote_network_lookup_by_name_ret = -1;
+static gboolean dissect_xdr_remote_network_lookup_by_name_ret(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_network_lookup_by_name_ret);
+    hf = hf_remote_network_lookup_by_name_ret;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "net: ");
+    if (!dissect_xdr_remote_nonnull_network(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_network_create_xml_args = -1;
+static gint ett_remote_network_create_xml_args = -1;
+static gboolean dissect_xdr_remote_network_create_xml_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_network_create_xml_args);
+    hf = hf_remote_network_create_xml_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "xml: ");
+    if (!dissect_xdr_remote_nonnull_string(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_network_create_xml_ret = -1;
+static gint ett_remote_network_create_xml_ret = -1;
+static gboolean dissect_xdr_remote_network_create_xml_ret(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_network_create_xml_ret);
+    hf = hf_remote_network_create_xml_ret;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "net: ");
+    if (!dissect_xdr_remote_nonnull_network(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_network_define_xml_args = -1;
+static gint ett_remote_network_define_xml_args = -1;
+static gboolean dissect_xdr_remote_network_define_xml_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_network_define_xml_args);
+    hf = hf_remote_network_define_xml_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "xml: ");
+    if (!dissect_xdr_remote_nonnull_string(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_network_define_xml_ret = -1;
+static gint ett_remote_network_define_xml_ret = -1;
+static gboolean dissect_xdr_remote_network_define_xml_ret(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_network_define_xml_ret);
+    hf = hf_remote_network_define_xml_ret;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "net: ");
+    if (!dissect_xdr_remote_nonnull_network(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_network_undefine_args = -1;
+static gint ett_remote_network_undefine_args = -1;
+static gboolean dissect_xdr_remote_network_undefine_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_network_undefine_args);
+    hf = hf_remote_network_undefine_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "net: ");
+    if (!dissect_xdr_remote_nonnull_network(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_network_update_args = -1;
+static gint ett_remote_network_update_args = -1;
+static gboolean dissect_xdr_remote_network_update_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_network_update_args);
+    hf = hf_remote_network_update_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "net: ");
+    if (!dissect_xdr_remote_nonnull_network(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "command: ");
+    if (!dissect_xdr_u_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "section: ");
+    if (!dissect_xdr_u_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "parentIndex: ");
+    if (!dissect_xdr_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "xml: ");
+    if (!dissect_xdr_remote_nonnull_string(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "flags: ");
+    if (!dissect_xdr_u_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_network_create_args = -1;
+static gint ett_remote_network_create_args = -1;
+static gboolean dissect_xdr_remote_network_create_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_network_create_args);
+    hf = hf_remote_network_create_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "net: ");
+    if (!dissect_xdr_remote_nonnull_network(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_network_destroy_args = -1;
+static gint ett_remote_network_destroy_args = -1;
+static gboolean dissect_xdr_remote_network_destroy_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_network_destroy_args);
+    hf = hf_remote_network_destroy_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "net: ");
+    if (!dissect_xdr_remote_nonnull_network(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_network_get_xml_desc_args = -1;
+static gint ett_remote_network_get_xml_desc_args = -1;
+static gboolean dissect_xdr_remote_network_get_xml_desc_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_network_get_xml_desc_args);
+    hf = hf_remote_network_get_xml_desc_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "net: ");
+    if (!dissect_xdr_remote_nonnull_network(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "flags: ");
+    if (!dissect_xdr_u_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_network_get_xml_desc_ret = -1;
+static gint ett_remote_network_get_xml_desc_ret = -1;
+static gboolean dissect_xdr_remote_network_get_xml_desc_ret(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_network_get_xml_desc_ret);
+    hf = hf_remote_network_get_xml_desc_ret;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "xml: ");
+    if (!dissect_xdr_remote_nonnull_string(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_network_get_bridge_name_args = -1;
+static gint ett_remote_network_get_bridge_name_args = -1;
+static gboolean dissect_xdr_remote_network_get_bridge_name_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_network_get_bridge_name_args);
+    hf = hf_remote_network_get_bridge_name_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "net: ");
+    if (!dissect_xdr_remote_nonnull_network(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_network_get_bridge_name_ret = -1;
+static gint ett_remote_network_get_bridge_name_ret = -1;
+static gboolean dissect_xdr_remote_network_get_bridge_name_ret(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_network_get_bridge_name_ret);
+    hf = hf_remote_network_get_bridge_name_ret;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "name: ");
+    if (!dissect_xdr_remote_nonnull_string(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_network_get_autostart_args = -1;
+static gint ett_remote_network_get_autostart_args = -1;
+static gboolean dissect_xdr_remote_network_get_autostart_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_network_get_autostart_args);
+    hf = hf_remote_network_get_autostart_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "net: ");
+    if (!dissect_xdr_remote_nonnull_network(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_network_get_autostart_ret = -1;
+static gint ett_remote_network_get_autostart_ret = -1;
+static gboolean dissect_xdr_remote_network_get_autostart_ret(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_network_get_autostart_ret);
+    hf = hf_remote_network_get_autostart_ret;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "autostart: ");
+    if (!dissect_xdr_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_network_set_autostart_args = -1;
+static gint ett_remote_network_set_autostart_args = -1;
+static gboolean dissect_xdr_remote_network_set_autostart_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_network_set_autostart_args);
+    hf = hf_remote_network_set_autostart_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "net: ");
+    if (!dissect_xdr_remote_nonnull_network(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "autostart: ");
+    if (!dissect_xdr_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_connect_num_of_nwfilters_ret = -1;
+static gint ett_remote_connect_num_of_nwfilters_ret = -1;
+static gboolean dissect_xdr_remote_connect_num_of_nwfilters_ret(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_connect_num_of_nwfilters_ret);
+    hf = hf_remote_connect_num_of_nwfilters_ret;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "num: ");
+    if (!dissect_xdr_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_connect_list_nwfilters_args = -1;
+static gint ett_remote_connect_list_nwfilters_args = -1;
+static gboolean dissect_xdr_remote_connect_list_nwfilters_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_connect_list_nwfilters_args);
+    hf = hf_remote_connect_list_nwfilters_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "maxnames: ");
+    if (!dissect_xdr_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_connect_list_nwfilters_ret_ANONTYPE_names = -1;
+static gint ett_remote_connect_list_nwfilters_ret_ANONTYPE_names = -1;
+static int hf_remote_connect_list_nwfilters_ret = -1;
+static gint ett_remote_connect_list_nwfilters_ret = -1;
+static gboolean dissect_xdr_remote_connect_list_nwfilters_ret(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_connect_list_nwfilters_ret);
+    hf = hf_remote_connect_list_nwfilters_ret;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "names: ");
+    if (!dissect_xdr_array(tvb, ti, xdrs, hf_remote_connect_list_nwfilters_ret_ANONTYPE_names, ett_remote_connect_list_nwfilters_ret_ANONTYPE_names, REMOTE_NWFILTER_NAME_LIST_MAX, dissect_xdr_remote_nonnull_string)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_nwfilter_lookup_by_uuid_args = -1;
+static gint ett_remote_nwfilter_lookup_by_uuid_args = -1;
+static gboolean dissect_xdr_remote_nwfilter_lookup_by_uuid_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_nwfilter_lookup_by_uuid_args);
+    hf = hf_remote_nwfilter_lookup_by_uuid_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "uuid: ");
+    if (!dissect_xdr_remote_uuid(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_nwfilter_lookup_by_uuid_ret = -1;
+static gint ett_remote_nwfilter_lookup_by_uuid_ret = -1;
+static gboolean dissect_xdr_remote_nwfilter_lookup_by_uuid_ret(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_nwfilter_lookup_by_uuid_ret);
+    hf = hf_remote_nwfilter_lookup_by_uuid_ret;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "nwfilter: ");
+    if (!dissect_xdr_remote_nonnull_nwfilter(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_nwfilter_lookup_by_name_args = -1;
+static gint ett_remote_nwfilter_lookup_by_name_args = -1;
+static gboolean dissect_xdr_remote_nwfilter_lookup_by_name_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_nwfilter_lookup_by_name_args);
+    hf = hf_remote_nwfilter_lookup_by_name_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "name: ");
+    if (!dissect_xdr_remote_nonnull_string(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_nwfilter_lookup_by_name_ret = -1;
+static gint ett_remote_nwfilter_lookup_by_name_ret = -1;
+static gboolean dissect_xdr_remote_nwfilter_lookup_by_name_ret(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_nwfilter_lookup_by_name_ret);
+    hf = hf_remote_nwfilter_lookup_by_name_ret;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "nwfilter: ");
+    if (!dissect_xdr_remote_nonnull_nwfilter(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_nwfilter_define_xml_args = -1;
+static gint ett_remote_nwfilter_define_xml_args = -1;
+static gboolean dissect_xdr_remote_nwfilter_define_xml_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_nwfilter_define_xml_args);
+    hf = hf_remote_nwfilter_define_xml_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "xml: ");
+    if (!dissect_xdr_remote_nonnull_string(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_nwfilter_define_xml_ret = -1;
+static gint ett_remote_nwfilter_define_xml_ret = -1;
+static gboolean dissect_xdr_remote_nwfilter_define_xml_ret(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_nwfilter_define_xml_ret);
+    hf = hf_remote_nwfilter_define_xml_ret;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "nwfilter: ");
+    if (!dissect_xdr_remote_nonnull_nwfilter(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_nwfilter_undefine_args = -1;
+static gint ett_remote_nwfilter_undefine_args = -1;
+static gboolean dissect_xdr_remote_nwfilter_undefine_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_nwfilter_undefine_args);
+    hf = hf_remote_nwfilter_undefine_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "nwfilter: ");
+    if (!dissect_xdr_remote_nonnull_nwfilter(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_nwfilter_get_xml_desc_args = -1;
+static gint ett_remote_nwfilter_get_xml_desc_args = -1;
+static gboolean dissect_xdr_remote_nwfilter_get_xml_desc_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_nwfilter_get_xml_desc_args);
+    hf = hf_remote_nwfilter_get_xml_desc_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "nwfilter: ");
+    if (!dissect_xdr_remote_nonnull_nwfilter(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "flags: ");
+    if (!dissect_xdr_u_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_nwfilter_get_xml_desc_ret = -1;
+static gint ett_remote_nwfilter_get_xml_desc_ret = -1;
+static gboolean dissect_xdr_remote_nwfilter_get_xml_desc_ret(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_nwfilter_get_xml_desc_ret);
+    hf = hf_remote_nwfilter_get_xml_desc_ret;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "xml: ");
+    if (!dissect_xdr_remote_nonnull_string(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_connect_num_of_interfaces_ret = -1;
+static gint ett_remote_connect_num_of_interfaces_ret = -1;
+static gboolean dissect_xdr_remote_connect_num_of_interfaces_ret(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_connect_num_of_interfaces_ret);
+    hf = hf_remote_connect_num_of_interfaces_ret;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "num: ");
+    if (!dissect_xdr_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_connect_list_interfaces_args = -1;
+static gint ett_remote_connect_list_interfaces_args = -1;
+static gboolean dissect_xdr_remote_connect_list_interfaces_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_connect_list_interfaces_args);
+    hf = hf_remote_connect_list_interfaces_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "maxnames: ");
+    if (!dissect_xdr_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_connect_list_interfaces_ret_ANONTYPE_names = -1;
+static gint ett_remote_connect_list_interfaces_ret_ANONTYPE_names = -1;
+static int hf_remote_connect_list_interfaces_ret = -1;
+static gint ett_remote_connect_list_interfaces_ret = -1;
+static gboolean dissect_xdr_remote_connect_list_interfaces_ret(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_connect_list_interfaces_ret);
+    hf = hf_remote_connect_list_interfaces_ret;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "names: ");
+    if (!dissect_xdr_array(tvb, ti, xdrs, hf_remote_connect_list_interfaces_ret_ANONTYPE_names, ett_remote_connect_list_interfaces_ret_ANONTYPE_names, REMOTE_INTERFACE_NAME_LIST_MAX, dissect_xdr_remote_nonnull_string)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_connect_num_of_defined_interfaces_ret = -1;
+static gint ett_remote_connect_num_of_defined_interfaces_ret = -1;
+static gboolean dissect_xdr_remote_connect_num_of_defined_interfaces_ret(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_connect_num_of_defined_interfaces_ret);
+    hf = hf_remote_connect_num_of_defined_interfaces_ret;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "num: ");
+    if (!dissect_xdr_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_connect_list_defined_interfaces_args = -1;
+static gint ett_remote_connect_list_defined_interfaces_args = -1;
+static gboolean dissect_xdr_remote_connect_list_defined_interfaces_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_connect_list_defined_interfaces_args);
+    hf = hf_remote_connect_list_defined_interfaces_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "maxnames: ");
+    if (!dissect_xdr_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_connect_list_defined_interfaces_ret_ANONTYPE_names = -1;
+static gint ett_remote_connect_list_defined_interfaces_ret_ANONTYPE_names = -1;
+static int hf_remote_connect_list_defined_interfaces_ret = -1;
+static gint ett_remote_connect_list_defined_interfaces_ret = -1;
+static gboolean dissect_xdr_remote_connect_list_defined_interfaces_ret(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_connect_list_defined_interfaces_ret);
+    hf = hf_remote_connect_list_defined_interfaces_ret;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "names: ");
+    if (!dissect_xdr_array(tvb, ti, xdrs, hf_remote_connect_list_defined_interfaces_ret_ANONTYPE_names, ett_remote_connect_list_defined_interfaces_ret_ANONTYPE_names, REMOTE_DEFINED_INTERFACE_NAME_LIST_MAX, dissect_xdr_remote_nonnull_string)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_interface_lookup_by_name_args = -1;
+static gint ett_remote_interface_lookup_by_name_args = -1;
+static gboolean dissect_xdr_remote_interface_lookup_by_name_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_interface_lookup_by_name_args);
+    hf = hf_remote_interface_lookup_by_name_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "name: ");
+    if (!dissect_xdr_remote_nonnull_string(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_interface_lookup_by_name_ret = -1;
+static gint ett_remote_interface_lookup_by_name_ret = -1;
+static gboolean dissect_xdr_remote_interface_lookup_by_name_ret(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_interface_lookup_by_name_ret);
+    hf = hf_remote_interface_lookup_by_name_ret;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "iface: ");
+    if (!dissect_xdr_remote_nonnull_interface(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_interface_lookup_by_mac_string_args = -1;
+static gint ett_remote_interface_lookup_by_mac_string_args = -1;
+static gboolean dissect_xdr_remote_interface_lookup_by_mac_string_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_interface_lookup_by_mac_string_args);
+    hf = hf_remote_interface_lookup_by_mac_string_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "mac: ");
+    if (!dissect_xdr_remote_nonnull_string(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_interface_lookup_by_mac_string_ret = -1;
+static gint ett_remote_interface_lookup_by_mac_string_ret = -1;
+static gboolean dissect_xdr_remote_interface_lookup_by_mac_string_ret(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_interface_lookup_by_mac_string_ret);
+    hf = hf_remote_interface_lookup_by_mac_string_ret;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "iface: ");
+    if (!dissect_xdr_remote_nonnull_interface(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_interface_get_xml_desc_args = -1;
+static gint ett_remote_interface_get_xml_desc_args = -1;
+static gboolean dissect_xdr_remote_interface_get_xml_desc_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_interface_get_xml_desc_args);
+    hf = hf_remote_interface_get_xml_desc_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "iface: ");
+    if (!dissect_xdr_remote_nonnull_interface(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "flags: ");
+    if (!dissect_xdr_u_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_interface_get_xml_desc_ret = -1;
+static gint ett_remote_interface_get_xml_desc_ret = -1;
+static gboolean dissect_xdr_remote_interface_get_xml_desc_ret(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_interface_get_xml_desc_ret);
+    hf = hf_remote_interface_get_xml_desc_ret;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "xml: ");
+    if (!dissect_xdr_remote_nonnull_string(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_interface_define_xml_args = -1;
+static gint ett_remote_interface_define_xml_args = -1;
+static gboolean dissect_xdr_remote_interface_define_xml_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_interface_define_xml_args);
+    hf = hf_remote_interface_define_xml_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "xml: ");
+    if (!dissect_xdr_remote_nonnull_string(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "flags: ");
+    if (!dissect_xdr_u_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_interface_define_xml_ret = -1;
+static gint ett_remote_interface_define_xml_ret = -1;
+static gboolean dissect_xdr_remote_interface_define_xml_ret(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_interface_define_xml_ret);
+    hf = hf_remote_interface_define_xml_ret;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "iface: ");
+    if (!dissect_xdr_remote_nonnull_interface(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_interface_undefine_args = -1;
+static gint ett_remote_interface_undefine_args = -1;
+static gboolean dissect_xdr_remote_interface_undefine_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_interface_undefine_args);
+    hf = hf_remote_interface_undefine_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "iface: ");
+    if (!dissect_xdr_remote_nonnull_interface(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_interface_create_args = -1;
+static gint ett_remote_interface_create_args = -1;
+static gboolean dissect_xdr_remote_interface_create_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_interface_create_args);
+    hf = hf_remote_interface_create_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "iface: ");
+    if (!dissect_xdr_remote_nonnull_interface(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "flags: ");
+    if (!dissect_xdr_u_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_interface_destroy_args = -1;
+static gint ett_remote_interface_destroy_args = -1;
+static gboolean dissect_xdr_remote_interface_destroy_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_interface_destroy_args);
+    hf = hf_remote_interface_destroy_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "iface: ");
+    if (!dissect_xdr_remote_nonnull_interface(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "flags: ");
+    if (!dissect_xdr_u_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_interface_change_begin_args = -1;
+static gint ett_remote_interface_change_begin_args = -1;
+static gboolean dissect_xdr_remote_interface_change_begin_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_interface_change_begin_args);
+    hf = hf_remote_interface_change_begin_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "flags: ");
+    if (!dissect_xdr_u_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_interface_change_commit_args = -1;
+static gint ett_remote_interface_change_commit_args = -1;
+static gboolean dissect_xdr_remote_interface_change_commit_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_interface_change_commit_args);
+    hf = hf_remote_interface_change_commit_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "flags: ");
+    if (!dissect_xdr_u_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_interface_change_rollback_args = -1;
+static gint ett_remote_interface_change_rollback_args = -1;
+static gboolean dissect_xdr_remote_interface_change_rollback_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_interface_change_rollback_args);
+    hf = hf_remote_interface_change_rollback_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "flags: ");
+    if (!dissect_xdr_u_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_auth_list_ret_ANONTYPE_types = -1;
+static gint ett_remote_auth_list_ret_ANONTYPE_types = -1;
+static int hf_remote_auth_list_ret = -1;
+static gint ett_remote_auth_list_ret = -1;
+static gboolean dissect_xdr_remote_auth_list_ret(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_auth_list_ret);
+    hf = hf_remote_auth_list_ret;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "types: ");
+    if (!dissect_xdr_array(tvb, ti, xdrs, hf_remote_auth_list_ret_ANONTYPE_types, ett_remote_auth_list_ret_ANONTYPE_types, REMOTE_AUTH_TYPE_LIST_MAX, dissect_xdr_remote_auth_type)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_auth_sasl_init_ret = -1;
+static gint ett_remote_auth_sasl_init_ret = -1;
+static gboolean dissect_xdr_remote_auth_sasl_init_ret(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_auth_sasl_init_ret);
+    hf = hf_remote_auth_sasl_init_ret;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "mechlist: ");
+    if (!dissect_xdr_remote_nonnull_string(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_auth_sasl_start_args_ANONTYPE_data = -1;
+static gint ett_remote_auth_sasl_start_args_ANONTYPE_data = -1;
+static int hf_remote_auth_sasl_start_args = -1;
+static gint ett_remote_auth_sasl_start_args = -1;
+static gboolean dissect_xdr_remote_auth_sasl_start_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_auth_sasl_start_args);
+    hf = hf_remote_auth_sasl_start_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "mech: ");
+    if (!dissect_xdr_remote_nonnull_string(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "nil: ");
+    if (!dissect_xdr_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "data: ");
+    if (!dissect_xdr_array(tvb, ti, xdrs, hf_remote_auth_sasl_start_args_ANONTYPE_data, ett_remote_auth_sasl_start_args_ANONTYPE_data, REMOTE_AUTH_SASL_DATA_MAX, dissect_xdr_char)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_auth_sasl_start_ret_ANONTYPE_data = -1;
+static gint ett_remote_auth_sasl_start_ret_ANONTYPE_data = -1;
+static int hf_remote_auth_sasl_start_ret = -1;
+static gint ett_remote_auth_sasl_start_ret = -1;
+static gboolean dissect_xdr_remote_auth_sasl_start_ret(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_auth_sasl_start_ret);
+    hf = hf_remote_auth_sasl_start_ret;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "complete: ");
+    if (!dissect_xdr_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "nil: ");
+    if (!dissect_xdr_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "data: ");
+    if (!dissect_xdr_array(tvb, ti, xdrs, hf_remote_auth_sasl_start_ret_ANONTYPE_data, ett_remote_auth_sasl_start_ret_ANONTYPE_data, REMOTE_AUTH_SASL_DATA_MAX, dissect_xdr_char)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_auth_sasl_step_args_ANONTYPE_data = -1;
+static gint ett_remote_auth_sasl_step_args_ANONTYPE_data = -1;
+static int hf_remote_auth_sasl_step_args = -1;
+static gint ett_remote_auth_sasl_step_args = -1;
+static gboolean dissect_xdr_remote_auth_sasl_step_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_auth_sasl_step_args);
+    hf = hf_remote_auth_sasl_step_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "nil: ");
+    if (!dissect_xdr_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "data: ");
+    if (!dissect_xdr_array(tvb, ti, xdrs, hf_remote_auth_sasl_step_args_ANONTYPE_data, ett_remote_auth_sasl_step_args_ANONTYPE_data, REMOTE_AUTH_SASL_DATA_MAX, dissect_xdr_char)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_auth_sasl_step_ret_ANONTYPE_data = -1;
+static gint ett_remote_auth_sasl_step_ret_ANONTYPE_data = -1;
+static int hf_remote_auth_sasl_step_ret = -1;
+static gint ett_remote_auth_sasl_step_ret = -1;
+static gboolean dissect_xdr_remote_auth_sasl_step_ret(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_auth_sasl_step_ret);
+    hf = hf_remote_auth_sasl_step_ret;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "complete: ");
+    if (!dissect_xdr_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "nil: ");
+    if (!dissect_xdr_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "data: ");
+    if (!dissect_xdr_array(tvb, ti, xdrs, hf_remote_auth_sasl_step_ret_ANONTYPE_data, ett_remote_auth_sasl_step_ret_ANONTYPE_data, REMOTE_AUTH_SASL_DATA_MAX, dissect_xdr_char)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_auth_polkit_ret = -1;
+static gint ett_remote_auth_polkit_ret = -1;
+static gboolean dissect_xdr_remote_auth_polkit_ret(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_auth_polkit_ret);
+    hf = hf_remote_auth_polkit_ret;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "complete: ");
+    if (!dissect_xdr_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_connect_num_of_storage_pools_ret = -1;
+static gint ett_remote_connect_num_of_storage_pools_ret = -1;
+static gboolean dissect_xdr_remote_connect_num_of_storage_pools_ret(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_connect_num_of_storage_pools_ret);
+    hf = hf_remote_connect_num_of_storage_pools_ret;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "num: ");
+    if (!dissect_xdr_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_connect_list_storage_pools_args = -1;
+static gint ett_remote_connect_list_storage_pools_args = -1;
+static gboolean dissect_xdr_remote_connect_list_storage_pools_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_connect_list_storage_pools_args);
+    hf = hf_remote_connect_list_storage_pools_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "maxnames: ");
+    if (!dissect_xdr_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_connect_list_storage_pools_ret_ANONTYPE_names = -1;
+static gint ett_remote_connect_list_storage_pools_ret_ANONTYPE_names = -1;
+static int hf_remote_connect_list_storage_pools_ret = -1;
+static gint ett_remote_connect_list_storage_pools_ret = -1;
+static gboolean dissect_xdr_remote_connect_list_storage_pools_ret(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_connect_list_storage_pools_ret);
+    hf = hf_remote_connect_list_storage_pools_ret;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "names: ");
+    if (!dissect_xdr_array(tvb, ti, xdrs, hf_remote_connect_list_storage_pools_ret_ANONTYPE_names, ett_remote_connect_list_storage_pools_ret_ANONTYPE_names, REMOTE_STORAGE_POOL_NAME_LIST_MAX, dissect_xdr_remote_nonnull_string)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_connect_num_of_defined_storage_pools_ret = -1;
+static gint ett_remote_connect_num_of_defined_storage_pools_ret = -1;
+static gboolean dissect_xdr_remote_connect_num_of_defined_storage_pools_ret(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_connect_num_of_defined_storage_pools_ret);
+    hf = hf_remote_connect_num_of_defined_storage_pools_ret;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "num: ");
+    if (!dissect_xdr_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_connect_list_defined_storage_pools_args = -1;
+static gint ett_remote_connect_list_defined_storage_pools_args = -1;
+static gboolean dissect_xdr_remote_connect_list_defined_storage_pools_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_connect_list_defined_storage_pools_args);
+    hf = hf_remote_connect_list_defined_storage_pools_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "maxnames: ");
+    if (!dissect_xdr_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_connect_list_defined_storage_pools_ret_ANONTYPE_names = -1;
+static gint ett_remote_connect_list_defined_storage_pools_ret_ANONTYPE_names = -1;
+static int hf_remote_connect_list_defined_storage_pools_ret = -1;
+static gint ett_remote_connect_list_defined_storage_pools_ret = -1;
+static gboolean dissect_xdr_remote_connect_list_defined_storage_pools_ret(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_connect_list_defined_storage_pools_ret);
+    hf = hf_remote_connect_list_defined_storage_pools_ret;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "names: ");
+    if (!dissect_xdr_array(tvb, ti, xdrs, hf_remote_connect_list_defined_storage_pools_ret_ANONTYPE_names, ett_remote_connect_list_defined_storage_pools_ret_ANONTYPE_names, REMOTE_STORAGE_POOL_NAME_LIST_MAX, dissect_xdr_remote_nonnull_string)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_connect_find_storage_pool_sources_args = -1;
+static gint ett_remote_connect_find_storage_pool_sources_args = -1;
+static gboolean dissect_xdr_remote_connect_find_storage_pool_sources_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_connect_find_storage_pool_sources_args);
+    hf = hf_remote_connect_find_storage_pool_sources_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "type: ");
+    if (!dissect_xdr_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "srcSpec: ");
+    if (!dissect_xdr_remote_string(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "flags: ");
+    if (!dissect_xdr_u_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_connect_find_storage_pool_sources_ret = -1;
+static gint ett_remote_connect_find_storage_pool_sources_ret = -1;
+static gboolean dissect_xdr_remote_connect_find_storage_pool_sources_ret(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_connect_find_storage_pool_sources_ret);
+    hf = hf_remote_connect_find_storage_pool_sources_ret;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "xml: ");
+    if (!dissect_xdr_remote_nonnull_string(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_storage_pool_lookup_by_uuid_args = -1;
+static gint ett_remote_storage_pool_lookup_by_uuid_args = -1;
+static gboolean dissect_xdr_remote_storage_pool_lookup_by_uuid_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_storage_pool_lookup_by_uuid_args);
+    hf = hf_remote_storage_pool_lookup_by_uuid_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "uuid: ");
+    if (!dissect_xdr_remote_uuid(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_storage_pool_lookup_by_uuid_ret = -1;
+static gint ett_remote_storage_pool_lookup_by_uuid_ret = -1;
+static gboolean dissect_xdr_remote_storage_pool_lookup_by_uuid_ret(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_storage_pool_lookup_by_uuid_ret);
+    hf = hf_remote_storage_pool_lookup_by_uuid_ret;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "pool: ");
+    if (!dissect_xdr_remote_nonnull_storage_pool(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_storage_pool_lookup_by_name_args = -1;
+static gint ett_remote_storage_pool_lookup_by_name_args = -1;
+static gboolean dissect_xdr_remote_storage_pool_lookup_by_name_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_storage_pool_lookup_by_name_args);
+    hf = hf_remote_storage_pool_lookup_by_name_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "name: ");
+    if (!dissect_xdr_remote_nonnull_string(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_storage_pool_lookup_by_name_ret = -1;
+static gint ett_remote_storage_pool_lookup_by_name_ret = -1;
+static gboolean dissect_xdr_remote_storage_pool_lookup_by_name_ret(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_storage_pool_lookup_by_name_ret);
+    hf = hf_remote_storage_pool_lookup_by_name_ret;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "pool: ");
+    if (!dissect_xdr_remote_nonnull_storage_pool(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_storage_pool_lookup_by_volume_args = -1;
+static gint ett_remote_storage_pool_lookup_by_volume_args = -1;
+static gboolean dissect_xdr_remote_storage_pool_lookup_by_volume_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_storage_pool_lookup_by_volume_args);
+    hf = hf_remote_storage_pool_lookup_by_volume_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "vol: ");
+    if (!dissect_xdr_remote_nonnull_storage_vol(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_storage_pool_lookup_by_volume_ret = -1;
+static gint ett_remote_storage_pool_lookup_by_volume_ret = -1;
+static gboolean dissect_xdr_remote_storage_pool_lookup_by_volume_ret(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_storage_pool_lookup_by_volume_ret);
+    hf = hf_remote_storage_pool_lookup_by_volume_ret;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "pool: ");
+    if (!dissect_xdr_remote_nonnull_storage_pool(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_storage_pool_create_xml_args = -1;
+static gint ett_remote_storage_pool_create_xml_args = -1;
+static gboolean dissect_xdr_remote_storage_pool_create_xml_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_storage_pool_create_xml_args);
+    hf = hf_remote_storage_pool_create_xml_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "xml: ");
+    if (!dissect_xdr_remote_nonnull_string(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "flags: ");
+    if (!dissect_xdr_u_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_storage_pool_create_xml_ret = -1;
+static gint ett_remote_storage_pool_create_xml_ret = -1;
+static gboolean dissect_xdr_remote_storage_pool_create_xml_ret(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_storage_pool_create_xml_ret);
+    hf = hf_remote_storage_pool_create_xml_ret;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "pool: ");
+    if (!dissect_xdr_remote_nonnull_storage_pool(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_storage_pool_define_xml_args = -1;
+static gint ett_remote_storage_pool_define_xml_args = -1;
+static gboolean dissect_xdr_remote_storage_pool_define_xml_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_storage_pool_define_xml_args);
+    hf = hf_remote_storage_pool_define_xml_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "xml: ");
+    if (!dissect_xdr_remote_nonnull_string(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "flags: ");
+    if (!dissect_xdr_u_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_storage_pool_define_xml_ret = -1;
+static gint ett_remote_storage_pool_define_xml_ret = -1;
+static gboolean dissect_xdr_remote_storage_pool_define_xml_ret(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_storage_pool_define_xml_ret);
+    hf = hf_remote_storage_pool_define_xml_ret;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "pool: ");
+    if (!dissect_xdr_remote_nonnull_storage_pool(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_storage_pool_build_args = -1;
+static gint ett_remote_storage_pool_build_args = -1;
+static gboolean dissect_xdr_remote_storage_pool_build_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_storage_pool_build_args);
+    hf = hf_remote_storage_pool_build_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "pool: ");
+    if (!dissect_xdr_remote_nonnull_storage_pool(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "flags: ");
+    if (!dissect_xdr_u_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_storage_pool_undefine_args = -1;
+static gint ett_remote_storage_pool_undefine_args = -1;
+static gboolean dissect_xdr_remote_storage_pool_undefine_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_storage_pool_undefine_args);
+    hf = hf_remote_storage_pool_undefine_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "pool: ");
+    if (!dissect_xdr_remote_nonnull_storage_pool(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_storage_pool_create_args = -1;
+static gint ett_remote_storage_pool_create_args = -1;
+static gboolean dissect_xdr_remote_storage_pool_create_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_storage_pool_create_args);
+    hf = hf_remote_storage_pool_create_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "pool: ");
+    if (!dissect_xdr_remote_nonnull_storage_pool(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "flags: ");
+    if (!dissect_xdr_u_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_storage_pool_destroy_args = -1;
+static gint ett_remote_storage_pool_destroy_args = -1;
+static gboolean dissect_xdr_remote_storage_pool_destroy_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_storage_pool_destroy_args);
+    hf = hf_remote_storage_pool_destroy_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "pool: ");
+    if (!dissect_xdr_remote_nonnull_storage_pool(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_storage_pool_delete_args = -1;
+static gint ett_remote_storage_pool_delete_args = -1;
+static gboolean dissect_xdr_remote_storage_pool_delete_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_storage_pool_delete_args);
+    hf = hf_remote_storage_pool_delete_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "pool: ");
+    if (!dissect_xdr_remote_nonnull_storage_pool(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "flags: ");
+    if (!dissect_xdr_u_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_storage_pool_refresh_args = -1;
+static gint ett_remote_storage_pool_refresh_args = -1;
+static gboolean dissect_xdr_remote_storage_pool_refresh_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_storage_pool_refresh_args);
+    hf = hf_remote_storage_pool_refresh_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "pool: ");
+    if (!dissect_xdr_remote_nonnull_storage_pool(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "flags: ");
+    if (!dissect_xdr_u_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_storage_pool_get_xml_desc_args = -1;
+static gint ett_remote_storage_pool_get_xml_desc_args = -1;
+static gboolean dissect_xdr_remote_storage_pool_get_xml_desc_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_storage_pool_get_xml_desc_args);
+    hf = hf_remote_storage_pool_get_xml_desc_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "pool: ");
+    if (!dissect_xdr_remote_nonnull_storage_pool(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "flags: ");
+    if (!dissect_xdr_u_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_storage_pool_get_xml_desc_ret = -1;
+static gint ett_remote_storage_pool_get_xml_desc_ret = -1;
+static gboolean dissect_xdr_remote_storage_pool_get_xml_desc_ret(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_storage_pool_get_xml_desc_ret);
+    hf = hf_remote_storage_pool_get_xml_desc_ret;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "xml: ");
+    if (!dissect_xdr_remote_nonnull_string(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_storage_pool_get_info_args = -1;
+static gint ett_remote_storage_pool_get_info_args = -1;
+static gboolean dissect_xdr_remote_storage_pool_get_info_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_storage_pool_get_info_args);
+    hf = hf_remote_storage_pool_get_info_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "pool: ");
+    if (!dissect_xdr_remote_nonnull_storage_pool(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_storage_pool_get_info_ret = -1;
+static gint ett_remote_storage_pool_get_info_ret = -1;
+static gboolean dissect_xdr_remote_storage_pool_get_info_ret(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_storage_pool_get_info_ret);
+    hf = hf_remote_storage_pool_get_info_ret;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "state: ");
+    if (!dissect_xdr_u_char(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "capacity: ");
+    if (!dissect_xdr_u_hyper(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "allocation: ");
+    if (!dissect_xdr_u_hyper(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "available: ");
+    if (!dissect_xdr_u_hyper(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_storage_pool_get_autostart_args = -1;
+static gint ett_remote_storage_pool_get_autostart_args = -1;
+static gboolean dissect_xdr_remote_storage_pool_get_autostart_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_storage_pool_get_autostart_args);
+    hf = hf_remote_storage_pool_get_autostart_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "pool: ");
+    if (!dissect_xdr_remote_nonnull_storage_pool(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_storage_pool_get_autostart_ret = -1;
+static gint ett_remote_storage_pool_get_autostart_ret = -1;
+static gboolean dissect_xdr_remote_storage_pool_get_autostart_ret(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_storage_pool_get_autostart_ret);
+    hf = hf_remote_storage_pool_get_autostart_ret;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "autostart: ");
+    if (!dissect_xdr_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_storage_pool_set_autostart_args = -1;
+static gint ett_remote_storage_pool_set_autostart_args = -1;
+static gboolean dissect_xdr_remote_storage_pool_set_autostart_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_storage_pool_set_autostart_args);
+    hf = hf_remote_storage_pool_set_autostart_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "pool: ");
+    if (!dissect_xdr_remote_nonnull_storage_pool(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "autostart: ");
+    if (!dissect_xdr_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_storage_pool_num_of_volumes_args = -1;
+static gint ett_remote_storage_pool_num_of_volumes_args = -1;
+static gboolean dissect_xdr_remote_storage_pool_num_of_volumes_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_storage_pool_num_of_volumes_args);
+    hf = hf_remote_storage_pool_num_of_volumes_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "pool: ");
+    if (!dissect_xdr_remote_nonnull_storage_pool(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_storage_pool_num_of_volumes_ret = -1;
+static gint ett_remote_storage_pool_num_of_volumes_ret = -1;
+static gboolean dissect_xdr_remote_storage_pool_num_of_volumes_ret(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_storage_pool_num_of_volumes_ret);
+    hf = hf_remote_storage_pool_num_of_volumes_ret;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "num: ");
+    if (!dissect_xdr_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_storage_pool_list_volumes_args = -1;
+static gint ett_remote_storage_pool_list_volumes_args = -1;
+static gboolean dissect_xdr_remote_storage_pool_list_volumes_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_storage_pool_list_volumes_args);
+    hf = hf_remote_storage_pool_list_volumes_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "pool: ");
+    if (!dissect_xdr_remote_nonnull_storage_pool(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "maxnames: ");
+    if (!dissect_xdr_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_storage_pool_list_volumes_ret_ANONTYPE_names = -1;
+static gint ett_remote_storage_pool_list_volumes_ret_ANONTYPE_names = -1;
+static int hf_remote_storage_pool_list_volumes_ret = -1;
+static gint ett_remote_storage_pool_list_volumes_ret = -1;
+static gboolean dissect_xdr_remote_storage_pool_list_volumes_ret(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_storage_pool_list_volumes_ret);
+    hf = hf_remote_storage_pool_list_volumes_ret;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "names: ");
+    if (!dissect_xdr_array(tvb, ti, xdrs, hf_remote_storage_pool_list_volumes_ret_ANONTYPE_names, ett_remote_storage_pool_list_volumes_ret_ANONTYPE_names, REMOTE_STORAGE_VOL_NAME_LIST_MAX, dissect_xdr_remote_nonnull_string)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_storage_vol_lookup_by_name_args = -1;
+static gint ett_remote_storage_vol_lookup_by_name_args = -1;
+static gboolean dissect_xdr_remote_storage_vol_lookup_by_name_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_storage_vol_lookup_by_name_args);
+    hf = hf_remote_storage_vol_lookup_by_name_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "pool: ");
+    if (!dissect_xdr_remote_nonnull_storage_pool(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "name: ");
+    if (!dissect_xdr_remote_nonnull_string(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_storage_vol_lookup_by_name_ret = -1;
+static gint ett_remote_storage_vol_lookup_by_name_ret = -1;
+static gboolean dissect_xdr_remote_storage_vol_lookup_by_name_ret(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_storage_vol_lookup_by_name_ret);
+    hf = hf_remote_storage_vol_lookup_by_name_ret;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "vol: ");
+    if (!dissect_xdr_remote_nonnull_storage_vol(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_storage_vol_lookup_by_key_args = -1;
+static gint ett_remote_storage_vol_lookup_by_key_args = -1;
+static gboolean dissect_xdr_remote_storage_vol_lookup_by_key_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_storage_vol_lookup_by_key_args);
+    hf = hf_remote_storage_vol_lookup_by_key_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "key: ");
+    if (!dissect_xdr_remote_nonnull_string(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_storage_vol_lookup_by_key_ret = -1;
+static gint ett_remote_storage_vol_lookup_by_key_ret = -1;
+static gboolean dissect_xdr_remote_storage_vol_lookup_by_key_ret(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_storage_vol_lookup_by_key_ret);
+    hf = hf_remote_storage_vol_lookup_by_key_ret;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "vol: ");
+    if (!dissect_xdr_remote_nonnull_storage_vol(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_storage_vol_lookup_by_path_args = -1;
+static gint ett_remote_storage_vol_lookup_by_path_args = -1;
+static gboolean dissect_xdr_remote_storage_vol_lookup_by_path_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_storage_vol_lookup_by_path_args);
+    hf = hf_remote_storage_vol_lookup_by_path_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "path: ");
+    if (!dissect_xdr_remote_nonnull_string(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_storage_vol_lookup_by_path_ret = -1;
+static gint ett_remote_storage_vol_lookup_by_path_ret = -1;
+static gboolean dissect_xdr_remote_storage_vol_lookup_by_path_ret(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_storage_vol_lookup_by_path_ret);
+    hf = hf_remote_storage_vol_lookup_by_path_ret;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "vol: ");
+    if (!dissect_xdr_remote_nonnull_storage_vol(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_storage_vol_create_xml_args = -1;
+static gint ett_remote_storage_vol_create_xml_args = -1;
+static gboolean dissect_xdr_remote_storage_vol_create_xml_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_storage_vol_create_xml_args);
+    hf = hf_remote_storage_vol_create_xml_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "pool: ");
+    if (!dissect_xdr_remote_nonnull_storage_pool(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "xml: ");
+    if (!dissect_xdr_remote_nonnull_string(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "flags: ");
+    if (!dissect_xdr_u_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_storage_vol_create_xml_ret = -1;
+static gint ett_remote_storage_vol_create_xml_ret = -1;
+static gboolean dissect_xdr_remote_storage_vol_create_xml_ret(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_storage_vol_create_xml_ret);
+    hf = hf_remote_storage_vol_create_xml_ret;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "vol: ");
+    if (!dissect_xdr_remote_nonnull_storage_vol(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_storage_vol_create_xml_from_args = -1;
+static gint ett_remote_storage_vol_create_xml_from_args = -1;
+static gboolean dissect_xdr_remote_storage_vol_create_xml_from_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_storage_vol_create_xml_from_args);
+    hf = hf_remote_storage_vol_create_xml_from_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "pool: ");
+    if (!dissect_xdr_remote_nonnull_storage_pool(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "xml: ");
+    if (!dissect_xdr_remote_nonnull_string(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "clonevol: ");
+    if (!dissect_xdr_remote_nonnull_storage_vol(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "flags: ");
+    if (!dissect_xdr_u_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_storage_vol_create_xml_from_ret = -1;
+static gint ett_remote_storage_vol_create_xml_from_ret = -1;
+static gboolean dissect_xdr_remote_storage_vol_create_xml_from_ret(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_storage_vol_create_xml_from_ret);
+    hf = hf_remote_storage_vol_create_xml_from_ret;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "vol: ");
+    if (!dissect_xdr_remote_nonnull_storage_vol(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_storage_vol_delete_args = -1;
+static gint ett_remote_storage_vol_delete_args = -1;
+static gboolean dissect_xdr_remote_storage_vol_delete_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_storage_vol_delete_args);
+    hf = hf_remote_storage_vol_delete_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "vol: ");
+    if (!dissect_xdr_remote_nonnull_storage_vol(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "flags: ");
+    if (!dissect_xdr_u_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_storage_vol_wipe_args = -1;
+static gint ett_remote_storage_vol_wipe_args = -1;
+static gboolean dissect_xdr_remote_storage_vol_wipe_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_storage_vol_wipe_args);
+    hf = hf_remote_storage_vol_wipe_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "vol: ");
+    if (!dissect_xdr_remote_nonnull_storage_vol(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "flags: ");
+    if (!dissect_xdr_u_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_storage_vol_wipe_pattern_args = -1;
+static gint ett_remote_storage_vol_wipe_pattern_args = -1;
+static gboolean dissect_xdr_remote_storage_vol_wipe_pattern_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_storage_vol_wipe_pattern_args);
+    hf = hf_remote_storage_vol_wipe_pattern_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "vol: ");
+    if (!dissect_xdr_remote_nonnull_storage_vol(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "algorithm: ");
+    if (!dissect_xdr_u_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "flags: ");
+    if (!dissect_xdr_u_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_storage_vol_get_xml_desc_args = -1;
+static gint ett_remote_storage_vol_get_xml_desc_args = -1;
+static gboolean dissect_xdr_remote_storage_vol_get_xml_desc_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_storage_vol_get_xml_desc_args);
+    hf = hf_remote_storage_vol_get_xml_desc_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "vol: ");
+    if (!dissect_xdr_remote_nonnull_storage_vol(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "flags: ");
+    if (!dissect_xdr_u_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_storage_vol_get_xml_desc_ret = -1;
+static gint ett_remote_storage_vol_get_xml_desc_ret = -1;
+static gboolean dissect_xdr_remote_storage_vol_get_xml_desc_ret(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_storage_vol_get_xml_desc_ret);
+    hf = hf_remote_storage_vol_get_xml_desc_ret;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "xml: ");
+    if (!dissect_xdr_remote_nonnull_string(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_storage_vol_get_info_args = -1;
+static gint ett_remote_storage_vol_get_info_args = -1;
+static gboolean dissect_xdr_remote_storage_vol_get_info_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_storage_vol_get_info_args);
+    hf = hf_remote_storage_vol_get_info_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "vol: ");
+    if (!dissect_xdr_remote_nonnull_storage_vol(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_storage_vol_get_info_ret = -1;
+static gint ett_remote_storage_vol_get_info_ret = -1;
+static gboolean dissect_xdr_remote_storage_vol_get_info_ret(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_storage_vol_get_info_ret);
+    hf = hf_remote_storage_vol_get_info_ret;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "type: ");
+    if (!dissect_xdr_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "capacity: ");
+    if (!dissect_xdr_u_hyper(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "allocation: ");
+    if (!dissect_xdr_u_hyper(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_storage_vol_get_path_args = -1;
+static gint ett_remote_storage_vol_get_path_args = -1;
+static gboolean dissect_xdr_remote_storage_vol_get_path_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_storage_vol_get_path_args);
+    hf = hf_remote_storage_vol_get_path_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "vol: ");
+    if (!dissect_xdr_remote_nonnull_storage_vol(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_storage_vol_get_path_ret = -1;
+static gint ett_remote_storage_vol_get_path_ret = -1;
+static gboolean dissect_xdr_remote_storage_vol_get_path_ret(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_storage_vol_get_path_ret);
+    hf = hf_remote_storage_vol_get_path_ret;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "name: ");
+    if (!dissect_xdr_remote_nonnull_string(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_storage_vol_resize_args = -1;
+static gint ett_remote_storage_vol_resize_args = -1;
+static gboolean dissect_xdr_remote_storage_vol_resize_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_storage_vol_resize_args);
+    hf = hf_remote_storage_vol_resize_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "vol: ");
+    if (!dissect_xdr_remote_nonnull_storage_vol(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "capacity: ");
+    if (!dissect_xdr_u_hyper(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "flags: ");
+    if (!dissect_xdr_u_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_node_num_of_devices_args = -1;
+static gint ett_remote_node_num_of_devices_args = -1;
+static gboolean dissect_xdr_remote_node_num_of_devices_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_node_num_of_devices_args);
+    hf = hf_remote_node_num_of_devices_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "cap: ");
+    if (!dissect_xdr_remote_string(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "flags: ");
+    if (!dissect_xdr_u_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_node_num_of_devices_ret = -1;
+static gint ett_remote_node_num_of_devices_ret = -1;
+static gboolean dissect_xdr_remote_node_num_of_devices_ret(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_node_num_of_devices_ret);
+    hf = hf_remote_node_num_of_devices_ret;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "num: ");
+    if (!dissect_xdr_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_node_list_devices_args = -1;
+static gint ett_remote_node_list_devices_args = -1;
+static gboolean dissect_xdr_remote_node_list_devices_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_node_list_devices_args);
+    hf = hf_remote_node_list_devices_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "cap: ");
+    if (!dissect_xdr_remote_string(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "maxnames: ");
+    if (!dissect_xdr_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "flags: ");
+    if (!dissect_xdr_u_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_node_list_devices_ret_ANONTYPE_names = -1;
+static gint ett_remote_node_list_devices_ret_ANONTYPE_names = -1;
+static int hf_remote_node_list_devices_ret = -1;
+static gint ett_remote_node_list_devices_ret = -1;
+static gboolean dissect_xdr_remote_node_list_devices_ret(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_node_list_devices_ret);
+    hf = hf_remote_node_list_devices_ret;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "names: ");
+    if (!dissect_xdr_array(tvb, ti, xdrs, hf_remote_node_list_devices_ret_ANONTYPE_names, ett_remote_node_list_devices_ret_ANONTYPE_names, REMOTE_NODE_DEVICE_NAME_LIST_MAX, dissect_xdr_remote_nonnull_string)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_node_device_lookup_by_name_args = -1;
+static gint ett_remote_node_device_lookup_by_name_args = -1;
+static gboolean dissect_xdr_remote_node_device_lookup_by_name_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_node_device_lookup_by_name_args);
+    hf = hf_remote_node_device_lookup_by_name_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "name: ");
+    if (!dissect_xdr_remote_nonnull_string(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_node_device_lookup_by_name_ret = -1;
+static gint ett_remote_node_device_lookup_by_name_ret = -1;
+static gboolean dissect_xdr_remote_node_device_lookup_by_name_ret(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_node_device_lookup_by_name_ret);
+    hf = hf_remote_node_device_lookup_by_name_ret;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "dev: ");
+    if (!dissect_xdr_remote_nonnull_node_device(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_node_device_lookup_scsi_host_by_wwn_args = -1;
+static gint ett_remote_node_device_lookup_scsi_host_by_wwn_args = -1;
+static gboolean dissect_xdr_remote_node_device_lookup_scsi_host_by_wwn_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_node_device_lookup_scsi_host_by_wwn_args);
+    hf = hf_remote_node_device_lookup_scsi_host_by_wwn_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "wwnn: ");
+    if (!dissect_xdr_remote_nonnull_string(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "wwpn: ");
+    if (!dissect_xdr_remote_nonnull_string(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "flags: ");
+    if (!dissect_xdr_u_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_node_device_lookup_scsi_host_by_wwn_ret = -1;
+static gint ett_remote_node_device_lookup_scsi_host_by_wwn_ret = -1;
+static gboolean dissect_xdr_remote_node_device_lookup_scsi_host_by_wwn_ret(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_node_device_lookup_scsi_host_by_wwn_ret);
+    hf = hf_remote_node_device_lookup_scsi_host_by_wwn_ret;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "dev: ");
+    if (!dissect_xdr_remote_nonnull_node_device(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_node_device_get_xml_desc_args = -1;
+static gint ett_remote_node_device_get_xml_desc_args = -1;
+static gboolean dissect_xdr_remote_node_device_get_xml_desc_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_node_device_get_xml_desc_args);
+    hf = hf_remote_node_device_get_xml_desc_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "name: ");
+    if (!dissect_xdr_remote_nonnull_string(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "flags: ");
+    if (!dissect_xdr_u_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_node_device_get_xml_desc_ret = -1;
+static gint ett_remote_node_device_get_xml_desc_ret = -1;
+static gboolean dissect_xdr_remote_node_device_get_xml_desc_ret(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_node_device_get_xml_desc_ret);
+    hf = hf_remote_node_device_get_xml_desc_ret;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "xml: ");
+    if (!dissect_xdr_remote_nonnull_string(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_node_device_get_parent_args = -1;
+static gint ett_remote_node_device_get_parent_args = -1;
+static gboolean dissect_xdr_remote_node_device_get_parent_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_node_device_get_parent_args);
+    hf = hf_remote_node_device_get_parent_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "name: ");
+    if (!dissect_xdr_remote_nonnull_string(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_node_device_get_parent_ret = -1;
+static gint ett_remote_node_device_get_parent_ret = -1;
+static gboolean dissect_xdr_remote_node_device_get_parent_ret(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_node_device_get_parent_ret);
+    hf = hf_remote_node_device_get_parent_ret;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "parent: ");
+    if (!dissect_xdr_remote_string(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_node_device_num_of_caps_args = -1;
+static gint ett_remote_node_device_num_of_caps_args = -1;
+static gboolean dissect_xdr_remote_node_device_num_of_caps_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_node_device_num_of_caps_args);
+    hf = hf_remote_node_device_num_of_caps_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "name: ");
+    if (!dissect_xdr_remote_nonnull_string(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_node_device_num_of_caps_ret = -1;
+static gint ett_remote_node_device_num_of_caps_ret = -1;
+static gboolean dissect_xdr_remote_node_device_num_of_caps_ret(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_node_device_num_of_caps_ret);
+    hf = hf_remote_node_device_num_of_caps_ret;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "num: ");
+    if (!dissect_xdr_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_node_device_list_caps_args = -1;
+static gint ett_remote_node_device_list_caps_args = -1;
+static gboolean dissect_xdr_remote_node_device_list_caps_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_node_device_list_caps_args);
+    hf = hf_remote_node_device_list_caps_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "name: ");
+    if (!dissect_xdr_remote_nonnull_string(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "maxnames: ");
+    if (!dissect_xdr_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_node_device_list_caps_ret_ANONTYPE_names = -1;
+static gint ett_remote_node_device_list_caps_ret_ANONTYPE_names = -1;
+static int hf_remote_node_device_list_caps_ret = -1;
+static gint ett_remote_node_device_list_caps_ret = -1;
+static gboolean dissect_xdr_remote_node_device_list_caps_ret(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_node_device_list_caps_ret);
+    hf = hf_remote_node_device_list_caps_ret;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "names: ");
+    if (!dissect_xdr_array(tvb, ti, xdrs, hf_remote_node_device_list_caps_ret_ANONTYPE_names, ett_remote_node_device_list_caps_ret_ANONTYPE_names, REMOTE_NODE_DEVICE_CAPS_LIST_MAX, dissect_xdr_remote_nonnull_string)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_node_device_dettach_args = -1;
+static gint ett_remote_node_device_dettach_args = -1;
+static gboolean dissect_xdr_remote_node_device_dettach_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_node_device_dettach_args);
+    hf = hf_remote_node_device_dettach_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "name: ");
+    if (!dissect_xdr_remote_nonnull_string(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_node_device_detach_flags_args = -1;
+static gint ett_remote_node_device_detach_flags_args = -1;
+static gboolean dissect_xdr_remote_node_device_detach_flags_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_node_device_detach_flags_args);
+    hf = hf_remote_node_device_detach_flags_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "name: ");
+    if (!dissect_xdr_remote_nonnull_string(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "driverName: ");
+    if (!dissect_xdr_remote_string(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "flags: ");
+    if (!dissect_xdr_u_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_node_device_re_attach_args = -1;
+static gint ett_remote_node_device_re_attach_args = -1;
+static gboolean dissect_xdr_remote_node_device_re_attach_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_node_device_re_attach_args);
+    hf = hf_remote_node_device_re_attach_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "name: ");
+    if (!dissect_xdr_remote_nonnull_string(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_node_device_reset_args = -1;
+static gint ett_remote_node_device_reset_args = -1;
+static gboolean dissect_xdr_remote_node_device_reset_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_node_device_reset_args);
+    hf = hf_remote_node_device_reset_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "name: ");
+    if (!dissect_xdr_remote_nonnull_string(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_node_device_create_xml_args = -1;
+static gint ett_remote_node_device_create_xml_args = -1;
+static gboolean dissect_xdr_remote_node_device_create_xml_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_node_device_create_xml_args);
+    hf = hf_remote_node_device_create_xml_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "xml_desc: ");
+    if (!dissect_xdr_remote_nonnull_string(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "flags: ");
+    if (!dissect_xdr_u_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_node_device_create_xml_ret = -1;
+static gint ett_remote_node_device_create_xml_ret = -1;
+static gboolean dissect_xdr_remote_node_device_create_xml_ret(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_node_device_create_xml_ret);
+    hf = hf_remote_node_device_create_xml_ret;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "dev: ");
+    if (!dissect_xdr_remote_nonnull_node_device(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_node_device_destroy_args = -1;
+static gint ett_remote_node_device_destroy_args = -1;
+static gboolean dissect_xdr_remote_node_device_destroy_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_node_device_destroy_args);
+    hf = hf_remote_node_device_destroy_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "name: ");
+    if (!dissect_xdr_remote_nonnull_string(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_connect_domain_event_register_ret = -1;
+static gint ett_remote_connect_domain_event_register_ret = -1;
+static gboolean dissect_xdr_remote_connect_domain_event_register_ret(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_connect_domain_event_register_ret);
+    hf = hf_remote_connect_domain_event_register_ret;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "cb_registered: ");
+    if (!dissect_xdr_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_connect_domain_event_deregister_ret = -1;
+static gint ett_remote_connect_domain_event_deregister_ret = -1;
+static gboolean dissect_xdr_remote_connect_domain_event_deregister_ret(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_connect_domain_event_deregister_ret);
+    hf = hf_remote_connect_domain_event_deregister_ret;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "cb_registered: ");
+    if (!dissect_xdr_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_event_lifecycle_msg = -1;
+static gint ett_remote_domain_event_lifecycle_msg = -1;
+static gboolean dissect_xdr_remote_domain_event_lifecycle_msg(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_event_lifecycle_msg);
+    hf = hf_remote_domain_event_lifecycle_msg;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "dom: ");
+    if (!dissect_xdr_remote_nonnull_domain(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "event: ");
+    if (!dissect_xdr_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "detail: ");
+    if (!dissect_xdr_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_connect_domain_xml_from_native_args = -1;
+static gint ett_remote_connect_domain_xml_from_native_args = -1;
+static gboolean dissect_xdr_remote_connect_domain_xml_from_native_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_connect_domain_xml_from_native_args);
+    hf = hf_remote_connect_domain_xml_from_native_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "nativeFormat: ");
+    if (!dissect_xdr_remote_nonnull_string(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "nativeConfig: ");
+    if (!dissect_xdr_remote_nonnull_string(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "flags: ");
+    if (!dissect_xdr_u_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_connect_domain_xml_from_native_ret = -1;
+static gint ett_remote_connect_domain_xml_from_native_ret = -1;
+static gboolean dissect_xdr_remote_connect_domain_xml_from_native_ret(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_connect_domain_xml_from_native_ret);
+    hf = hf_remote_connect_domain_xml_from_native_ret;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "domainXml: ");
+    if (!dissect_xdr_remote_nonnull_string(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_connect_domain_xml_to_native_args = -1;
+static gint ett_remote_connect_domain_xml_to_native_args = -1;
+static gboolean dissect_xdr_remote_connect_domain_xml_to_native_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_connect_domain_xml_to_native_args);
+    hf = hf_remote_connect_domain_xml_to_native_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "nativeFormat: ");
+    if (!dissect_xdr_remote_nonnull_string(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "domainXml: ");
+    if (!dissect_xdr_remote_nonnull_string(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "flags: ");
+    if (!dissect_xdr_u_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_connect_domain_xml_to_native_ret = -1;
+static gint ett_remote_connect_domain_xml_to_native_ret = -1;
+static gboolean dissect_xdr_remote_connect_domain_xml_to_native_ret(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_connect_domain_xml_to_native_ret);
+    hf = hf_remote_connect_domain_xml_to_native_ret;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "nativeConfig: ");
+    if (!dissect_xdr_remote_nonnull_string(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_connect_num_of_secrets_ret = -1;
+static gint ett_remote_connect_num_of_secrets_ret = -1;
+static gboolean dissect_xdr_remote_connect_num_of_secrets_ret(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_connect_num_of_secrets_ret);
+    hf = hf_remote_connect_num_of_secrets_ret;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "num: ");
+    if (!dissect_xdr_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_connect_list_secrets_args = -1;
+static gint ett_remote_connect_list_secrets_args = -1;
+static gboolean dissect_xdr_remote_connect_list_secrets_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_connect_list_secrets_args);
+    hf = hf_remote_connect_list_secrets_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "maxuuids: ");
+    if (!dissect_xdr_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_connect_list_secrets_ret_ANONTYPE_uuids = -1;
+static gint ett_remote_connect_list_secrets_ret_ANONTYPE_uuids = -1;
+static int hf_remote_connect_list_secrets_ret = -1;
+static gint ett_remote_connect_list_secrets_ret = -1;
+static gboolean dissect_xdr_remote_connect_list_secrets_ret(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_connect_list_secrets_ret);
+    hf = hf_remote_connect_list_secrets_ret;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "uuids: ");
+    if (!dissect_xdr_array(tvb, ti, xdrs, hf_remote_connect_list_secrets_ret_ANONTYPE_uuids, ett_remote_connect_list_secrets_ret_ANONTYPE_uuids, REMOTE_SECRET_UUID_LIST_MAX, dissect_xdr_remote_nonnull_string)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_secret_lookup_by_uuid_args = -1;
+static gint ett_remote_secret_lookup_by_uuid_args = -1;
+static gboolean dissect_xdr_remote_secret_lookup_by_uuid_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_secret_lookup_by_uuid_args);
+    hf = hf_remote_secret_lookup_by_uuid_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "uuid: ");
+    if (!dissect_xdr_remote_uuid(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_secret_lookup_by_uuid_ret = -1;
+static gint ett_remote_secret_lookup_by_uuid_ret = -1;
+static gboolean dissect_xdr_remote_secret_lookup_by_uuid_ret(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_secret_lookup_by_uuid_ret);
+    hf = hf_remote_secret_lookup_by_uuid_ret;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "secret: ");
+    if (!dissect_xdr_remote_nonnull_secret(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_secret_define_xml_args = -1;
+static gint ett_remote_secret_define_xml_args = -1;
+static gboolean dissect_xdr_remote_secret_define_xml_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_secret_define_xml_args);
+    hf = hf_remote_secret_define_xml_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "xml: ");
+    if (!dissect_xdr_remote_nonnull_string(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "flags: ");
+    if (!dissect_xdr_u_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_secret_define_xml_ret = -1;
+static gint ett_remote_secret_define_xml_ret = -1;
+static gboolean dissect_xdr_remote_secret_define_xml_ret(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_secret_define_xml_ret);
+    hf = hf_remote_secret_define_xml_ret;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "secret: ");
+    if (!dissect_xdr_remote_nonnull_secret(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_secret_get_xml_desc_args = -1;
+static gint ett_remote_secret_get_xml_desc_args = -1;
+static gboolean dissect_xdr_remote_secret_get_xml_desc_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_secret_get_xml_desc_args);
+    hf = hf_remote_secret_get_xml_desc_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "secret: ");
+    if (!dissect_xdr_remote_nonnull_secret(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "flags: ");
+    if (!dissect_xdr_u_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_secret_get_xml_desc_ret = -1;
+static gint ett_remote_secret_get_xml_desc_ret = -1;
+static gboolean dissect_xdr_remote_secret_get_xml_desc_ret(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_secret_get_xml_desc_ret);
+    hf = hf_remote_secret_get_xml_desc_ret;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "xml: ");
+    if (!dissect_xdr_remote_nonnull_string(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_secret_set_value_args = -1;
+static gint ett_remote_secret_set_value_args = -1;
+static gboolean dissect_xdr_remote_secret_set_value_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_secret_set_value_args);
+    hf = hf_remote_secret_set_value_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "secret: ");
+    if (!dissect_xdr_remote_nonnull_secret(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "value: ");
+    if (!dissect_xdr_bytes(tvb, ti, xdrs, hf, REMOTE_SECRET_VALUE_MAX)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "flags: ");
+    if (!dissect_xdr_u_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_secret_get_value_args = -1;
+static gint ett_remote_secret_get_value_args = -1;
+static gboolean dissect_xdr_remote_secret_get_value_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_secret_get_value_args);
+    hf = hf_remote_secret_get_value_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "secret: ");
+    if (!dissect_xdr_remote_nonnull_secret(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "flags: ");
+    if (!dissect_xdr_u_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_secret_get_value_ret = -1;
+static gint ett_remote_secret_get_value_ret = -1;
+static gboolean dissect_xdr_remote_secret_get_value_ret(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_secret_get_value_ret);
+    hf = hf_remote_secret_get_value_ret;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "value: ");
+    if (!dissect_xdr_bytes(tvb, ti, xdrs, hf, REMOTE_SECRET_VALUE_MAX)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_secret_undefine_args = -1;
+static gint ett_remote_secret_undefine_args = -1;
+static gboolean dissect_xdr_remote_secret_undefine_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_secret_undefine_args);
+    hf = hf_remote_secret_undefine_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "secret: ");
+    if (!dissect_xdr_remote_nonnull_secret(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_secret_lookup_by_usage_args = -1;
+static gint ett_remote_secret_lookup_by_usage_args = -1;
+static gboolean dissect_xdr_remote_secret_lookup_by_usage_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_secret_lookup_by_usage_args);
+    hf = hf_remote_secret_lookup_by_usage_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "usageType: ");
+    if (!dissect_xdr_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "usageID: ");
+    if (!dissect_xdr_remote_nonnull_string(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_secret_lookup_by_usage_ret = -1;
+static gint ett_remote_secret_lookup_by_usage_ret = -1;
+static gboolean dissect_xdr_remote_secret_lookup_by_usage_ret(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_secret_lookup_by_usage_ret);
+    hf = hf_remote_secret_lookup_by_usage_ret;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "secret: ");
+    if (!dissect_xdr_remote_nonnull_secret(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_migrate_prepare_tunnel_args = -1;
+static gint ett_remote_domain_migrate_prepare_tunnel_args = -1;
+static gboolean dissect_xdr_remote_domain_migrate_prepare_tunnel_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_migrate_prepare_tunnel_args);
+    hf = hf_remote_domain_migrate_prepare_tunnel_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "flags: ");
+    if (!dissect_xdr_u_hyper(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "dname: ");
+    if (!dissect_xdr_remote_string(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "resource: ");
+    if (!dissect_xdr_u_hyper(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "dom_xml: ");
+    if (!dissect_xdr_remote_nonnull_string(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_connect_is_secure_ret = -1;
+static gint ett_remote_connect_is_secure_ret = -1;
+static gboolean dissect_xdr_remote_connect_is_secure_ret(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_connect_is_secure_ret);
+    hf = hf_remote_connect_is_secure_ret;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "secure: ");
+    if (!dissect_xdr_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_is_active_args = -1;
+static gint ett_remote_domain_is_active_args = -1;
+static gboolean dissect_xdr_remote_domain_is_active_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_is_active_args);
+    hf = hf_remote_domain_is_active_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "dom: ");
+    if (!dissect_xdr_remote_nonnull_domain(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_is_active_ret = -1;
+static gint ett_remote_domain_is_active_ret = -1;
+static gboolean dissect_xdr_remote_domain_is_active_ret(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_is_active_ret);
+    hf = hf_remote_domain_is_active_ret;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "active: ");
+    if (!dissect_xdr_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_is_persistent_args = -1;
+static gint ett_remote_domain_is_persistent_args = -1;
+static gboolean dissect_xdr_remote_domain_is_persistent_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_is_persistent_args);
+    hf = hf_remote_domain_is_persistent_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "dom: ");
+    if (!dissect_xdr_remote_nonnull_domain(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_is_persistent_ret = -1;
+static gint ett_remote_domain_is_persistent_ret = -1;
+static gboolean dissect_xdr_remote_domain_is_persistent_ret(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_is_persistent_ret);
+    hf = hf_remote_domain_is_persistent_ret;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "persistent: ");
+    if (!dissect_xdr_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_is_updated_args = -1;
+static gint ett_remote_domain_is_updated_args = -1;
+static gboolean dissect_xdr_remote_domain_is_updated_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_is_updated_args);
+    hf = hf_remote_domain_is_updated_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "dom: ");
+    if (!dissect_xdr_remote_nonnull_domain(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_is_updated_ret = -1;
+static gint ett_remote_domain_is_updated_ret = -1;
+static gboolean dissect_xdr_remote_domain_is_updated_ret(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_is_updated_ret);
+    hf = hf_remote_domain_is_updated_ret;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "updated: ");
+    if (!dissect_xdr_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_network_is_active_args = -1;
+static gint ett_remote_network_is_active_args = -1;
+static gboolean dissect_xdr_remote_network_is_active_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_network_is_active_args);
+    hf = hf_remote_network_is_active_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "net: ");
+    if (!dissect_xdr_remote_nonnull_network(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_network_is_active_ret = -1;
+static gint ett_remote_network_is_active_ret = -1;
+static gboolean dissect_xdr_remote_network_is_active_ret(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_network_is_active_ret);
+    hf = hf_remote_network_is_active_ret;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "active: ");
+    if (!dissect_xdr_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_network_is_persistent_args = -1;
+static gint ett_remote_network_is_persistent_args = -1;
+static gboolean dissect_xdr_remote_network_is_persistent_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_network_is_persistent_args);
+    hf = hf_remote_network_is_persistent_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "net: ");
+    if (!dissect_xdr_remote_nonnull_network(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_network_is_persistent_ret = -1;
+static gint ett_remote_network_is_persistent_ret = -1;
+static gboolean dissect_xdr_remote_network_is_persistent_ret(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_network_is_persistent_ret);
+    hf = hf_remote_network_is_persistent_ret;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "persistent: ");
+    if (!dissect_xdr_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_storage_pool_is_active_args = -1;
+static gint ett_remote_storage_pool_is_active_args = -1;
+static gboolean dissect_xdr_remote_storage_pool_is_active_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_storage_pool_is_active_args);
+    hf = hf_remote_storage_pool_is_active_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "pool: ");
+    if (!dissect_xdr_remote_nonnull_storage_pool(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_storage_pool_is_active_ret = -1;
+static gint ett_remote_storage_pool_is_active_ret = -1;
+static gboolean dissect_xdr_remote_storage_pool_is_active_ret(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_storage_pool_is_active_ret);
+    hf = hf_remote_storage_pool_is_active_ret;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "active: ");
+    if (!dissect_xdr_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_storage_pool_is_persistent_args = -1;
+static gint ett_remote_storage_pool_is_persistent_args = -1;
+static gboolean dissect_xdr_remote_storage_pool_is_persistent_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_storage_pool_is_persistent_args);
+    hf = hf_remote_storage_pool_is_persistent_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "pool: ");
+    if (!dissect_xdr_remote_nonnull_storage_pool(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_storage_pool_is_persistent_ret = -1;
+static gint ett_remote_storage_pool_is_persistent_ret = -1;
+static gboolean dissect_xdr_remote_storage_pool_is_persistent_ret(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_storage_pool_is_persistent_ret);
+    hf = hf_remote_storage_pool_is_persistent_ret;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "persistent: ");
+    if (!dissect_xdr_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_interface_is_active_args = -1;
+static gint ett_remote_interface_is_active_args = -1;
+static gboolean dissect_xdr_remote_interface_is_active_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_interface_is_active_args);
+    hf = hf_remote_interface_is_active_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "iface: ");
+    if (!dissect_xdr_remote_nonnull_interface(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_interface_is_active_ret = -1;
+static gint ett_remote_interface_is_active_ret = -1;
+static gboolean dissect_xdr_remote_interface_is_active_ret(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_interface_is_active_ret);
+    hf = hf_remote_interface_is_active_ret;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "active: ");
+    if (!dissect_xdr_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_connect_compare_cpu_args = -1;
+static gint ett_remote_connect_compare_cpu_args = -1;
+static gboolean dissect_xdr_remote_connect_compare_cpu_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_connect_compare_cpu_args);
+    hf = hf_remote_connect_compare_cpu_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "xml: ");
+    if (!dissect_xdr_remote_nonnull_string(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "flags: ");
+    if (!dissect_xdr_u_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_connect_compare_cpu_ret = -1;
+static gint ett_remote_connect_compare_cpu_ret = -1;
+static gboolean dissect_xdr_remote_connect_compare_cpu_ret(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_connect_compare_cpu_ret);
+    hf = hf_remote_connect_compare_cpu_ret;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "result: ");
+    if (!dissect_xdr_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_connect_baseline_cpu_args_ANONTYPE_xmlCPUs = -1;
+static gint ett_remote_connect_baseline_cpu_args_ANONTYPE_xmlCPUs = -1;
+static int hf_remote_connect_baseline_cpu_args = -1;
+static gint ett_remote_connect_baseline_cpu_args = -1;
+static gboolean dissect_xdr_remote_connect_baseline_cpu_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_connect_baseline_cpu_args);
+    hf = hf_remote_connect_baseline_cpu_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "xmlCPUs: ");
+    if (!dissect_xdr_array(tvb, ti, xdrs, hf_remote_connect_baseline_cpu_args_ANONTYPE_xmlCPUs, ett_remote_connect_baseline_cpu_args_ANONTYPE_xmlCPUs, REMOTE_CPU_BASELINE_MAX, dissect_xdr_remote_nonnull_string)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "flags: ");
+    if (!dissect_xdr_u_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_connect_baseline_cpu_ret = -1;
+static gint ett_remote_connect_baseline_cpu_ret = -1;
+static gboolean dissect_xdr_remote_connect_baseline_cpu_ret(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_connect_baseline_cpu_ret);
+    hf = hf_remote_connect_baseline_cpu_ret;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "cpu: ");
+    if (!dissect_xdr_remote_nonnull_string(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_get_job_info_args = -1;
+static gint ett_remote_domain_get_job_info_args = -1;
+static gboolean dissect_xdr_remote_domain_get_job_info_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_get_job_info_args);
+    hf = hf_remote_domain_get_job_info_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "dom: ");
+    if (!dissect_xdr_remote_nonnull_domain(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_get_job_info_ret = -1;
+static gint ett_remote_domain_get_job_info_ret = -1;
+static gboolean dissect_xdr_remote_domain_get_job_info_ret(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_get_job_info_ret);
+    hf = hf_remote_domain_get_job_info_ret;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "type: ");
+    if (!dissect_xdr_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "timeElapsed: ");
+    if (!dissect_xdr_u_hyper(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "timeRemaining: ");
+    if (!dissect_xdr_u_hyper(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "dataTotal: ");
+    if (!dissect_xdr_u_hyper(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "dataProcessed: ");
+    if (!dissect_xdr_u_hyper(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "dataRemaining: ");
+    if (!dissect_xdr_u_hyper(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "memTotal: ");
+    if (!dissect_xdr_u_hyper(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "memProcessed: ");
+    if (!dissect_xdr_u_hyper(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "memRemaining: ");
+    if (!dissect_xdr_u_hyper(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "fileTotal: ");
+    if (!dissect_xdr_u_hyper(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "fileProcessed: ");
+    if (!dissect_xdr_u_hyper(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "fileRemaining: ");
+    if (!dissect_xdr_u_hyper(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_get_job_stats_args = -1;
+static gint ett_remote_domain_get_job_stats_args = -1;
+static gboolean dissect_xdr_remote_domain_get_job_stats_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_get_job_stats_args);
+    hf = hf_remote_domain_get_job_stats_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "dom: ");
+    if (!dissect_xdr_remote_nonnull_domain(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "flags: ");
+    if (!dissect_xdr_u_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_get_job_stats_ret_ANONTYPE_params = -1;
+static gint ett_remote_domain_get_job_stats_ret_ANONTYPE_params = -1;
+static int hf_remote_domain_get_job_stats_ret = -1;
+static gint ett_remote_domain_get_job_stats_ret = -1;
+static gboolean dissect_xdr_remote_domain_get_job_stats_ret(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_get_job_stats_ret);
+    hf = hf_remote_domain_get_job_stats_ret;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "type: ");
+    if (!dissect_xdr_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "params: ");
+    if (!dissect_xdr_array(tvb, ti, xdrs, hf_remote_domain_get_job_stats_ret_ANONTYPE_params, ett_remote_domain_get_job_stats_ret_ANONTYPE_params, ~0, dissect_xdr_remote_typed_param)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_abort_job_args = -1;
+static gint ett_remote_domain_abort_job_args = -1;
+static gboolean dissect_xdr_remote_domain_abort_job_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_abort_job_args);
+    hf = hf_remote_domain_abort_job_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "dom: ");
+    if (!dissect_xdr_remote_nonnull_domain(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_migrate_set_max_downtime_args = -1;
+static gint ett_remote_domain_migrate_set_max_downtime_args = -1;
+static gboolean dissect_xdr_remote_domain_migrate_set_max_downtime_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_migrate_set_max_downtime_args);
+    hf = hf_remote_domain_migrate_set_max_downtime_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "dom: ");
+    if (!dissect_xdr_remote_nonnull_domain(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "downtime: ");
+    if (!dissect_xdr_u_hyper(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "flags: ");
+    if (!dissect_xdr_u_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_migrate_get_compression_cache_args = -1;
+static gint ett_remote_domain_migrate_get_compression_cache_args = -1;
+static gboolean dissect_xdr_remote_domain_migrate_get_compression_cache_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_migrate_get_compression_cache_args);
+    hf = hf_remote_domain_migrate_get_compression_cache_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "dom: ");
+    if (!dissect_xdr_remote_nonnull_domain(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "flags: ");
+    if (!dissect_xdr_u_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_migrate_get_compression_cache_ret = -1;
+static gint ett_remote_domain_migrate_get_compression_cache_ret = -1;
+static gboolean dissect_xdr_remote_domain_migrate_get_compression_cache_ret(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_migrate_get_compression_cache_ret);
+    hf = hf_remote_domain_migrate_get_compression_cache_ret;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "cacheSize: ");
+    if (!dissect_xdr_u_hyper(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_migrate_set_compression_cache_args = -1;
+static gint ett_remote_domain_migrate_set_compression_cache_args = -1;
+static gboolean dissect_xdr_remote_domain_migrate_set_compression_cache_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_migrate_set_compression_cache_args);
+    hf = hf_remote_domain_migrate_set_compression_cache_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "dom: ");
+    if (!dissect_xdr_remote_nonnull_domain(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "cacheSize: ");
+    if (!dissect_xdr_u_hyper(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "flags: ");
+    if (!dissect_xdr_u_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_migrate_set_max_speed_args = -1;
+static gint ett_remote_domain_migrate_set_max_speed_args = -1;
+static gboolean dissect_xdr_remote_domain_migrate_set_max_speed_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_migrate_set_max_speed_args);
+    hf = hf_remote_domain_migrate_set_max_speed_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "dom: ");
+    if (!dissect_xdr_remote_nonnull_domain(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "bandwidth: ");
+    if (!dissect_xdr_u_hyper(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "flags: ");
+    if (!dissect_xdr_u_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_migrate_get_max_speed_args = -1;
+static gint ett_remote_domain_migrate_get_max_speed_args = -1;
+static gboolean dissect_xdr_remote_domain_migrate_get_max_speed_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_migrate_get_max_speed_args);
+    hf = hf_remote_domain_migrate_get_max_speed_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "dom: ");
+    if (!dissect_xdr_remote_nonnull_domain(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "flags: ");
+    if (!dissect_xdr_u_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_migrate_get_max_speed_ret = -1;
+static gint ett_remote_domain_migrate_get_max_speed_ret = -1;
+static gboolean dissect_xdr_remote_domain_migrate_get_max_speed_ret(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_migrate_get_max_speed_ret);
+    hf = hf_remote_domain_migrate_get_max_speed_ret;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "bandwidth: ");
+    if (!dissect_xdr_u_hyper(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_connect_domain_event_register_any_args = -1;
+static gint ett_remote_connect_domain_event_register_any_args = -1;
+static gboolean dissect_xdr_remote_connect_domain_event_register_any_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_connect_domain_event_register_any_args);
+    hf = hf_remote_connect_domain_event_register_any_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "eventID: ");
+    if (!dissect_xdr_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_connect_domain_event_deregister_any_args = -1;
+static gint ett_remote_connect_domain_event_deregister_any_args = -1;
+static gboolean dissect_xdr_remote_connect_domain_event_deregister_any_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_connect_domain_event_deregister_any_args);
+    hf = hf_remote_connect_domain_event_deregister_any_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "eventID: ");
+    if (!dissect_xdr_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_event_reboot_msg = -1;
+static gint ett_remote_domain_event_reboot_msg = -1;
+static gboolean dissect_xdr_remote_domain_event_reboot_msg(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_event_reboot_msg);
+    hf = hf_remote_domain_event_reboot_msg;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "dom: ");
+    if (!dissect_xdr_remote_nonnull_domain(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_event_rtc_change_msg = -1;
+static gint ett_remote_domain_event_rtc_change_msg = -1;
+static gboolean dissect_xdr_remote_domain_event_rtc_change_msg(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_event_rtc_change_msg);
+    hf = hf_remote_domain_event_rtc_change_msg;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "dom: ");
+    if (!dissect_xdr_remote_nonnull_domain(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "offset: ");
+    if (!dissect_xdr_hyper(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_event_watchdog_msg = -1;
+static gint ett_remote_domain_event_watchdog_msg = -1;
+static gboolean dissect_xdr_remote_domain_event_watchdog_msg(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_event_watchdog_msg);
+    hf = hf_remote_domain_event_watchdog_msg;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "dom: ");
+    if (!dissect_xdr_remote_nonnull_domain(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "action: ");
+    if (!dissect_xdr_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_event_io_error_msg = -1;
+static gint ett_remote_domain_event_io_error_msg = -1;
+static gboolean dissect_xdr_remote_domain_event_io_error_msg(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_event_io_error_msg);
+    hf = hf_remote_domain_event_io_error_msg;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "dom: ");
+    if (!dissect_xdr_remote_nonnull_domain(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "srcPath: ");
+    if (!dissect_xdr_remote_nonnull_string(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "devAlias: ");
+    if (!dissect_xdr_remote_nonnull_string(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "action: ");
+    if (!dissect_xdr_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_event_io_error_reason_msg = -1;
+static gint ett_remote_domain_event_io_error_reason_msg = -1;
+static gboolean dissect_xdr_remote_domain_event_io_error_reason_msg(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_event_io_error_reason_msg);
+    hf = hf_remote_domain_event_io_error_reason_msg;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "dom: ");
+    if (!dissect_xdr_remote_nonnull_domain(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "srcPath: ");
+    if (!dissect_xdr_remote_nonnull_string(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "devAlias: ");
+    if (!dissect_xdr_remote_nonnull_string(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "action: ");
+    if (!dissect_xdr_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "reason: ");
+    if (!dissect_xdr_remote_nonnull_string(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_event_graphics_address = -1;
+static gint ett_remote_domain_event_graphics_address = -1;
+static gboolean dissect_xdr_remote_domain_event_graphics_address(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_event_graphics_address);
+    hf = hf_remote_domain_event_graphics_address;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "family: ");
+    if (!dissect_xdr_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "node: ");
+    if (!dissect_xdr_remote_nonnull_string(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "service: ");
+    if (!dissect_xdr_remote_nonnull_string(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
 #define REMOTE_DOMAIN_EVENT_GRAPHICS_IDENTITY_MAX (20)
-static vir_named_xdrdef_t struct_remote_domain_event_graphics_identity_members_def[] = {
-    { "type", XDR_INT, NULL, 0 /* int */ },
-    { "name", XDR_STRING, 0, REMOTE_STRING_MAX /* remote_nonnull_string */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_xdrdef_t remote_domain_event_graphics_identity_def = {
-    XDR_STRUCT, struct_remote_domain_event_graphics_identity_members_def, 0 /* remote_domain_event_graphics_identity */
-};
-static vir_named_xdrdef_t struct_remote_domain_event_graphics_msg_members_def[] = {
-    { "dom", XDR_STRUCT, struct_remote_nonnull_domain_members_def, 0 /* remote_nonnull_domain */ },
-    { "phase", XDR_INT, NULL, 0 /* int */ },
-    { "local", XDR_STRUCT, struct_remote_domain_event_graphics_address_members_def, 0 /* remote_domain_event_graphics_address */ },
-    { "remote", XDR_STRUCT, struct_remote_domain_event_graphics_address_members_def, 0 /* remote_domain_event_graphics_address */ },
-    { "authScheme", XDR_STRING, 0, REMOTE_STRING_MAX /* remote_nonnull_string */ },
-    { "subject", XDR_ARRAY, &remote_domain_event_graphics_identity_def, REMOTE_DOMAIN_EVENT_GRAPHICS_IDENTITY_MAX /* remote_domain_event_graphics_msg_ANON_0 */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_event_block_job_msg_members_def[] = {
-    { "dom", XDR_STRUCT, struct_remote_nonnull_domain_members_def, 0 /* remote_nonnull_domain */ },
-    { "path", XDR_STRING, 0, REMOTE_STRING_MAX /* remote_nonnull_string */ },
-    { "type", XDR_INT, NULL, 0 /* int */ },
-    { "status", XDR_INT, NULL, 0 /* int */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_event_disk_change_msg_members_def[] = {
-    { "dom", XDR_STRUCT, struct_remote_nonnull_domain_members_def, 0 /* remote_nonnull_domain */ },
-    { "oldSrcPath", XDR_POINTER, &remote_nonnull_string_def, 0 /* remote_string */ },
-    { "newSrcPath", XDR_POINTER, &remote_nonnull_string_def, 0 /* remote_string */ },
-    { "devAlias", XDR_STRING, 0, REMOTE_STRING_MAX /* remote_nonnull_string */ },
-    { "reason", XDR_INT, NULL, 0 /* int */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_event_tray_change_msg_members_def[] = {
-    { "dom", XDR_STRUCT, struct_remote_nonnull_domain_members_def, 0 /* remote_nonnull_domain */ },
-    { "devAlias", XDR_STRING, 0, REMOTE_STRING_MAX /* remote_nonnull_string */ },
-    { "reason", XDR_INT, NULL, 0 /* int */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_event_pmwakeup_msg_members_def[] = {
-    { "dom", XDR_STRUCT, struct_remote_nonnull_domain_members_def, 0 /* remote_nonnull_domain */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_event_pmsuspend_msg_members_def[] = {
-    { "dom", XDR_STRUCT, struct_remote_nonnull_domain_members_def, 0 /* remote_nonnull_domain */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_event_balloon_change_msg_members_def[] = {
-    { "dom", XDR_STRUCT, struct_remote_nonnull_domain_members_def, 0 /* remote_nonnull_domain */ },
-    { "actual", XDR_UHYPER, NULL, 0 /* uhyper */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_event_pmsuspend_disk_msg_members_def[] = {
-    { "dom", XDR_STRUCT, struct_remote_nonnull_domain_members_def, 0 /* remote_nonnull_domain */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_managed_save_args_members_def[] = {
-    { "dom", XDR_STRUCT, struct_remote_nonnull_domain_members_def, 0 /* remote_nonnull_domain */ },
-    { "flags", XDR_UINT, NULL, 0 /* uint */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_has_managed_save_image_args_members_def[] = {
-    { "dom", XDR_STRUCT, struct_remote_nonnull_domain_members_def, 0 /* remote_nonnull_domain */ },
-    { "flags", XDR_UINT, NULL, 0 /* uint */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_has_managed_save_image_ret_members_def[] = {
-    { "result", XDR_INT, NULL, 0 /* int */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_managed_save_remove_args_members_def[] = {
-    { "dom", XDR_STRUCT, struct_remote_nonnull_domain_members_def, 0 /* remote_nonnull_domain */ },
-    { "flags", XDR_UINT, NULL, 0 /* uint */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_snapshot_create_xml_args_members_def[] = {
-    { "dom", XDR_STRUCT, struct_remote_nonnull_domain_members_def, 0 /* remote_nonnull_domain */ },
-    { "xml_desc", XDR_STRING, 0, REMOTE_STRING_MAX /* remote_nonnull_string */ },
-    { "flags", XDR_UINT, NULL, 0 /* uint */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_snapshot_create_xml_ret_members_def[] = {
-    { "snap", XDR_STRUCT, struct_remote_nonnull_domain_snapshot_members_def, 0 /* remote_nonnull_domain_snapshot */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_snapshot_get_xml_desc_args_members_def[] = {
-    { "snap", XDR_STRUCT, struct_remote_nonnull_domain_snapshot_members_def, 0 /* remote_nonnull_domain_snapshot */ },
-    { "flags", XDR_UINT, NULL, 0 /* uint */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_snapshot_get_xml_desc_ret_members_def[] = {
-    { "xml", XDR_STRING, 0, REMOTE_STRING_MAX /* remote_nonnull_string */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_snapshot_num_args_members_def[] = {
-    { "dom", XDR_STRUCT, struct_remote_nonnull_domain_members_def, 0 /* remote_nonnull_domain */ },
-    { "flags", XDR_UINT, NULL, 0 /* uint */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_snapshot_num_ret_members_def[] = {
-    { "num", XDR_INT, NULL, 0 /* int */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_snapshot_list_names_args_members_def[] = {
-    { "dom", XDR_STRUCT, struct_remote_nonnull_domain_members_def, 0 /* remote_nonnull_domain */ },
-    { "maxnames", XDR_INT, NULL, 0 /* int */ },
-    { "flags", XDR_UINT, NULL, 0 /* uint */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_snapshot_list_names_ret_members_def[] = {
-    { "names", XDR_ARRAY, &remote_nonnull_string_def, REMOTE_DOMAIN_SNAPSHOT_LIST_NAMES_MAX /* remote_domain_snapshot_list_names_ret_ANON_0 */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_list_all_snapshots_args_members_def[] = {
-    { "dom", XDR_STRUCT, struct_remote_nonnull_domain_members_def, 0 /* remote_nonnull_domain */ },
-    { "need_results", XDR_INT, NULL, 0 /* int */ },
-    { "flags", XDR_UINT, NULL, 0 /* uint */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_list_all_snapshots_ret_members_def[] = {
-    { "snapshots", XDR_ARRAY, &remote_nonnull_domain_snapshot_def, 0 /* remote_domain_list_all_snapshots_ret_ANON_0 */ },
-    { "ret", XDR_INT, NULL, 0 /* int */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_snapshot_num_children_args_members_def[] = {
-    { "snap", XDR_STRUCT, struct_remote_nonnull_domain_snapshot_members_def, 0 /* remote_nonnull_domain_snapshot */ },
-    { "flags", XDR_UINT, NULL, 0 /* uint */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_snapshot_num_children_ret_members_def[] = {
-    { "num", XDR_INT, NULL, 0 /* int */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_snapshot_list_children_names_args_members_def[] = {
-    { "snap", XDR_STRUCT, struct_remote_nonnull_domain_snapshot_members_def, 0 /* remote_nonnull_domain_snapshot */ },
-    { "maxnames", XDR_INT, NULL, 0 /* int */ },
-    { "flags", XDR_UINT, NULL, 0 /* uint */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_snapshot_list_children_names_ret_members_def[] = {
-    { "names", XDR_ARRAY, &remote_nonnull_string_def, REMOTE_DOMAIN_SNAPSHOT_LIST_NAMES_MAX /* remote_domain_snapshot_list_children_names_ret_ANON_0 */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_snapshot_list_all_children_args_members_def[] = {
-    { "snapshot", XDR_STRUCT, struct_remote_nonnull_domain_snapshot_members_def, 0 /* remote_nonnull_domain_snapshot */ },
-    { "need_results", XDR_INT, NULL, 0 /* int */ },
-    { "flags", XDR_UINT, NULL, 0 /* uint */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_snapshot_list_all_children_ret_members_def[] = {
-    { "snapshots", XDR_ARRAY, &remote_nonnull_domain_snapshot_def, 0 /* remote_domain_snapshot_list_all_children_ret_ANON_0 */ },
-    { "ret", XDR_INT, NULL, 0 /* int */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_snapshot_lookup_by_name_args_members_def[] = {
-    { "dom", XDR_STRUCT, struct_remote_nonnull_domain_members_def, 0 /* remote_nonnull_domain */ },
-    { "name", XDR_STRING, 0, REMOTE_STRING_MAX /* remote_nonnull_string */ },
-    { "flags", XDR_UINT, NULL, 0 /* uint */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_snapshot_lookup_by_name_ret_members_def[] = {
-    { "snap", XDR_STRUCT, struct_remote_nonnull_domain_snapshot_members_def, 0 /* remote_nonnull_domain_snapshot */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_has_current_snapshot_args_members_def[] = {
-    { "dom", XDR_STRUCT, struct_remote_nonnull_domain_members_def, 0 /* remote_nonnull_domain */ },
-    { "flags", XDR_UINT, NULL, 0 /* uint */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_has_current_snapshot_ret_members_def[] = {
-    { "result", XDR_INT, NULL, 0 /* int */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_snapshot_get_parent_args_members_def[] = {
-    { "snap", XDR_STRUCT, struct_remote_nonnull_domain_snapshot_members_def, 0 /* remote_nonnull_domain_snapshot */ },
-    { "flags", XDR_UINT, NULL, 0 /* uint */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_snapshot_get_parent_ret_members_def[] = {
-    { "snap", XDR_STRUCT, struct_remote_nonnull_domain_snapshot_members_def, 0 /* remote_nonnull_domain_snapshot */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_snapshot_current_args_members_def[] = {
-    { "dom", XDR_STRUCT, struct_remote_nonnull_domain_members_def, 0 /* remote_nonnull_domain */ },
-    { "flags", XDR_UINT, NULL, 0 /* uint */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_snapshot_current_ret_members_def[] = {
-    { "snap", XDR_STRUCT, struct_remote_nonnull_domain_snapshot_members_def, 0 /* remote_nonnull_domain_snapshot */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_snapshot_is_current_args_members_def[] = {
-    { "snap", XDR_STRUCT, struct_remote_nonnull_domain_snapshot_members_def, 0 /* remote_nonnull_domain_snapshot */ },
-    { "flags", XDR_UINT, NULL, 0 /* uint */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_snapshot_is_current_ret_members_def[] = {
-    { "current", XDR_INT, NULL, 0 /* int */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_snapshot_has_metadata_args_members_def[] = {
-    { "snap", XDR_STRUCT, struct_remote_nonnull_domain_snapshot_members_def, 0 /* remote_nonnull_domain_snapshot */ },
-    { "flags", XDR_UINT, NULL, 0 /* uint */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_snapshot_has_metadata_ret_members_def[] = {
-    { "metadata", XDR_INT, NULL, 0 /* int */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_revert_to_snapshot_args_members_def[] = {
-    { "snap", XDR_STRUCT, struct_remote_nonnull_domain_snapshot_members_def, 0 /* remote_nonnull_domain_snapshot */ },
-    { "flags", XDR_UINT, NULL, 0 /* uint */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_snapshot_delete_args_members_def[] = {
-    { "snap", XDR_STRUCT, struct_remote_nonnull_domain_snapshot_members_def, 0 /* remote_nonnull_domain_snapshot */ },
-    { "flags", XDR_UINT, NULL, 0 /* uint */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_open_console_args_members_def[] = {
-    { "dom", XDR_STRUCT, struct_remote_nonnull_domain_members_def, 0 /* remote_nonnull_domain */ },
-    { "dev_name", XDR_POINTER, &remote_nonnull_string_def, 0 /* remote_string */ },
-    { "flags", XDR_UINT, NULL, 0 /* uint */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_open_channel_args_members_def[] = {
-    { "dom", XDR_STRUCT, struct_remote_nonnull_domain_members_def, 0 /* remote_nonnull_domain */ },
-    { "name", XDR_POINTER, &remote_nonnull_string_def, 0 /* remote_string */ },
-    { "flags", XDR_UINT, NULL, 0 /* uint */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_storage_vol_upload_args_members_def[] = {
-    { "vol", XDR_STRUCT, struct_remote_nonnull_storage_vol_members_def, 0 /* remote_nonnull_storage_vol */ },
-    { "offset", XDR_UHYPER, NULL, 0 /* uhyper */ },
-    { "length", XDR_UHYPER, NULL, 0 /* uhyper */ },
-    { "flags", XDR_UINT, NULL, 0 /* uint */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_storage_vol_download_args_members_def[] = {
-    { "vol", XDR_STRUCT, struct_remote_nonnull_storage_vol_members_def, 0 /* remote_nonnull_storage_vol */ },
-    { "offset", XDR_UHYPER, NULL, 0 /* uhyper */ },
-    { "length", XDR_UHYPER, NULL, 0 /* uhyper */ },
-    { "flags", XDR_UINT, NULL, 0 /* uint */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_get_state_args_members_def[] = {
-    { "dom", XDR_STRUCT, struct_remote_nonnull_domain_members_def, 0 /* remote_nonnull_domain */ },
-    { "flags", XDR_UINT, NULL, 0 /* uint */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_get_state_ret_members_def[] = {
-    { "state", XDR_INT, NULL, 0 /* int */ },
-    { "reason", XDR_INT, NULL, 0 /* int */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_migrate_begin3_args_members_def[] = {
-    { "dom", XDR_STRUCT, struct_remote_nonnull_domain_members_def, 0 /* remote_nonnull_domain */ },
-    { "xmlin", XDR_POINTER, &remote_nonnull_string_def, 0 /* remote_string */ },
-    { "flags", XDR_UHYPER, NULL, 0 /* uhyper */ },
-    { "dname", XDR_POINTER, &remote_nonnull_string_def, 0 /* remote_string */ },
-    { "resource", XDR_UHYPER, NULL, 0 /* uhyper */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_migrate_begin3_ret_members_def[] = {
-    { "cookie_out", XDR_BYTES, 0, REMOTE_MIGRATE_COOKIE_MAX /* remote_domain_migrate_begin3_ret_ANON_0 */ },
-    { "xml", XDR_STRING, 0, REMOTE_STRING_MAX /* remote_nonnull_string */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_migrate_prepare3_args_members_def[] = {
-    { "cookie_in", XDR_BYTES, 0, REMOTE_MIGRATE_COOKIE_MAX /* remote_domain_migrate_prepare3_args_ANON_0 */ },
-    { "uri_in", XDR_POINTER, &remote_nonnull_string_def, 0 /* remote_string */ },
-    { "flags", XDR_UHYPER, NULL, 0 /* uhyper */ },
-    { "dname", XDR_POINTER, &remote_nonnull_string_def, 0 /* remote_string */ },
-    { "resource", XDR_UHYPER, NULL, 0 /* uhyper */ },
-    { "dom_xml", XDR_STRING, 0, REMOTE_STRING_MAX /* remote_nonnull_string */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_migrate_prepare3_ret_members_def[] = {
-    { "cookie_out", XDR_BYTES, 0, REMOTE_MIGRATE_COOKIE_MAX /* remote_domain_migrate_prepare3_ret_ANON_0 */ },
-    { "uri_out", XDR_POINTER, &remote_nonnull_string_def, 0 /* remote_string */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_migrate_prepare_tunnel3_args_members_def[] = {
-    { "cookie_in", XDR_BYTES, 0, REMOTE_MIGRATE_COOKIE_MAX /* remote_domain_migrate_prepare_tunnel3_args_ANON_0 */ },
-    { "flags", XDR_UHYPER, NULL, 0 /* uhyper */ },
-    { "dname", XDR_POINTER, &remote_nonnull_string_def, 0 /* remote_string */ },
-    { "resource", XDR_UHYPER, NULL, 0 /* uhyper */ },
-    { "dom_xml", XDR_STRING, 0, REMOTE_STRING_MAX /* remote_nonnull_string */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_migrate_prepare_tunnel3_ret_members_def[] = {
-    { "cookie_out", XDR_BYTES, 0, REMOTE_MIGRATE_COOKIE_MAX /* remote_domain_migrate_prepare_tunnel3_ret_ANON_0 */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_migrate_perform3_args_members_def[] = {
-    { "dom", XDR_STRUCT, struct_remote_nonnull_domain_members_def, 0 /* remote_nonnull_domain */ },
-    { "xmlin", XDR_POINTER, &remote_nonnull_string_def, 0 /* remote_string */ },
-    { "cookie_in", XDR_BYTES, 0, REMOTE_MIGRATE_COOKIE_MAX /* remote_domain_migrate_perform3_args_ANON_0 */ },
-    { "dconnuri", XDR_POINTER, &remote_nonnull_string_def, 0 /* remote_string */ },
-    { "uri", XDR_POINTER, &remote_nonnull_string_def, 0 /* remote_string */ },
-    { "flags", XDR_UHYPER, NULL, 0 /* uhyper */ },
-    { "dname", XDR_POINTER, &remote_nonnull_string_def, 0 /* remote_string */ },
-    { "resource", XDR_UHYPER, NULL, 0 /* uhyper */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_migrate_perform3_ret_members_def[] = {
-    { "cookie_out", XDR_BYTES, 0, REMOTE_MIGRATE_COOKIE_MAX /* remote_domain_migrate_perform3_ret_ANON_0 */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_migrate_finish3_args_members_def[] = {
-    { "dname", XDR_STRING, 0, REMOTE_STRING_MAX /* remote_nonnull_string */ },
-    { "cookie_in", XDR_BYTES, 0, REMOTE_MIGRATE_COOKIE_MAX /* remote_domain_migrate_finish3_args_ANON_0 */ },
-    { "dconnuri", XDR_POINTER, &remote_nonnull_string_def, 0 /* remote_string */ },
-    { "uri", XDR_POINTER, &remote_nonnull_string_def, 0 /* remote_string */ },
-    { "flags", XDR_UHYPER, NULL, 0 /* uhyper */ },
-    { "cancelled", XDR_INT, NULL, 0 /* int */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_migrate_finish3_ret_members_def[] = {
-    { "dom", XDR_STRUCT, struct_remote_nonnull_domain_members_def, 0 /* remote_nonnull_domain */ },
-    { "cookie_out", XDR_BYTES, 0, REMOTE_MIGRATE_COOKIE_MAX /* remote_domain_migrate_finish3_ret_ANON_0 */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_migrate_confirm3_args_members_def[] = {
-    { "dom", XDR_STRUCT, struct_remote_nonnull_domain_members_def, 0 /* remote_nonnull_domain */ },
-    { "cookie_in", XDR_BYTES, 0, REMOTE_MIGRATE_COOKIE_MAX /* remote_domain_migrate_confirm3_args_ANON_0 */ },
-    { "flags", XDR_UHYPER, NULL, 0 /* uhyper */ },
-    { "cancelled", XDR_INT, NULL, 0 /* int */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_event_control_error_msg_members_def[] = {
-    { "dom", XDR_STRUCT, struct_remote_nonnull_domain_members_def, 0 /* remote_nonnull_domain */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_get_control_info_args_members_def[] = {
-    { "dom", XDR_STRUCT, struct_remote_nonnull_domain_members_def, 0 /* remote_nonnull_domain */ },
-    { "flags", XDR_UINT, NULL, 0 /* uint */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_get_control_info_ret_members_def[] = {
-    { "state", XDR_UINT, NULL, 0 /* uint */ },
-    { "details", XDR_UINT, NULL, 0 /* uint */ },
-    { "stateTime", XDR_UHYPER, NULL, 0 /* uhyper */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_open_graphics_args_members_def[] = {
-    { "dom", XDR_STRUCT, struct_remote_nonnull_domain_members_def, 0 /* remote_nonnull_domain */ },
-    { "idx", XDR_UINT, NULL, 0 /* uint */ },
-    { "flags", XDR_UINT, NULL, 0 /* uint */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_node_suspend_for_duration_args_members_def[] = {
-    { "target", XDR_UINT, NULL, 0 /* uint */ },
-    { "duration", XDR_UHYPER, NULL, 0 /* uhyper */ },
-    { "flags", XDR_UINT, NULL, 0 /* uint */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_shutdown_flags_args_members_def[] = {
-    { "dom", XDR_STRUCT, struct_remote_nonnull_domain_members_def, 0 /* remote_nonnull_domain */ },
-    { "flags", XDR_UINT, NULL, 0 /* uint */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_get_disk_errors_args_members_def[] = {
-    { "dom", XDR_STRUCT, struct_remote_nonnull_domain_members_def, 0 /* remote_nonnull_domain */ },
-    { "maxerrors", XDR_UINT, NULL, 0 /* uint */ },
-    { "flags", XDR_UINT, NULL, 0 /* uint */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_get_disk_errors_ret_members_def[] = {
-    { "errors", XDR_ARRAY, &remote_domain_disk_error_def, REMOTE_DOMAIN_DISK_ERRORS_MAX /* remote_domain_get_disk_errors_ret_ANON_0 */ },
-    { "nerrors", XDR_INT, NULL, 0 /* int */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_connect_list_all_domains_args_members_def[] = {
-    { "need_results", XDR_INT, NULL, 0 /* int */ },
-    { "flags", XDR_UINT, NULL, 0 /* uint */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_connect_list_all_domains_ret_members_def[] = {
-    { "domains", XDR_ARRAY, &remote_nonnull_domain_def, 0 /* remote_connect_list_all_domains_ret_ANON_0 */ },
-    { "ret", XDR_UINT, NULL, 0 /* uint */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_connect_list_all_storage_pools_args_members_def[] = {
-    { "need_results", XDR_INT, NULL, 0 /* int */ },
-    { "flags", XDR_UINT, NULL, 0 /* uint */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_connect_list_all_storage_pools_ret_members_def[] = {
-    { "pools", XDR_ARRAY, &remote_nonnull_storage_pool_def, 0 /* remote_connect_list_all_storage_pools_ret_ANON_0 */ },
-    { "ret", XDR_UINT, NULL, 0 /* uint */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_storage_pool_list_all_volumes_args_members_def[] = {
-    { "pool", XDR_STRUCT, struct_remote_nonnull_storage_pool_members_def, 0 /* remote_nonnull_storage_pool */ },
-    { "need_results", XDR_INT, NULL, 0 /* int */ },
-    { "flags", XDR_UINT, NULL, 0 /* uint */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_storage_pool_list_all_volumes_ret_members_def[] = {
-    { "vols", XDR_ARRAY, &remote_nonnull_storage_vol_def, 0 /* remote_storage_pool_list_all_volumes_ret_ANON_0 */ },
-    { "ret", XDR_UINT, NULL, 0 /* uint */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_connect_list_all_networks_args_members_def[] = {
-    { "need_results", XDR_INT, NULL, 0 /* int */ },
-    { "flags", XDR_UINT, NULL, 0 /* uint */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_connect_list_all_networks_ret_members_def[] = {
-    { "nets", XDR_ARRAY, &remote_nonnull_network_def, 0 /* remote_connect_list_all_networks_ret_ANON_0 */ },
-    { "ret", XDR_UINT, NULL, 0 /* uint */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_connect_list_all_interfaces_args_members_def[] = {
-    { "need_results", XDR_INT, NULL, 0 /* int */ },
-    { "flags", XDR_UINT, NULL, 0 /* uint */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_connect_list_all_interfaces_ret_members_def[] = {
-    { "ifaces", XDR_ARRAY, &remote_nonnull_interface_def, 0 /* remote_connect_list_all_interfaces_ret_ANON_0 */ },
-    { "ret", XDR_UINT, NULL, 0 /* uint */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_connect_list_all_node_devices_args_members_def[] = {
-    { "need_results", XDR_INT, NULL, 0 /* int */ },
-    { "flags", XDR_UINT, NULL, 0 /* uint */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_connect_list_all_node_devices_ret_members_def[] = {
-    { "devices", XDR_ARRAY, &remote_nonnull_node_device_def, 0 /* remote_connect_list_all_node_devices_ret_ANON_0 */ },
-    { "ret", XDR_UINT, NULL, 0 /* uint */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_connect_list_all_nwfilters_args_members_def[] = {
-    { "need_results", XDR_INT, NULL, 0 /* int */ },
-    { "flags", XDR_UINT, NULL, 0 /* uint */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_connect_list_all_nwfilters_ret_members_def[] = {
-    { "filters", XDR_ARRAY, &remote_nonnull_nwfilter_def, 0 /* remote_connect_list_all_nwfilters_ret_ANON_0 */ },
-    { "ret", XDR_UINT, NULL, 0 /* uint */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_connect_list_all_secrets_args_members_def[] = {
-    { "need_results", XDR_INT, NULL, 0 /* int */ },
-    { "flags", XDR_UINT, NULL, 0 /* uint */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_connect_list_all_secrets_ret_members_def[] = {
-    { "secrets", XDR_ARRAY, &remote_nonnull_secret_def, 0 /* remote_connect_list_all_secrets_ret_ANON_0 */ },
-    { "ret", XDR_UINT, NULL, 0 /* uint */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_node_set_memory_parameters_args_members_def[] = {
-    { "params", XDR_ARRAY, &remote_typed_param_def, REMOTE_NODE_MEMORY_PARAMETERS_MAX /* remote_node_set_memory_parameters_args_ANON_0 */ },
-    { "flags", XDR_UINT, NULL, 0 /* uint */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_node_get_memory_parameters_args_members_def[] = {
-    { "nparams", XDR_INT, NULL, 0 /* int */ },
-    { "flags", XDR_UINT, NULL, 0 /* uint */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_node_get_memory_parameters_ret_members_def[] = {
-    { "params", XDR_ARRAY, &remote_typed_param_def, REMOTE_NODE_MEMORY_PARAMETERS_MAX /* remote_node_get_memory_parameters_ret_ANON_0 */ },
-    { "nparams", XDR_INT, NULL, 0 /* int */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_node_get_cpu_map_args_members_def[] = {
-    { "need_map", XDR_INT, NULL, 0 /* int */ },
-    { "need_online", XDR_INT, NULL, 0 /* int */ },
-    { "flags", XDR_UINT, NULL, 0 /* uint */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_node_get_cpu_map_ret_members_def[] = {
-    { "cpumap", XDR_BYTES, 0, REMOTE_CPUMAP_MAX /* remote_node_get_cpu_map_ret_ANON_0 */ },
-    { "online", XDR_UINT, NULL, 0 /* uint */ },
-    { "ret", XDR_INT, NULL, 0 /* int */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_fstrim_args_members_def[] = {
-    { "dom", XDR_STRUCT, struct_remote_nonnull_domain_members_def, 0 /* remote_nonnull_domain */ },
-    { "mountPoint", XDR_POINTER, &remote_nonnull_string_def, 0 /* remote_string */ },
-    { "minimum", XDR_UHYPER, NULL, 0 /* uhyper */ },
-    { "flags", XDR_UINT, NULL, 0 /* uint */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_migrate_begin3_params_args_members_def[] = {
-    { "dom", XDR_STRUCT, struct_remote_nonnull_domain_members_def, 0 /* remote_nonnull_domain */ },
-    { "params", XDR_ARRAY, &remote_typed_param_def, 0 /* remote_domain_migrate_begin3_params_args_ANON_0 */ },
-    { "flags", XDR_UINT, NULL, 0 /* uint */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_migrate_begin3_params_ret_members_def[] = {
-    { "cookie_out", XDR_BYTES, 0, REMOTE_MIGRATE_COOKIE_MAX /* remote_domain_migrate_begin3_params_ret_ANON_0 */ },
-    { "xml", XDR_STRING, 0, REMOTE_STRING_MAX /* remote_nonnull_string */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_migrate_prepare3_params_args_members_def[] = {
-    { "params", XDR_ARRAY, &remote_typed_param_def, 0 /* remote_domain_migrate_prepare3_params_args_ANON_0 */ },
-    { "cookie_in", XDR_BYTES, 0, REMOTE_MIGRATE_COOKIE_MAX /* remote_domain_migrate_prepare3_params_args_ANON_1 */ },
-    { "flags", XDR_UINT, NULL, 0 /* uint */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_migrate_prepare3_params_ret_members_def[] = {
-    { "cookie_out", XDR_BYTES, 0, REMOTE_MIGRATE_COOKIE_MAX /* remote_domain_migrate_prepare3_params_ret_ANON_0 */ },
-    { "uri_out", XDR_POINTER, &remote_nonnull_string_def, 0 /* remote_string */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_migrate_prepare_tunnel3_params_args_members_def[] = {
-    { "params", XDR_ARRAY, &remote_typed_param_def, 0 /* remote_domain_migrate_prepare_tunnel3_params_args_ANON_0 */ },
-    { "cookie_in", XDR_BYTES, 0, REMOTE_MIGRATE_COOKIE_MAX /* remote_domain_migrate_prepare_tunnel3_params_args_ANON_1 */ },
-    { "flags", XDR_UINT, NULL, 0 /* uint */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_migrate_prepare_tunnel3_params_ret_members_def[] = {
-    { "cookie_out", XDR_BYTES, 0, REMOTE_MIGRATE_COOKIE_MAX /* remote_domain_migrate_prepare_tunnel3_params_ret_ANON_0 */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_migrate_perform3_params_args_members_def[] = {
-    { "dom", XDR_STRUCT, struct_remote_nonnull_domain_members_def, 0 /* remote_nonnull_domain */ },
-    { "dconnuri", XDR_POINTER, &remote_nonnull_string_def, 0 /* remote_string */ },
-    { "params", XDR_ARRAY, &remote_typed_param_def, 0 /* remote_domain_migrate_perform3_params_args_ANON_0 */ },
-    { "cookie_in", XDR_BYTES, 0, REMOTE_MIGRATE_COOKIE_MAX /* remote_domain_migrate_perform3_params_args_ANON_1 */ },
-    { "flags", XDR_UINT, NULL, 0 /* uint */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_migrate_perform3_params_ret_members_def[] = {
-    { "cookie_out", XDR_BYTES, 0, REMOTE_MIGRATE_COOKIE_MAX /* remote_domain_migrate_perform3_params_ret_ANON_0 */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_migrate_finish3_params_args_members_def[] = {
-    { "params", XDR_ARRAY, &remote_typed_param_def, 0 /* remote_domain_migrate_finish3_params_args_ANON_0 */ },
-    { "cookie_in", XDR_BYTES, 0, REMOTE_MIGRATE_COOKIE_MAX /* remote_domain_migrate_finish3_params_args_ANON_1 */ },
-    { "flags", XDR_UINT, NULL, 0 /* uint */ },
-    { "cancelled", XDR_INT, NULL, 0 /* int */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_migrate_finish3_params_ret_members_def[] = {
-    { "dom", XDR_STRUCT, struct_remote_nonnull_domain_members_def, 0 /* remote_nonnull_domain */ },
-    { "cookie_out", XDR_BYTES, 0, REMOTE_MIGRATE_COOKIE_MAX /* remote_domain_migrate_finish3_params_ret_ANON_0 */ },
-    VIR_NAMED_XDRDEF_NULL
-};
-static vir_named_xdrdef_t struct_remote_domain_migrate_confirm3_params_args_members_def[] = {
-    { "dom", XDR_STRUCT, struct_remote_nonnull_domain_members_def, 0 /* remote_nonnull_domain */ },
-    { "params", XDR_ARRAY, &remote_typed_param_def, 0 /* remote_domain_migrate_confirm3_params_args_ANON_0 */ },
-    { "cookie_in", XDR_BYTES, 0, REMOTE_MIGRATE_COOKIE_MAX /* remote_domain_migrate_confirm3_params_args_ANON_1 */ },
-    { "flags", XDR_UINT, NULL, 0 /* uint */ },
-    { "cancelled", XDR_INT, NULL, 0 /* int */ },
-    VIR_NAMED_XDRDEF_NULL
-};
+static int hf_remote_domain_event_graphics_identity = -1;
+static gint ett_remote_domain_event_graphics_identity = -1;
+static gboolean dissect_xdr_remote_domain_event_graphics_identity(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_event_graphics_identity);
+    hf = hf_remote_domain_event_graphics_identity;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "type: ");
+    if (!dissect_xdr_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "name: ");
+    if (!dissect_xdr_remote_nonnull_string(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_event_graphics_msg_ANONTYPE_subject = -1;
+static gint ett_remote_domain_event_graphics_msg_ANONTYPE_subject = -1;
+static int hf_remote_domain_event_graphics_msg = -1;
+static gint ett_remote_domain_event_graphics_msg = -1;
+static gboolean dissect_xdr_remote_domain_event_graphics_msg(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_event_graphics_msg);
+    hf = hf_remote_domain_event_graphics_msg;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "dom: ");
+    if (!dissect_xdr_remote_nonnull_domain(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "phase: ");
+    if (!dissect_xdr_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "local: ");
+    if (!dissect_xdr_remote_domain_event_graphics_address(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "remote: ");
+    if (!dissect_xdr_remote_domain_event_graphics_address(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "authScheme: ");
+    if (!dissect_xdr_remote_nonnull_string(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "subject: ");
+    if (!dissect_xdr_array(tvb, ti, xdrs, hf_remote_domain_event_graphics_msg_ANONTYPE_subject, ett_remote_domain_event_graphics_msg_ANONTYPE_subject, REMOTE_DOMAIN_EVENT_GRAPHICS_IDENTITY_MAX, dissect_xdr_remote_domain_event_graphics_identity)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_event_block_job_msg = -1;
+static gint ett_remote_domain_event_block_job_msg = -1;
+static gboolean dissect_xdr_remote_domain_event_block_job_msg(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_event_block_job_msg);
+    hf = hf_remote_domain_event_block_job_msg;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "dom: ");
+    if (!dissect_xdr_remote_nonnull_domain(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "path: ");
+    if (!dissect_xdr_remote_nonnull_string(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "type: ");
+    if (!dissect_xdr_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "status: ");
+    if (!dissect_xdr_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_event_disk_change_msg = -1;
+static gint ett_remote_domain_event_disk_change_msg = -1;
+static gboolean dissect_xdr_remote_domain_event_disk_change_msg(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_event_disk_change_msg);
+    hf = hf_remote_domain_event_disk_change_msg;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "dom: ");
+    if (!dissect_xdr_remote_nonnull_domain(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "oldSrcPath: ");
+    if (!dissect_xdr_remote_string(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "newSrcPath: ");
+    if (!dissect_xdr_remote_string(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "devAlias: ");
+    if (!dissect_xdr_remote_nonnull_string(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "reason: ");
+    if (!dissect_xdr_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_event_tray_change_msg = -1;
+static gint ett_remote_domain_event_tray_change_msg = -1;
+static gboolean dissect_xdr_remote_domain_event_tray_change_msg(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_event_tray_change_msg);
+    hf = hf_remote_domain_event_tray_change_msg;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "dom: ");
+    if (!dissect_xdr_remote_nonnull_domain(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "devAlias: ");
+    if (!dissect_xdr_remote_nonnull_string(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "reason: ");
+    if (!dissect_xdr_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_event_pmwakeup_msg = -1;
+static gint ett_remote_domain_event_pmwakeup_msg = -1;
+static gboolean dissect_xdr_remote_domain_event_pmwakeup_msg(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_event_pmwakeup_msg);
+    hf = hf_remote_domain_event_pmwakeup_msg;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "dom: ");
+    if (!dissect_xdr_remote_nonnull_domain(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_event_pmsuspend_msg = -1;
+static gint ett_remote_domain_event_pmsuspend_msg = -1;
+static gboolean dissect_xdr_remote_domain_event_pmsuspend_msg(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_event_pmsuspend_msg);
+    hf = hf_remote_domain_event_pmsuspend_msg;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "dom: ");
+    if (!dissect_xdr_remote_nonnull_domain(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_event_balloon_change_msg = -1;
+static gint ett_remote_domain_event_balloon_change_msg = -1;
+static gboolean dissect_xdr_remote_domain_event_balloon_change_msg(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_event_balloon_change_msg);
+    hf = hf_remote_domain_event_balloon_change_msg;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "dom: ");
+    if (!dissect_xdr_remote_nonnull_domain(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "actual: ");
+    if (!dissect_xdr_u_hyper(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_event_pmsuspend_disk_msg = -1;
+static gint ett_remote_domain_event_pmsuspend_disk_msg = -1;
+static gboolean dissect_xdr_remote_domain_event_pmsuspend_disk_msg(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_event_pmsuspend_disk_msg);
+    hf = hf_remote_domain_event_pmsuspend_disk_msg;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "dom: ");
+    if (!dissect_xdr_remote_nonnull_domain(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_managed_save_args = -1;
+static gint ett_remote_domain_managed_save_args = -1;
+static gboolean dissect_xdr_remote_domain_managed_save_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_managed_save_args);
+    hf = hf_remote_domain_managed_save_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "dom: ");
+    if (!dissect_xdr_remote_nonnull_domain(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "flags: ");
+    if (!dissect_xdr_u_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_has_managed_save_image_args = -1;
+static gint ett_remote_domain_has_managed_save_image_args = -1;
+static gboolean dissect_xdr_remote_domain_has_managed_save_image_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_has_managed_save_image_args);
+    hf = hf_remote_domain_has_managed_save_image_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "dom: ");
+    if (!dissect_xdr_remote_nonnull_domain(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "flags: ");
+    if (!dissect_xdr_u_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_has_managed_save_image_ret = -1;
+static gint ett_remote_domain_has_managed_save_image_ret = -1;
+static gboolean dissect_xdr_remote_domain_has_managed_save_image_ret(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_has_managed_save_image_ret);
+    hf = hf_remote_domain_has_managed_save_image_ret;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "result: ");
+    if (!dissect_xdr_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_managed_save_remove_args = -1;
+static gint ett_remote_domain_managed_save_remove_args = -1;
+static gboolean dissect_xdr_remote_domain_managed_save_remove_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_managed_save_remove_args);
+    hf = hf_remote_domain_managed_save_remove_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "dom: ");
+    if (!dissect_xdr_remote_nonnull_domain(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "flags: ");
+    if (!dissect_xdr_u_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_snapshot_create_xml_args = -1;
+static gint ett_remote_domain_snapshot_create_xml_args = -1;
+static gboolean dissect_xdr_remote_domain_snapshot_create_xml_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_snapshot_create_xml_args);
+    hf = hf_remote_domain_snapshot_create_xml_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "dom: ");
+    if (!dissect_xdr_remote_nonnull_domain(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "xml_desc: ");
+    if (!dissect_xdr_remote_nonnull_string(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "flags: ");
+    if (!dissect_xdr_u_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_snapshot_create_xml_ret = -1;
+static gint ett_remote_domain_snapshot_create_xml_ret = -1;
+static gboolean dissect_xdr_remote_domain_snapshot_create_xml_ret(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_snapshot_create_xml_ret);
+    hf = hf_remote_domain_snapshot_create_xml_ret;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "snap: ");
+    if (!dissect_xdr_remote_nonnull_domain_snapshot(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_snapshot_get_xml_desc_args = -1;
+static gint ett_remote_domain_snapshot_get_xml_desc_args = -1;
+static gboolean dissect_xdr_remote_domain_snapshot_get_xml_desc_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_snapshot_get_xml_desc_args);
+    hf = hf_remote_domain_snapshot_get_xml_desc_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "snap: ");
+    if (!dissect_xdr_remote_nonnull_domain_snapshot(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "flags: ");
+    if (!dissect_xdr_u_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_snapshot_get_xml_desc_ret = -1;
+static gint ett_remote_domain_snapshot_get_xml_desc_ret = -1;
+static gboolean dissect_xdr_remote_domain_snapshot_get_xml_desc_ret(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_snapshot_get_xml_desc_ret);
+    hf = hf_remote_domain_snapshot_get_xml_desc_ret;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "xml: ");
+    if (!dissect_xdr_remote_nonnull_string(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_snapshot_num_args = -1;
+static gint ett_remote_domain_snapshot_num_args = -1;
+static gboolean dissect_xdr_remote_domain_snapshot_num_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_snapshot_num_args);
+    hf = hf_remote_domain_snapshot_num_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "dom: ");
+    if (!dissect_xdr_remote_nonnull_domain(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "flags: ");
+    if (!dissect_xdr_u_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_snapshot_num_ret = -1;
+static gint ett_remote_domain_snapshot_num_ret = -1;
+static gboolean dissect_xdr_remote_domain_snapshot_num_ret(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_snapshot_num_ret);
+    hf = hf_remote_domain_snapshot_num_ret;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "num: ");
+    if (!dissect_xdr_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_snapshot_list_names_args = -1;
+static gint ett_remote_domain_snapshot_list_names_args = -1;
+static gboolean dissect_xdr_remote_domain_snapshot_list_names_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_snapshot_list_names_args);
+    hf = hf_remote_domain_snapshot_list_names_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "dom: ");
+    if (!dissect_xdr_remote_nonnull_domain(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "maxnames: ");
+    if (!dissect_xdr_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "flags: ");
+    if (!dissect_xdr_u_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_snapshot_list_names_ret_ANONTYPE_names = -1;
+static gint ett_remote_domain_snapshot_list_names_ret_ANONTYPE_names = -1;
+static int hf_remote_domain_snapshot_list_names_ret = -1;
+static gint ett_remote_domain_snapshot_list_names_ret = -1;
+static gboolean dissect_xdr_remote_domain_snapshot_list_names_ret(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_snapshot_list_names_ret);
+    hf = hf_remote_domain_snapshot_list_names_ret;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "names: ");
+    if (!dissect_xdr_array(tvb, ti, xdrs, hf_remote_domain_snapshot_list_names_ret_ANONTYPE_names, ett_remote_domain_snapshot_list_names_ret_ANONTYPE_names, REMOTE_DOMAIN_SNAPSHOT_LIST_NAMES_MAX, dissect_xdr_remote_nonnull_string)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_list_all_snapshots_args = -1;
+static gint ett_remote_domain_list_all_snapshots_args = -1;
+static gboolean dissect_xdr_remote_domain_list_all_snapshots_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_list_all_snapshots_args);
+    hf = hf_remote_domain_list_all_snapshots_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "dom: ");
+    if (!dissect_xdr_remote_nonnull_domain(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "need_results: ");
+    if (!dissect_xdr_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "flags: ");
+    if (!dissect_xdr_u_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_list_all_snapshots_ret_ANONTYPE_snapshots = -1;
+static gint ett_remote_domain_list_all_snapshots_ret_ANONTYPE_snapshots = -1;
+static int hf_remote_domain_list_all_snapshots_ret = -1;
+static gint ett_remote_domain_list_all_snapshots_ret = -1;
+static gboolean dissect_xdr_remote_domain_list_all_snapshots_ret(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_list_all_snapshots_ret);
+    hf = hf_remote_domain_list_all_snapshots_ret;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "snapshots: ");
+    if (!dissect_xdr_array(tvb, ti, xdrs, hf_remote_domain_list_all_snapshots_ret_ANONTYPE_snapshots, ett_remote_domain_list_all_snapshots_ret_ANONTYPE_snapshots, ~0, dissect_xdr_remote_nonnull_domain_snapshot)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "ret: ");
+    if (!dissect_xdr_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_snapshot_num_children_args = -1;
+static gint ett_remote_domain_snapshot_num_children_args = -1;
+static gboolean dissect_xdr_remote_domain_snapshot_num_children_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_snapshot_num_children_args);
+    hf = hf_remote_domain_snapshot_num_children_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "snap: ");
+    if (!dissect_xdr_remote_nonnull_domain_snapshot(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "flags: ");
+    if (!dissect_xdr_u_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_snapshot_num_children_ret = -1;
+static gint ett_remote_domain_snapshot_num_children_ret = -1;
+static gboolean dissect_xdr_remote_domain_snapshot_num_children_ret(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_snapshot_num_children_ret);
+    hf = hf_remote_domain_snapshot_num_children_ret;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "num: ");
+    if (!dissect_xdr_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_snapshot_list_children_names_args = -1;
+static gint ett_remote_domain_snapshot_list_children_names_args = -1;
+static gboolean dissect_xdr_remote_domain_snapshot_list_children_names_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_snapshot_list_children_names_args);
+    hf = hf_remote_domain_snapshot_list_children_names_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "snap: ");
+    if (!dissect_xdr_remote_nonnull_domain_snapshot(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "maxnames: ");
+    if (!dissect_xdr_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "flags: ");
+    if (!dissect_xdr_u_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_snapshot_list_children_names_ret_ANONTYPE_names = -1;
+static gint ett_remote_domain_snapshot_list_children_names_ret_ANONTYPE_names = -1;
+static int hf_remote_domain_snapshot_list_children_names_ret = -1;
+static gint ett_remote_domain_snapshot_list_children_names_ret = -1;
+static gboolean dissect_xdr_remote_domain_snapshot_list_children_names_ret(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_snapshot_list_children_names_ret);
+    hf = hf_remote_domain_snapshot_list_children_names_ret;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "names: ");
+    if (!dissect_xdr_array(tvb, ti, xdrs, hf_remote_domain_snapshot_list_children_names_ret_ANONTYPE_names, ett_remote_domain_snapshot_list_children_names_ret_ANONTYPE_names, REMOTE_DOMAIN_SNAPSHOT_LIST_NAMES_MAX, dissect_xdr_remote_nonnull_string)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_snapshot_list_all_children_args = -1;
+static gint ett_remote_domain_snapshot_list_all_children_args = -1;
+static gboolean dissect_xdr_remote_domain_snapshot_list_all_children_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_snapshot_list_all_children_args);
+    hf = hf_remote_domain_snapshot_list_all_children_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "snapshot: ");
+    if (!dissect_xdr_remote_nonnull_domain_snapshot(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "need_results: ");
+    if (!dissect_xdr_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "flags: ");
+    if (!dissect_xdr_u_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_snapshot_list_all_children_ret_ANONTYPE_snapshots = -1;
+static gint ett_remote_domain_snapshot_list_all_children_ret_ANONTYPE_snapshots = -1;
+static int hf_remote_domain_snapshot_list_all_children_ret = -1;
+static gint ett_remote_domain_snapshot_list_all_children_ret = -1;
+static gboolean dissect_xdr_remote_domain_snapshot_list_all_children_ret(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_snapshot_list_all_children_ret);
+    hf = hf_remote_domain_snapshot_list_all_children_ret;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "snapshots: ");
+    if (!dissect_xdr_array(tvb, ti, xdrs, hf_remote_domain_snapshot_list_all_children_ret_ANONTYPE_snapshots, ett_remote_domain_snapshot_list_all_children_ret_ANONTYPE_snapshots, ~0, dissect_xdr_remote_nonnull_domain_snapshot)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "ret: ");
+    if (!dissect_xdr_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_snapshot_lookup_by_name_args = -1;
+static gint ett_remote_domain_snapshot_lookup_by_name_args = -1;
+static gboolean dissect_xdr_remote_domain_snapshot_lookup_by_name_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_snapshot_lookup_by_name_args);
+    hf = hf_remote_domain_snapshot_lookup_by_name_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "dom: ");
+    if (!dissect_xdr_remote_nonnull_domain(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "name: ");
+    if (!dissect_xdr_remote_nonnull_string(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "flags: ");
+    if (!dissect_xdr_u_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_snapshot_lookup_by_name_ret = -1;
+static gint ett_remote_domain_snapshot_lookup_by_name_ret = -1;
+static gboolean dissect_xdr_remote_domain_snapshot_lookup_by_name_ret(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_snapshot_lookup_by_name_ret);
+    hf = hf_remote_domain_snapshot_lookup_by_name_ret;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "snap: ");
+    if (!dissect_xdr_remote_nonnull_domain_snapshot(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_has_current_snapshot_args = -1;
+static gint ett_remote_domain_has_current_snapshot_args = -1;
+static gboolean dissect_xdr_remote_domain_has_current_snapshot_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_has_current_snapshot_args);
+    hf = hf_remote_domain_has_current_snapshot_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "dom: ");
+    if (!dissect_xdr_remote_nonnull_domain(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "flags: ");
+    if (!dissect_xdr_u_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_has_current_snapshot_ret = -1;
+static gint ett_remote_domain_has_current_snapshot_ret = -1;
+static gboolean dissect_xdr_remote_domain_has_current_snapshot_ret(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_has_current_snapshot_ret);
+    hf = hf_remote_domain_has_current_snapshot_ret;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "result: ");
+    if (!dissect_xdr_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_snapshot_get_parent_args = -1;
+static gint ett_remote_domain_snapshot_get_parent_args = -1;
+static gboolean dissect_xdr_remote_domain_snapshot_get_parent_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_snapshot_get_parent_args);
+    hf = hf_remote_domain_snapshot_get_parent_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "snap: ");
+    if (!dissect_xdr_remote_nonnull_domain_snapshot(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "flags: ");
+    if (!dissect_xdr_u_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_snapshot_get_parent_ret = -1;
+static gint ett_remote_domain_snapshot_get_parent_ret = -1;
+static gboolean dissect_xdr_remote_domain_snapshot_get_parent_ret(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_snapshot_get_parent_ret);
+    hf = hf_remote_domain_snapshot_get_parent_ret;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "snap: ");
+    if (!dissect_xdr_remote_nonnull_domain_snapshot(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_snapshot_current_args = -1;
+static gint ett_remote_domain_snapshot_current_args = -1;
+static gboolean dissect_xdr_remote_domain_snapshot_current_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_snapshot_current_args);
+    hf = hf_remote_domain_snapshot_current_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "dom: ");
+    if (!dissect_xdr_remote_nonnull_domain(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "flags: ");
+    if (!dissect_xdr_u_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_snapshot_current_ret = -1;
+static gint ett_remote_domain_snapshot_current_ret = -1;
+static gboolean dissect_xdr_remote_domain_snapshot_current_ret(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_snapshot_current_ret);
+    hf = hf_remote_domain_snapshot_current_ret;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "snap: ");
+    if (!dissect_xdr_remote_nonnull_domain_snapshot(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_snapshot_is_current_args = -1;
+static gint ett_remote_domain_snapshot_is_current_args = -1;
+static gboolean dissect_xdr_remote_domain_snapshot_is_current_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_snapshot_is_current_args);
+    hf = hf_remote_domain_snapshot_is_current_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "snap: ");
+    if (!dissect_xdr_remote_nonnull_domain_snapshot(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "flags: ");
+    if (!dissect_xdr_u_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_snapshot_is_current_ret = -1;
+static gint ett_remote_domain_snapshot_is_current_ret = -1;
+static gboolean dissect_xdr_remote_domain_snapshot_is_current_ret(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_snapshot_is_current_ret);
+    hf = hf_remote_domain_snapshot_is_current_ret;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "current: ");
+    if (!dissect_xdr_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_snapshot_has_metadata_args = -1;
+static gint ett_remote_domain_snapshot_has_metadata_args = -1;
+static gboolean dissect_xdr_remote_domain_snapshot_has_metadata_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_snapshot_has_metadata_args);
+    hf = hf_remote_domain_snapshot_has_metadata_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "snap: ");
+    if (!dissect_xdr_remote_nonnull_domain_snapshot(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "flags: ");
+    if (!dissect_xdr_u_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_snapshot_has_metadata_ret = -1;
+static gint ett_remote_domain_snapshot_has_metadata_ret = -1;
+static gboolean dissect_xdr_remote_domain_snapshot_has_metadata_ret(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_snapshot_has_metadata_ret);
+    hf = hf_remote_domain_snapshot_has_metadata_ret;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "metadata: ");
+    if (!dissect_xdr_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_revert_to_snapshot_args = -1;
+static gint ett_remote_domain_revert_to_snapshot_args = -1;
+static gboolean dissect_xdr_remote_domain_revert_to_snapshot_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_revert_to_snapshot_args);
+    hf = hf_remote_domain_revert_to_snapshot_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "snap: ");
+    if (!dissect_xdr_remote_nonnull_domain_snapshot(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "flags: ");
+    if (!dissect_xdr_u_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_snapshot_delete_args = -1;
+static gint ett_remote_domain_snapshot_delete_args = -1;
+static gboolean dissect_xdr_remote_domain_snapshot_delete_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_snapshot_delete_args);
+    hf = hf_remote_domain_snapshot_delete_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "snap: ");
+    if (!dissect_xdr_remote_nonnull_domain_snapshot(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "flags: ");
+    if (!dissect_xdr_u_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_open_console_args = -1;
+static gint ett_remote_domain_open_console_args = -1;
+static gboolean dissect_xdr_remote_domain_open_console_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_open_console_args);
+    hf = hf_remote_domain_open_console_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "dom: ");
+    if (!dissect_xdr_remote_nonnull_domain(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "dev_name: ");
+    if (!dissect_xdr_remote_string(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "flags: ");
+    if (!dissect_xdr_u_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_open_channel_args = -1;
+static gint ett_remote_domain_open_channel_args = -1;
+static gboolean dissect_xdr_remote_domain_open_channel_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_open_channel_args);
+    hf = hf_remote_domain_open_channel_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "dom: ");
+    if (!dissect_xdr_remote_nonnull_domain(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "name: ");
+    if (!dissect_xdr_remote_string(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "flags: ");
+    if (!dissect_xdr_u_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_storage_vol_upload_args = -1;
+static gint ett_remote_storage_vol_upload_args = -1;
+static gboolean dissect_xdr_remote_storage_vol_upload_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_storage_vol_upload_args);
+    hf = hf_remote_storage_vol_upload_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "vol: ");
+    if (!dissect_xdr_remote_nonnull_storage_vol(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "offset: ");
+    if (!dissect_xdr_u_hyper(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "length: ");
+    if (!dissect_xdr_u_hyper(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "flags: ");
+    if (!dissect_xdr_u_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_storage_vol_download_args = -1;
+static gint ett_remote_storage_vol_download_args = -1;
+static gboolean dissect_xdr_remote_storage_vol_download_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_storage_vol_download_args);
+    hf = hf_remote_storage_vol_download_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "vol: ");
+    if (!dissect_xdr_remote_nonnull_storage_vol(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "offset: ");
+    if (!dissect_xdr_u_hyper(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "length: ");
+    if (!dissect_xdr_u_hyper(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "flags: ");
+    if (!dissect_xdr_u_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_get_state_args = -1;
+static gint ett_remote_domain_get_state_args = -1;
+static gboolean dissect_xdr_remote_domain_get_state_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_get_state_args);
+    hf = hf_remote_domain_get_state_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "dom: ");
+    if (!dissect_xdr_remote_nonnull_domain(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "flags: ");
+    if (!dissect_xdr_u_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_get_state_ret = -1;
+static gint ett_remote_domain_get_state_ret = -1;
+static gboolean dissect_xdr_remote_domain_get_state_ret(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_get_state_ret);
+    hf = hf_remote_domain_get_state_ret;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "state: ");
+    if (!dissect_xdr_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "reason: ");
+    if (!dissect_xdr_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_migrate_begin3_args = -1;
+static gint ett_remote_domain_migrate_begin3_args = -1;
+static gboolean dissect_xdr_remote_domain_migrate_begin3_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_migrate_begin3_args);
+    hf = hf_remote_domain_migrate_begin3_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "dom: ");
+    if (!dissect_xdr_remote_nonnull_domain(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "xmlin: ");
+    if (!dissect_xdr_remote_string(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "flags: ");
+    if (!dissect_xdr_u_hyper(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "dname: ");
+    if (!dissect_xdr_remote_string(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "resource: ");
+    if (!dissect_xdr_u_hyper(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_migrate_begin3_ret = -1;
+static gint ett_remote_domain_migrate_begin3_ret = -1;
+static gboolean dissect_xdr_remote_domain_migrate_begin3_ret(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_migrate_begin3_ret);
+    hf = hf_remote_domain_migrate_begin3_ret;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "cookie_out: ");
+    if (!dissect_xdr_bytes(tvb, ti, xdrs, hf, REMOTE_MIGRATE_COOKIE_MAX)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "xml: ");
+    if (!dissect_xdr_remote_nonnull_string(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_migrate_prepare3_args = -1;
+static gint ett_remote_domain_migrate_prepare3_args = -1;
+static gboolean dissect_xdr_remote_domain_migrate_prepare3_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_migrate_prepare3_args);
+    hf = hf_remote_domain_migrate_prepare3_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "cookie_in: ");
+    if (!dissect_xdr_bytes(tvb, ti, xdrs, hf, REMOTE_MIGRATE_COOKIE_MAX)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "uri_in: ");
+    if (!dissect_xdr_remote_string(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "flags: ");
+    if (!dissect_xdr_u_hyper(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "dname: ");
+    if (!dissect_xdr_remote_string(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "resource: ");
+    if (!dissect_xdr_u_hyper(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "dom_xml: ");
+    if (!dissect_xdr_remote_nonnull_string(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_migrate_prepare3_ret = -1;
+static gint ett_remote_domain_migrate_prepare3_ret = -1;
+static gboolean dissect_xdr_remote_domain_migrate_prepare3_ret(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_migrate_prepare3_ret);
+    hf = hf_remote_domain_migrate_prepare3_ret;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "cookie_out: ");
+    if (!dissect_xdr_bytes(tvb, ti, xdrs, hf, REMOTE_MIGRATE_COOKIE_MAX)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "uri_out: ");
+    if (!dissect_xdr_remote_string(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_migrate_prepare_tunnel3_args = -1;
+static gint ett_remote_domain_migrate_prepare_tunnel3_args = -1;
+static gboolean dissect_xdr_remote_domain_migrate_prepare_tunnel3_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_migrate_prepare_tunnel3_args);
+    hf = hf_remote_domain_migrate_prepare_tunnel3_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "cookie_in: ");
+    if (!dissect_xdr_bytes(tvb, ti, xdrs, hf, REMOTE_MIGRATE_COOKIE_MAX)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "flags: ");
+    if (!dissect_xdr_u_hyper(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "dname: ");
+    if (!dissect_xdr_remote_string(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "resource: ");
+    if (!dissect_xdr_u_hyper(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "dom_xml: ");
+    if (!dissect_xdr_remote_nonnull_string(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_migrate_prepare_tunnel3_ret = -1;
+static gint ett_remote_domain_migrate_prepare_tunnel3_ret = -1;
+static gboolean dissect_xdr_remote_domain_migrate_prepare_tunnel3_ret(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_migrate_prepare_tunnel3_ret);
+    hf = hf_remote_domain_migrate_prepare_tunnel3_ret;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "cookie_out: ");
+    if (!dissect_xdr_bytes(tvb, ti, xdrs, hf, REMOTE_MIGRATE_COOKIE_MAX)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_migrate_perform3_args = -1;
+static gint ett_remote_domain_migrate_perform3_args = -1;
+static gboolean dissect_xdr_remote_domain_migrate_perform3_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_migrate_perform3_args);
+    hf = hf_remote_domain_migrate_perform3_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "dom: ");
+    if (!dissect_xdr_remote_nonnull_domain(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "xmlin: ");
+    if (!dissect_xdr_remote_string(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "cookie_in: ");
+    if (!dissect_xdr_bytes(tvb, ti, xdrs, hf, REMOTE_MIGRATE_COOKIE_MAX)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "dconnuri: ");
+    if (!dissect_xdr_remote_string(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "uri: ");
+    if (!dissect_xdr_remote_string(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "flags: ");
+    if (!dissect_xdr_u_hyper(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "dname: ");
+    if (!dissect_xdr_remote_string(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "resource: ");
+    if (!dissect_xdr_u_hyper(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_migrate_perform3_ret = -1;
+static gint ett_remote_domain_migrate_perform3_ret = -1;
+static gboolean dissect_xdr_remote_domain_migrate_perform3_ret(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_migrate_perform3_ret);
+    hf = hf_remote_domain_migrate_perform3_ret;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "cookie_out: ");
+    if (!dissect_xdr_bytes(tvb, ti, xdrs, hf, REMOTE_MIGRATE_COOKIE_MAX)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_migrate_finish3_args = -1;
+static gint ett_remote_domain_migrate_finish3_args = -1;
+static gboolean dissect_xdr_remote_domain_migrate_finish3_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_migrate_finish3_args);
+    hf = hf_remote_domain_migrate_finish3_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "dname: ");
+    if (!dissect_xdr_remote_nonnull_string(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "cookie_in: ");
+    if (!dissect_xdr_bytes(tvb, ti, xdrs, hf, REMOTE_MIGRATE_COOKIE_MAX)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "dconnuri: ");
+    if (!dissect_xdr_remote_string(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "uri: ");
+    if (!dissect_xdr_remote_string(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "flags: ");
+    if (!dissect_xdr_u_hyper(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "cancelled: ");
+    if (!dissect_xdr_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_migrate_finish3_ret = -1;
+static gint ett_remote_domain_migrate_finish3_ret = -1;
+static gboolean dissect_xdr_remote_domain_migrate_finish3_ret(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_migrate_finish3_ret);
+    hf = hf_remote_domain_migrate_finish3_ret;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "dom: ");
+    if (!dissect_xdr_remote_nonnull_domain(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "cookie_out: ");
+    if (!dissect_xdr_bytes(tvb, ti, xdrs, hf, REMOTE_MIGRATE_COOKIE_MAX)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_migrate_confirm3_args = -1;
+static gint ett_remote_domain_migrate_confirm3_args = -1;
+static gboolean dissect_xdr_remote_domain_migrate_confirm3_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_migrate_confirm3_args);
+    hf = hf_remote_domain_migrate_confirm3_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "dom: ");
+    if (!dissect_xdr_remote_nonnull_domain(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "cookie_in: ");
+    if (!dissect_xdr_bytes(tvb, ti, xdrs, hf, REMOTE_MIGRATE_COOKIE_MAX)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "flags: ");
+    if (!dissect_xdr_u_hyper(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "cancelled: ");
+    if (!dissect_xdr_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_event_control_error_msg = -1;
+static gint ett_remote_domain_event_control_error_msg = -1;
+static gboolean dissect_xdr_remote_domain_event_control_error_msg(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_event_control_error_msg);
+    hf = hf_remote_domain_event_control_error_msg;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "dom: ");
+    if (!dissect_xdr_remote_nonnull_domain(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_get_control_info_args = -1;
+static gint ett_remote_domain_get_control_info_args = -1;
+static gboolean dissect_xdr_remote_domain_get_control_info_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_get_control_info_args);
+    hf = hf_remote_domain_get_control_info_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "dom: ");
+    if (!dissect_xdr_remote_nonnull_domain(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "flags: ");
+    if (!dissect_xdr_u_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_get_control_info_ret = -1;
+static gint ett_remote_domain_get_control_info_ret = -1;
+static gboolean dissect_xdr_remote_domain_get_control_info_ret(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_get_control_info_ret);
+    hf = hf_remote_domain_get_control_info_ret;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "state: ");
+    if (!dissect_xdr_u_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "details: ");
+    if (!dissect_xdr_u_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "stateTime: ");
+    if (!dissect_xdr_u_hyper(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_open_graphics_args = -1;
+static gint ett_remote_domain_open_graphics_args = -1;
+static gboolean dissect_xdr_remote_domain_open_graphics_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_open_graphics_args);
+    hf = hf_remote_domain_open_graphics_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "dom: ");
+    if (!dissect_xdr_remote_nonnull_domain(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "idx: ");
+    if (!dissect_xdr_u_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "flags: ");
+    if (!dissect_xdr_u_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_node_suspend_for_duration_args = -1;
+static gint ett_remote_node_suspend_for_duration_args = -1;
+static gboolean dissect_xdr_remote_node_suspend_for_duration_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_node_suspend_for_duration_args);
+    hf = hf_remote_node_suspend_for_duration_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "target: ");
+    if (!dissect_xdr_u_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "duration: ");
+    if (!dissect_xdr_u_hyper(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "flags: ");
+    if (!dissect_xdr_u_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_shutdown_flags_args = -1;
+static gint ett_remote_domain_shutdown_flags_args = -1;
+static gboolean dissect_xdr_remote_domain_shutdown_flags_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_shutdown_flags_args);
+    hf = hf_remote_domain_shutdown_flags_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "dom: ");
+    if (!dissect_xdr_remote_nonnull_domain(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "flags: ");
+    if (!dissect_xdr_u_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_get_disk_errors_args = -1;
+static gint ett_remote_domain_get_disk_errors_args = -1;
+static gboolean dissect_xdr_remote_domain_get_disk_errors_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_get_disk_errors_args);
+    hf = hf_remote_domain_get_disk_errors_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "dom: ");
+    if (!dissect_xdr_remote_nonnull_domain(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "maxerrors: ");
+    if (!dissect_xdr_u_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "flags: ");
+    if (!dissect_xdr_u_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_get_disk_errors_ret_ANONTYPE_errors = -1;
+static gint ett_remote_domain_get_disk_errors_ret_ANONTYPE_errors = -1;
+static int hf_remote_domain_get_disk_errors_ret = -1;
+static gint ett_remote_domain_get_disk_errors_ret = -1;
+static gboolean dissect_xdr_remote_domain_get_disk_errors_ret(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_get_disk_errors_ret);
+    hf = hf_remote_domain_get_disk_errors_ret;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "errors: ");
+    if (!dissect_xdr_array(tvb, ti, xdrs, hf_remote_domain_get_disk_errors_ret_ANONTYPE_errors, ett_remote_domain_get_disk_errors_ret_ANONTYPE_errors, REMOTE_DOMAIN_DISK_ERRORS_MAX, dissect_xdr_remote_domain_disk_error)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "nerrors: ");
+    if (!dissect_xdr_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_connect_list_all_domains_args = -1;
+static gint ett_remote_connect_list_all_domains_args = -1;
+static gboolean dissect_xdr_remote_connect_list_all_domains_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_connect_list_all_domains_args);
+    hf = hf_remote_connect_list_all_domains_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "need_results: ");
+    if (!dissect_xdr_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "flags: ");
+    if (!dissect_xdr_u_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_connect_list_all_domains_ret_ANONTYPE_domains = -1;
+static gint ett_remote_connect_list_all_domains_ret_ANONTYPE_domains = -1;
+static int hf_remote_connect_list_all_domains_ret = -1;
+static gint ett_remote_connect_list_all_domains_ret = -1;
+static gboolean dissect_xdr_remote_connect_list_all_domains_ret(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_connect_list_all_domains_ret);
+    hf = hf_remote_connect_list_all_domains_ret;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "domains: ");
+    if (!dissect_xdr_array(tvb, ti, xdrs, hf_remote_connect_list_all_domains_ret_ANONTYPE_domains, ett_remote_connect_list_all_domains_ret_ANONTYPE_domains, ~0, dissect_xdr_remote_nonnull_domain)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "ret: ");
+    if (!dissect_xdr_u_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_connect_list_all_storage_pools_args = -1;
+static gint ett_remote_connect_list_all_storage_pools_args = -1;
+static gboolean dissect_xdr_remote_connect_list_all_storage_pools_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_connect_list_all_storage_pools_args);
+    hf = hf_remote_connect_list_all_storage_pools_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "need_results: ");
+    if (!dissect_xdr_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "flags: ");
+    if (!dissect_xdr_u_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_connect_list_all_storage_pools_ret_ANONTYPE_pools = -1;
+static gint ett_remote_connect_list_all_storage_pools_ret_ANONTYPE_pools = -1;
+static int hf_remote_connect_list_all_storage_pools_ret = -1;
+static gint ett_remote_connect_list_all_storage_pools_ret = -1;
+static gboolean dissect_xdr_remote_connect_list_all_storage_pools_ret(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_connect_list_all_storage_pools_ret);
+    hf = hf_remote_connect_list_all_storage_pools_ret;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "pools: ");
+    if (!dissect_xdr_array(tvb, ti, xdrs, hf_remote_connect_list_all_storage_pools_ret_ANONTYPE_pools, ett_remote_connect_list_all_storage_pools_ret_ANONTYPE_pools, ~0, dissect_xdr_remote_nonnull_storage_pool)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "ret: ");
+    if (!dissect_xdr_u_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_storage_pool_list_all_volumes_args = -1;
+static gint ett_remote_storage_pool_list_all_volumes_args = -1;
+static gboolean dissect_xdr_remote_storage_pool_list_all_volumes_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_storage_pool_list_all_volumes_args);
+    hf = hf_remote_storage_pool_list_all_volumes_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "pool: ");
+    if (!dissect_xdr_remote_nonnull_storage_pool(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "need_results: ");
+    if (!dissect_xdr_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "flags: ");
+    if (!dissect_xdr_u_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_storage_pool_list_all_volumes_ret_ANONTYPE_vols = -1;
+static gint ett_remote_storage_pool_list_all_volumes_ret_ANONTYPE_vols = -1;
+static int hf_remote_storage_pool_list_all_volumes_ret = -1;
+static gint ett_remote_storage_pool_list_all_volumes_ret = -1;
+static gboolean dissect_xdr_remote_storage_pool_list_all_volumes_ret(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_storage_pool_list_all_volumes_ret);
+    hf = hf_remote_storage_pool_list_all_volumes_ret;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "vols: ");
+    if (!dissect_xdr_array(tvb, ti, xdrs, hf_remote_storage_pool_list_all_volumes_ret_ANONTYPE_vols, ett_remote_storage_pool_list_all_volumes_ret_ANONTYPE_vols, ~0, dissect_xdr_remote_nonnull_storage_vol)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "ret: ");
+    if (!dissect_xdr_u_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_connect_list_all_networks_args = -1;
+static gint ett_remote_connect_list_all_networks_args = -1;
+static gboolean dissect_xdr_remote_connect_list_all_networks_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_connect_list_all_networks_args);
+    hf = hf_remote_connect_list_all_networks_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "need_results: ");
+    if (!dissect_xdr_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "flags: ");
+    if (!dissect_xdr_u_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_connect_list_all_networks_ret_ANONTYPE_nets = -1;
+static gint ett_remote_connect_list_all_networks_ret_ANONTYPE_nets = -1;
+static int hf_remote_connect_list_all_networks_ret = -1;
+static gint ett_remote_connect_list_all_networks_ret = -1;
+static gboolean dissect_xdr_remote_connect_list_all_networks_ret(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_connect_list_all_networks_ret);
+    hf = hf_remote_connect_list_all_networks_ret;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "nets: ");
+    if (!dissect_xdr_array(tvb, ti, xdrs, hf_remote_connect_list_all_networks_ret_ANONTYPE_nets, ett_remote_connect_list_all_networks_ret_ANONTYPE_nets, ~0, dissect_xdr_remote_nonnull_network)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "ret: ");
+    if (!dissect_xdr_u_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_connect_list_all_interfaces_args = -1;
+static gint ett_remote_connect_list_all_interfaces_args = -1;
+static gboolean dissect_xdr_remote_connect_list_all_interfaces_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_connect_list_all_interfaces_args);
+    hf = hf_remote_connect_list_all_interfaces_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "need_results: ");
+    if (!dissect_xdr_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "flags: ");
+    if (!dissect_xdr_u_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_connect_list_all_interfaces_ret_ANONTYPE_ifaces = -1;
+static gint ett_remote_connect_list_all_interfaces_ret_ANONTYPE_ifaces = -1;
+static int hf_remote_connect_list_all_interfaces_ret = -1;
+static gint ett_remote_connect_list_all_interfaces_ret = -1;
+static gboolean dissect_xdr_remote_connect_list_all_interfaces_ret(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_connect_list_all_interfaces_ret);
+    hf = hf_remote_connect_list_all_interfaces_ret;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "ifaces: ");
+    if (!dissect_xdr_array(tvb, ti, xdrs, hf_remote_connect_list_all_interfaces_ret_ANONTYPE_ifaces, ett_remote_connect_list_all_interfaces_ret_ANONTYPE_ifaces, ~0, dissect_xdr_remote_nonnull_interface)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "ret: ");
+    if (!dissect_xdr_u_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_connect_list_all_node_devices_args = -1;
+static gint ett_remote_connect_list_all_node_devices_args = -1;
+static gboolean dissect_xdr_remote_connect_list_all_node_devices_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_connect_list_all_node_devices_args);
+    hf = hf_remote_connect_list_all_node_devices_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "need_results: ");
+    if (!dissect_xdr_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "flags: ");
+    if (!dissect_xdr_u_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_connect_list_all_node_devices_ret_ANONTYPE_devices = -1;
+static gint ett_remote_connect_list_all_node_devices_ret_ANONTYPE_devices = -1;
+static int hf_remote_connect_list_all_node_devices_ret = -1;
+static gint ett_remote_connect_list_all_node_devices_ret = -1;
+static gboolean dissect_xdr_remote_connect_list_all_node_devices_ret(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_connect_list_all_node_devices_ret);
+    hf = hf_remote_connect_list_all_node_devices_ret;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "devices: ");
+    if (!dissect_xdr_array(tvb, ti, xdrs, hf_remote_connect_list_all_node_devices_ret_ANONTYPE_devices, ett_remote_connect_list_all_node_devices_ret_ANONTYPE_devices, ~0, dissect_xdr_remote_nonnull_node_device)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "ret: ");
+    if (!dissect_xdr_u_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_connect_list_all_nwfilters_args = -1;
+static gint ett_remote_connect_list_all_nwfilters_args = -1;
+static gboolean dissect_xdr_remote_connect_list_all_nwfilters_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_connect_list_all_nwfilters_args);
+    hf = hf_remote_connect_list_all_nwfilters_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "need_results: ");
+    if (!dissect_xdr_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "flags: ");
+    if (!dissect_xdr_u_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_connect_list_all_nwfilters_ret_ANONTYPE_filters = -1;
+static gint ett_remote_connect_list_all_nwfilters_ret_ANONTYPE_filters = -1;
+static int hf_remote_connect_list_all_nwfilters_ret = -1;
+static gint ett_remote_connect_list_all_nwfilters_ret = -1;
+static gboolean dissect_xdr_remote_connect_list_all_nwfilters_ret(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_connect_list_all_nwfilters_ret);
+    hf = hf_remote_connect_list_all_nwfilters_ret;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "filters: ");
+    if (!dissect_xdr_array(tvb, ti, xdrs, hf_remote_connect_list_all_nwfilters_ret_ANONTYPE_filters, ett_remote_connect_list_all_nwfilters_ret_ANONTYPE_filters, ~0, dissect_xdr_remote_nonnull_nwfilter)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "ret: ");
+    if (!dissect_xdr_u_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_connect_list_all_secrets_args = -1;
+static gint ett_remote_connect_list_all_secrets_args = -1;
+static gboolean dissect_xdr_remote_connect_list_all_secrets_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_connect_list_all_secrets_args);
+    hf = hf_remote_connect_list_all_secrets_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "need_results: ");
+    if (!dissect_xdr_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "flags: ");
+    if (!dissect_xdr_u_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_connect_list_all_secrets_ret_ANONTYPE_secrets = -1;
+static gint ett_remote_connect_list_all_secrets_ret_ANONTYPE_secrets = -1;
+static int hf_remote_connect_list_all_secrets_ret = -1;
+static gint ett_remote_connect_list_all_secrets_ret = -1;
+static gboolean dissect_xdr_remote_connect_list_all_secrets_ret(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_connect_list_all_secrets_ret);
+    hf = hf_remote_connect_list_all_secrets_ret;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "secrets: ");
+    if (!dissect_xdr_array(tvb, ti, xdrs, hf_remote_connect_list_all_secrets_ret_ANONTYPE_secrets, ett_remote_connect_list_all_secrets_ret_ANONTYPE_secrets, ~0, dissect_xdr_remote_nonnull_secret)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "ret: ");
+    if (!dissect_xdr_u_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_node_set_memory_parameters_args_ANONTYPE_params = -1;
+static gint ett_remote_node_set_memory_parameters_args_ANONTYPE_params = -1;
+static int hf_remote_node_set_memory_parameters_args = -1;
+static gint ett_remote_node_set_memory_parameters_args = -1;
+static gboolean dissect_xdr_remote_node_set_memory_parameters_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_node_set_memory_parameters_args);
+    hf = hf_remote_node_set_memory_parameters_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "params: ");
+    if (!dissect_xdr_array(tvb, ti, xdrs, hf_remote_node_set_memory_parameters_args_ANONTYPE_params, ett_remote_node_set_memory_parameters_args_ANONTYPE_params, REMOTE_NODE_MEMORY_PARAMETERS_MAX, dissect_xdr_remote_typed_param)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "flags: ");
+    if (!dissect_xdr_u_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_node_get_memory_parameters_args = -1;
+static gint ett_remote_node_get_memory_parameters_args = -1;
+static gboolean dissect_xdr_remote_node_get_memory_parameters_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_node_get_memory_parameters_args);
+    hf = hf_remote_node_get_memory_parameters_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "nparams: ");
+    if (!dissect_xdr_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "flags: ");
+    if (!dissect_xdr_u_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_node_get_memory_parameters_ret_ANONTYPE_params = -1;
+static gint ett_remote_node_get_memory_parameters_ret_ANONTYPE_params = -1;
+static int hf_remote_node_get_memory_parameters_ret = -1;
+static gint ett_remote_node_get_memory_parameters_ret = -1;
+static gboolean dissect_xdr_remote_node_get_memory_parameters_ret(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_node_get_memory_parameters_ret);
+    hf = hf_remote_node_get_memory_parameters_ret;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "params: ");
+    if (!dissect_xdr_array(tvb, ti, xdrs, hf_remote_node_get_memory_parameters_ret_ANONTYPE_params, ett_remote_node_get_memory_parameters_ret_ANONTYPE_params, REMOTE_NODE_MEMORY_PARAMETERS_MAX, dissect_xdr_remote_typed_param)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "nparams: ");
+    if (!dissect_xdr_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_node_get_cpu_map_args = -1;
+static gint ett_remote_node_get_cpu_map_args = -1;
+static gboolean dissect_xdr_remote_node_get_cpu_map_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_node_get_cpu_map_args);
+    hf = hf_remote_node_get_cpu_map_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "need_map: ");
+    if (!dissect_xdr_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "need_online: ");
+    if (!dissect_xdr_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "flags: ");
+    if (!dissect_xdr_u_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_node_get_cpu_map_ret = -1;
+static gint ett_remote_node_get_cpu_map_ret = -1;
+static gboolean dissect_xdr_remote_node_get_cpu_map_ret(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_node_get_cpu_map_ret);
+    hf = hf_remote_node_get_cpu_map_ret;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "cpumap: ");
+    if (!dissect_xdr_bytes(tvb, ti, xdrs, hf, REMOTE_CPUMAP_MAX)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "online: ");
+    if (!dissect_xdr_u_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "ret: ");
+    if (!dissect_xdr_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_fstrim_args = -1;
+static gint ett_remote_domain_fstrim_args = -1;
+static gboolean dissect_xdr_remote_domain_fstrim_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_fstrim_args);
+    hf = hf_remote_domain_fstrim_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "dom: ");
+    if (!dissect_xdr_remote_nonnull_domain(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "mountPoint: ");
+    if (!dissect_xdr_remote_string(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "minimum: ");
+    if (!dissect_xdr_u_hyper(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "flags: ");
+    if (!dissect_xdr_u_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_migrate_begin3_params_args_ANONTYPE_params = -1;
+static gint ett_remote_domain_migrate_begin3_params_args_ANONTYPE_params = -1;
+static int hf_remote_domain_migrate_begin3_params_args = -1;
+static gint ett_remote_domain_migrate_begin3_params_args = -1;
+static gboolean dissect_xdr_remote_domain_migrate_begin3_params_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_migrate_begin3_params_args);
+    hf = hf_remote_domain_migrate_begin3_params_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "dom: ");
+    if (!dissect_xdr_remote_nonnull_domain(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "params: ");
+    if (!dissect_xdr_array(tvb, ti, xdrs, hf_remote_domain_migrate_begin3_params_args_ANONTYPE_params, ett_remote_domain_migrate_begin3_params_args_ANONTYPE_params, ~0, dissect_xdr_remote_typed_param)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "flags: ");
+    if (!dissect_xdr_u_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_migrate_begin3_params_ret = -1;
+static gint ett_remote_domain_migrate_begin3_params_ret = -1;
+static gboolean dissect_xdr_remote_domain_migrate_begin3_params_ret(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_migrate_begin3_params_ret);
+    hf = hf_remote_domain_migrate_begin3_params_ret;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "cookie_out: ");
+    if (!dissect_xdr_bytes(tvb, ti, xdrs, hf, REMOTE_MIGRATE_COOKIE_MAX)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "xml: ");
+    if (!dissect_xdr_remote_nonnull_string(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_migrate_prepare3_params_args_ANONTYPE_params = -1;
+static gint ett_remote_domain_migrate_prepare3_params_args_ANONTYPE_params = -1;
+static int hf_remote_domain_migrate_prepare3_params_args = -1;
+static gint ett_remote_domain_migrate_prepare3_params_args = -1;
+static gboolean dissect_xdr_remote_domain_migrate_prepare3_params_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_migrate_prepare3_params_args);
+    hf = hf_remote_domain_migrate_prepare3_params_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "params: ");
+    if (!dissect_xdr_array(tvb, ti, xdrs, hf_remote_domain_migrate_prepare3_params_args_ANONTYPE_params, ett_remote_domain_migrate_prepare3_params_args_ANONTYPE_params, ~0, dissect_xdr_remote_typed_param)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "cookie_in: ");
+    if (!dissect_xdr_bytes(tvb, ti, xdrs, hf, REMOTE_MIGRATE_COOKIE_MAX)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "flags: ");
+    if (!dissect_xdr_u_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_migrate_prepare3_params_ret = -1;
+static gint ett_remote_domain_migrate_prepare3_params_ret = -1;
+static gboolean dissect_xdr_remote_domain_migrate_prepare3_params_ret(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_migrate_prepare3_params_ret);
+    hf = hf_remote_domain_migrate_prepare3_params_ret;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "cookie_out: ");
+    if (!dissect_xdr_bytes(tvb, ti, xdrs, hf, REMOTE_MIGRATE_COOKIE_MAX)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "uri_out: ");
+    if (!dissect_xdr_remote_string(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_migrate_prepare_tunnel3_params_args_ANONTYPE_params = -1;
+static gint ett_remote_domain_migrate_prepare_tunnel3_params_args_ANONTYPE_params = -1;
+static int hf_remote_domain_migrate_prepare_tunnel3_params_args = -1;
+static gint ett_remote_domain_migrate_prepare_tunnel3_params_args = -1;
+static gboolean dissect_xdr_remote_domain_migrate_prepare_tunnel3_params_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_migrate_prepare_tunnel3_params_args);
+    hf = hf_remote_domain_migrate_prepare_tunnel3_params_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "params: ");
+    if (!dissect_xdr_array(tvb, ti, xdrs, hf_remote_domain_migrate_prepare_tunnel3_params_args_ANONTYPE_params, ett_remote_domain_migrate_prepare_tunnel3_params_args_ANONTYPE_params, ~0, dissect_xdr_remote_typed_param)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "cookie_in: ");
+    if (!dissect_xdr_bytes(tvb, ti, xdrs, hf, REMOTE_MIGRATE_COOKIE_MAX)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "flags: ");
+    if (!dissect_xdr_u_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_migrate_prepare_tunnel3_params_ret = -1;
+static gint ett_remote_domain_migrate_prepare_tunnel3_params_ret = -1;
+static gboolean dissect_xdr_remote_domain_migrate_prepare_tunnel3_params_ret(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_migrate_prepare_tunnel3_params_ret);
+    hf = hf_remote_domain_migrate_prepare_tunnel3_params_ret;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "cookie_out: ");
+    if (!dissect_xdr_bytes(tvb, ti, xdrs, hf, REMOTE_MIGRATE_COOKIE_MAX)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_migrate_perform3_params_args_ANONTYPE_params = -1;
+static gint ett_remote_domain_migrate_perform3_params_args_ANONTYPE_params = -1;
+static int hf_remote_domain_migrate_perform3_params_args = -1;
+static gint ett_remote_domain_migrate_perform3_params_args = -1;
+static gboolean dissect_xdr_remote_domain_migrate_perform3_params_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_migrate_perform3_params_args);
+    hf = hf_remote_domain_migrate_perform3_params_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "dom: ");
+    if (!dissect_xdr_remote_nonnull_domain(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "dconnuri: ");
+    if (!dissect_xdr_remote_string(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "params: ");
+    if (!dissect_xdr_array(tvb, ti, xdrs, hf_remote_domain_migrate_perform3_params_args_ANONTYPE_params, ett_remote_domain_migrate_perform3_params_args_ANONTYPE_params, ~0, dissect_xdr_remote_typed_param)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "cookie_in: ");
+    if (!dissect_xdr_bytes(tvb, ti, xdrs, hf, REMOTE_MIGRATE_COOKIE_MAX)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "flags: ");
+    if (!dissect_xdr_u_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_migrate_perform3_params_ret = -1;
+static gint ett_remote_domain_migrate_perform3_params_ret = -1;
+static gboolean dissect_xdr_remote_domain_migrate_perform3_params_ret(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_migrate_perform3_params_ret);
+    hf = hf_remote_domain_migrate_perform3_params_ret;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "cookie_out: ");
+    if (!dissect_xdr_bytes(tvb, ti, xdrs, hf, REMOTE_MIGRATE_COOKIE_MAX)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_migrate_finish3_params_args_ANONTYPE_params = -1;
+static gint ett_remote_domain_migrate_finish3_params_args_ANONTYPE_params = -1;
+static int hf_remote_domain_migrate_finish3_params_args = -1;
+static gint ett_remote_domain_migrate_finish3_params_args = -1;
+static gboolean dissect_xdr_remote_domain_migrate_finish3_params_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_migrate_finish3_params_args);
+    hf = hf_remote_domain_migrate_finish3_params_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "params: ");
+    if (!dissect_xdr_array(tvb, ti, xdrs, hf_remote_domain_migrate_finish3_params_args_ANONTYPE_params, ett_remote_domain_migrate_finish3_params_args_ANONTYPE_params, ~0, dissect_xdr_remote_typed_param)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "cookie_in: ");
+    if (!dissect_xdr_bytes(tvb, ti, xdrs, hf, REMOTE_MIGRATE_COOKIE_MAX)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "flags: ");
+    if (!dissect_xdr_u_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "cancelled: ");
+    if (!dissect_xdr_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_migrate_finish3_params_ret = -1;
+static gint ett_remote_domain_migrate_finish3_params_ret = -1;
+static gboolean dissect_xdr_remote_domain_migrate_finish3_params_ret(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_migrate_finish3_params_ret);
+    hf = hf_remote_domain_migrate_finish3_params_ret;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "dom: ");
+    if (!dissect_xdr_remote_nonnull_domain(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "cookie_out: ");
+    if (!dissect_xdr_bytes(tvb, ti, xdrs, hf, REMOTE_MIGRATE_COOKIE_MAX)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
+static int hf_remote_domain_migrate_confirm3_params_args_ANONTYPE_params = -1;
+static gint ett_remote_domain_migrate_confirm3_params_args_ANONTYPE_params = -1;
+static int hf_remote_domain_migrate_confirm3_params_args = -1;
+static gint ett_remote_domain_migrate_confirm3_params_args = -1;
+static gboolean dissect_xdr_remote_domain_migrate_confirm3_params_args(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
+{
+    goffset start, incr;
+    proto_tree *tree;
+    
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    tree = proto_item_add_subtree(ti, ett_remote_domain_migrate_confirm3_params_args);
+    hf = hf_remote_domain_migrate_confirm3_params_args;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "dom: ");
+    if (!dissect_xdr_remote_nonnull_domain(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "params: ");
+    if (!dissect_xdr_array(tvb, ti, xdrs, hf_remote_domain_migrate_confirm3_params_args_ANONTYPE_params, ett_remote_domain_migrate_confirm3_params_args_ANONTYPE_params, ~0, dissect_xdr_remote_typed_param)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "cookie_in: ");
+    if (!dissect_xdr_bytes(tvb, ti, xdrs, hf, REMOTE_MIGRATE_COOKIE_MAX)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "flags: ");
+    if (!dissect_xdr_u_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_set_text(ti, "cancelled: ");
+    if (!dissect_xdr_int(tvb, ti, xdrs, hf)) return FALSE;
+    incr = xdr_getpos(xdrs) - start + VIR_HEADER_LEN;
+    proto_item_set_len(ti, incr);
+    start += incr;
+    return TRUE;
+}
 #define REMOTE_PROGRAM (0x20008086)
 #define REMOTE_PROTOCOL_VERSION (1)
-static const vir_proc_payload_t remote_payload_def[] = {
-    { 1, struct_remote_connect_open_args_members_def, NULL, NULL },
+static const vir_proc_payload_t remote_dissectors[] = {
+    { 1, dissect_xdr_remote_connect_open_args, NULL, NULL },
     { 2, NULL, NULL, NULL },
-    { 3, NULL, struct_remote_connect_get_type_ret_members_def, NULL },
-    { 4, NULL, struct_remote_connect_get_version_ret_members_def, NULL },
-    { 5, struct_remote_connect_get_max_vcpus_args_members_def, struct_remote_connect_get_max_vcpus_ret_members_def, NULL },
-    { 6, NULL, struct_remote_node_get_info_ret_members_def, NULL },
-    { 7, NULL, struct_remote_connect_get_capabilities_ret_members_def, NULL },
-    { 8, struct_remote_domain_attach_device_args_members_def, NULL, NULL },
-    { 9, struct_remote_domain_create_args_members_def, NULL, NULL },
-    { 10, struct_remote_domain_create_xml_args_members_def, struct_remote_domain_create_xml_ret_members_def, NULL },
-    { 11, struct_remote_domain_define_xml_args_members_def, struct_remote_domain_define_xml_ret_members_def, NULL },
-    { 12, struct_remote_domain_destroy_args_members_def, NULL, NULL },
-    { 13, struct_remote_domain_detach_device_args_members_def, NULL, NULL },
-    { 14, struct_remote_domain_get_xml_desc_args_members_def, struct_remote_domain_get_xml_desc_ret_members_def, NULL },
-    { 15, struct_remote_domain_get_autostart_args_members_def, struct_remote_domain_get_autostart_ret_members_def, NULL },
-    { 16, struct_remote_domain_get_info_args_members_def, struct_remote_domain_get_info_ret_members_def, NULL },
-    { 17, struct_remote_domain_get_max_memory_args_members_def, struct_remote_domain_get_max_memory_ret_members_def, NULL },
-    { 18, struct_remote_domain_get_max_vcpus_args_members_def, struct_remote_domain_get_max_vcpus_ret_members_def, NULL },
-    { 19, struct_remote_domain_get_os_type_args_members_def, struct_remote_domain_get_os_type_ret_members_def, NULL },
-    { 20, struct_remote_domain_get_vcpus_args_members_def, struct_remote_domain_get_vcpus_ret_members_def, NULL },
-    { 21, struct_remote_connect_list_defined_domains_args_members_def, struct_remote_connect_list_defined_domains_ret_members_def, NULL },
-    { 22, struct_remote_domain_lookup_by_id_args_members_def, struct_remote_domain_lookup_by_id_ret_members_def, NULL },
-    { 23, struct_remote_domain_lookup_by_name_args_members_def, struct_remote_domain_lookup_by_name_ret_members_def, NULL },
-    { 24, struct_remote_domain_lookup_by_uuid_args_members_def, struct_remote_domain_lookup_by_uuid_ret_members_def, NULL },
-    { 25, NULL, struct_remote_connect_num_of_defined_domains_ret_members_def, NULL },
-    { 26, struct_remote_domain_pin_vcpu_args_members_def, NULL, NULL },
-    { 27, struct_remote_domain_reboot_args_members_def, NULL, NULL },
-    { 28, struct_remote_domain_resume_args_members_def, NULL, NULL },
-    { 29, struct_remote_domain_set_autostart_args_members_def, NULL, NULL },
-    { 30, struct_remote_domain_set_max_memory_args_members_def, NULL, NULL },
-    { 31, struct_remote_domain_set_memory_args_members_def, NULL, NULL },
-    { 32, struct_remote_domain_set_vcpus_args_members_def, NULL, NULL },
-    { 33, struct_remote_domain_shutdown_args_members_def, NULL, NULL },
-    { 34, struct_remote_domain_suspend_args_members_def, NULL, NULL },
-    { 35, struct_remote_domain_undefine_args_members_def, NULL, NULL },
-    { 36, struct_remote_connect_list_defined_networks_args_members_def, struct_remote_connect_list_defined_networks_ret_members_def, NULL },
-    { 37, struct_remote_connect_list_domains_args_members_def, struct_remote_connect_list_domains_ret_members_def, NULL },
-    { 38, struct_remote_connect_list_networks_args_members_def, struct_remote_connect_list_networks_ret_members_def, NULL },
-    { 39, struct_remote_network_create_args_members_def, NULL, NULL },
-    { 40, struct_remote_network_create_xml_args_members_def, struct_remote_network_create_xml_ret_members_def, NULL },
-    { 41, struct_remote_network_define_xml_args_members_def, struct_remote_network_define_xml_ret_members_def, NULL },
-    { 42, struct_remote_network_destroy_args_members_def, NULL, NULL },
-    { 43, struct_remote_network_get_xml_desc_args_members_def, struct_remote_network_get_xml_desc_ret_members_def, NULL },
-    { 44, struct_remote_network_get_autostart_args_members_def, struct_remote_network_get_autostart_ret_members_def, NULL },
-    { 45, struct_remote_network_get_bridge_name_args_members_def, struct_remote_network_get_bridge_name_ret_members_def, NULL },
-    { 46, struct_remote_network_lookup_by_name_args_members_def, struct_remote_network_lookup_by_name_ret_members_def, NULL },
-    { 47, struct_remote_network_lookup_by_uuid_args_members_def, struct_remote_network_lookup_by_uuid_ret_members_def, NULL },
-    { 48, struct_remote_network_set_autostart_args_members_def, NULL, NULL },
-    { 49, struct_remote_network_undefine_args_members_def, NULL, NULL },
-    { 50, NULL, struct_remote_connect_num_of_defined_networks_ret_members_def, NULL },
-    { 51, NULL, struct_remote_connect_num_of_domains_ret_members_def, NULL },
-    { 52, NULL, struct_remote_connect_num_of_networks_ret_members_def, NULL },
-    { 53, struct_remote_domain_core_dump_args_members_def, NULL, NULL },
-    { 54, struct_remote_domain_restore_args_members_def, NULL, NULL },
-    { 55, struct_remote_domain_save_args_members_def, NULL, NULL },
-    { 56, struct_remote_domain_get_scheduler_type_args_members_def, struct_remote_domain_get_scheduler_type_ret_members_def, NULL },
-    { 57, struct_remote_domain_get_scheduler_parameters_args_members_def, struct_remote_domain_get_scheduler_parameters_ret_members_def, NULL },
-    { 58, struct_remote_domain_set_scheduler_parameters_args_members_def, NULL, NULL },
-    { 59, NULL, struct_remote_connect_get_hostname_ret_members_def, NULL },
-    { 60, struct_remote_connect_supports_feature_args_members_def, struct_remote_connect_supports_feature_ret_members_def, NULL },
-    { 61, struct_remote_domain_migrate_prepare_args_members_def, struct_remote_domain_migrate_prepare_ret_members_def, NULL },
-    { 62, struct_remote_domain_migrate_perform_args_members_def, NULL, NULL },
-    { 63, struct_remote_domain_migrate_finish_args_members_def, struct_remote_domain_migrate_finish_ret_members_def, NULL },
-    { 64, struct_remote_domain_block_stats_args_members_def, struct_remote_domain_block_stats_ret_members_def, NULL },
-    { 65, struct_remote_domain_interface_stats_args_members_def, struct_remote_domain_interface_stats_ret_members_def, NULL },
-    { 66, NULL, struct_remote_auth_list_ret_members_def, NULL },
-    { 67, NULL, struct_remote_auth_sasl_init_ret_members_def, NULL },
-    { 68, struct_remote_auth_sasl_start_args_members_def, struct_remote_auth_sasl_start_ret_members_def, NULL },
-    { 69, struct_remote_auth_sasl_step_args_members_def, struct_remote_auth_sasl_step_ret_members_def, NULL },
-    { 70, NULL, struct_remote_auth_polkit_ret_members_def, NULL },
-    { 71, NULL, struct_remote_connect_num_of_storage_pools_ret_members_def, NULL },
-    { 72, struct_remote_connect_list_storage_pools_args_members_def, struct_remote_connect_list_storage_pools_ret_members_def, NULL },
-    { 73, NULL, struct_remote_connect_num_of_defined_storage_pools_ret_members_def, NULL },
-    { 74, struct_remote_connect_list_defined_storage_pools_args_members_def, struct_remote_connect_list_defined_storage_pools_ret_members_def, NULL },
-    { 75, struct_remote_connect_find_storage_pool_sources_args_members_def, struct_remote_connect_find_storage_pool_sources_ret_members_def, NULL },
-    { 76, struct_remote_storage_pool_create_xml_args_members_def, struct_remote_storage_pool_create_xml_ret_members_def, NULL },
-    { 77, struct_remote_storage_pool_define_xml_args_members_def, struct_remote_storage_pool_define_xml_ret_members_def, NULL },
-    { 78, struct_remote_storage_pool_create_args_members_def, NULL, NULL },
-    { 79, struct_remote_storage_pool_build_args_members_def, NULL, NULL },
-    { 80, struct_remote_storage_pool_destroy_args_members_def, NULL, NULL },
-    { 81, struct_remote_storage_pool_delete_args_members_def, NULL, NULL },
-    { 82, struct_remote_storage_pool_undefine_args_members_def, NULL, NULL },
-    { 83, struct_remote_storage_pool_refresh_args_members_def, NULL, NULL },
-    { 84, struct_remote_storage_pool_lookup_by_name_args_members_def, struct_remote_storage_pool_lookup_by_name_ret_members_def, NULL },
-    { 85, struct_remote_storage_pool_lookup_by_uuid_args_members_def, struct_remote_storage_pool_lookup_by_uuid_ret_members_def, NULL },
-    { 86, struct_remote_storage_pool_lookup_by_volume_args_members_def, struct_remote_storage_pool_lookup_by_volume_ret_members_def, NULL },
-    { 87, struct_remote_storage_pool_get_info_args_members_def, struct_remote_storage_pool_get_info_ret_members_def, NULL },
-    { 88, struct_remote_storage_pool_get_xml_desc_args_members_def, struct_remote_storage_pool_get_xml_desc_ret_members_def, NULL },
-    { 89, struct_remote_storage_pool_get_autostart_args_members_def, struct_remote_storage_pool_get_autostart_ret_members_def, NULL },
-    { 90, struct_remote_storage_pool_set_autostart_args_members_def, NULL, NULL },
-    { 91, struct_remote_storage_pool_num_of_volumes_args_members_def, struct_remote_storage_pool_num_of_volumes_ret_members_def, NULL },
-    { 92, struct_remote_storage_pool_list_volumes_args_members_def, struct_remote_storage_pool_list_volumes_ret_members_def, NULL },
-    { 93, struct_remote_storage_vol_create_xml_args_members_def, struct_remote_storage_vol_create_xml_ret_members_def, NULL },
-    { 94, struct_remote_storage_vol_delete_args_members_def, NULL, NULL },
-    { 95, struct_remote_storage_vol_lookup_by_name_args_members_def, struct_remote_storage_vol_lookup_by_name_ret_members_def, NULL },
-    { 96, struct_remote_storage_vol_lookup_by_key_args_members_def, struct_remote_storage_vol_lookup_by_key_ret_members_def, NULL },
-    { 97, struct_remote_storage_vol_lookup_by_path_args_members_def, struct_remote_storage_vol_lookup_by_path_ret_members_def, NULL },
-    { 98, struct_remote_storage_vol_get_info_args_members_def, struct_remote_storage_vol_get_info_ret_members_def, NULL },
-    { 99, struct_remote_storage_vol_get_xml_desc_args_members_def, struct_remote_storage_vol_get_xml_desc_ret_members_def, NULL },
-    { 100, struct_remote_storage_vol_get_path_args_members_def, struct_remote_storage_vol_get_path_ret_members_def, NULL },
-    { 101, struct_remote_node_get_cells_free_memory_args_members_def, struct_remote_node_get_cells_free_memory_ret_members_def, NULL },
-    { 102, NULL, struct_remote_node_get_free_memory_ret_members_def, NULL },
-    { 103, struct_remote_domain_block_peek_args_members_def, struct_remote_domain_block_peek_ret_members_def, NULL },
-    { 104, struct_remote_domain_memory_peek_args_members_def, struct_remote_domain_memory_peek_ret_members_def, NULL },
-    { 105, NULL, struct_remote_connect_domain_event_register_ret_members_def, NULL },
-    { 106, NULL, struct_remote_connect_domain_event_deregister_ret_members_def, NULL },
-    { 107, NULL, NULL, struct_remote_domain_event_lifecycle_msg_members_def },
-    { 108, struct_remote_domain_migrate_prepare2_args_members_def, struct_remote_domain_migrate_prepare2_ret_members_def, NULL },
-    { 109, struct_remote_domain_migrate_finish2_args_members_def, struct_remote_domain_migrate_finish2_ret_members_def, NULL },
-    { 110, NULL, struct_remote_connect_get_uri_ret_members_def, NULL },
-    { 111, struct_remote_node_num_of_devices_args_members_def, struct_remote_node_num_of_devices_ret_members_def, NULL },
-    { 112, struct_remote_node_list_devices_args_members_def, struct_remote_node_list_devices_ret_members_def, NULL },
-    { 113, struct_remote_node_device_lookup_by_name_args_members_def, struct_remote_node_device_lookup_by_name_ret_members_def, NULL },
-    { 114, struct_remote_node_device_get_xml_desc_args_members_def, struct_remote_node_device_get_xml_desc_ret_members_def, NULL },
-    { 115, struct_remote_node_device_get_parent_args_members_def, struct_remote_node_device_get_parent_ret_members_def, NULL },
-    { 116, struct_remote_node_device_num_of_caps_args_members_def, struct_remote_node_device_num_of_caps_ret_members_def, NULL },
-    { 117, struct_remote_node_device_list_caps_args_members_def, struct_remote_node_device_list_caps_ret_members_def, NULL },
-    { 118, struct_remote_node_device_dettach_args_members_def, NULL, NULL },
-    { 119, struct_remote_node_device_re_attach_args_members_def, NULL, NULL },
-    { 120, struct_remote_node_device_reset_args_members_def, NULL, NULL },
-    { 121, struct_remote_domain_get_security_label_args_members_def, struct_remote_domain_get_security_label_ret_members_def, NULL },
-    { 122, NULL, struct_remote_node_get_security_model_ret_members_def, NULL },
-    { 123, struct_remote_node_device_create_xml_args_members_def, struct_remote_node_device_create_xml_ret_members_def, NULL },
-    { 124, struct_remote_node_device_destroy_args_members_def, NULL, NULL },
-    { 125, struct_remote_storage_vol_create_xml_from_args_members_def, struct_remote_storage_vol_create_xml_from_ret_members_def, NULL },
-    { 126, NULL, struct_remote_connect_num_of_interfaces_ret_members_def, NULL },
-    { 127, struct_remote_connect_list_interfaces_args_members_def, struct_remote_connect_list_interfaces_ret_members_def, NULL },
-    { 128, struct_remote_interface_lookup_by_name_args_members_def, struct_remote_interface_lookup_by_name_ret_members_def, NULL },
-    { 129, struct_remote_interface_lookup_by_mac_string_args_members_def, struct_remote_interface_lookup_by_mac_string_ret_members_def, NULL },
-    { 130, struct_remote_interface_get_xml_desc_args_members_def, struct_remote_interface_get_xml_desc_ret_members_def, NULL },
-    { 131, struct_remote_interface_define_xml_args_members_def, struct_remote_interface_define_xml_ret_members_def, NULL },
-    { 132, struct_remote_interface_undefine_args_members_def, NULL, NULL },
-    { 133, struct_remote_interface_create_args_members_def, NULL, NULL },
-    { 134, struct_remote_interface_destroy_args_members_def, NULL, NULL },
-    { 135, struct_remote_connect_domain_xml_from_native_args_members_def, struct_remote_connect_domain_xml_from_native_ret_members_def, NULL },
-    { 136, struct_remote_connect_domain_xml_to_native_args_members_def, struct_remote_connect_domain_xml_to_native_ret_members_def, NULL },
-    { 137, NULL, struct_remote_connect_num_of_defined_interfaces_ret_members_def, NULL },
-    { 138, struct_remote_connect_list_defined_interfaces_args_members_def, struct_remote_connect_list_defined_interfaces_ret_members_def, NULL },
-    { 139, NULL, struct_remote_connect_num_of_secrets_ret_members_def, NULL },
-    { 140, struct_remote_connect_list_secrets_args_members_def, struct_remote_connect_list_secrets_ret_members_def, NULL },
-    { 141, struct_remote_secret_lookup_by_uuid_args_members_def, struct_remote_secret_lookup_by_uuid_ret_members_def, NULL },
-    { 142, struct_remote_secret_define_xml_args_members_def, struct_remote_secret_define_xml_ret_members_def, NULL },
-    { 143, struct_remote_secret_get_xml_desc_args_members_def, struct_remote_secret_get_xml_desc_ret_members_def, NULL },
-    { 144, struct_remote_secret_set_value_args_members_def, NULL, NULL },
-    { 145, struct_remote_secret_get_value_args_members_def, struct_remote_secret_get_value_ret_members_def, NULL },
-    { 146, struct_remote_secret_undefine_args_members_def, NULL, NULL },
-    { 147, struct_remote_secret_lookup_by_usage_args_members_def, struct_remote_secret_lookup_by_usage_ret_members_def, NULL },
-    { 148, struct_remote_domain_migrate_prepare_tunnel_args_members_def, NULL, NULL },
-    { 149, NULL, struct_remote_connect_is_secure_ret_members_def, NULL },
-    { 150, struct_remote_domain_is_active_args_members_def, struct_remote_domain_is_active_ret_members_def, NULL },
-    { 151, struct_remote_domain_is_persistent_args_members_def, struct_remote_domain_is_persistent_ret_members_def, NULL },
-    { 152, struct_remote_network_is_active_args_members_def, struct_remote_network_is_active_ret_members_def, NULL },
-    { 153, struct_remote_network_is_persistent_args_members_def, struct_remote_network_is_persistent_ret_members_def, NULL },
-    { 154, struct_remote_storage_pool_is_active_args_members_def, struct_remote_storage_pool_is_active_ret_members_def, NULL },
-    { 155, struct_remote_storage_pool_is_persistent_args_members_def, struct_remote_storage_pool_is_persistent_ret_members_def, NULL },
-    { 156, struct_remote_interface_is_active_args_members_def, struct_remote_interface_is_active_ret_members_def, NULL },
-    { 157, NULL, struct_remote_connect_get_lib_version_ret_members_def, NULL },
-    { 158, struct_remote_connect_compare_cpu_args_members_def, struct_remote_connect_compare_cpu_ret_members_def, NULL },
-    { 159, struct_remote_domain_memory_stats_args_members_def, struct_remote_domain_memory_stats_ret_members_def, NULL },
-    { 160, struct_remote_domain_attach_device_flags_args_members_def, NULL, NULL },
-    { 161, struct_remote_domain_detach_device_flags_args_members_def, NULL, NULL },
-    { 162, struct_remote_connect_baseline_cpu_args_members_def, struct_remote_connect_baseline_cpu_ret_members_def, NULL },
-    { 163, struct_remote_domain_get_job_info_args_members_def, struct_remote_domain_get_job_info_ret_members_def, NULL },
-    { 164, struct_remote_domain_abort_job_args_members_def, NULL, NULL },
-    { 165, struct_remote_storage_vol_wipe_args_members_def, NULL, NULL },
-    { 166, struct_remote_domain_migrate_set_max_downtime_args_members_def, NULL, NULL },
-    { 167, struct_remote_connect_domain_event_register_any_args_members_def, NULL, NULL },
-    { 168, struct_remote_connect_domain_event_deregister_any_args_members_def, NULL, NULL },
-    { 169, NULL, NULL, struct_remote_domain_event_reboot_msg_members_def },
-    { 170, NULL, NULL, struct_remote_domain_event_rtc_change_msg_members_def },
-    { 171, NULL, NULL, struct_remote_domain_event_watchdog_msg_members_def },
-    { 172, NULL, NULL, struct_remote_domain_event_io_error_msg_members_def },
-    { 173, NULL, NULL, struct_remote_domain_event_graphics_msg_members_def },
-    { 174, struct_remote_domain_update_device_flags_args_members_def, NULL, NULL },
-    { 175, struct_remote_nwfilter_lookup_by_name_args_members_def, struct_remote_nwfilter_lookup_by_name_ret_members_def, NULL },
-    { 176, struct_remote_nwfilter_lookup_by_uuid_args_members_def, struct_remote_nwfilter_lookup_by_uuid_ret_members_def, NULL },
-    { 177, struct_remote_nwfilter_get_xml_desc_args_members_def, struct_remote_nwfilter_get_xml_desc_ret_members_def, NULL },
-    { 178, NULL, struct_remote_connect_num_of_nwfilters_ret_members_def, NULL },
-    { 179, struct_remote_connect_list_nwfilters_args_members_def, struct_remote_connect_list_nwfilters_ret_members_def, NULL },
-    { 180, struct_remote_nwfilter_define_xml_args_members_def, struct_remote_nwfilter_define_xml_ret_members_def, NULL },
-    { 181, struct_remote_nwfilter_undefine_args_members_def, NULL, NULL },
-    { 182, struct_remote_domain_managed_save_args_members_def, NULL, NULL },
-    { 183, struct_remote_domain_has_managed_save_image_args_members_def, struct_remote_domain_has_managed_save_image_ret_members_def, NULL },
-    { 184, struct_remote_domain_managed_save_remove_args_members_def, NULL, NULL },
-    { 185, struct_remote_domain_snapshot_create_xml_args_members_def, struct_remote_domain_snapshot_create_xml_ret_members_def, NULL },
-    { 186, struct_remote_domain_snapshot_get_xml_desc_args_members_def, struct_remote_domain_snapshot_get_xml_desc_ret_members_def, NULL },
-    { 187, struct_remote_domain_snapshot_num_args_members_def, struct_remote_domain_snapshot_num_ret_members_def, NULL },
-    { 188, struct_remote_domain_snapshot_list_names_args_members_def, struct_remote_domain_snapshot_list_names_ret_members_def, NULL },
-    { 189, struct_remote_domain_snapshot_lookup_by_name_args_members_def, struct_remote_domain_snapshot_lookup_by_name_ret_members_def, NULL },
-    { 190, struct_remote_domain_has_current_snapshot_args_members_def, struct_remote_domain_has_current_snapshot_ret_members_def, NULL },
-    { 191, struct_remote_domain_snapshot_current_args_members_def, struct_remote_domain_snapshot_current_ret_members_def, NULL },
-    { 192, struct_remote_domain_revert_to_snapshot_args_members_def, NULL, NULL },
-    { 193, struct_remote_domain_snapshot_delete_args_members_def, NULL, NULL },
-    { 194, struct_remote_domain_get_block_info_args_members_def, struct_remote_domain_get_block_info_ret_members_def, NULL },
-    { 195, NULL, NULL, struct_remote_domain_event_io_error_reason_msg_members_def },
-    { 196, struct_remote_domain_create_with_flags_args_members_def, struct_remote_domain_create_with_flags_ret_members_def, NULL },
-    { 197, struct_remote_domain_set_memory_parameters_args_members_def, NULL, NULL },
-    { 198, struct_remote_domain_get_memory_parameters_args_members_def, struct_remote_domain_get_memory_parameters_ret_members_def, NULL },
-    { 199, struct_remote_domain_set_vcpus_flags_args_members_def, NULL, NULL },
-    { 200, struct_remote_domain_get_vcpus_flags_args_members_def, struct_remote_domain_get_vcpus_flags_ret_members_def, NULL },
-    { 201, struct_remote_domain_open_console_args_members_def, NULL, NULL },
-    { 202, struct_remote_domain_is_updated_args_members_def, struct_remote_domain_is_updated_ret_members_def, NULL },
-    { 203, struct_remote_connect_get_sysinfo_args_members_def, struct_remote_connect_get_sysinfo_ret_members_def, NULL },
-    { 204, struct_remote_domain_set_memory_flags_args_members_def, NULL, NULL },
-    { 205, struct_remote_domain_set_blkio_parameters_args_members_def, NULL, NULL },
-    { 206, struct_remote_domain_get_blkio_parameters_args_members_def, struct_remote_domain_get_blkio_parameters_ret_members_def, NULL },
-    { 207, struct_remote_domain_migrate_set_max_speed_args_members_def, NULL, NULL },
-    { 208, struct_remote_storage_vol_upload_args_members_def, NULL, NULL },
-    { 209, struct_remote_storage_vol_download_args_members_def, NULL, NULL },
-    { 210, struct_remote_domain_inject_nmi_args_members_def, NULL, NULL },
-    { 211, struct_remote_domain_screenshot_args_members_def, struct_remote_domain_screenshot_ret_members_def, NULL },
-    { 212, struct_remote_domain_get_state_args_members_def, struct_remote_domain_get_state_ret_members_def, NULL },
-    { 213, struct_remote_domain_migrate_begin3_args_members_def, struct_remote_domain_migrate_begin3_ret_members_def, NULL },
-    { 214, struct_remote_domain_migrate_prepare3_args_members_def, struct_remote_domain_migrate_prepare3_ret_members_def, NULL },
-    { 215, struct_remote_domain_migrate_prepare_tunnel3_args_members_def, struct_remote_domain_migrate_prepare_tunnel3_ret_members_def, NULL },
-    { 216, struct_remote_domain_migrate_perform3_args_members_def, struct_remote_domain_migrate_perform3_ret_members_def, NULL },
-    { 217, struct_remote_domain_migrate_finish3_args_members_def, struct_remote_domain_migrate_finish3_ret_members_def, NULL },
-    { 218, struct_remote_domain_migrate_confirm3_args_members_def, NULL, NULL },
-    { 219, struct_remote_domain_set_scheduler_parameters_flags_args_members_def, NULL, NULL },
-    { 220, struct_remote_interface_change_begin_args_members_def, NULL, NULL },
-    { 221, struct_remote_interface_change_commit_args_members_def, NULL, NULL },
-    { 222, struct_remote_interface_change_rollback_args_members_def, NULL, NULL },
-    { 223, struct_remote_domain_get_scheduler_parameters_flags_args_members_def, struct_remote_domain_get_scheduler_parameters_flags_ret_members_def, NULL },
-    { 224, NULL, NULL, struct_remote_domain_event_control_error_msg_members_def },
-    { 225, struct_remote_domain_pin_vcpu_flags_args_members_def, NULL, NULL },
-    { 226, struct_remote_domain_send_key_args_members_def, NULL, NULL },
-    { 227, struct_remote_node_get_cpu_stats_args_members_def, struct_remote_node_get_cpu_stats_ret_members_def, NULL },
-    { 228, struct_remote_node_get_memory_stats_args_members_def, struct_remote_node_get_memory_stats_ret_members_def, NULL },
-    { 229, struct_remote_domain_get_control_info_args_members_def, struct_remote_domain_get_control_info_ret_members_def, NULL },
-    { 230, struct_remote_domain_get_vcpu_pin_info_args_members_def, struct_remote_domain_get_vcpu_pin_info_ret_members_def, NULL },
-    { 231, struct_remote_domain_undefine_flags_args_members_def, NULL, NULL },
-    { 232, struct_remote_domain_save_flags_args_members_def, NULL, NULL },
-    { 233, struct_remote_domain_restore_flags_args_members_def, NULL, NULL },
-    { 234, struct_remote_domain_destroy_flags_args_members_def, NULL, NULL },
-    { 235, struct_remote_domain_save_image_get_xml_desc_args_members_def, struct_remote_domain_save_image_get_xml_desc_ret_members_def, NULL },
-    { 236, struct_remote_domain_save_image_define_xml_args_members_def, NULL, NULL },
-    { 237, struct_remote_domain_block_job_abort_args_members_def, NULL, NULL },
-    { 238, struct_remote_domain_get_block_job_info_args_members_def, struct_remote_domain_get_block_job_info_ret_members_def, NULL },
-    { 239, struct_remote_domain_block_job_set_speed_args_members_def, NULL, NULL },
-    { 240, struct_remote_domain_block_pull_args_members_def, NULL, NULL },
-    { 241, NULL, NULL, struct_remote_domain_event_block_job_msg_members_def },
-    { 242, struct_remote_domain_migrate_get_max_speed_args_members_def, struct_remote_domain_migrate_get_max_speed_ret_members_def, NULL },
-    { 243, struct_remote_domain_block_stats_flags_args_members_def, struct_remote_domain_block_stats_flags_ret_members_def, NULL },
-    { 244, struct_remote_domain_snapshot_get_parent_args_members_def, struct_remote_domain_snapshot_get_parent_ret_members_def, NULL },
-    { 245, struct_remote_domain_reset_args_members_def, NULL, NULL },
-    { 246, struct_remote_domain_snapshot_num_children_args_members_def, struct_remote_domain_snapshot_num_children_ret_members_def, NULL },
-    { 247, struct_remote_domain_snapshot_list_children_names_args_members_def, struct_remote_domain_snapshot_list_children_names_ret_members_def, NULL },
-    { 248, NULL, NULL, struct_remote_domain_event_disk_change_msg_members_def },
-    { 249, struct_remote_domain_open_graphics_args_members_def, NULL, NULL },
-    { 250, struct_remote_node_suspend_for_duration_args_members_def, NULL, NULL },
-    { 251, struct_remote_domain_block_resize_args_members_def, NULL, NULL },
-    { 252, struct_remote_domain_set_block_io_tune_args_members_def, NULL, NULL },
-    { 253, struct_remote_domain_get_block_io_tune_args_members_def, struct_remote_domain_get_block_io_tune_ret_members_def, NULL },
-    { 254, struct_remote_domain_set_numa_parameters_args_members_def, NULL, NULL },
-    { 255, struct_remote_domain_get_numa_parameters_args_members_def, struct_remote_domain_get_numa_parameters_ret_members_def, NULL },
-    { 256, struct_remote_domain_set_interface_parameters_args_members_def, NULL, NULL },
-    { 257, struct_remote_domain_get_interface_parameters_args_members_def, struct_remote_domain_get_interface_parameters_ret_members_def, NULL },
-    { 258, struct_remote_domain_shutdown_flags_args_members_def, NULL, NULL },
-    { 259, struct_remote_storage_vol_wipe_pattern_args_members_def, NULL, NULL },
-    { 260, struct_remote_storage_vol_resize_args_members_def, NULL, NULL },
-    { 261, struct_remote_domain_pm_suspend_for_duration_args_members_def, NULL, NULL },
-    { 262, struct_remote_domain_get_cpu_stats_args_members_def, struct_remote_domain_get_cpu_stats_ret_members_def, NULL },
-    { 263, struct_remote_domain_get_disk_errors_args_members_def, struct_remote_domain_get_disk_errors_ret_members_def, NULL },
-    { 264, struct_remote_domain_set_metadata_args_members_def, NULL, NULL },
-    { 265, struct_remote_domain_get_metadata_args_members_def, struct_remote_domain_get_metadata_ret_members_def, NULL },
-    { 266, struct_remote_domain_block_rebase_args_members_def, NULL, NULL },
-    { 267, struct_remote_domain_pm_wakeup_args_members_def, NULL, NULL },
-    { 268, NULL, NULL, struct_remote_domain_event_tray_change_msg_members_def },
-    { 269, NULL, NULL, struct_remote_domain_event_pmwakeup_msg_members_def },
-    { 270, NULL, NULL, struct_remote_domain_event_pmsuspend_msg_members_def },
-    { 271, struct_remote_domain_snapshot_is_current_args_members_def, struct_remote_domain_snapshot_is_current_ret_members_def, NULL },
-    { 272, struct_remote_domain_snapshot_has_metadata_args_members_def, struct_remote_domain_snapshot_has_metadata_ret_members_def, NULL },
-    { 273, struct_remote_connect_list_all_domains_args_members_def, struct_remote_connect_list_all_domains_ret_members_def, NULL },
-    { 274, struct_remote_domain_list_all_snapshots_args_members_def, struct_remote_domain_list_all_snapshots_ret_members_def, NULL },
-    { 275, struct_remote_domain_snapshot_list_all_children_args_members_def, struct_remote_domain_snapshot_list_all_children_ret_members_def, NULL },
-    { 276, NULL, NULL, struct_remote_domain_event_balloon_change_msg_members_def },
-    { 277, struct_remote_domain_get_hostname_args_members_def, struct_remote_domain_get_hostname_ret_members_def, NULL },
-    { 278, struct_remote_domain_get_security_label_list_args_members_def, struct_remote_domain_get_security_label_list_ret_members_def, NULL },
-    { 279, struct_remote_domain_pin_emulator_args_members_def, NULL, NULL },
-    { 280, struct_remote_domain_get_emulator_pin_info_args_members_def, struct_remote_domain_get_emulator_pin_info_ret_members_def, NULL },
-    { 281, struct_remote_connect_list_all_storage_pools_args_members_def, struct_remote_connect_list_all_storage_pools_ret_members_def, NULL },
-    { 282, struct_remote_storage_pool_list_all_volumes_args_members_def, struct_remote_storage_pool_list_all_volumes_ret_members_def, NULL },
-    { 283, struct_remote_connect_list_all_networks_args_members_def, struct_remote_connect_list_all_networks_ret_members_def, NULL },
-    { 284, struct_remote_connect_list_all_interfaces_args_members_def, struct_remote_connect_list_all_interfaces_ret_members_def, NULL },
-    { 285, struct_remote_connect_list_all_node_devices_args_members_def, struct_remote_connect_list_all_node_devices_ret_members_def, NULL },
-    { 286, struct_remote_connect_list_all_nwfilters_args_members_def, struct_remote_connect_list_all_nwfilters_ret_members_def, NULL },
-    { 287, struct_remote_connect_list_all_secrets_args_members_def, struct_remote_connect_list_all_secrets_ret_members_def, NULL },
-    { 288, struct_remote_node_set_memory_parameters_args_members_def, NULL, NULL },
-    { 289, struct_remote_node_get_memory_parameters_args_members_def, struct_remote_node_get_memory_parameters_ret_members_def, NULL },
-    { 290, struct_remote_domain_block_commit_args_members_def, NULL, NULL },
-    { 291, struct_remote_network_update_args_members_def, NULL, NULL },
-    { 292, NULL, NULL, struct_remote_domain_event_pmsuspend_disk_msg_members_def },
-    { 293, struct_remote_node_get_cpu_map_args_members_def, struct_remote_node_get_cpu_map_ret_members_def, NULL },
-    { 294, struct_remote_domain_fstrim_args_members_def, NULL, NULL },
-    { 295, struct_remote_domain_send_process_signal_args_members_def, NULL, NULL },
-    { 296, struct_remote_domain_open_channel_args_members_def, NULL, NULL },
-    { 297, struct_remote_node_device_lookup_scsi_host_by_wwn_args_members_def, struct_remote_node_device_lookup_scsi_host_by_wwn_ret_members_def, NULL },
-    { 298, struct_remote_domain_get_job_stats_args_members_def, struct_remote_domain_get_job_stats_ret_members_def, NULL },
-    { 299, struct_remote_domain_migrate_get_compression_cache_args_members_def, struct_remote_domain_migrate_get_compression_cache_ret_members_def, NULL },
-    { 300, struct_remote_domain_migrate_set_compression_cache_args_members_def, NULL, NULL },
-    { 301, struct_remote_node_device_detach_flags_args_members_def, NULL, NULL },
-    { 302, struct_remote_domain_migrate_begin3_params_args_members_def, struct_remote_domain_migrate_begin3_params_ret_members_def, NULL },
-    { 303, struct_remote_domain_migrate_prepare3_params_args_members_def, struct_remote_domain_migrate_prepare3_params_ret_members_def, NULL },
-    { 304, struct_remote_domain_migrate_prepare_tunnel3_params_args_members_def, struct_remote_domain_migrate_prepare_tunnel3_params_ret_members_def, NULL },
-    { 305, struct_remote_domain_migrate_perform3_params_args_members_def, struct_remote_domain_migrate_perform3_params_ret_members_def, NULL },
-    { 306, struct_remote_domain_migrate_finish3_params_args_members_def, struct_remote_domain_migrate_finish3_params_ret_members_def, NULL },
-    { 307, struct_remote_domain_migrate_confirm3_params_args_members_def, NULL, NULL },
+    { 3, NULL, dissect_xdr_remote_connect_get_type_ret, NULL },
+    { 4, NULL, dissect_xdr_remote_connect_get_version_ret, NULL },
+    { 5, dissect_xdr_remote_connect_get_max_vcpus_args, dissect_xdr_remote_connect_get_max_vcpus_ret, NULL },
+    { 6, NULL, dissect_xdr_remote_node_get_info_ret, NULL },
+    { 7, NULL, dissect_xdr_remote_connect_get_capabilities_ret, NULL },
+    { 8, dissect_xdr_remote_domain_attach_device_args, NULL, NULL },
+    { 9, dissect_xdr_remote_domain_create_args, NULL, NULL },
+    { 10, dissect_xdr_remote_domain_create_xml_args, dissect_xdr_remote_domain_create_xml_ret, NULL },
+    { 11, dissect_xdr_remote_domain_define_xml_args, dissect_xdr_remote_domain_define_xml_ret, NULL },
+    { 12, dissect_xdr_remote_domain_destroy_args, NULL, NULL },
+    { 13, dissect_xdr_remote_domain_detach_device_args, NULL, NULL },
+    { 14, dissect_xdr_remote_domain_get_xml_desc_args, dissect_xdr_remote_domain_get_xml_desc_ret, NULL },
+    { 15, dissect_xdr_remote_domain_get_autostart_args, dissect_xdr_remote_domain_get_autostart_ret, NULL },
+    { 16, dissect_xdr_remote_domain_get_info_args, dissect_xdr_remote_domain_get_info_ret, NULL },
+    { 17, dissect_xdr_remote_domain_get_max_memory_args, dissect_xdr_remote_domain_get_max_memory_ret, NULL },
+    { 18, dissect_xdr_remote_domain_get_max_vcpus_args, dissect_xdr_remote_domain_get_max_vcpus_ret, NULL },
+    { 19, dissect_xdr_remote_domain_get_os_type_args, dissect_xdr_remote_domain_get_os_type_ret, NULL },
+    { 20, dissect_xdr_remote_domain_get_vcpus_args, dissect_xdr_remote_domain_get_vcpus_ret, NULL },
+    { 21, dissect_xdr_remote_connect_list_defined_domains_args, dissect_xdr_remote_connect_list_defined_domains_ret, NULL },
+    { 22, dissect_xdr_remote_domain_lookup_by_id_args, dissect_xdr_remote_domain_lookup_by_id_ret, NULL },
+    { 23, dissect_xdr_remote_domain_lookup_by_name_args, dissect_xdr_remote_domain_lookup_by_name_ret, NULL },
+    { 24, dissect_xdr_remote_domain_lookup_by_uuid_args, dissect_xdr_remote_domain_lookup_by_uuid_ret, NULL },
+    { 25, NULL, dissect_xdr_remote_connect_num_of_defined_domains_ret, NULL },
+    { 26, dissect_xdr_remote_domain_pin_vcpu_args, NULL, NULL },
+    { 27, dissect_xdr_remote_domain_reboot_args, NULL, NULL },
+    { 28, dissect_xdr_remote_domain_resume_args, NULL, NULL },
+    { 29, dissect_xdr_remote_domain_set_autostart_args, NULL, NULL },
+    { 30, dissect_xdr_remote_domain_set_max_memory_args, NULL, NULL },
+    { 31, dissect_xdr_remote_domain_set_memory_args, NULL, NULL },
+    { 32, dissect_xdr_remote_domain_set_vcpus_args, NULL, NULL },
+    { 33, dissect_xdr_remote_domain_shutdown_args, NULL, NULL },
+    { 34, dissect_xdr_remote_domain_suspend_args, NULL, NULL },
+    { 35, dissect_xdr_remote_domain_undefine_args, NULL, NULL },
+    { 36, dissect_xdr_remote_connect_list_defined_networks_args, dissect_xdr_remote_connect_list_defined_networks_ret, NULL },
+    { 37, dissect_xdr_remote_connect_list_domains_args, dissect_xdr_remote_connect_list_domains_ret, NULL },
+    { 38, dissect_xdr_remote_connect_list_networks_args, dissect_xdr_remote_connect_list_networks_ret, NULL },
+    { 39, dissect_xdr_remote_network_create_args, NULL, NULL },
+    { 40, dissect_xdr_remote_network_create_xml_args, dissect_xdr_remote_network_create_xml_ret, NULL },
+    { 41, dissect_xdr_remote_network_define_xml_args, dissect_xdr_remote_network_define_xml_ret, NULL },
+    { 42, dissect_xdr_remote_network_destroy_args, NULL, NULL },
+    { 43, dissect_xdr_remote_network_get_xml_desc_args, dissect_xdr_remote_network_get_xml_desc_ret, NULL },
+    { 44, dissect_xdr_remote_network_get_autostart_args, dissect_xdr_remote_network_get_autostart_ret, NULL },
+    { 45, dissect_xdr_remote_network_get_bridge_name_args, dissect_xdr_remote_network_get_bridge_name_ret, NULL },
+    { 46, dissect_xdr_remote_network_lookup_by_name_args, dissect_xdr_remote_network_lookup_by_name_ret, NULL },
+    { 47, dissect_xdr_remote_network_lookup_by_uuid_args, dissect_xdr_remote_network_lookup_by_uuid_ret, NULL },
+    { 48, dissect_xdr_remote_network_set_autostart_args, NULL, NULL },
+    { 49, dissect_xdr_remote_network_undefine_args, NULL, NULL },
+    { 50, NULL, dissect_xdr_remote_connect_num_of_defined_networks_ret, NULL },
+    { 51, NULL, dissect_xdr_remote_connect_num_of_domains_ret, NULL },
+    { 52, NULL, dissect_xdr_remote_connect_num_of_networks_ret, NULL },
+    { 53, dissect_xdr_remote_domain_core_dump_args, NULL, NULL },
+    { 54, dissect_xdr_remote_domain_restore_args, NULL, NULL },
+    { 55, dissect_xdr_remote_domain_save_args, NULL, NULL },
+    { 56, dissect_xdr_remote_domain_get_scheduler_type_args, dissect_xdr_remote_domain_get_scheduler_type_ret, NULL },
+    { 57, dissect_xdr_remote_domain_get_scheduler_parameters_args, dissect_xdr_remote_domain_get_scheduler_parameters_ret, NULL },
+    { 58, dissect_xdr_remote_domain_set_scheduler_parameters_args, NULL, NULL },
+    { 59, NULL, dissect_xdr_remote_connect_get_hostname_ret, NULL },
+    { 60, dissect_xdr_remote_connect_supports_feature_args, dissect_xdr_remote_connect_supports_feature_ret, NULL },
+    { 61, dissect_xdr_remote_domain_migrate_prepare_args, dissect_xdr_remote_domain_migrate_prepare_ret, NULL },
+    { 62, dissect_xdr_remote_domain_migrate_perform_args, NULL, NULL },
+    { 63, dissect_xdr_remote_domain_migrate_finish_args, dissect_xdr_remote_domain_migrate_finish_ret, NULL },
+    { 64, dissect_xdr_remote_domain_block_stats_args, dissect_xdr_remote_domain_block_stats_ret, NULL },
+    { 65, dissect_xdr_remote_domain_interface_stats_args, dissect_xdr_remote_domain_interface_stats_ret, NULL },
+    { 66, NULL, dissect_xdr_remote_auth_list_ret, NULL },
+    { 67, NULL, dissect_xdr_remote_auth_sasl_init_ret, NULL },
+    { 68, dissect_xdr_remote_auth_sasl_start_args, dissect_xdr_remote_auth_sasl_start_ret, NULL },
+    { 69, dissect_xdr_remote_auth_sasl_step_args, dissect_xdr_remote_auth_sasl_step_ret, NULL },
+    { 70, NULL, dissect_xdr_remote_auth_polkit_ret, NULL },
+    { 71, NULL, dissect_xdr_remote_connect_num_of_storage_pools_ret, NULL },
+    { 72, dissect_xdr_remote_connect_list_storage_pools_args, dissect_xdr_remote_connect_list_storage_pools_ret, NULL },
+    { 73, NULL, dissect_xdr_remote_connect_num_of_defined_storage_pools_ret, NULL },
+    { 74, dissect_xdr_remote_connect_list_defined_storage_pools_args, dissect_xdr_remote_connect_list_defined_storage_pools_ret, NULL },
+    { 75, dissect_xdr_remote_connect_find_storage_pool_sources_args, dissect_xdr_remote_connect_find_storage_pool_sources_ret, NULL },
+    { 76, dissect_xdr_remote_storage_pool_create_xml_args, dissect_xdr_remote_storage_pool_create_xml_ret, NULL },
+    { 77, dissect_xdr_remote_storage_pool_define_xml_args, dissect_xdr_remote_storage_pool_define_xml_ret, NULL },
+    { 78, dissect_xdr_remote_storage_pool_create_args, NULL, NULL },
+    { 79, dissect_xdr_remote_storage_pool_build_args, NULL, NULL },
+    { 80, dissect_xdr_remote_storage_pool_destroy_args, NULL, NULL },
+    { 81, dissect_xdr_remote_storage_pool_delete_args, NULL, NULL },
+    { 82, dissect_xdr_remote_storage_pool_undefine_args, NULL, NULL },
+    { 83, dissect_xdr_remote_storage_pool_refresh_args, NULL, NULL },
+    { 84, dissect_xdr_remote_storage_pool_lookup_by_name_args, dissect_xdr_remote_storage_pool_lookup_by_name_ret, NULL },
+    { 85, dissect_xdr_remote_storage_pool_lookup_by_uuid_args, dissect_xdr_remote_storage_pool_lookup_by_uuid_ret, NULL },
+    { 86, dissect_xdr_remote_storage_pool_lookup_by_volume_args, dissect_xdr_remote_storage_pool_lookup_by_volume_ret, NULL },
+    { 87, dissect_xdr_remote_storage_pool_get_info_args, dissect_xdr_remote_storage_pool_get_info_ret, NULL },
+    { 88, dissect_xdr_remote_storage_pool_get_xml_desc_args, dissect_xdr_remote_storage_pool_get_xml_desc_ret, NULL },
+    { 89, dissect_xdr_remote_storage_pool_get_autostart_args, dissect_xdr_remote_storage_pool_get_autostart_ret, NULL },
+    { 90, dissect_xdr_remote_storage_pool_set_autostart_args, NULL, NULL },
+    { 91, dissect_xdr_remote_storage_pool_num_of_volumes_args, dissect_xdr_remote_storage_pool_num_of_volumes_ret, NULL },
+    { 92, dissect_xdr_remote_storage_pool_list_volumes_args, dissect_xdr_remote_storage_pool_list_volumes_ret, NULL },
+    { 93, dissect_xdr_remote_storage_vol_create_xml_args, dissect_xdr_remote_storage_vol_create_xml_ret, NULL },
+    { 94, dissect_xdr_remote_storage_vol_delete_args, NULL, NULL },
+    { 95, dissect_xdr_remote_storage_vol_lookup_by_name_args, dissect_xdr_remote_storage_vol_lookup_by_name_ret, NULL },
+    { 96, dissect_xdr_remote_storage_vol_lookup_by_key_args, dissect_xdr_remote_storage_vol_lookup_by_key_ret, NULL },
+    { 97, dissect_xdr_remote_storage_vol_lookup_by_path_args, dissect_xdr_remote_storage_vol_lookup_by_path_ret, NULL },
+    { 98, dissect_xdr_remote_storage_vol_get_info_args, dissect_xdr_remote_storage_vol_get_info_ret, NULL },
+    { 99, dissect_xdr_remote_storage_vol_get_xml_desc_args, dissect_xdr_remote_storage_vol_get_xml_desc_ret, NULL },
+    { 100, dissect_xdr_remote_storage_vol_get_path_args, dissect_xdr_remote_storage_vol_get_path_ret, NULL },
+    { 101, dissect_xdr_remote_node_get_cells_free_memory_args, dissect_xdr_remote_node_get_cells_free_memory_ret, NULL },
+    { 102, NULL, dissect_xdr_remote_node_get_free_memory_ret, NULL },
+    { 103, dissect_xdr_remote_domain_block_peek_args, dissect_xdr_remote_domain_block_peek_ret, NULL },
+    { 104, dissect_xdr_remote_domain_memory_peek_args, dissect_xdr_remote_domain_memory_peek_ret, NULL },
+    { 105, NULL, dissect_xdr_remote_connect_domain_event_register_ret, NULL },
+    { 106, NULL, dissect_xdr_remote_connect_domain_event_deregister_ret, NULL },
+    { 107, NULL, NULL, dissect_xdr_remote_domain_event_lifecycle_msg },
+    { 108, dissect_xdr_remote_domain_migrate_prepare2_args, dissect_xdr_remote_domain_migrate_prepare2_ret, NULL },
+    { 109, dissect_xdr_remote_domain_migrate_finish2_args, dissect_xdr_remote_domain_migrate_finish2_ret, NULL },
+    { 110, NULL, dissect_xdr_remote_connect_get_uri_ret, NULL },
+    { 111, dissect_xdr_remote_node_num_of_devices_args, dissect_xdr_remote_node_num_of_devices_ret, NULL },
+    { 112, dissect_xdr_remote_node_list_devices_args, dissect_xdr_remote_node_list_devices_ret, NULL },
+    { 113, dissect_xdr_remote_node_device_lookup_by_name_args, dissect_xdr_remote_node_device_lookup_by_name_ret, NULL },
+    { 114, dissect_xdr_remote_node_device_get_xml_desc_args, dissect_xdr_remote_node_device_get_xml_desc_ret, NULL },
+    { 115, dissect_xdr_remote_node_device_get_parent_args, dissect_xdr_remote_node_device_get_parent_ret, NULL },
+    { 116, dissect_xdr_remote_node_device_num_of_caps_args, dissect_xdr_remote_node_device_num_of_caps_ret, NULL },
+    { 117, dissect_xdr_remote_node_device_list_caps_args, dissect_xdr_remote_node_device_list_caps_ret, NULL },
+    { 118, dissect_xdr_remote_node_device_dettach_args, NULL, NULL },
+    { 119, dissect_xdr_remote_node_device_re_attach_args, NULL, NULL },
+    { 120, dissect_xdr_remote_node_device_reset_args, NULL, NULL },
+    { 121, dissect_xdr_remote_domain_get_security_label_args, dissect_xdr_remote_domain_get_security_label_ret, NULL },
+    { 122, NULL, dissect_xdr_remote_node_get_security_model_ret, NULL },
+    { 123, dissect_xdr_remote_node_device_create_xml_args, dissect_xdr_remote_node_device_create_xml_ret, NULL },
+    { 124, dissect_xdr_remote_node_device_destroy_args, NULL, NULL },
+    { 125, dissect_xdr_remote_storage_vol_create_xml_from_args, dissect_xdr_remote_storage_vol_create_xml_from_ret, NULL },
+    { 126, NULL, dissect_xdr_remote_connect_num_of_interfaces_ret, NULL },
+    { 127, dissect_xdr_remote_connect_list_interfaces_args, dissect_xdr_remote_connect_list_interfaces_ret, NULL },
+    { 128, dissect_xdr_remote_interface_lookup_by_name_args, dissect_xdr_remote_interface_lookup_by_name_ret, NULL },
+    { 129, dissect_xdr_remote_interface_lookup_by_mac_string_args, dissect_xdr_remote_interface_lookup_by_mac_string_ret, NULL },
+    { 130, dissect_xdr_remote_interface_get_xml_desc_args, dissect_xdr_remote_interface_get_xml_desc_ret, NULL },
+    { 131, dissect_xdr_remote_interface_define_xml_args, dissect_xdr_remote_interface_define_xml_ret, NULL },
+    { 132, dissect_xdr_remote_interface_undefine_args, NULL, NULL },
+    { 133, dissect_xdr_remote_interface_create_args, NULL, NULL },
+    { 134, dissect_xdr_remote_interface_destroy_args, NULL, NULL },
+    { 135, dissect_xdr_remote_connect_domain_xml_from_native_args, dissect_xdr_remote_connect_domain_xml_from_native_ret, NULL },
+    { 136, dissect_xdr_remote_connect_domain_xml_to_native_args, dissect_xdr_remote_connect_domain_xml_to_native_ret, NULL },
+    { 137, NULL, dissect_xdr_remote_connect_num_of_defined_interfaces_ret, NULL },
+    { 138, dissect_xdr_remote_connect_list_defined_interfaces_args, dissect_xdr_remote_connect_list_defined_interfaces_ret, NULL },
+    { 139, NULL, dissect_xdr_remote_connect_num_of_secrets_ret, NULL },
+    { 140, dissect_xdr_remote_connect_list_secrets_args, dissect_xdr_remote_connect_list_secrets_ret, NULL },
+    { 141, dissect_xdr_remote_secret_lookup_by_uuid_args, dissect_xdr_remote_secret_lookup_by_uuid_ret, NULL },
+    { 142, dissect_xdr_remote_secret_define_xml_args, dissect_xdr_remote_secret_define_xml_ret, NULL },
+    { 143, dissect_xdr_remote_secret_get_xml_desc_args, dissect_xdr_remote_secret_get_xml_desc_ret, NULL },
+    { 144, dissect_xdr_remote_secret_set_value_args, NULL, NULL },
+    { 145, dissect_xdr_remote_secret_get_value_args, dissect_xdr_remote_secret_get_value_ret, NULL },
+    { 146, dissect_xdr_remote_secret_undefine_args, NULL, NULL },
+    { 147, dissect_xdr_remote_secret_lookup_by_usage_args, dissect_xdr_remote_secret_lookup_by_usage_ret, NULL },
+    { 148, dissect_xdr_remote_domain_migrate_prepare_tunnel_args, NULL, NULL },
+    { 149, NULL, dissect_xdr_remote_connect_is_secure_ret, NULL },
+    { 150, dissect_xdr_remote_domain_is_active_args, dissect_xdr_remote_domain_is_active_ret, NULL },
+    { 151, dissect_xdr_remote_domain_is_persistent_args, dissect_xdr_remote_domain_is_persistent_ret, NULL },
+    { 152, dissect_xdr_remote_network_is_active_args, dissect_xdr_remote_network_is_active_ret, NULL },
+    { 153, dissect_xdr_remote_network_is_persistent_args, dissect_xdr_remote_network_is_persistent_ret, NULL },
+    { 154, dissect_xdr_remote_storage_pool_is_active_args, dissect_xdr_remote_storage_pool_is_active_ret, NULL },
+    { 155, dissect_xdr_remote_storage_pool_is_persistent_args, dissect_xdr_remote_storage_pool_is_persistent_ret, NULL },
+    { 156, dissect_xdr_remote_interface_is_active_args, dissect_xdr_remote_interface_is_active_ret, NULL },
+    { 157, NULL, dissect_xdr_remote_connect_get_lib_version_ret, NULL },
+    { 158, dissect_xdr_remote_connect_compare_cpu_args, dissect_xdr_remote_connect_compare_cpu_ret, NULL },
+    { 159, dissect_xdr_remote_domain_memory_stats_args, dissect_xdr_remote_domain_memory_stats_ret, NULL },
+    { 160, dissect_xdr_remote_domain_attach_device_flags_args, NULL, NULL },
+    { 161, dissect_xdr_remote_domain_detach_device_flags_args, NULL, NULL },
+    { 162, dissect_xdr_remote_connect_baseline_cpu_args, dissect_xdr_remote_connect_baseline_cpu_ret, NULL },
+    { 163, dissect_xdr_remote_domain_get_job_info_args, dissect_xdr_remote_domain_get_job_info_ret, NULL },
+    { 164, dissect_xdr_remote_domain_abort_job_args, NULL, NULL },
+    { 165, dissect_xdr_remote_storage_vol_wipe_args, NULL, NULL },
+    { 166, dissect_xdr_remote_domain_migrate_set_max_downtime_args, NULL, NULL },
+    { 167, dissect_xdr_remote_connect_domain_event_register_any_args, NULL, NULL },
+    { 168, dissect_xdr_remote_connect_domain_event_deregister_any_args, NULL, NULL },
+    { 169, NULL, NULL, dissect_xdr_remote_domain_event_reboot_msg },
+    { 170, NULL, NULL, dissect_xdr_remote_domain_event_rtc_change_msg },
+    { 171, NULL, NULL, dissect_xdr_remote_domain_event_watchdog_msg },
+    { 172, NULL, NULL, dissect_xdr_remote_domain_event_io_error_msg },
+    { 173, NULL, NULL, dissect_xdr_remote_domain_event_graphics_msg },
+    { 174, dissect_xdr_remote_domain_update_device_flags_args, NULL, NULL },
+    { 175, dissect_xdr_remote_nwfilter_lookup_by_name_args, dissect_xdr_remote_nwfilter_lookup_by_name_ret, NULL },
+    { 176, dissect_xdr_remote_nwfilter_lookup_by_uuid_args, dissect_xdr_remote_nwfilter_lookup_by_uuid_ret, NULL },
+    { 177, dissect_xdr_remote_nwfilter_get_xml_desc_args, dissect_xdr_remote_nwfilter_get_xml_desc_ret, NULL },
+    { 178, NULL, dissect_xdr_remote_connect_num_of_nwfilters_ret, NULL },
+    { 179, dissect_xdr_remote_connect_list_nwfilters_args, dissect_xdr_remote_connect_list_nwfilters_ret, NULL },
+    { 180, dissect_xdr_remote_nwfilter_define_xml_args, dissect_xdr_remote_nwfilter_define_xml_ret, NULL },
+    { 181, dissect_xdr_remote_nwfilter_undefine_args, NULL, NULL },
+    { 182, dissect_xdr_remote_domain_managed_save_args, NULL, NULL },
+    { 183, dissect_xdr_remote_domain_has_managed_save_image_args, dissect_xdr_remote_domain_has_managed_save_image_ret, NULL },
+    { 184, dissect_xdr_remote_domain_managed_save_remove_args, NULL, NULL },
+    { 185, dissect_xdr_remote_domain_snapshot_create_xml_args, dissect_xdr_remote_domain_snapshot_create_xml_ret, NULL },
+    { 186, dissect_xdr_remote_domain_snapshot_get_xml_desc_args, dissect_xdr_remote_domain_snapshot_get_xml_desc_ret, NULL },
+    { 187, dissect_xdr_remote_domain_snapshot_num_args, dissect_xdr_remote_domain_snapshot_num_ret, NULL },
+    { 188, dissect_xdr_remote_domain_snapshot_list_names_args, dissect_xdr_remote_domain_snapshot_list_names_ret, NULL },
+    { 189, dissect_xdr_remote_domain_snapshot_lookup_by_name_args, dissect_xdr_remote_domain_snapshot_lookup_by_name_ret, NULL },
+    { 190, dissect_xdr_remote_domain_has_current_snapshot_args, dissect_xdr_remote_domain_has_current_snapshot_ret, NULL },
+    { 191, dissect_xdr_remote_domain_snapshot_current_args, dissect_xdr_remote_domain_snapshot_current_ret, NULL },
+    { 192, dissect_xdr_remote_domain_revert_to_snapshot_args, NULL, NULL },
+    { 193, dissect_xdr_remote_domain_snapshot_delete_args, NULL, NULL },
+    { 194, dissect_xdr_remote_domain_get_block_info_args, dissect_xdr_remote_domain_get_block_info_ret, NULL },
+    { 195, NULL, NULL, dissect_xdr_remote_domain_event_io_error_reason_msg },
+    { 196, dissect_xdr_remote_domain_create_with_flags_args, dissect_xdr_remote_domain_create_with_flags_ret, NULL },
+    { 197, dissect_xdr_remote_domain_set_memory_parameters_args, NULL, NULL },
+    { 198, dissect_xdr_remote_domain_get_memory_parameters_args, dissect_xdr_remote_domain_get_memory_parameters_ret, NULL },
+    { 199, dissect_xdr_remote_domain_set_vcpus_flags_args, NULL, NULL },
+    { 200, dissect_xdr_remote_domain_get_vcpus_flags_args, dissect_xdr_remote_domain_get_vcpus_flags_ret, NULL },
+    { 201, dissect_xdr_remote_domain_open_console_args, NULL, NULL },
+    { 202, dissect_xdr_remote_domain_is_updated_args, dissect_xdr_remote_domain_is_updated_ret, NULL },
+    { 203, dissect_xdr_remote_connect_get_sysinfo_args, dissect_xdr_remote_connect_get_sysinfo_ret, NULL },
+    { 204, dissect_xdr_remote_domain_set_memory_flags_args, NULL, NULL },
+    { 205, dissect_xdr_remote_domain_set_blkio_parameters_args, NULL, NULL },
+    { 206, dissect_xdr_remote_domain_get_blkio_parameters_args, dissect_xdr_remote_domain_get_blkio_parameters_ret, NULL },
+    { 207, dissect_xdr_remote_domain_migrate_set_max_speed_args, NULL, NULL },
+    { 208, dissect_xdr_remote_storage_vol_upload_args, NULL, NULL },
+    { 209, dissect_xdr_remote_storage_vol_download_args, NULL, NULL },
+    { 210, dissect_xdr_remote_domain_inject_nmi_args, NULL, NULL },
+    { 211, dissect_xdr_remote_domain_screenshot_args, dissect_xdr_remote_domain_screenshot_ret, NULL },
+    { 212, dissect_xdr_remote_domain_get_state_args, dissect_xdr_remote_domain_get_state_ret, NULL },
+    { 213, dissect_xdr_remote_domain_migrate_begin3_args, dissect_xdr_remote_domain_migrate_begin3_ret, NULL },
+    { 214, dissect_xdr_remote_domain_migrate_prepare3_args, dissect_xdr_remote_domain_migrate_prepare3_ret, NULL },
+    { 215, dissect_xdr_remote_domain_migrate_prepare_tunnel3_args, dissect_xdr_remote_domain_migrate_prepare_tunnel3_ret, NULL },
+    { 216, dissect_xdr_remote_domain_migrate_perform3_args, dissect_xdr_remote_domain_migrate_perform3_ret, NULL },
+    { 217, dissect_xdr_remote_domain_migrate_finish3_args, dissect_xdr_remote_domain_migrate_finish3_ret, NULL },
+    { 218, dissect_xdr_remote_domain_migrate_confirm3_args, NULL, NULL },
+    { 219, dissect_xdr_remote_domain_set_scheduler_parameters_flags_args, NULL, NULL },
+    { 220, dissect_xdr_remote_interface_change_begin_args, NULL, NULL },
+    { 221, dissect_xdr_remote_interface_change_commit_args, NULL, NULL },
+    { 222, dissect_xdr_remote_interface_change_rollback_args, NULL, NULL },
+    { 223, dissect_xdr_remote_domain_get_scheduler_parameters_flags_args, dissect_xdr_remote_domain_get_scheduler_parameters_flags_ret, NULL },
+    { 224, NULL, NULL, dissect_xdr_remote_domain_event_control_error_msg },
+    { 225, dissect_xdr_remote_domain_pin_vcpu_flags_args, NULL, NULL },
+    { 226, dissect_xdr_remote_domain_send_key_args, NULL, NULL },
+    { 227, dissect_xdr_remote_node_get_cpu_stats_args, dissect_xdr_remote_node_get_cpu_stats_ret, NULL },
+    { 228, dissect_xdr_remote_node_get_memory_stats_args, dissect_xdr_remote_node_get_memory_stats_ret, NULL },
+    { 229, dissect_xdr_remote_domain_get_control_info_args, dissect_xdr_remote_domain_get_control_info_ret, NULL },
+    { 230, dissect_xdr_remote_domain_get_vcpu_pin_info_args, dissect_xdr_remote_domain_get_vcpu_pin_info_ret, NULL },
+    { 231, dissect_xdr_remote_domain_undefine_flags_args, NULL, NULL },
+    { 232, dissect_xdr_remote_domain_save_flags_args, NULL, NULL },
+    { 233, dissect_xdr_remote_domain_restore_flags_args, NULL, NULL },
+    { 234, dissect_xdr_remote_domain_destroy_flags_args, NULL, NULL },
+    { 235, dissect_xdr_remote_domain_save_image_get_xml_desc_args, dissect_xdr_remote_domain_save_image_get_xml_desc_ret, NULL },
+    { 236, dissect_xdr_remote_domain_save_image_define_xml_args, NULL, NULL },
+    { 237, dissect_xdr_remote_domain_block_job_abort_args, NULL, NULL },
+    { 238, dissect_xdr_remote_domain_get_block_job_info_args, dissect_xdr_remote_domain_get_block_job_info_ret, NULL },
+    { 239, dissect_xdr_remote_domain_block_job_set_speed_args, NULL, NULL },
+    { 240, dissect_xdr_remote_domain_block_pull_args, NULL, NULL },
+    { 241, NULL, NULL, dissect_xdr_remote_domain_event_block_job_msg },
+    { 242, dissect_xdr_remote_domain_migrate_get_max_speed_args, dissect_xdr_remote_domain_migrate_get_max_speed_ret, NULL },
+    { 243, dissect_xdr_remote_domain_block_stats_flags_args, dissect_xdr_remote_domain_block_stats_flags_ret, NULL },
+    { 244, dissect_xdr_remote_domain_snapshot_get_parent_args, dissect_xdr_remote_domain_snapshot_get_parent_ret, NULL },
+    { 245, dissect_xdr_remote_domain_reset_args, NULL, NULL },
+    { 246, dissect_xdr_remote_domain_snapshot_num_children_args, dissect_xdr_remote_domain_snapshot_num_children_ret, NULL },
+    { 247, dissect_xdr_remote_domain_snapshot_list_children_names_args, dissect_xdr_remote_domain_snapshot_list_children_names_ret, NULL },
+    { 248, NULL, NULL, dissect_xdr_remote_domain_event_disk_change_msg },
+    { 249, dissect_xdr_remote_domain_open_graphics_args, NULL, NULL },
+    { 250, dissect_xdr_remote_node_suspend_for_duration_args, NULL, NULL },
+    { 251, dissect_xdr_remote_domain_block_resize_args, NULL, NULL },
+    { 252, dissect_xdr_remote_domain_set_block_io_tune_args, NULL, NULL },
+    { 253, dissect_xdr_remote_domain_get_block_io_tune_args, dissect_xdr_remote_domain_get_block_io_tune_ret, NULL },
+    { 254, dissect_xdr_remote_domain_set_numa_parameters_args, NULL, NULL },
+    { 255, dissect_xdr_remote_domain_get_numa_parameters_args, dissect_xdr_remote_domain_get_numa_parameters_ret, NULL },
+    { 256, dissect_xdr_remote_domain_set_interface_parameters_args, NULL, NULL },
+    { 257, dissect_xdr_remote_domain_get_interface_parameters_args, dissect_xdr_remote_domain_get_interface_parameters_ret, NULL },
+    { 258, dissect_xdr_remote_domain_shutdown_flags_args, NULL, NULL },
+    { 259, dissect_xdr_remote_storage_vol_wipe_pattern_args, NULL, NULL },
+    { 260, dissect_xdr_remote_storage_vol_resize_args, NULL, NULL },
+    { 261, dissect_xdr_remote_domain_pm_suspend_for_duration_args, NULL, NULL },
+    { 262, dissect_xdr_remote_domain_get_cpu_stats_args, dissect_xdr_remote_domain_get_cpu_stats_ret, NULL },
+    { 263, dissect_xdr_remote_domain_get_disk_errors_args, dissect_xdr_remote_domain_get_disk_errors_ret, NULL },
+    { 264, dissect_xdr_remote_domain_set_metadata_args, NULL, NULL },
+    { 265, dissect_xdr_remote_domain_get_metadata_args, dissect_xdr_remote_domain_get_metadata_ret, NULL },
+    { 266, dissect_xdr_remote_domain_block_rebase_args, NULL, NULL },
+    { 267, dissect_xdr_remote_domain_pm_wakeup_args, NULL, NULL },
+    { 268, NULL, NULL, dissect_xdr_remote_domain_event_tray_change_msg },
+    { 269, NULL, NULL, dissect_xdr_remote_domain_event_pmwakeup_msg },
+    { 270, NULL, NULL, dissect_xdr_remote_domain_event_pmsuspend_msg },
+    { 271, dissect_xdr_remote_domain_snapshot_is_current_args, dissect_xdr_remote_domain_snapshot_is_current_ret, NULL },
+    { 272, dissect_xdr_remote_domain_snapshot_has_metadata_args, dissect_xdr_remote_domain_snapshot_has_metadata_ret, NULL },
+    { 273, dissect_xdr_remote_connect_list_all_domains_args, dissect_xdr_remote_connect_list_all_domains_ret, NULL },
+    { 274, dissect_xdr_remote_domain_list_all_snapshots_args, dissect_xdr_remote_domain_list_all_snapshots_ret, NULL },
+    { 275, dissect_xdr_remote_domain_snapshot_list_all_children_args, dissect_xdr_remote_domain_snapshot_list_all_children_ret, NULL },
+    { 276, NULL, NULL, dissect_xdr_remote_domain_event_balloon_change_msg },
+    { 277, dissect_xdr_remote_domain_get_hostname_args, dissect_xdr_remote_domain_get_hostname_ret, NULL },
+    { 278, dissect_xdr_remote_domain_get_security_label_list_args, dissect_xdr_remote_domain_get_security_label_list_ret, NULL },
+    { 279, dissect_xdr_remote_domain_pin_emulator_args, NULL, NULL },
+    { 280, dissect_xdr_remote_domain_get_emulator_pin_info_args, dissect_xdr_remote_domain_get_emulator_pin_info_ret, NULL },
+    { 281, dissect_xdr_remote_connect_list_all_storage_pools_args, dissect_xdr_remote_connect_list_all_storage_pools_ret, NULL },
+    { 282, dissect_xdr_remote_storage_pool_list_all_volumes_args, dissect_xdr_remote_storage_pool_list_all_volumes_ret, NULL },
+    { 283, dissect_xdr_remote_connect_list_all_networks_args, dissect_xdr_remote_connect_list_all_networks_ret, NULL },
+    { 284, dissect_xdr_remote_connect_list_all_interfaces_args, dissect_xdr_remote_connect_list_all_interfaces_ret, NULL },
+    { 285, dissect_xdr_remote_connect_list_all_node_devices_args, dissect_xdr_remote_connect_list_all_node_devices_ret, NULL },
+    { 286, dissect_xdr_remote_connect_list_all_nwfilters_args, dissect_xdr_remote_connect_list_all_nwfilters_ret, NULL },
+    { 287, dissect_xdr_remote_connect_list_all_secrets_args, dissect_xdr_remote_connect_list_all_secrets_ret, NULL },
+    { 288, dissect_xdr_remote_node_set_memory_parameters_args, NULL, NULL },
+    { 289, dissect_xdr_remote_node_get_memory_parameters_args, dissect_xdr_remote_node_get_memory_parameters_ret, NULL },
+    { 290, dissect_xdr_remote_domain_block_commit_args, NULL, NULL },
+    { 291, dissect_xdr_remote_network_update_args, NULL, NULL },
+    { 292, NULL, NULL, dissect_xdr_remote_domain_event_pmsuspend_disk_msg },
+    { 293, dissect_xdr_remote_node_get_cpu_map_args, dissect_xdr_remote_node_get_cpu_map_ret, NULL },
+    { 294, dissect_xdr_remote_domain_fstrim_args, NULL, NULL },
+    { 295, dissect_xdr_remote_domain_send_process_signal_args, NULL, NULL },
+    { 296, dissect_xdr_remote_domain_open_channel_args, NULL, NULL },
+    { 297, dissect_xdr_remote_node_device_lookup_scsi_host_by_wwn_args, dissect_xdr_remote_node_device_lookup_scsi_host_by_wwn_ret, NULL },
+    { 298, dissect_xdr_remote_domain_get_job_stats_args, dissect_xdr_remote_domain_get_job_stats_ret, NULL },
+    { 299, dissect_xdr_remote_domain_migrate_get_compression_cache_args, dissect_xdr_remote_domain_migrate_get_compression_cache_ret, NULL },
+    { 300, dissect_xdr_remote_domain_migrate_set_compression_cache_args, NULL, NULL },
+    { 301, dissect_xdr_remote_node_device_detach_flags_args, NULL, NULL },
+    { 302, dissect_xdr_remote_domain_migrate_begin3_params_args, dissect_xdr_remote_domain_migrate_begin3_params_ret, NULL },
+    { 303, dissect_xdr_remote_domain_migrate_prepare3_params_args, dissect_xdr_remote_domain_migrate_prepare3_params_ret, NULL },
+    { 304, dissect_xdr_remote_domain_migrate_prepare_tunnel3_params_args, dissect_xdr_remote_domain_migrate_prepare_tunnel3_params_ret, NULL },
+    { 305, dissect_xdr_remote_domain_migrate_perform3_params_args, dissect_xdr_remote_domain_migrate_perform3_params_ret, NULL },
+    { 306, dissect_xdr_remote_domain_migrate_finish3_params_args, dissect_xdr_remote_domain_migrate_finish3_params_ret, NULL },
+    { 307, dissect_xdr_remote_domain_migrate_confirm3_params_args, NULL, NULL },
 };
 static const value_string remote_procedure_strings[] = {
     { 1, "CONNECT_OPEN" },
