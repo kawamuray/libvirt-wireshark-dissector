@@ -24,29 +24,16 @@
 #define LIBVIRT_PORT 16509
 #endif
 
-typedef struct vir_xdrdef vir_xdrdef_t;
-struct vir_xdrdef {
-    const guint    type;
-    const void    *typeref;
-    const gintptr  metainfo;
-};
+#define VIR_HEADER_LEN 24
 
-typedef struct vir_named_xdrdef vir_named_xdrdef_t;
-struct vir_named_xdrdef {
-    const gchar   *name; /* TODO: to guchar? */
-    const guint    type;
-    const void    *typeref;
-    const gintptr  metainfo;
-};
-#define VIR_NAMED_XDRDEF_NULL { NULL, 0, NULL, 0 }
-#define VIR_XDRDEF_STRIP(def) ((vir_xdrdef_t *)&(def)->type)
+typedef gboolean (*vir_xdr_dissector_t)(tvbuff_t *tvb, proto_tree *tree, XDR *xdrs, int hf);
 
 typedef struct vir_proc_payload vir_proc_payload_t;
 struct vir_proc_payload {
     guint32             proc;
-    vir_named_xdrdef_t *args;
-    vir_named_xdrdef_t *ret;
-    vir_named_xdrdef_t *msg;
+    vir_xdr_dissector_t args;
+    vir_xdr_dissector_t ret;
+    vir_xdr_dissector_t msg;
 };
 
 enum vir_net_message_type {
@@ -129,7 +116,29 @@ enum {
 };
 /* / */
 
-#define VIR_ERROR_MESSAGE_PAYLOAD_DEF struct_remote_error_members_def
+#define VIR_ERROR_MESSAGE_DISSECTOR dissect_xdr_remote_error
+/* XXX: consider location */
+static gboolean dissect_xdr_int(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf);
+static gboolean dissect_xdr_u_int(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf);
+static gboolean dissect_xdr_short(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf);
+static gboolean dissect_xdr_u_short(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf);
+static gboolean dissect_xdr_char(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf);
+static gboolean dissect_xdr_u_char(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf);
+static gboolean dissect_xdr_hyper(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf);
+static gboolean dissect_xdr_u_hyper(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf);
+static gboolean dissect_xdr_float(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf);
+static gboolean dissect_xdr_double(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf);
+static gboolean dissect_xdr_bool(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf);
+static gboolean dissect_xdr_string(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf, gint32 maxlen);
+static gboolean dissect_xdr_opaque(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf, gint32 size);
+static gboolean dissect_xdr_bytes(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf, gint32 maxlen);
+static gboolean dissect_xdr_pointer(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf,
+                                    vir_xdr_dissector_t dp);
+static gboolean dissect_xdr_vector(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf,
+                                   gint ett, gint32 size, vir_xdr_dissector_t dp);
+static gboolean dissect_xdr_array(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf,
+                                  gint ett, gint32 maxlen, vir_xdr_dissector_t dp);
+
 #include "libvirt/protocol.h"
 
 #endif /* _PACKET_LIBVIRT_H_ */

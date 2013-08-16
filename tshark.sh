@@ -4,4 +4,4 @@
 # sudo chown root:wireshark local/bin/dumpcap
 # sudo setcap cap_net_raw,cap_net_admin=eip local/bin/dumpcap
 
-exec ./local/bin/tshark-mprivozn -i lo -R libvirt -O libvirt -T pdml
+exec ./local/bin/tshark -i lo -R libvirt -O libvirt -T pdml

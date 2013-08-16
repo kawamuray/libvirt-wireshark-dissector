@@ -44,141 +44,33 @@ static int hf_libvirt_status = -1;
 static int hf_libvirt_payload = -1;
 static gint ett_libvirt = -1;
 
-static gboolean describe_dispatch(const vir_xdrdef_t *def, XDR *xdrs, proto_item *ti);
-
-#define XDR_PRIMITIVE_DESCRIBER(name, ctype, fmt)                       \
+#define XDR_PRIMITIVE_DISSECTOR(name, ctype, fmt)                        \
     static gboolean                                                     \
-    describe_xdr_##name(const vir_xdrdef_t *def __attribute__((unused)), \
-                        XDR *xdrs, proto_item *ti)                      \
+    dissect_xdr_##name(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf) \
     {                                                                   \
         ctype val;                                                      \
         if (xdr_##name(xdrs, &val)) {                                   \
             proto_item_append_text(ti, fmt, val);                       \
             return TRUE;                                                \
         } else {                                                        \
-            proto_item_append_text(ti, "(unkown)");                     \
+            proto_item_append_text(ti, "(unknown)");                     \
             return FALSE;                                               \
         }                                                               \
     }
 
-XDR_PRIMITIVE_DESCRIBER(int,     gint32,  "%d")
-XDR_PRIMITIVE_DESCRIBER(u_int,   guint32, "%u")
-XDR_PRIMITIVE_DESCRIBER(short,   gint16,  "%d")
-XDR_PRIMITIVE_DESCRIBER(u_short, guint16, "%u")
-XDR_PRIMITIVE_DESCRIBER(char,    gchar,   "%02x")
-XDR_PRIMITIVE_DESCRIBER(u_char,  guchar,  "%02x")
-XDR_PRIMITIVE_DESCRIBER(hyper,   gint64,  "%lld")
-XDR_PRIMITIVE_DESCRIBER(u_hyper, guint64, "%llu")
-XDR_PRIMITIVE_DESCRIBER(float,   gfloat,  "%f")
-XDR_PRIMITIVE_DESCRIBER(double,  gdouble, "%lf")
+XDR_PRIMITIVE_DISSECTOR(int,     gint32,  "%d")
+XDR_PRIMITIVE_DISSECTOR(u_int,   guint32, "%u")
+XDR_PRIMITIVE_DISSECTOR(short,   gint16,  "%d")
+XDR_PRIMITIVE_DISSECTOR(u_short, guint16, "%u")
+XDR_PRIMITIVE_DISSECTOR(char,    gchar,   "%02x")
+XDR_PRIMITIVE_DISSECTOR(u_char,  guchar,  "%02x")
+XDR_PRIMITIVE_DISSECTOR(hyper,   gint64,  "%lld")
+XDR_PRIMITIVE_DISSECTOR(u_hyper, guint64, "%llu")
+XDR_PRIMITIVE_DISSECTOR(float,   gfloat,  "%f")
+XDR_PRIMITIVE_DISSECTOR(double,  gdouble, "%lf")
 
 static gboolean
-describe_xdr_string(const vir_xdrdef_t *def, XDR *xdrs, proto_item *ti)
-{
-    gchar *val = NULL;
-
-    if (xdr_string(xdrs, &val, def->metainfo)) {
-        proto_item_append_text(ti, "\"%s\"", (val) ? val : "(null)");
-        xdr_free((xdrproc_t)xdr_string, (char *)&val);
-        return TRUE;
-    } else {
-        proto_item_append_text(ti, "(unkown)");
-        return FALSE;
-    }
-}
-
-static gboolean
-describe_xdr_opaque(const vir_xdrdef_t *def, XDR *xdrs, proto_item *ti)
-{
-    gboolean rc;
-    guint8 *val;
-
-    val = g_malloc(def->metainfo);
-    if (val == NULL) {
-        g_print("ERROR: memory allocation failed\n");
-        return FALSE;
-    }
-
-    if ((rc = xdr_opaque(xdrs, (caddr_t)val, def->metainfo))) {
-        gint i;
-        /* TODO: buffering */
-        for (i = 0; i < def->metainfo; i++) {
-            if (!i) proto_item_append_text(ti, " ");
-            proto_item_append_text(ti, "%02x ", val[i]);
-        }
-    } else {
-        proto_item_append_text(ti, "(unkown)");
-    }
-
-    g_free(val);
-    return rc;
-}
-
-static gboolean
-describe_xdr_bytes(const vir_xdrdef_t *def, XDR *xdrs, proto_item *ti)
-{
-    guint8 *val = NULL;
-    guint length;
-
-    if (xdr_bytes(xdrs, (char **)&val, &length, def->metainfo)) {
-        gint i;
-        /* g_print("DEBUG: xdr_bytes length = %u, val = %p\n", length, val); */
-        /* TODO: buffering */
-        for (i = 0; i < length; i++) {
-            if (!i) proto_item_append_text(ti, " ");
-            proto_item_append_text(ti, "%02x", val[i]);
-        }
-        /* XXX: maybe this is wrong way */
-        xdrs->x_op = XDR_FREE;
-        xdr_bytes(xdrs, (char **)&val, &length, def->metainfo);
-        /* xdr_free((xdrproc_t)xdr_bytes, (char *)&val); */
-        xdrs->x_op = XDR_DECODE;
-        return TRUE;
-    } else {
-        proto_item_append_text(ti, "(unkown)");
-        return FALSE;
-    }
-}
-
-static gboolean
-describe_xdr_pointer(const vir_xdrdef_t *def, XDR *xdrs, proto_item *ti)
-{
-    bool_t isnull;
-
-    if (!xdr_bool(xdrs, &isnull)) {
-        return FALSE;
-    }
-    if (isnull) {
-        proto_item_append_text(ti, "(null)");
-    } else {
-        if (!describe_dispatch(def->typeref, xdrs, ti)) {
-            return FALSE;
-        }
-    }
-    return TRUE;
-}
-
-static gboolean
-describe_xdr_enum(const vir_xdrdef_t *def, XDR *xdrs, proto_item *ti)
-{
-    const vir_named_xdrdef_t *field;
-    enum { DUMMY } es;
-
-    if (xdr_enum(xdrs, (enum_t *)&es)) {
-        for (field = def->typeref; field->name != NULL; field++) {
-            if (field->metainfo == (gintptr)es) {
-                proto_item_append_text(ti, "%s(%u)", field->name, es);
-                return TRUE;
-            }
-        }
-    } else {
-        proto_item_append_text(ti, "(unkown)");
-    }
-    return FALSE;
-}
-
-static gboolean
-describe_xdr_bool(const vir_xdrdef_t *def, XDR *xdrs, proto_item *ti)
+dissect_xdr_bool(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
 {
     bool_t bool;
 
@@ -186,168 +78,137 @@ describe_xdr_bool(const vir_xdrdef_t *def, XDR *xdrs, proto_item *ti)
         proto_item_append_text(ti, "%s", bool ? "TRUE" : "FALSE");
         return TRUE;
     } else {
-        proto_item_append_text(ti, "(unkown)");
+        proto_item_append_text(ti, "(unknown)");
         return FALSE;
     }
 }
 
 static gboolean
-describe_xdr_struct(const vir_xdrdef_t *def, XDR *xdrs, proto_item *ti)
+dissect_xdr_string(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf,
+                   gint32 maxlen)
 {
-    gboolean rc = TRUE;
-    const vir_named_xdrdef_t *field;
+    gchar *val = NULL;
 
-    proto_item_append_text(ti, "{ ");
-    for (field = def->typeref; field->name != NULL; field++) {
-        proto_item_append_text(ti, " .%s = ", field->name);
-        if (!(rc = describe_dispatch(VIR_XDRDEF_STRIP(field), xdrs, ti))) {
-            proto_item_append_text(ti, "<<UNABLE TO CONTINUE>>");
-            break;
-        }
+    if (xdr_string(xdrs, &val, maxlen)) {
+        proto_item_append_text(ti, "\"%s\"", val ? val : "(null)");
+        xdr_free((xdrproc_t)xdr_string, (char *)&val);
+        return TRUE;
+    } else {
+        proto_item_append_text(ti, "(unknown)");
+        return FALSE;
     }
-    proto_item_append_text(ti, " }");
+}
+
+static gboolean
+dissect_xdr_opaque(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf,
+                   gint32 size)
+{
+    gboolean rc;
+    guint8 *val;
+
+    val = g_malloc(size);
+    if (val == NULL) {
+        g_print("ERROR: memory allocation failed\n");
+        return FALSE;
+    }
+
+    if ((rc = xdr_opaque(xdrs, (caddr_t)val, size))) {
+        gint i;
+        /* TODO: buffering */
+        for (i = 0; i < size; i++) {
+            if (!i) proto_item_append_text(ti, " ");
+            proto_item_append_text(ti, "%02x ", val[i]);
+        }
+    } else {
+        proto_item_append_text(ti, "(unknown)");
+    }
+
+    g_free(val);
     return rc;
 }
 
 static gboolean
-describe_xdr_array(const vir_xdrdef_t *def, XDR *xdrs, proto_item *ti)
+dissect_xdr_bytes(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf,
+                  gint32 maxlen)
 {
-    gint length;
+    guint8 *val = NULL;
+    guint length;
 
-    if (xdr_int(xdrs, &length)) {
-        const vir_xdrdef_t *subdef;
+    if (xdr_bytes(xdrs, (char **)&val, &length, maxlen)) {
         gint i;
-        if (length > def->metainfo)
-            return FALSE;
-
-        subdef = def->typeref;
-        proto_item_append_text(ti, "[ ");
+        /* g_print("DEBUG: xdr_bytes length = %u, val = %p\n", length, val); */
         for (i = 0; i < length; i++) {
-            if (!describe_dispatch(subdef, xdrs, ti)) {
-                g_print("ERROR: failed decoding on iteration %d\n", i);
-                return FALSE;
-            }
+            if (!i) proto_item_append_text(ti, " ");
+            proto_item_append_text(ti, "%02x", val[i]);
         }
-        proto_item_append_text(ti, " ]");
+        /* XXX: maybe this is wrong way */
+        xdrs->x_op = XDR_FREE;
+        xdr_bytes(xdrs, (char **)&val, &length, maxlen);
+        /* xdr_free((xdrproc_t)xdr_bytes, (char *)&val); */
+        xdrs->x_op = XDR_DECODE;
         return TRUE;
     } else {
-        proto_item_append_text(ti, "(unkown)");
+        proto_item_append_text(ti, "(unknown)");
         return FALSE;
     }
 }
 
 static gboolean
-describe_xdr_vector(const vir_xdrdef_t *def, XDR *xdrs, proto_item *ti)
+dissect_xdr_pointer(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf,
+                    vir_xdr_dissector_t dp)
 {
-    const vir_xdrdef_t *subdef;
+    bool_t isnull;
+
+    if (!xdr_bool(xdrs, &isnull)) {
+        return FALSE;
+    }
+    if (isnull) {
+        proto_item_append_text(ti, "(NULL)");
+        return TRUE;
+    } else {
+        return dp(tvb, ti, xdrs, hf);
+    }
+}
+
+static gboolean
+dissect_xdr_vector(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf,
+                   gint ett, gint32 size, vir_xdr_dissector_t dp)
+{
+    proto_tree *tree;
     gint i;
 
-    subdef = def->typeref;
-    proto_item_append_text(ti, "[ ");
-    for (i = 0; i < def->metainfo; i++) {
-        if (!describe_dispatch(subdef, xdrs, ti)) {
-            g_print("ERROR: failed decoding on iteration %d\n", i);
+    tree = proto_item_add_subtree(ti, ett);
+    for (i = 0; i < size; i++) {
+        goffset start;
+        proto_item *subti;
+        start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+        subti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+        if (!dp(tvb, subti, xdrs, hf))
             return FALSE;
-        }
+        proto_item_set_len(subti, xdr_getpos(xdrs) - start + VIR_HEADER_LEN);
     }
-    proto_item_append_text(ti, " ]");
     return TRUE;
 }
 
 static gboolean
-describe_xdr_union(const vir_xdrdef_t *def, XDR *xdrs, proto_item *ti)
+dissect_xdr_array(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf,
+                  gint ett, gint32 maxlen, vir_xdr_dissector_t dp)
 {
-    const vir_named_xdrdef_t *mp;
-    void *index;
-    bool_t (*xdr_func)(XDR *, caddr_t);
-    guint size;
-    gboolean rc = FALSE;
+    gint32 length;
 
-    mp = def->typeref;
-    xdr_func = mp->typeref;
-    size = mp->metainfo;
-
-    index = g_malloc(size);
-    if (index == NULL) {
-        g_print("ERROR: memory allocation fail\n");
+    if (!xdr_int(xdrs, &length))
         return FALSE;
-    }
-
-    if (!xdr_func(xdrs, index)) {
-        g_print("ERROR: cannot extract union index\n");
-        goto done;
-    }
-    while ((++mp)->type) {
-        if (!memcmp(index, (void *)mp->metainfo, size)) {
-            rc = describe_dispatch(VIR_XDRDEF_STRIP(mp), xdrs, ti);
-            break;
-        }
-    }
-
-done:
-    g_free(index);
-    return rc;
-}
-
-static gboolean
-describe_dispatch(const vir_xdrdef_t *def, XDR *xdrs, proto_item *ti)
-{
-    switch (def->type) {
-    case XDR_INT:
-        return describe_xdr_int(def, xdrs, ti);
-    case XDR_UINT:
-        return describe_xdr_u_int(def, xdrs, ti);
-    case XDR_ENUM:
-        return describe_xdr_enum(def, xdrs, ti);
-    case XDR_BOOL:
-        return describe_xdr_bool(def, xdrs, ti);
-    case XDR_SHORT:
-        return describe_xdr_short(def, xdrs, ti);
-    case XDR_USHORT:
-        return describe_xdr_u_short(def, xdrs, ti);
-    case XDR_HYPER:
-        return describe_xdr_hyper(def, xdrs, ti);
-    case XDR_UHYPER:
-        return describe_xdr_u_hyper(def, xdrs, ti);
-    case XDR_CHAR:
-        return describe_xdr_char(def, xdrs, ti);
-    case XDR_UCHAR:
-        return describe_xdr_u_char(def, xdrs, ti);
-    case XDR_FLOAT:
-        return describe_xdr_float(def, xdrs, ti);
-    case XDR_DOUBLE:
-        return describe_xdr_double(def, xdrs, ti);
-    case XDR_OPAQUE:
-        return describe_xdr_opaque(def, xdrs, ti);
-    case XDR_BYTES:
-        return describe_xdr_bytes(def, xdrs, ti);
-    case XDR_STRING:
-        return describe_xdr_string(def, xdrs, ti);
-    case XDR_VECTOR:
-        return describe_xdr_vector(def, xdrs, ti);
-    case XDR_ARRAY:
-        return describe_xdr_array(def, xdrs, ti);
-    case XDR_STRUCT:
-        return describe_xdr_struct(def, xdrs, ti);
-    case XDR_UNION:
-        return describe_xdr_union(def, xdrs, ti);
-    case XDR_POINTER:
-        return describe_xdr_pointer(def, xdrs, ti);
-    default:
-        proto_item_append_text(ti, "UNIMPLEMENTED TYPE APPEARED!!!");
-        /* return FALSE; */
-        /* XXX: temporaily */
-        return TRUE;
-    }
+    if (length > maxlen)
+        return FALSE;
+    return dissect_xdr_vector(tvb, ti, xdrs, hf, ett, length, dp);
 }
 
 static void
-describe_payload(tvbuff_t *tvb, proto_item *ti,
-                 size_t length, vir_named_xdrdef_t *def)
+dissect_payload(tvbuff_t *tvb, proto_item *ti, int hf,
+                 size_t length, vir_xdr_dissector_t xd)
 {
     guint8 *payload;
     XDR xdrs;
-    const vir_xdrdef_t dmdef = { XDR_STRUCT, def, 0 };
 
     g_print("Payload length = %u\n", length);
 
@@ -358,14 +219,14 @@ describe_payload(tvbuff_t *tvb, proto_item *ti,
 
     xdrmem_create(&xdrs, (caddr_t)payload, length, XDR_DECODE);
 
-    describe_xdr_struct(&dmdef, &xdrs, ti);
+    xd(tvb, ti, &xdrs, hf);
 
     xdr_destroy(&xdrs);
     g_free(payload);
 }
 
 static const vir_proc_payload_t *
-find_payload_def(guint32 proc, const vir_proc_payload_t *defs, gsize length)
+find_xdr_dissector(guint32 proc, const vir_proc_payload_t *defs, gsize length)
 {
     const vir_proc_payload_t *def;
     guint32 first, last, direction;
@@ -395,14 +256,14 @@ find_payload_def(guint32 proc, const vir_proc_payload_t *defs, gsize length)
     return def;
 }
 
-static vir_named_xdrdef_t *
+static vir_xdr_dissector_t
 payload_dispatch_type(guint32 prog, guint32 proc, guint32 type)
 {
     if (type == VIR_NET_STREAM) {
         /* NOP */
     } else {
         const vir_proc_payload_t *pd = NULL;
-#define VIR_PROG_CASE(ps) pd = find_payload_def(proc, ps##_payload_def, array_length(ps##_payload_def))
+#define VIR_PROG_CASE(ps) pd = find_xdr_dissector(proc, ps##_dissectors, array_length(ps##_dissectors))
         VIR_PROG_SWITCH(prog);
 #undef VIR_PROG_CASE
 
@@ -429,23 +290,23 @@ payload_dispatch_type(guint32 prog, guint32 proc, guint32 type)
 }
 
 static void
-dissect_libvirt_payload(tvbuff_t *tvb, proto_item *ti, gint length,
+dissect_libvirt_payload(tvbuff_t *tvb, proto_item *ti, gint length, int hf,
                         guint32 prog, guint32 proc,
                         guint32 type, guint32 status)
 {
     switch (status) {
     case VIR_NET_OK: {
-        vir_named_xdrdef_t *def;
-        def = payload_dispatch_type(prog, proc, type);
-        if (def == NULL) {
-            proto_item_set_text(ti, "(unkown payload)");
+        vir_xdr_dissector_t xd;
+        xd = payload_dispatch_type(prog, proc, type);
+        if (xd == NULL) {
+            proto_item_set_text(ti, "(unknown payload)");
         } else {
-            describe_payload(tvb, ti, length, def);
+            dissect_payload(tvb, ti, hf, length, xd);
         }
         break;
     }
     case VIR_NET_ERROR:
-        describe_payload(tvb, ti, length, VIR_ERROR_MESSAGE_PAYLOAD_DEF);
+        dissect_payload(tvb, ti, hf, length, VIR_ERROR_MESSAGE_DISSECTOR);
         break;
     case VIR_NET_CONTINUE:
     default:
@@ -517,7 +378,7 @@ dissect_libvirt_message(tvbuff_t *tvb, packet_info *pinfo, proto_tree *tree)
         pld_length = tvb_get_ntohl(tvb, 0) - offset;
         if (pld_length > 0) {
             ti = proto_tree_add_item(libvirt_tree, hf_libvirt_payload, tvb, offset, pld_length, FALSE);
-            dissect_libvirt_payload(tvb, ti, pld_length, prog, proc, type, status);
+            dissect_libvirt_payload(tvb, ti, pld_length, hf_proc, prog, proc, type, status);
             g_print("Dissecting libvirt payload END\n");
         } else {
             g_print("No payload\n");
@@ -580,17 +441,18 @@ proto_register_libvirt(void)
             NULL, HFILL}
         },
 
-        VIR_PROCEDURES_HEADERSET
+        VIR_DYNAMIC_HFSET
 
         { &hf_libvirt_payload,
           { "payload", "libvirt.payload",
             FT_STRING, BASE_NONE,
             NULL, 0x0,
             NULL, HFILL}
-        }
+        },
     };
 
     static gint *ett[] = {
+        VIR_DYNAMIC_ETTSET
         &ett_libvirt
     };
 
