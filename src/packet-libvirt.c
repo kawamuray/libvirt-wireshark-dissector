@@ -44,65 +44,62 @@ static int hf_libvirt_status = -1;
 static int hf_libvirt_payload = -1;
 static gint ett_libvirt = -1;
 
-#define XDR_PRIMITIVE_DISSECTOR(name, ctype, fmt)                        \
+#define XDR_PRIMITIVE_DISSECTOR(xtype, ctype, ftype)                    \
+    static int hf_libvirt_xdr_##xtype = -1;                             \
     static gboolean                                                     \
-    dissect_xdr_##name(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf) \
+    dissect_xdr_##xtype(tvbuff_t *tvb, proto_tree *tree, XDR *xdrs)     \
     {                                                                   \
+        goffset start;                                                  \
         ctype val;                                                      \
-        if (xdr_##name(xdrs, &val)) {                                   \
-            proto_item_append_text(ti, fmt, val);                       \
+        start = VIR_HEADER_LEN + xdr_getpos(xdrs);                      \
+        if (xdr_##xtype(xdrs, &val)) {                                  \
+            proto_tree_add_##ftype(tree, hf_libvirt_xdr_##xtype, tvb,   \
+                                   start, xdr_getpos(xdrs) - start + VIR_HEADER_LEN, val); \
             return TRUE;                                                \
         } else {                                                        \
-            proto_item_append_text(ti, "(unknown)");                     \
+            proto_tree_add_text(tree, tvb, start, -1, "(unknown)");     \
             return FALSE;                                               \
         }                                                               \
     }
 
-XDR_PRIMITIVE_DISSECTOR(int,     gint32,  "%d")
-XDR_PRIMITIVE_DISSECTOR(u_int,   guint32, "%u")
-XDR_PRIMITIVE_DISSECTOR(short,   gint16,  "%d")
-XDR_PRIMITIVE_DISSECTOR(u_short, guint16, "%u")
-XDR_PRIMITIVE_DISSECTOR(char,    gchar,   "%02x")
-XDR_PRIMITIVE_DISSECTOR(u_char,  guchar,  "%02x")
-XDR_PRIMITIVE_DISSECTOR(hyper,   gint64,  "%lld")
-XDR_PRIMITIVE_DISSECTOR(u_hyper, guint64, "%llu")
-XDR_PRIMITIVE_DISSECTOR(float,   gfloat,  "%f")
-XDR_PRIMITIVE_DISSECTOR(double,  gdouble, "%lf")
+XDR_PRIMITIVE_DISSECTOR(int,     gint32,  int)
+XDR_PRIMITIVE_DISSECTOR(u_int,   guint32, uint)
+XDR_PRIMITIVE_DISSECTOR(short,   gint16,  int)
+XDR_PRIMITIVE_DISSECTOR(u_short, guint16, uint)
+XDR_PRIMITIVE_DISSECTOR(char,    gchar,   int)
+XDR_PRIMITIVE_DISSECTOR(u_char,  guchar,  uint)
+XDR_PRIMITIVE_DISSECTOR(hyper,   gint64,  int64)
+XDR_PRIMITIVE_DISSECTOR(u_hyper, guint64, uint64)
+XDR_PRIMITIVE_DISSECTOR(float,   gfloat,  float)
+XDR_PRIMITIVE_DISSECTOR(double,  gdouble, double)
+XDR_PRIMITIVE_DISSECTOR(bool,    bool_t,  boolean)
 
+static int hf_libvirt_xdr_string = -1;
 static gboolean
-dissect_xdr_bool(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf)
-{
-    bool_t bool;
-
-    if (xdr_bool(xdrs, &bool)) {
-        proto_item_append_text(ti, "%s", bool ? "TRUE" : "FALSE");
-        return TRUE;
-    } else {
-        proto_item_append_text(ti, "(unknown)");
-        return FALSE;
-    }
-}
-
-static gboolean
-dissect_xdr_string(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf,
+dissect_xdr_string(tvbuff_t *tvb, proto_tree *tree, XDR *xdrs,
                    gint32 maxlen)
 {
+    goffset start;
     gchar *val = NULL;
 
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
     if (xdr_string(xdrs, &val, maxlen)) {
-        proto_item_append_text(ti, "\"%s\"", val ? val : "(null)");
+        proto_tree_add_string(tree, hf_libvirt_xdr_string, tvb,
+                              start, xdr_getpos(xdrs) - start + VIR_HEADER_LEN, val);
         xdr_free((xdrproc_t)xdr_string, (char *)&val);
         return TRUE;
     } else {
-        proto_item_append_text(ti, "(unknown)");
+        proto_tree_add_text(tree, tvb, start, -1, "(unknown)");
         return FALSE;
     }
 }
 
+static int hf_libvirt_xdr_opaque = -1;
 static gboolean
-dissect_xdr_opaque(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf,
+dissect_xdr_opaque(tvbuff_t *tvb, proto_tree *tree, XDR *xdrs,
                    gint32 size)
 {
+    goffset start;
     gboolean rc;
     guint8 *val;
 
@@ -112,35 +109,31 @@ dissect_xdr_opaque(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf,
         return FALSE;
     }
 
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
     if ((rc = xdr_opaque(xdrs, (caddr_t)val, size))) {
-        gint i;
-        /* TODO: buffering */
-        for (i = 0; i < size; i++) {
-            if (!i) proto_item_append_text(ti, " ");
-            proto_item_append_text(ti, "%02x ", val[i]);
-        }
+        proto_tree_add_bytes(tree, hf_libvirt_xdr_opaque, tvb,
+                             start, xdr_getpos(xdrs) - start + VIR_HEADER_LEN, val);
     } else {
-        proto_item_append_text(ti, "(unknown)");
+        proto_tree_add_text(tree, tvb, start, -1, "(unknown)");
     }
 
     g_free(val);
     return rc;
 }
 
+static int hf_libvirt_xdr_bytes = -1;
 static gboolean
-dissect_xdr_bytes(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf,
+dissect_xdr_bytes(tvbuff_t *tvb, proto_tree *tree, XDR *xdrs,
                   gint32 maxlen)
 {
+    goffset start;
     guint8 *val = NULL;
     guint length;
 
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs) + sizeof(length); /* XXX */
     if (xdr_bytes(xdrs, (char **)&val, &length, maxlen)) {
-        gint i;
-        /* g_print("DEBUG: xdr_bytes length = %u, val = %p\n", length, val); */
-        for (i = 0; i < length; i++) {
-            if (!i) proto_item_append_text(ti, " ");
-            proto_item_append_text(ti, "%02x", val[i]);
-        }
+        proto_tree_add_bytes(tree, hf_libvirt_xdr_bytes, tvb,
+                             start, xdr_getpos(xdrs) - start + VIR_HEADER_LEN, val);
         /* XXX: maybe this is wrong way */
         xdrs->x_op = XDR_FREE;
         xdr_bytes(xdrs, (char **)&val, &length, maxlen);
@@ -148,50 +141,52 @@ dissect_xdr_bytes(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf,
         xdrs->x_op = XDR_DECODE;
         return TRUE;
     } else {
-        proto_item_append_text(ti, "(unknown)");
+        proto_tree_add_text(tree, tvb, start, -1, "(unknown)");
         return FALSE;
     }
 }
 
 static gboolean
-dissect_xdr_pointer(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf,
+dissect_xdr_pointer(tvbuff_t *tvb, proto_tree *tree, XDR *xdrs,
                     vir_xdr_dissector_t dp)
 {
+    goffset start;
     bool_t isnull;
 
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
     if (!xdr_bool(xdrs, &isnull)) {
+        proto_tree_add_text(tree, tvb, start, -1, "(unknown)");
         return FALSE;
     }
     if (isnull) {
-        proto_item_append_text(ti, "(NULL)");
+        proto_tree_add_text(tree, tvb, start, xdr_getpos(xdrs) - start + VIR_HEADER_LEN, "(NULL)");
         return TRUE;
     } else {
-        return dp(tvb, ti, xdrs, hf);
+        return dp(tvb, tree, xdrs);
     }
 }
 
 static gboolean
-dissect_xdr_vector(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf,
+dissect_xdr_vector(tvbuff_t *tvb, proto_tree *tree, XDR *xdrs, int hf,
                    gint ett, gint32 size, vir_xdr_dissector_t dp)
 {
-    proto_tree *tree;
+    goffset start;
+    proto_item *ti;
     gint i;
 
+    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
     tree = proto_item_add_subtree(ti, ett);
     for (i = 0; i < size; i++) {
-        goffset start;
-        proto_item *subti;
-        start = VIR_HEADER_LEN + xdr_getpos(xdrs);
-        subti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
-        if (!dp(tvb, subti, xdrs, hf))
+        if (!dp(tvb, tree, xdrs))
             return FALSE;
-        proto_item_set_len(subti, xdr_getpos(xdrs) - start + VIR_HEADER_LEN);
     }
+    proto_item_set_len(ti, xdr_getpos(xdrs) - start + VIR_HEADER_LEN);
     return TRUE;
 }
 
 static gboolean
-dissect_xdr_array(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf,
+dissect_xdr_array(tvbuff_t *tvb, proto_tree *tree, XDR *xdrs, int hf,
                   gint ett, gint32 maxlen, vir_xdr_dissector_t dp)
 {
     gint32 length;
@@ -200,12 +195,12 @@ dissect_xdr_array(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, int hf,
         return FALSE;
     if (length > maxlen)
         return FALSE;
-    return dissect_xdr_vector(tvb, ti, xdrs, hf, ett, length, dp);
+    return dissect_xdr_vector(tvb, tree, xdrs, hf, ett, length, dp);
 }
 
 static void
-dissect_payload(tvbuff_t *tvb, proto_item *ti, int hf,
-                 size_t length, vir_xdr_dissector_t xd)
+dissect_payload(tvbuff_t *tvb, proto_tree *tree,
+                size_t length, vir_xdr_dissector_t xd)
 {
     guint8 *payload;
     XDR xdrs;
@@ -219,7 +214,7 @@ dissect_payload(tvbuff_t *tvb, proto_item *ti, int hf,
 
     xdrmem_create(&xdrs, (caddr_t)payload, length, XDR_DECODE);
 
-    xd(tvb, ti, &xdrs, hf);
+    xd(tvb, tree, &xdrs);
 
     xdr_destroy(&xdrs);
     g_free(payload);
@@ -290,7 +285,7 @@ payload_dispatch_type(guint32 prog, guint32 proc, guint32 type)
 }
 
 static void
-dissect_libvirt_payload(tvbuff_t *tvb, proto_item *ti, gint length, int hf,
+dissect_libvirt_payload(tvbuff_t *tvb, proto_tree *tree, gint length,
                         guint32 prog, guint32 proc,
                         guint32 type, guint32 status)
 {
@@ -299,14 +294,14 @@ dissect_libvirt_payload(tvbuff_t *tvb, proto_item *ti, gint length, int hf,
         vir_xdr_dissector_t xd;
         xd = payload_dispatch_type(prog, proc, type);
         if (xd == NULL) {
-            proto_item_set_text(ti, "(unknown payload)");
+            proto_tree_add_text(tree, tvb, VIR_HEADER_LEN, length, "(unknown payload)");
         } else {
-            dissect_payload(tvb, ti, hf, length, xd);
+            dissect_payload(tvb, tree, length, xd);
         }
         break;
     }
     case VIR_NET_ERROR:
-        dissect_payload(tvb, ti, hf, length, VIR_ERROR_MESSAGE_DISSECTOR);
+        dissect_payload(tvb, tree, length, VIR_ERROR_MESSAGE_DISSECTOR);
         break;
     case VIR_NET_CONTINUE:
     default:
@@ -377,8 +372,7 @@ dissect_libvirt_message(tvbuff_t *tvb, packet_info *pinfo, proto_tree *tree)
         /* Dissect packet payload */
         pld_length = tvb_get_ntohl(tvb, 0) - offset;
         if (pld_length > 0) {
-            ti = proto_tree_add_item(libvirt_tree, hf_libvirt_payload, tvb, offset, pld_length, FALSE);
-            dissect_libvirt_payload(tvb, ti, pld_length, hf_proc, prog, proc, type, status);
+            dissect_libvirt_payload(tvb, libvirt_tree, pld_length, prog, proc, type, status);
             g_print("Dissecting libvirt payload END\n");
         } else {
             g_print("No payload\n");
@@ -438,6 +432,92 @@ proto_register_libvirt(void)
           { "status", "libvirt.status",
             FT_INT32, BASE_DEC,
             VALS(status_strings), 0x0,
+            NULL, HFILL}
+        },
+
+        /* XDR primitive fields */
+        { &hf_libvirt_xdr_int,
+          { "xdr_int", "libvirt.xdr.int",
+            FT_INT32, BASE_DEC,
+            NULL, 0x0,
+            NULL, HFILL}
+        },
+        { &hf_libvirt_xdr_u_int,
+          { "xdr_u_int", "libvirt.xdr.u_int",
+            FT_UINT32, BASE_DEC,
+            NULL, 0x0,
+            NULL, HFILL}
+        },
+        { &hf_libvirt_xdr_short,
+          { "xdr_short", "libvirt.xdr.short",
+            FT_INT16, BASE_DEC,
+            NULL, 0x0,
+            NULL, HFILL}
+        },
+        { &hf_libvirt_xdr_u_short,
+          { "xdr_u_short", "libvirt.xdr.u_short",
+            FT_UINT16, BASE_DEC,
+            NULL, 0x0,
+            NULL, HFILL}
+        },
+        { &hf_libvirt_xdr_char,
+          { "xdr_char", "libvirt.xdr.char",
+            FT_INT8, BASE_DEC,
+            NULL, 0x0,
+            NULL, HFILL}
+        },
+        { &hf_libvirt_xdr_u_char,
+          { "xdr_u_char", "libvirt.xdr.u_char",
+            FT_UINT8, BASE_DEC,
+            NULL, 0x0,
+            NULL, HFILL}
+        },
+        { &hf_libvirt_xdr_hyper,
+          { "xdr_hyper", "libvirt.xdr.hyper",
+            FT_INT64, BASE_DEC,
+            NULL, 0x0,
+            NULL, HFILL}
+        },
+        { &hf_libvirt_xdr_u_hyper,
+          { "xdr_u_hyper", "libvirt.xdr.u_hyper",
+            FT_UINT64, BASE_DEC,
+            NULL, 0x0,
+            NULL, HFILL}
+        },
+        { &hf_libvirt_xdr_float,
+          { "xdr_float", "libvirt.xdr.float",
+            FT_FLOAT, BASE_NONE,
+            NULL, 0x0,
+            NULL, HFILL}
+        },
+        { &hf_libvirt_xdr_double,
+          { "xdr_double", "libvirt.xdr.double",
+            FT_DOUBLE, BASE_NONE,
+            NULL, 0x0,
+            NULL, HFILL}
+        },
+        { &hf_libvirt_xdr_bool,
+          { "xdr_bool", "libvirt.xdr.bool",
+            FT_BOOLEAN, BASE_NONE,
+            NULL, 0x0,
+            NULL, HFILL}
+        },
+        { &hf_libvirt_xdr_string,
+          { "xdr_string", "libvirt.xdr.string",
+            FT_STRING, BASE_NONE,
+            NULL, 0x0,
+            NULL, HFILL}
+        },
+        { &hf_libvirt_xdr_opaque,
+          { "xdr_opaque", "libvirt.xdr.opaque",
+            FT_BYTES, BASE_NONE,
+            NULL, 0x0,
+            NULL, HFILL}
+        },
+        { &hf_libvirt_xdr_bytes,
+          { "xdr_bytes", "libvirt.xdr.bytes",
+            FT_BYTES, BASE_NONE,
+            NULL, 0x0,
             NULL, HFILL}
         },
 
