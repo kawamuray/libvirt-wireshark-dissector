@@ -45,16 +45,14 @@ static int hf_libvirt_payload = -1;
 static gint ett_libvirt = -1;
 
 #define XDR_PRIMITIVE_DISSECTOR(xtype, ctype, ftype)                    \
-    static int hf_libvirt_xdr_##xtype = -1;                             \
     static gboolean                                                     \
-    dissect_xdr_##xtype(tvbuff_t *tvb, proto_tree *tree, XDR *xdrs)     \
+    dissect_xdr_##xtype(tvbuff_t *tvb, proto_tree *tree, XDR *xdrs, int hf)    \
     {                                                                   \
         goffset start;                                                  \
         ctype val;                                                      \
         start = VIR_HEADER_LEN + xdr_getpos(xdrs);                      \
         if (xdr_##xtype(xdrs, &val)) {                                  \
-            proto_tree_add_##ftype(tree, hf_libvirt_xdr_##xtype, tvb,   \
-                                   start, xdr_getpos(xdrs) - start + VIR_HEADER_LEN, val); \
+            proto_tree_add_##ftype(tree, hf, tvb, start, xdr_getpos(xdrs) - start + VIR_HEADER_LEN, val); \
             return TRUE;                                                \
         } else {                                                        \
             proto_tree_add_text(tree, tvb, start, -1, "(unknown)");     \
@@ -74,9 +72,8 @@ XDR_PRIMITIVE_DISSECTOR(float,   gfloat,  float)
 XDR_PRIMITIVE_DISSECTOR(double,  gdouble, double)
 XDR_PRIMITIVE_DISSECTOR(bool,    bool_t,  boolean)
 
-static int hf_libvirt_xdr_string = -1;
 static gboolean
-dissect_xdr_string(tvbuff_t *tvb, proto_tree *tree, XDR *xdrs,
+dissect_xdr_string(tvbuff_t *tvb, proto_tree *tree, XDR *xdrs, int hf,
                    gint32 maxlen)
 {
     goffset start;
@@ -84,8 +81,8 @@ dissect_xdr_string(tvbuff_t *tvb, proto_tree *tree, XDR *xdrs,
 
     start = VIR_HEADER_LEN + xdr_getpos(xdrs);
     if (xdr_string(xdrs, &val, maxlen)) {
-        proto_tree_add_string(tree, hf_libvirt_xdr_string, tvb,
-                              start, xdr_getpos(xdrs) - start + VIR_HEADER_LEN, val);
+        proto_tree_add_string(tree, hf, tvb, start,
+                              xdr_getpos(xdrs) - start + VIR_HEADER_LEN, val);
         xdr_free((xdrproc_t)xdr_string, (char *)&val);
         return TRUE;
     } else {
@@ -94,9 +91,8 @@ dissect_xdr_string(tvbuff_t *tvb, proto_tree *tree, XDR *xdrs,
     }
 }
 
-static int hf_libvirt_xdr_opaque = -1;
 static gboolean
-dissect_xdr_opaque(tvbuff_t *tvb, proto_tree *tree, XDR *xdrs,
+dissect_xdr_opaque(tvbuff_t *tvb, proto_tree *tree, XDR *xdrs, int hf,
                    gint32 size)
 {
     goffset start;
@@ -111,8 +107,8 @@ dissect_xdr_opaque(tvbuff_t *tvb, proto_tree *tree, XDR *xdrs,
 
     start = VIR_HEADER_LEN + xdr_getpos(xdrs);
     if ((rc = xdr_opaque(xdrs, (caddr_t)val, size))) {
-        proto_tree_add_bytes(tree, hf_libvirt_xdr_opaque, tvb,
-                             start, xdr_getpos(xdrs) - start + VIR_HEADER_LEN, val);
+        proto_tree_add_bytes(tree, hf, tvb, start,
+                             xdr_getpos(xdrs) - start + VIR_HEADER_LEN, val);
     } else {
         proto_tree_add_text(tree, tvb, start, -1, "(unknown)");
     }
@@ -121,9 +117,8 @@ dissect_xdr_opaque(tvbuff_t *tvb, proto_tree *tree, XDR *xdrs,
     return rc;
 }
 
-static int hf_libvirt_xdr_bytes = -1;
 static gboolean
-dissect_xdr_bytes(tvbuff_t *tvb, proto_tree *tree, XDR *xdrs,
+dissect_xdr_bytes(tvbuff_t *tvb, proto_tree *tree, XDR *xdrs, int hf,
                   gint32 maxlen)
 {
     goffset start;
@@ -132,7 +127,7 @@ dissect_xdr_bytes(tvbuff_t *tvb, proto_tree *tree, XDR *xdrs,
 
     start = VIR_HEADER_LEN + xdr_getpos(xdrs) + sizeof(length); /* XXX */
     if (xdr_bytes(xdrs, (char **)&val, &length, maxlen)) {
-        proto_tree_add_bytes(tree, hf_libvirt_xdr_bytes, tvb,
+        proto_tree_add_bytes(tree, hf, tvb,
                              start, xdr_getpos(xdrs) - start + VIR_HEADER_LEN, val);
         /* XXX: maybe this is wrong way */
         xdrs->x_op = XDR_FREE;
@@ -147,7 +142,7 @@ dissect_xdr_bytes(tvbuff_t *tvb, proto_tree *tree, XDR *xdrs,
 }
 
 static gboolean
-dissect_xdr_pointer(tvbuff_t *tvb, proto_tree *tree, XDR *xdrs,
+dissect_xdr_pointer(tvbuff_t *tvb, proto_tree *tree, XDR *xdrs, int hf,
                     vir_xdr_dissector_t dp)
 {
     goffset start;
@@ -159,16 +154,16 @@ dissect_xdr_pointer(tvbuff_t *tvb, proto_tree *tree, XDR *xdrs,
         return FALSE;
     }
     if (isnull) {
-        proto_tree_add_text(tree, tvb, start, xdr_getpos(xdrs) - start + VIR_HEADER_LEN, "(NULL)");
+        proto_item_append_text(proto_tree_add_item(tree, hf, tvb, start, xdr_getpos(xdrs) - start + VIR_HEADER_LEN, ENC_NA), "(NULL)");
         return TRUE;
     } else {
-        return dp(tvb, tree, xdrs);
+        return dp(tvb, tree, xdrs, hf);
     }
 }
 
 static gboolean
 dissect_xdr_vector(tvbuff_t *tvb, proto_tree *tree, XDR *xdrs, int hf,
-                   gint ett, gint32 size, vir_xdr_dissector_t dp)
+                   gint ett, int rhf, gint32 size, vir_xdr_dissector_t dp)
 {
     goffset start;
     proto_item *ti;
@@ -178,7 +173,7 @@ dissect_xdr_vector(tvbuff_t *tvb, proto_tree *tree, XDR *xdrs, int hf,
     ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
     tree = proto_item_add_subtree(ti, ett);
     for (i = 0; i < size; i++) {
-        if (!dp(tvb, tree, xdrs))
+        if (!dp(tvb, tree, xdrs, rhf))
             return FALSE;
     }
     proto_item_set_len(ti, xdr_getpos(xdrs) - start + VIR_HEADER_LEN);
@@ -187,7 +182,7 @@ dissect_xdr_vector(tvbuff_t *tvb, proto_tree *tree, XDR *xdrs, int hf,
 
 static gboolean
 dissect_xdr_array(tvbuff_t *tvb, proto_tree *tree, XDR *xdrs, int hf,
-                  gint ett, gint32 maxlen, vir_xdr_dissector_t dp)
+                  gint ett, int rhf, gint32 maxlen, vir_xdr_dissector_t dp)
 {
     gint32 length;
 
@@ -195,7 +190,7 @@ dissect_xdr_array(tvbuff_t *tvb, proto_tree *tree, XDR *xdrs, int hf,
         return FALSE;
     if (length > maxlen)
         return FALSE;
-    return dissect_xdr_vector(tvb, tree, xdrs, hf, ett, length, dp);
+    return dissect_xdr_vector(tvb, tree, xdrs, hf, ett, rhf, length, dp);
 }
 
 static void
@@ -214,7 +209,7 @@ dissect_payload(tvbuff_t *tvb, proto_tree *tree,
 
     xdrmem_create(&xdrs, (caddr_t)payload, length, XDR_DECODE);
 
-    xd(tvb, tree, &xdrs);
+    xd(tvb, tree, &xdrs, hf_libvirt_payload);
 
     xdr_destroy(&xdrs);
     g_free(payload);
@@ -432,92 +427,6 @@ proto_register_libvirt(void)
           { "status", "libvirt.status",
             FT_INT32, BASE_DEC,
             VALS(status_strings), 0x0,
-            NULL, HFILL}
-        },
-
-        /* XDR primitive fields */
-        { &hf_libvirt_xdr_int,
-          { "xdr_int", "libvirt.xdr.int",
-            FT_INT32, BASE_DEC,
-            NULL, 0x0,
-            NULL, HFILL}
-        },
-        { &hf_libvirt_xdr_u_int,
-          { "xdr_u_int", "libvirt.xdr.u_int",
-            FT_UINT32, BASE_DEC,
-            NULL, 0x0,
-            NULL, HFILL}
-        },
-        { &hf_libvirt_xdr_short,
-          { "xdr_short", "libvirt.xdr.short",
-            FT_INT16, BASE_DEC,
-            NULL, 0x0,
-            NULL, HFILL}
-        },
-        { &hf_libvirt_xdr_u_short,
-          { "xdr_u_short", "libvirt.xdr.u_short",
-            FT_UINT16, BASE_DEC,
-            NULL, 0x0,
-            NULL, HFILL}
-        },
-        { &hf_libvirt_xdr_char,
-          { "xdr_char", "libvirt.xdr.char",
-            FT_INT8, BASE_DEC,
-            NULL, 0x0,
-            NULL, HFILL}
-        },
-        { &hf_libvirt_xdr_u_char,
-          { "xdr_u_char", "libvirt.xdr.u_char",
-            FT_UINT8, BASE_DEC,
-            NULL, 0x0,
-            NULL, HFILL}
-        },
-        { &hf_libvirt_xdr_hyper,
-          { "xdr_hyper", "libvirt.xdr.hyper",
-            FT_INT64, BASE_DEC,
-            NULL, 0x0,
-            NULL, HFILL}
-        },
-        { &hf_libvirt_xdr_u_hyper,
-          { "xdr_u_hyper", "libvirt.xdr.u_hyper",
-            FT_UINT64, BASE_DEC,
-            NULL, 0x0,
-            NULL, HFILL}
-        },
-        { &hf_libvirt_xdr_float,
-          { "xdr_float", "libvirt.xdr.float",
-            FT_FLOAT, BASE_NONE,
-            NULL, 0x0,
-            NULL, HFILL}
-        },
-        { &hf_libvirt_xdr_double,
-          { "xdr_double", "libvirt.xdr.double",
-            FT_DOUBLE, BASE_NONE,
-            NULL, 0x0,
-            NULL, HFILL}
-        },
-        { &hf_libvirt_xdr_bool,
-          { "xdr_bool", "libvirt.xdr.bool",
-            FT_BOOLEAN, BASE_NONE,
-            NULL, 0x0,
-            NULL, HFILL}
-        },
-        { &hf_libvirt_xdr_string,
-          { "xdr_string", "libvirt.xdr.string",
-            FT_STRING, BASE_NONE,
-            NULL, 0x0,
-            NULL, HFILL}
-        },
-        { &hf_libvirt_xdr_opaque,
-          { "xdr_opaque", "libvirt.xdr.opaque",
-            FT_BYTES, BASE_NONE,
-            NULL, 0x0,
-            NULL, HFILL}
-        },
-        { &hf_libvirt_xdr_bytes,
-          { "xdr_bytes", "libvirt.xdr.bytes",
-            FT_BYTES, BASE_NONE,
-            NULL, 0x0,
             NULL, HFILL}
         },
 

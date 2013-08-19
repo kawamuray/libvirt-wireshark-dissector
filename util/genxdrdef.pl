@@ -103,34 +103,35 @@ use File::Spec;
     }
 
     sub genstub {
-        my ($self, $c) = @_;
+        my ($self, $c, $ident) = @_;
         return if $self->is_primitive;
-        $c->sayf('return %s;', $self->dealias->gencall($c));
+        my $hfid = $self->ident eq $ident ? undef : $ident;
+        $c->sayf('return %s;', $self->dealias->gencall($c, $hfid));
     }
 
     sub gencall {
-        my ($self, $c) = @_;
-        sprintf '%s(tvb, tree, xdrs)',
+        my ($self, $c, $hfid) = @_;
+        sprintf '%s(tvb, tree, xdrs, hf)',
             $c->refinc('dissect_xdr_'.($self->ident_strip || lc($self->xdr_type)));
     }
 
     my %ft_special_map = (
-        int     => 'INT32',
-        u_int   => 'UINT32',
-        short   => 'INT16',
-        u_short => 'UINT16',
-        char    => 'INT8',
-        u_char  => 'UINT8',
-        hyper   => 'INT64',
-        u_hyper => 'UINT64',
-        bool    => 'BOOLEAN',
+        INT     => 'INT32',
+        U_INT   => 'UINT32',
+        SHORT   => 'INT16',
+        U_SHORT => 'UINT16',
+        CHAR    => 'INT8',
+        U_CHAR  => 'UINT8',
+        HYPER   => 'INT64',
+        U_HYPER => 'UINT64',
+        BOOL    => 'BOOLEAN',
     );
     sub ft_type {
         my ($self) = @_;
         my $xt = $self->xdr_type;
         $self->is_primitive
-            ? $ft_special_map{$xt} || uc($xt)
-            : $self->dealias->hf_base;
+            ? $ft_special_map{$xt} || $xt
+            : $self->dealias->ft_type;
     }
 
     sub hf_base {
@@ -145,19 +146,19 @@ use File::Spec;
     ::mk_accessor qw/ members /;
 
     sub genstub {
-        my ($self, $c) = @_;
-        $c->sayf(<<'EOS', $c->refinc('hf_'.$self->ident_strip), $c->refinc('ett_'.$self->ident_strip));
+        my ($self, $c, $ident) = @_;
+        $c->sayf(<<'EOS', $c->refinc('ett_'.$self->ident_strip));
 goffset start;
 proto_item *ti;
 
 start = VIR_HEADER_LEN + xdr_getpos(xdrs);
-ti = proto_tree_add_item(tree, %s, tvb, start, -1, ENC_NA);
+ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
 tree = proto_item_add_subtree(ti, %s);
 EOS
 
-        $c->sayf(<<'EOS', $_->ident, $_->type->gencall($c)) for @{ $self->members };
+        $c->sayf(<<'EOS', $c->refinc('hf_'.$ident.'__'.$_->ident), $_->type->gencall($c, $ident.'__'.$_->ident)) for @{ $self->members };
 
-/* proto_item_set_text(ti, "%s: "); */
+hf = %s;
 if (!%s) return FALSE;
 EOS
         $c->say(<<'EOS');
@@ -173,7 +174,7 @@ EOS
     ::mk_accessor qw/ members /;
 
     sub genstub {
-        my ($self, $c) = @_;
+        my ($self, $c, $ident) = @_;
         $c->sayf(<<'EOS', $self->ident_strip);
 goffset start;
 enum { DUMMY } es;
@@ -182,9 +183,9 @@ start = VIR_HEADER_LEN + xdr_getpos(xdrs);
 if (xdr_enum(xdrs, (enum_t *)&es)) {
     switch ((guint)es) {
 EOS
-        $c->sayf(<<'EOS', $_->value, $c->refinc('hf_'.$self->ident_strip), $_->ident_strip, $_->value) for @{ $self->members };
+        $c->sayf(<<'EOS', $_->value, $_->ident_strip, $_->value) for @{ $self->members };
     case %s:
-        proto_tree_add_uint_format_value(tree, %s, tvb, start, xdr_getpos(xdrs) - start + VIR_HEADER_LEN, (guint)es, "%s(%s)");
+        proto_tree_add_uint_format_value(tree, hf, tvb, start, xdr_getpos(xdrs) - start + VIR_HEADER_LEN, (guint)es, "%s(%s)");
         return TRUE;
 EOS
         $c->say(<<'EOS');
@@ -203,7 +204,7 @@ EOS
     ::mk_accessor qw/ decl case_specs /;
 
     sub genstub {
-        my ($self, $c) = @_;
+        my ($self, $c, $ident) = @_;
         $c->sayf(<<'EOS', $self->decl->type->ident_strip, $self->decl->type->ident_strip);
 gboolean rc = TRUE;
 goffset start;
@@ -214,9 +215,12 @@ if (!xdr_%s(xdrs, &type))
     return FALSE;
 switch (type) {
 EOS
+        # XXX: wrong hf
         for my $case (@{ $self->case_specs } ) {
-            $c->say("case $_:") for @{ $case->[0] };
-            $c->sayf(<<'EOS', $case->[1]->type->gencall($c));
+            my ($vals, $decl) = @$case;
+            $c->say("case $_:") for @$vals;
+            $c->sayf(<<'EOS', $c->refinc('hf_'.$ident.'__'.$decl->ident), $decl->type->gencall($c, $ident.'__'.$decl->ident));
+    hf = %s;
     rc = %s; break;
 EOS
         }
@@ -238,7 +242,7 @@ EOS
         my ($self, $c) = @_;
         my ($klass) = ref($self) =~ /([^:]+)$/;
         $klass = lc $klass;
-        sprintf '%s(tvb, tree, xdrs, %s)',
+        sprintf '%s(tvb, tree, xdrs, hf, %s)',
             $c->refinc("dissect_xdr_$klass"),
             $c->refinc('dissect_xdr_'.$self->reftype->ident_strip);
     }
@@ -249,10 +253,10 @@ EOS
     ::mk_accessor qw/ length /;
 
     sub gencall {
-        my ($self, $c) = @_;
+        my ($self, $c, $hfid) = @_;
         my ($klass) = ref($self) =~ /([^:]+)$/;
         $klass = lc $klass;
-        sprintf '%s(tvb, tree, xdrs, %s)',
+        sprintf '%s(tvb, tree, xdrs, hf, %s)',
             $c->refinc("dissect_xdr_$klass"), $self->length || '~0';
     }
 
@@ -262,10 +266,10 @@ EOS
     use parent -norequire, qw{ Sym::Type::_Ref Sym::Type::_Ext Sym::Type };
 
     sub gencall {
-        my ($self, $c) = @_;
-        sprintf 'dissect_xdr_array(tvb, tree, xdrs, %s, %s, %s, %s)',
-            $c->refinc(sprintf 'hf_%s', $self->ident_strip),
-            $c->refinc(sprintf 'ett_%s', $self->ident_strip),
+        my ($self, $c, $hfid) = @_;
+        sprintf 'dissect_xdr_array(tvb, tree, xdrs, hf, %s, %s, %s, %s)',
+            $c->refinc('ett_'.$self->ident_strip),
+            $c->refinc("hf_$hfid\___ELEMENT_"),
             $self->length || '~0',
             $c->refinc(sprintf 'dissect_xdr_%s', $self->reftype->ident_strip);
     }
@@ -274,11 +278,10 @@ EOS
     use parent -norequire, qw{ Sym::Type::_Ref Sym::Type::_Ext Sym::Type };
 
     sub gencall {
-        my ($self, $c) = @_;
-        sprintf 'dissect_xdr_vector(tvb, tree, xdrs, %s, %s, %s, %s)',
-            # ('vector_'.$self->reftype->ident_strip)x2, $self->length || '~0', $self->reftype->ident_strip;
-            $c->refinc(sprintf 'hf_%s', $self->ident_strip),
-            $c->refinc(sprintf 'ett_%s', $self->ident_strip),
+        my ($self, $c, $hfid) = @_;
+        sprintf 'dissect_xdr_vector(tvb, tree, xdrs, hf, %s, %s, %s, %s)',
+            $c->refinc('ett_'.$self->ident_strip),
+            $c->refinc("hf_$hfid\___ELEMENT_"),
             $self->length || '~0',
             $c->refinc(sprintf 'dissect_xdr_%s', $self->reftype->ident_strip);
     }
@@ -543,8 +546,8 @@ $context->writeheader('protocol' => sub {
         },
 EOS
         }
-        for my $lex (@{ $context->{hfs} }) {
-            $s .= sprintf <<'EOS', $context->refinc('hf_'.$lex->ident_strip), ($lex->ident_strip)x2, $lex->ft_type, $lex->hf_base;
+        for my $hf (@{ $context->{hfs} }) {
+            $s .= sprintf <<'EOS', $context->refinc($hf->{hfvar}), @$hf{qw{name abbrev ft_type hf_base}};
         { &%s,
           { "%s", "libvirt.%s",
             FT_%s, BASE_%s,
@@ -605,7 +608,8 @@ EOS
 $context->finalize;
 
 sub write_xdrstub {
-    my ($lex, $onlyvars) = @_;
+    my ($lex, $onlyvars, @idchain) = @_;
+    push @idchain, $lex->ident_strip unless @idchain;
 
     my @members;
     if ($lex->isa('Sym::Type::Struct')) {
@@ -614,20 +618,43 @@ sub write_xdrstub {
         @members = map { $_->[1] } @{ $lex->case_specs };
     }
     for my $field (@members) {
-        next if defined $field->type->ident;
-        $field->type->ident($lex->ident_strip.'_ANONTYPE_'.$field->ident);
-        last if $field->type->isa('Sym::Type::Opaque') || $field->type->isa('Sym::Type::Bytes');
+        unless (defined $field->type->ident) {
+            $field->type->ident(join '__', @idchain, $field->ident);
+        }
         write_xdrstub($field->type,
-                      not $field->type->isa('Sym::Type::Struct') ||
+                      not($field->type->isa('Sym::Type::Struct') ||
                           $field->type->isa('Sym::Type::Enum')   ||
-                          $field->type->isa('Sym::Type::Union'));
+                          $field->type->isa('Sym::Type::Union')),
+                      @idchain, $field->ident);
     }
 
+    my $ident = join '__', @idchain;
     $context->writedef(
-        symbol => 'hf_'.$lex->ident_strip,
+        symbol => "hf_$ident",
         render => sub { $context->say("static int $_ = -1;") },
     );
-    $context->add_hf($lex);
+    $context->add_hf({
+        hfvar   => "hf_$ident",
+        name    => $idchain[-1],
+        abbrev  => join('.', @idchain),
+        ft_type => $lex->ft_type,
+        hf_base => $lex->hf_base,
+    });
+    if ($lex->isa('Sym::Type::Vector') || $lex->isa('Sym::Type::Array')) {
+        my @idchain = (@idchain, '_ELEMENT_');
+        my $ident = join '__', @idchain;
+        $context->writedef(
+            symbol => "hf_$ident",
+            render => sub { $context->say("static int $_ = -1;") },
+        );
+        $context->add_hf({
+            hfvar   => "hf_$ident",
+            name    => $idchain[-1],
+            abbrev  => join('.', @idchain),
+            ft_type => $lex->reftype->ft_type,
+            hf_base => $lex->reftype->hf_base,
+        });
+    }
     if ($lex->isa('Sym::Type::Struct') ||
         $lex->isa('Sym::Type::Array') ||
         $lex->isa('Sym::Type::Vector')) {
@@ -640,12 +667,12 @@ sub write_xdrstub {
     return if $onlyvars;
 
     $context->writedef(
-        symbol => 'dissect_xdr_'.$lex->ident_strip,
+        symbol => "dissect_xdr_$ident",
         render => sub {
-            $context->sayf("static gboolean %s(tvbuff_t *tvb, proto_tree *tree, XDR *xdrs)\n{", $_);
+            $context->sayf("static gboolean %s(tvbuff_t *tvb, proto_tree *tree, XDR *xdrs, int hf)\n{", $_);
             {
                 local $context->{indent} = $context->{indent} + 4;
-                $lex->genstub($context);
+                $lex->genstub($context, $ident);
             }
             $context->say('}');
         },
