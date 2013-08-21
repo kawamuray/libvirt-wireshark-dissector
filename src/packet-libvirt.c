@@ -179,7 +179,7 @@ dissect_xdr_vector(tvbuff_t *tvb, proto_tree *tree, XDR *xdrs, int hf,
 
     start = VIR_HEADER_LEN + xdr_getpos(xdrs);
     ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
-    /* Maybe I can use proto_register_get_name() after
+    /* Maybe I can use proto_registrar_get_name() after
        stable distribution of wireshark contains it */
     hfinfo = proto_registrar_get_nth(rhf);
     proto_item_append_text(ti, " :: %s[%d]", hfinfo->name, size);
