@@ -42,6 +42,8 @@ static int hf_libvirt_type = -1;
 static int hf_libvirt_serial = -1;
 static int hf_libvirt_status = -1;
 static int hf_libvirt_payload = -1;
+static int hf_libvirt_stream = -1;
+static int hf_libvirt_num_of_fds = -1;
 static gint ett_libvirt = -1;
 
 #define XDR_PRIMITIVE_DISSECTOR(xtype, ctype, ftype)                    \
@@ -161,22 +163,34 @@ dissect_xdr_pointer(tvbuff_t *tvb, proto_tree *tree, XDR *xdrs, int hf,
     }
 }
 
+static void annotate_index(proto_node *ch, gpointer *ip)
+{
+    proto_item_prepend_text((proto_item *)ch, "[%d]", (*(gint *)ip)++);
+}
+
 static gboolean
 dissect_xdr_vector(tvbuff_t *tvb, proto_tree *tree, XDR *xdrs, int hf,
                    gint ett, int rhf, gint32 size, vir_xdr_dissector_t dp)
 {
     goffset start;
     proto_item *ti;
+    header_field_info *hfinfo;
     gint i;
 
     start = VIR_HEADER_LEN + xdr_getpos(xdrs);
     ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    /* Maybe I can use proto_register_get_name() after
+       stable distribution of wireshark contains it */
+    hfinfo = proto_registrar_get_nth(rhf);
+    proto_item_append_text(ti, " :: %s[%d]", hfinfo->name, size);
     tree = proto_item_add_subtree(ti, ett);
     for (i = 0; i < size; i++) {
         if (!dp(tvb, tree, xdrs, rhf))
             return FALSE;
     }
     proto_item_set_len(ti, xdr_getpos(xdrs) - start + VIR_HEADER_LEN);
+    i = 0;
+    proto_tree_children_foreach(tree, annotate_index, &i);
     return TRUE;
 }
 
@@ -193,114 +207,125 @@ dissect_xdr_array(tvbuff_t *tvb, proto_tree *tree, XDR *xdrs, int hf,
     return dissect_xdr_vector(tvb, tree, xdrs, hf, ett, rhf, length, dp);
 }
 
-static void
-dissect_payload(tvbuff_t *tvb, proto_tree *tree,
-                size_t length, vir_xdr_dissector_t xd)
+static vir_xdr_dissector_t
+libvirt_find_xdr_dissector(guint32 proc, guint32 type,
+                           const vir_dissector_index_t *pds, gsize length)
 {
-    guint8 *payload;
-    XDR xdrs;
-
-    g_print("Payload length = %u\n", length);
-
-    payload = (guint8 *)tvb_memdup(tvb, 28, length);
-    if (payload == NULL) {
-        return;
-    }
-
-    xdrmem_create(&xdrs, (caddr_t)payload, length, XDR_DECODE);
-
-    xd(tvb, tree, &xdrs, hf_libvirt_payload);
-
-    xdr_destroy(&xdrs);
-    g_free(payload);
-}
-
-static const vir_proc_payload_t *
-find_xdr_dissector(guint32 proc, const vir_proc_payload_t *defs, gsize length)
-{
-    const vir_proc_payload_t *def;
+    const vir_dissector_index_t *pd;
     guint32 first, last, direction;
 
     if (length < 1) {
         return NULL;
     }
 
-    first = defs[0].proc;
-    last = defs[length-1].proc;
+    first = pds[0].proc;
+    last = pds[length-1].proc;
     if (proc < first || proc > last) {
         return NULL;
     }
 
-    def = &defs[proc-first];
+    pd = &pds[proc-first];
     /* There is no guarantee to proc numbers has no gap */
-    if (def->proc == proc)
-        return def;
-
-    direction = (def->proc < proc) ? 1 : -1;
-    while (def->proc != proc) {
-        if (def->proc == first || def->proc == last)
-            return NULL;
-        def += direction;
-    }
-
-    return def;
-}
-
-static vir_xdr_dissector_t
-payload_dispatch_type(guint32 prog, guint32 proc, guint32 type)
-{
-    if (type == VIR_NET_STREAM) {
-        /* NOP */
-    } else {
-        const vir_proc_payload_t *pd = NULL;
-#define VIR_PROG_CASE(ps) pd = find_xdr_dissector(proc, ps##_dissectors, array_length(ps##_dissectors))
-        VIR_PROG_SWITCH(prog);
-#undef VIR_PROG_CASE
-
-        if (pd == NULL) {
-            g_print("ERROR: cannot find payload definition: Prog=%u, Proc=%u\n", prog, proc);
-            return NULL;
-        }
-        switch (type) {
-        case VIR_NET_CALL_WITH_FDS:
-            /* TODO: dissect number of fds */
-            break; /* fall through in the feature */
-        case VIR_NET_CALL:
-            return pd->args;
-        case VIR_NET_REPLY_WITH_FDS:
-            /* TODO: dissect number of fds */
-            break; /* fall through in the feature */
-        case VIR_NET_REPLY:
-            return pd->ret;
+    if (pd->proc != proc) {
+        direction = (pd->proc < proc) ? 1 : -1;
+        while (pd->proc != proc) {
+            if (pd->proc == first || pd->proc == last)
+                return NULL;
+            pd += direction;
         }
     }
 
-    g_print("ERROR: type = %u is not implemented\n", type);
-    return NULL;
+    switch (type) {
+    case VIR_NET_CALL:
+    case VIR_NET_CALL_WITH_FDS:
+        return pd->args;
+    case VIR_NET_REPLY:
+    case VIR_NET_REPLY_WITH_FDS:
+        return pd->ret;
+    case VIR_NET_MESSAGE:
+        return pd->msg;
+    default:
+        g_print("ERROR: type = %u is not implemented\n", type);
+        return NULL;
+    }
 }
 
 static void
-dissect_libvirt_payload(tvbuff_t *tvb, proto_tree *tree, gint length,
-                        guint32 prog, guint32 proc,
-                        guint32 type, guint32 status)
+dissect_libvirt_stream(tvbuff_t *tvb, proto_tree *tree, gint plsize)
 {
-    switch (status) {
-    case VIR_NET_OK: {
-        vir_xdr_dissector_t xd;
-        xd = payload_dispatch_type(prog, proc, type);
-        if (xd == NULL) {
-            proto_tree_add_text(tree, tvb, VIR_HEADER_LEN, length, "(unknown payload)");
-        } else {
-            dissect_payload(tvb, tree, length, xd);
-        }
-        break;
+    proto_tree_add_item(tree, hf_libvirt_stream, tvb, VIR_HEADER_LEN,
+                        plsize - VIR_HEADER_LEN, ENC_NA);
+}
+
+static gint32
+dissect_libvirt_num_of_fds(tvbuff_t *tvb, proto_tree *tree)
+{
+    gint32 nfds;
+    nfds = tvb_get_ntohl(tvb, VIR_HEADER_LEN);
+    proto_tree_add_int(tree, hf_libvirt_num_of_fds, tvb, VIR_HEADER_LEN, 4, nfds);
+    return nfds;
+}
+
+static void
+dissect_libvirt_fds(tvbuff_t *tvb, gint start, gint32 nfds)
+{
+    /* TODO: NOP */
+}
+
+static void
+dissect_libvirt_payload_xdr_data(tvbuff_t *tvb, proto_tree *tree, gint plsize,
+                                 gint32 status, vir_xdr_dissector_t dp)
+{
+    gint32 nfds = 0;
+    gint start = VIR_HEADER_LEN;
+    caddr_t pdata;
+    XDR xdrs;
+
+    if (status == VIR_NET_CALL_WITH_FDS ||
+        status == VIR_NET_REPLY_WITH_FDS) {
+        nfds = dissect_libvirt_num_of_fds(tvb, tree);
+        start += 4;
+        plsize -= 4;
     }
-    case VIR_NET_ERROR:
-        dissect_payload(tvb, tree, length, VIR_ERROR_MESSAGE_DISSECTOR);
-        break;
-    case VIR_NET_CONTINUE:
-    default:
-        g_print("ERROR: status = %u is not implemented", status);
+
+    pdata = (caddr_t)tvb_memdup(tvb, start, plsize);
+    if (pdata == NULL) {
+        g_print("ERROR: memory allocation failed\n");
+        return;
+    }
+    xdrmem_create(&xdrs, pdata, plsize, XDR_DECODE);
+
+    dp(tvb, tree, &xdrs, hf_libvirt_payload);
+
+    xdr_destroy(&xdrs);
+    g_free(pdata);
+
+    if (nfds != 0) {
+        dissect_libvirt_fds(tvb, start, nfds);
+    }
+}
+
+static void
+dissect_libvirt_payload(tvbuff_t *tvb, proto_tree *tree, gint plsize,
+                        guint32 prog, guint32 proc, guint32 type, guint32 status)
+{
+    if (status == VIR_NET_OK) {
+        vir_xdr_dissector_t xd = NULL;
+#define VIR_PROG_CASE(ps) xd = libvirt_find_xdr_dissector(proc, type, ps##_dissectors, array_length(ps##_dissectors))
+        VIR_PROG_SWITCH(prog);
+#undef VIR_PROG_CASE
+        if (xd == NULL) {
+            g_print("ERROR: cannot find payload definition: Prog=%u, Proc=%u\n", prog, proc);
+            return;
+        }
+
+        dissect_libvirt_payload_xdr_data(tvb, tree, plsize, status, xd);
+    } else if (status == VIR_NET_ERROR) {
+        dissect_libvirt_payload_xdr_data(tvb, tree, plsize, status, VIR_ERROR_MESSAGE_DISSECTOR);
+    } else if (type == VIR_NET_STREAM) { /* implicitly, status == VIR_NET_CONTINUE */
+        dissect_libvirt_stream(tvb, tree, plsize);
+    } else {
+        g_print("ERROR: unknown status = %u is not implemented\n", status);
     }
 }
 
@@ -435,6 +460,18 @@ proto_register_libvirt(void)
         { &hf_libvirt_payload,
           { "payload", "libvirt.payload",
             FT_STRING, BASE_NONE,
+            NULL, 0x0,
+            NULL, HFILL}
+        },
+        { &hf_libvirt_stream,
+          { "stream", "libvirt.stream",
+            FT_BYTES, BASE_NONE,
+            NULL, 0x0,
+            NULL, HFILL}
+        },
+        { &hf_libvirt_num_of_fds,
+          { "num_of_fds", "libvirt.num_of_fds",
+            FT_INT32, BASE_DEC,
             NULL, 0x0,
             NULL, HFILL}
         },

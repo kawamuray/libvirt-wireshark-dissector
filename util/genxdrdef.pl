@@ -146,12 +146,13 @@ use File::Spec;
 
     sub genstub {
         my ($self, $c, $ident) = @_;
-        $c->sayf(<<'EOS', $c->refinc('ett_'.$self->ident_strip));
+        $c->sayf(<<'EOS', $self->ident_strip, $c->refinc('ett_'.$self->ident_strip));
 goffset start;
 proto_item *ti;
 
 start = VIR_HEADER_LEN + xdr_getpos(xdrs);
 ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+proto_item_append_text(ti, " :: %s");
 tree = proto_item_add_subtree(ti, %s);
 EOS
 
@@ -485,7 +486,7 @@ for my $proto (@ARGV) {
             symbol => "$name\_dissectors",
             refcnt => 1,
             render => sub {
-                $context->sayf("static const vir_proc_payload_t %s[] = {", $_);
+                $context->sayf("static const vir_dissector_index_t %s[] = {", $_);
                 for my $proc (@procedures) {
                     local $context->{indent} = $context->{indent} + 4;
                     $context->sayf('{ %d, %s, %s, %s },', $proc->value, map {

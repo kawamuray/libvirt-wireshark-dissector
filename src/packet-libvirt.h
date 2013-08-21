@@ -24,12 +24,12 @@
 #define LIBVIRT_PORT 16509
 #endif
 
-#define VIR_HEADER_LEN 24
+#define VIR_HEADER_LEN 28
 
 typedef gboolean (*vir_xdr_dissector_t)(tvbuff_t *tvb, proto_tree *tree, XDR *xdrs, int hf);
 
-typedef struct vir_proc_payload vir_proc_payload_t;
-struct vir_proc_payload {
+typedef struct vir_dissector_index vir_dissector_index_t;
+struct vir_dissector_index {
     guint32             proc;
     vir_xdr_dissector_t args;
     vir_xdr_dissector_t ret;
