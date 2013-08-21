@@ -28,7 +28,6 @@ use strict;
 use warnings;
 use File::Spec;
 
-# TODO: add prefixes for needed things
 # TODO: dependencies graph
 # TODO: inteligent error message
 # TODO: add libvirt version info in header of protocol.h
@@ -216,7 +215,7 @@ if (!xdr_%s(xdrs, &type))
 switch (type) {
 EOS
         # XXX: wrong hf
-        for my $case (@{ $self->case_specs } ) {
+        for my $case (@{ $self->case_specs }) {
             my ($vals, $decl) = @$case;
             $c->say("case $_:") for @$vals;
             $c->sayf(<<'EOS', $c->refinc('hf_'.$ident.'__'.$decl->ident), $decl->type->gencall($c, $ident.'__'.$decl->ident));
