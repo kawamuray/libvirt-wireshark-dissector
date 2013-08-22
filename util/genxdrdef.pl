@@ -267,9 +267,10 @@ EOS
 
     sub gencall {
         my ($self, $c, $hfid) = @_;
-        sprintf 'dissect_xdr_array(tvb, tree, xdrs, hf, %s, %s, %s, %s)',
+        sprintf 'dissect_xdr_array(tvb, tree, xdrs, hf, %s, %s, "%s", %s, %s)',
             $c->refinc('ett_'.$self->ident_strip),
             $c->refinc("hf_$hfid\___ELEMENT_"),
+            $self->reftype->ident_strip,
             $self->length || '~0',
             $c->refinc(sprintf 'dissect_xdr_%s', $self->reftype->ident_strip);
     }
@@ -279,9 +280,10 @@ EOS
 
     sub gencall {
         my ($self, $c, $hfid) = @_;
-        sprintf 'dissect_xdr_vector(tvb, tree, xdrs, hf, %s, %s, %s, %s)',
+        sprintf 'dissect_xdr_vector(tvb, tree, xdrs, hf, %s, %s, "%s", %s, %s)',
             $c->refinc('ett_'.$self->ident_strip),
             $c->refinc("hf_$hfid\___ELEMENT_"),
+            $self->reftype->ident_strip,
             $self->length || '~0',
             $c->refinc(sprintf 'dissect_xdr_%s', $self->reftype->ident_strip);
     }

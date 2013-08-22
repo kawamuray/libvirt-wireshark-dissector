@@ -171,20 +171,16 @@ static void annotate_index(proto_node *ch, gpointer ip)
 }
 
 static gboolean
-dissect_xdr_vector(tvbuff_t *tvb, proto_tree *tree, XDR *xdrs, int hf,
-                   gint ett, int rhf, gint32 size, vir_xdr_dissector_t dp)
+dissect_xdr_vector(tvbuff_t *tvb, proto_tree *tree, XDR *xdrs, int hf, gint ett,
+                   int rhf, gchar *rtype, gint32 size, vir_xdr_dissector_t dp)
 {
     goffset start;
     proto_item *ti;
-    header_field_info *hfinfo;
     gint i;
 
     start = VIR_HEADER_LEN + xdr_getpos(xdrs);
     ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
-    /* Maybe I can use proto_registrar_get_name() after
-       stable distribution of wireshark contains it */
-    hfinfo = proto_registrar_get_nth(rhf);
-    proto_item_append_text(ti, " :: %s[%d]", hfinfo->name, size);
+    proto_item_append_text(ti, " :: %s[%d]", rtype, size);
     tree = proto_item_add_subtree(ti, ett);
     for (i = 0; i < size; i++) {
         if (!dp(tvb, tree, xdrs, rhf))
@@ -197,8 +193,8 @@ dissect_xdr_vector(tvbuff_t *tvb, proto_tree *tree, XDR *xdrs, int hf,
 }
 
 static gboolean
-dissect_xdr_array(tvbuff_t *tvb, proto_tree *tree, XDR *xdrs, int hf,
-                  gint ett, int rhf, gint32 maxlen, vir_xdr_dissector_t dp)
+dissect_xdr_array(tvbuff_t *tvb, proto_tree *tree, XDR *xdrs, int hf, gint ett,
+                  int rhf, gchar *rtype, gint32 maxlen, vir_xdr_dissector_t dp)
 {
     gint32 length;
 
@@ -206,7 +202,7 @@ dissect_xdr_array(tvbuff_t *tvb, proto_tree *tree, XDR *xdrs, int hf,
         return FALSE;
     if (length > maxlen)
         return FALSE;
-    return dissect_xdr_vector(tvb, tree, xdrs, hf, ett, rhf, length, dp);
+    return dissect_xdr_vector(tvb, tree, xdrs, hf, ett, rhf, rtype, length, dp);
 }
 
 static vir_xdr_dissector_t

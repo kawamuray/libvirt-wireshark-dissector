@@ -102,10 +102,10 @@ static gboolean dissect_xdr_opaque(tvbuff_t *tvb, proto_tree *tree, XDR *xdrs, i
 static gboolean dissect_xdr_bytes(tvbuff_t *tvb, proto_tree *tree, XDR *xdrs, int hf, gint32 maxlen);
 static gboolean dissect_xdr_pointer(tvbuff_t *tvb, proto_tree *tree, XDR *xdrs, int hf,
                                     vir_xdr_dissector_t dp);
-static gboolean dissect_xdr_vector(tvbuff_t *tvb, proto_tree *tree, XDR *xdrs, int hf,
-                                   gint ett, int rhf, gint32 size, vir_xdr_dissector_t dp);
-static gboolean dissect_xdr_array(tvbuff_t *tvb, proto_tree *tree, XDR *xdrs, int hf,
-                                  gint ett, int rhf, gint32 maxlen, vir_xdr_dissector_t dp);
+static gboolean dissect_xdr_vector(tvbuff_t *tvb, proto_tree *tree, XDR *xdrs, int hf, gint ett, 
+                                   int rhf, gchar *rtype, gint32 size, vir_xdr_dissector_t dp);
+static gboolean dissect_xdr_array(tvbuff_t *tvb, proto_tree *tree, XDR *xdrs, int hf, gint ett,
+                                  int rhf, gchar *rtype, gint32 maxlen, vir_xdr_dissector_t dp);
 
 #include "libvirt/protocol.h"
 
