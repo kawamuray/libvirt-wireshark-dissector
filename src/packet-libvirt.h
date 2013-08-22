@@ -68,38 +68,6 @@ static const value_string status_strings[] = {
     { -1, NULL }
 };
 
-enum {
-    VIR_PDIC_PROC_STRINGS = 1,
-    VIR_PDIC_HF,
-    VIR_PDIC_XDRDEF,
-    VIR_PDIC_XDRDEF_LEN,
-    VIR_PDIC_LAST
-};
-
-enum vir_xdr_type {
-    XDR_INT = 1,
-    XDR_UINT,
-    XDR_ENUM,
-    XDR_BOOL,
-    XDR_SHORT,
-    XDR_USHORT,
-    XDR_HYPER,
-    XDR_UHYPER,
-    XDR_CHAR,
-    XDR_UCHAR,
-    XDR_FLOAT,
-    XDR_DOUBLE,
-    XDR_QUADRUPLE,
-    XDR_OPAQUE,
-    XDR_BYTES,
-    XDR_STRING,
-    XDR_VECTOR,
-    XDR_ARRAY,
-    XDR_STRUCT,
-    XDR_UNION,
-    XDR_POINTER,
-};
-
 /* TODO: These symbols will automatically included in generated headers in the feature */
 #define VIR_SECURITY_MODEL_BUFLEN (256 + 1)
 #define VIR_SECURITY_LABEL_BUFLEN (4096 + 1)
