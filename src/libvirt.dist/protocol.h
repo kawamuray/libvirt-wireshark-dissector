@@ -30,3381 +30,9465 @@
             VALS(keepalive_procedure_strings), 0x0,\
             NULL, HFILL}\
         },\
+        { &hf_remote_nonnull_string,\
+          { "remote_nonnull_string", "libvirt.remote_nonnull_string",\
+            FT_STRING, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_string,\
+          { "remote_string", "libvirt.remote_string",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_uuid,\
+          { "remote_uuid", "libvirt.remote_uuid",\
+            FT_BYTES, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_nonnull_domain__name,\
+          { "name", "libvirt.remote_nonnull_domain.name",\
+            FT_STRING, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_nonnull_domain__uuid,\
+          { "uuid", "libvirt.remote_nonnull_domain.uuid",\
+            FT_BYTES, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_nonnull_domain__id,\
+          { "id", "libvirt.remote_nonnull_domain.id",\
+            FT_INT32, BASE_DEC,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
         { &hf_remote_nonnull_domain,\
           { "remote_nonnull_domain", "libvirt.remote_nonnull_domain",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_nonnull_network__name,\
+          { "name", "libvirt.remote_nonnull_network.name",\
             FT_STRING, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_nonnull_network__uuid,\
+          { "uuid", "libvirt.remote_nonnull_network.uuid",\
+            FT_BYTES, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_nonnull_network,\
           { "remote_nonnull_network", "libvirt.remote_nonnull_network",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_nonnull_nwfilter__name,\
+          { "name", "libvirt.remote_nonnull_nwfilter.name",\
             FT_STRING, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_nonnull_nwfilter__uuid,\
+          { "uuid", "libvirt.remote_nonnull_nwfilter.uuid",\
+            FT_BYTES, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_nonnull_nwfilter,\
           { "remote_nonnull_nwfilter", "libvirt.remote_nonnull_nwfilter",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_nonnull_interface__name,\
+          { "name", "libvirt.remote_nonnull_interface.name",\
+            FT_STRING, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_nonnull_interface__mac,\
+          { "mac", "libvirt.remote_nonnull_interface.mac",\
             FT_STRING, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_nonnull_interface,\
           { "remote_nonnull_interface", "libvirt.remote_nonnull_interface",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_nonnull_storage_pool__name,\
+          { "name", "libvirt.remote_nonnull_storage_pool.name",\
             FT_STRING, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_nonnull_storage_pool__uuid,\
+          { "uuid", "libvirt.remote_nonnull_storage_pool.uuid",\
+            FT_BYTES, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_nonnull_storage_pool,\
           { "remote_nonnull_storage_pool", "libvirt.remote_nonnull_storage_pool",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_nonnull_storage_vol__pool,\
+          { "pool", "libvirt.remote_nonnull_storage_vol.pool",\
+            FT_STRING, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_nonnull_storage_vol__name,\
+          { "name", "libvirt.remote_nonnull_storage_vol.name",\
+            FT_STRING, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_nonnull_storage_vol__key,\
+          { "key", "libvirt.remote_nonnull_storage_vol.key",\
             FT_STRING, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_nonnull_storage_vol,\
           { "remote_nonnull_storage_vol", "libvirt.remote_nonnull_storage_vol",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_nonnull_node_device__name,\
+          { "name", "libvirt.remote_nonnull_node_device.name",\
             FT_STRING, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_nonnull_node_device,\
           { "remote_nonnull_node_device", "libvirt.remote_nonnull_node_device",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_nonnull_secret__uuid,\
+          { "uuid", "libvirt.remote_nonnull_secret.uuid",\
+            FT_BYTES, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_nonnull_secret__usageType,\
+          { "usageType", "libvirt.remote_nonnull_secret.usageType",\
+            FT_INT32, BASE_DEC,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_nonnull_secret__usageID,\
+          { "usageID", "libvirt.remote_nonnull_secret.usageID",\
             FT_STRING, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_nonnull_secret,\
           { "remote_nonnull_secret", "libvirt.remote_nonnull_secret",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_nonnull_domain_snapshot__name,\
+          { "name", "libvirt.remote_nonnull_domain_snapshot.name",\
             FT_STRING, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_nonnull_domain_snapshot__dom,\
+          { "dom", "libvirt.remote_nonnull_domain_snapshot.dom",\
+            FT_NONE, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_nonnull_domain_snapshot,\
           { "remote_nonnull_domain_snapshot", "libvirt.remote_nonnull_domain_snapshot",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain,\
+          { "remote_domain", "libvirt.remote_domain",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_network,\
+          { "remote_network", "libvirt.remote_network",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_nwfilter,\
+          { "remote_nwfilter", "libvirt.remote_nwfilter",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_storage_pool,\
+          { "remote_storage_pool", "libvirt.remote_storage_pool",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_storage_vol,\
+          { "remote_storage_vol", "libvirt.remote_storage_vol",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_node_device,\
+          { "remote_node_device", "libvirt.remote_node_device",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_error__code,\
+          { "code", "libvirt.remote_error.code",\
+            FT_INT32, BASE_DEC,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_error__domain,\
+          { "domain", "libvirt.remote_error.domain",\
+            FT_INT32, BASE_DEC,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_error__message,\
+          { "message", "libvirt.remote_error.message",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_error__level,\
+          { "level", "libvirt.remote_error.level",\
+            FT_INT32, BASE_DEC,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_error__dom,\
+          { "dom", "libvirt.remote_error.dom",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_error__str1,\
+          { "str1", "libvirt.remote_error.str1",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_error__str2,\
+          { "str2", "libvirt.remote_error.str2",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_error__str3,\
+          { "str3", "libvirt.remote_error.str3",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_error__int1,\
+          { "int1", "libvirt.remote_error.int1",\
+            FT_INT32, BASE_DEC,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_error__int2,\
+          { "int2", "libvirt.remote_error.int2",\
+            FT_INT32, BASE_DEC,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_error__net,\
+          { "net", "libvirt.remote_error.net",\
+            FT_NONE, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_error,\
           { "remote_error", "libvirt.remote_error",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_auth_type,\
+          { "remote_auth_type", "libvirt.remote_auth_type",\
+            FT_UINT32, BASE_DEC,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_vcpu_info__number,\
+          { "number", "libvirt.remote_vcpu_info.number",\
+            FT_UINT32, BASE_DEC,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_vcpu_info__state,\
+          { "state", "libvirt.remote_vcpu_info.state",\
+            FT_INT32, BASE_DEC,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_vcpu_info__cpu_time,\
+          { "cpu_time", "libvirt.remote_vcpu_info.cpu_time",\
+            FT_UINT64, BASE_DEC,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_vcpu_info__cpu,\
+          { "cpu", "libvirt.remote_vcpu_info.cpu",\
+            FT_INT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_vcpu_info,\
           { "remote_vcpu_info", "libvirt.remote_vcpu_info",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_typed_param_value__i,\
+          { "i", "libvirt.remote_typed_param_value.i",\
+            FT_INT32, BASE_DEC,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_typed_param_value__ui,\
+          { "ui", "libvirt.remote_typed_param_value.ui",\
+            FT_UINT32, BASE_DEC,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_typed_param_value__l,\
+          { "l", "libvirt.remote_typed_param_value.l",\
+            FT_INT64, BASE_DEC,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_typed_param_value__ul,\
+          { "ul", "libvirt.remote_typed_param_value.ul",\
+            FT_UINT64, BASE_DEC,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_typed_param_value__d,\
+          { "d", "libvirt.remote_typed_param_value.d",\
+            FT_DOUBLE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_typed_param_value__b,\
+          { "b", "libvirt.remote_typed_param_value.b",\
+            FT_INT32, BASE_DEC,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_typed_param_value__s,\
+          { "s", "libvirt.remote_typed_param_value.s",\
             FT_STRING, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_typed_param_value,\
+          { "remote_typed_param_value", "libvirt.remote_typed_param_value",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_typed_param__field,\
+          { "field", "libvirt.remote_typed_param.field",\
+            FT_STRING, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_typed_param__value,\
+          { "value", "libvirt.remote_typed_param.value",\
+            FT_NONE, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_typed_param,\
           { "remote_typed_param", "libvirt.remote_typed_param",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_node_get_cpu_stats__field,\
+          { "field", "libvirt.remote_node_get_cpu_stats.field",\
             FT_STRING, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_node_get_cpu_stats__value,\
+          { "value", "libvirt.remote_node_get_cpu_stats.value",\
+            FT_UINT64, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_node_get_cpu_stats,\
           { "remote_node_get_cpu_stats", "libvirt.remote_node_get_cpu_stats",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_node_get_memory_stats__field,\
+          { "field", "libvirt.remote_node_get_memory_stats.field",\
             FT_STRING, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_node_get_memory_stats__value,\
+          { "value", "libvirt.remote_node_get_memory_stats.value",\
+            FT_UINT64, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_node_get_memory_stats,\
           { "remote_node_get_memory_stats", "libvirt.remote_node_get_memory_stats",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_disk_error__disk,\
+          { "disk", "libvirt.remote_domain_disk_error.disk",\
             FT_STRING, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_disk_error__error,\
+          { "error", "libvirt.remote_domain_disk_error.error",\
+            FT_INT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_disk_error,\
           { "remote_domain_disk_error", "libvirt.remote_domain_disk_error",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_connect_open_args__name,\
+          { "name", "libvirt.remote_connect_open_args.name",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_connect_open_args__flags,\
+          { "flags", "libvirt.remote_connect_open_args.flags",\
+            FT_UINT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_connect_open_args,\
           { "remote_connect_open_args", "libvirt.remote_connect_open_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_connect_supports_feature_args__feature,\
+          { "feature", "libvirt.remote_connect_supports_feature_args.feature",\
+            FT_INT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_connect_supports_feature_args,\
           { "remote_connect_supports_feature_args", "libvirt.remote_connect_supports_feature_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_connect_supports_feature_ret__supported,\
+          { "supported", "libvirt.remote_connect_supports_feature_ret.supported",\
+            FT_INT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_connect_supports_feature_ret,\
           { "remote_connect_supports_feature_ret", "libvirt.remote_connect_supports_feature_ret",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_connect_get_type_ret__type,\
+          { "type", "libvirt.remote_connect_get_type_ret.type",\
+            FT_INT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_connect_get_type_ret,\
           { "remote_connect_get_type_ret", "libvirt.remote_connect_get_type_ret",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_connect_get_version_ret__hv_ver,\
+          { "hv_ver", "libvirt.remote_connect_get_version_ret.hv_ver",\
+            FT_UINT64, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_connect_get_version_ret,\
           { "remote_connect_get_version_ret", "libvirt.remote_connect_get_version_ret",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_connect_get_lib_version_ret__lib_ver,\
+          { "lib_ver", "libvirt.remote_connect_get_lib_version_ret.lib_ver",\
+            FT_UINT64, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_connect_get_lib_version_ret,\
           { "remote_connect_get_lib_version_ret", "libvirt.remote_connect_get_lib_version_ret",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_connect_get_hostname_ret__hostname,\
+          { "hostname", "libvirt.remote_connect_get_hostname_ret.hostname",\
             FT_STRING, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_connect_get_hostname_ret,\
           { "remote_connect_get_hostname_ret", "libvirt.remote_connect_get_hostname_ret",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_connect_get_sysinfo_args__flags,\
+          { "flags", "libvirt.remote_connect_get_sysinfo_args.flags",\
+            FT_UINT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_connect_get_sysinfo_args,\
           { "remote_connect_get_sysinfo_args", "libvirt.remote_connect_get_sysinfo_args",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_connect_get_sysinfo_ret__sysinfo,\
+          { "sysinfo", "libvirt.remote_connect_get_sysinfo_ret.sysinfo",\
             FT_STRING, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_connect_get_sysinfo_ret,\
           { "remote_connect_get_sysinfo_ret", "libvirt.remote_connect_get_sysinfo_ret",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_connect_get_uri_ret__uri,\
+          { "uri", "libvirt.remote_connect_get_uri_ret.uri",\
             FT_STRING, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_connect_get_uri_ret,\
           { "remote_connect_get_uri_ret", "libvirt.remote_connect_get_uri_ret",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_connect_get_max_vcpus_args__type,\
+          { "type", "libvirt.remote_connect_get_max_vcpus_args.type",\
+            FT_INT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_connect_get_max_vcpus_args,\
           { "remote_connect_get_max_vcpus_args", "libvirt.remote_connect_get_max_vcpus_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_connect_get_max_vcpus_ret__max_vcpus,\
+          { "max_vcpus", "libvirt.remote_connect_get_max_vcpus_ret.max_vcpus",\
+            FT_INT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_connect_get_max_vcpus_ret,\
           { "remote_connect_get_max_vcpus_ret", "libvirt.remote_connect_get_max_vcpus_ret",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
-        { &hf_remote_node_get_info_ret_ANONTYPE_model,\
-          { "remote_node_get_info_ret_ANONTYPE_model", "libvirt.remote_node_get_info_ret_ANONTYPE_model",\
-            FT_STRING, BASE_NONE,\
+        { &hf_remote_node_get_info_ret__model,\
+          { "model", "libvirt.remote_node_get_info_ret.model",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_node_get_info_ret__model___ELEMENT_,\
+          { "_ELEMENT_", "libvirt.remote_node_get_info_ret.model._ELEMENT_",\
+            FT_INT8, BASE_DEC,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_node_get_info_ret__memory,\
+          { "memory", "libvirt.remote_node_get_info_ret.memory",\
+            FT_UINT64, BASE_DEC,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_node_get_info_ret__cpus,\
+          { "cpus", "libvirt.remote_node_get_info_ret.cpus",\
+            FT_INT32, BASE_DEC,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_node_get_info_ret__mhz,\
+          { "mhz", "libvirt.remote_node_get_info_ret.mhz",\
+            FT_INT32, BASE_DEC,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_node_get_info_ret__nodes,\
+          { "nodes", "libvirt.remote_node_get_info_ret.nodes",\
+            FT_INT32, BASE_DEC,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_node_get_info_ret__sockets,\
+          { "sockets", "libvirt.remote_node_get_info_ret.sockets",\
+            FT_INT32, BASE_DEC,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_node_get_info_ret__cores,\
+          { "cores", "libvirt.remote_node_get_info_ret.cores",\
+            FT_INT32, BASE_DEC,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_node_get_info_ret__threads,\
+          { "threads", "libvirt.remote_node_get_info_ret.threads",\
+            FT_INT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_node_get_info_ret,\
           { "remote_node_get_info_ret", "libvirt.remote_node_get_info_ret",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_connect_get_capabilities_ret__capabilities,\
+          { "capabilities", "libvirt.remote_connect_get_capabilities_ret.capabilities",\
             FT_STRING, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_connect_get_capabilities_ret,\
           { "remote_connect_get_capabilities_ret", "libvirt.remote_connect_get_capabilities_ret",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_node_get_cpu_stats_args__cpuNum,\
+          { "cpuNum", "libvirt.remote_node_get_cpu_stats_args.cpuNum",\
+            FT_INT32, BASE_DEC,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_node_get_cpu_stats_args__nparams,\
+          { "nparams", "libvirt.remote_node_get_cpu_stats_args.nparams",\
+            FT_INT32, BASE_DEC,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_node_get_cpu_stats_args__flags,\
+          { "flags", "libvirt.remote_node_get_cpu_stats_args.flags",\
+            FT_UINT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_node_get_cpu_stats_args,\
           { "remote_node_get_cpu_stats_args", "libvirt.remote_node_get_cpu_stats_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
-        { &hf_remote_node_get_cpu_stats_ret_ANONTYPE_params,\
-          { "remote_node_get_cpu_stats_ret_ANONTYPE_params", "libvirt.remote_node_get_cpu_stats_ret_ANONTYPE_params",\
-            FT_STRING, BASE_NONE,\
+        { &hf_remote_node_get_cpu_stats_ret__params,\
+          { "params", "libvirt.remote_node_get_cpu_stats_ret.params",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_node_get_cpu_stats_ret__params___ELEMENT_,\
+          { "_ELEMENT_", "libvirt.remote_node_get_cpu_stats_ret.params._ELEMENT_",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_node_get_cpu_stats_ret__nparams,\
+          { "nparams", "libvirt.remote_node_get_cpu_stats_ret.nparams",\
+            FT_INT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_node_get_cpu_stats_ret,\
           { "remote_node_get_cpu_stats_ret", "libvirt.remote_node_get_cpu_stats_ret",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_node_get_memory_stats_args__nparams,\
+          { "nparams", "libvirt.remote_node_get_memory_stats_args.nparams",\
+            FT_INT32, BASE_DEC,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_node_get_memory_stats_args__cellNum,\
+          { "cellNum", "libvirt.remote_node_get_memory_stats_args.cellNum",\
+            FT_INT32, BASE_DEC,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_node_get_memory_stats_args__flags,\
+          { "flags", "libvirt.remote_node_get_memory_stats_args.flags",\
+            FT_UINT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_node_get_memory_stats_args,\
           { "remote_node_get_memory_stats_args", "libvirt.remote_node_get_memory_stats_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
-        { &hf_remote_node_get_memory_stats_ret_ANONTYPE_params,\
-          { "remote_node_get_memory_stats_ret_ANONTYPE_params", "libvirt.remote_node_get_memory_stats_ret_ANONTYPE_params",\
-            FT_STRING, BASE_NONE,\
+        { &hf_remote_node_get_memory_stats_ret__params,\
+          { "params", "libvirt.remote_node_get_memory_stats_ret.params",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_node_get_memory_stats_ret__params___ELEMENT_,\
+          { "_ELEMENT_", "libvirt.remote_node_get_memory_stats_ret.params._ELEMENT_",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_node_get_memory_stats_ret__nparams,\
+          { "nparams", "libvirt.remote_node_get_memory_stats_ret.nparams",\
+            FT_INT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_node_get_memory_stats_ret,\
           { "remote_node_get_memory_stats_ret", "libvirt.remote_node_get_memory_stats_ret",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_node_get_cells_free_memory_args__startCell,\
+          { "startCell", "libvirt.remote_node_get_cells_free_memory_args.startCell",\
+            FT_INT32, BASE_DEC,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_node_get_cells_free_memory_args__maxcells,\
+          { "maxcells", "libvirt.remote_node_get_cells_free_memory_args.maxcells",\
+            FT_INT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_node_get_cells_free_memory_args,\
           { "remote_node_get_cells_free_memory_args", "libvirt.remote_node_get_cells_free_memory_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
-        { &hf_remote_node_get_cells_free_memory_ret_ANONTYPE_cells,\
-          { "remote_node_get_cells_free_memory_ret_ANONTYPE_cells", "libvirt.remote_node_get_cells_free_memory_ret_ANONTYPE_cells",\
-            FT_STRING, BASE_NONE,\
+        { &hf_remote_node_get_cells_free_memory_ret__cells,\
+          { "cells", "libvirt.remote_node_get_cells_free_memory_ret.cells",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_node_get_cells_free_memory_ret__cells___ELEMENT_,\
+          { "_ELEMENT_", "libvirt.remote_node_get_cells_free_memory_ret.cells._ELEMENT_",\
+            FT_UINT64, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_node_get_cells_free_memory_ret,\
           { "remote_node_get_cells_free_memory_ret", "libvirt.remote_node_get_cells_free_memory_ret",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_node_get_free_memory_ret__freeMem,\
+          { "freeMem", "libvirt.remote_node_get_free_memory_ret.freeMem",\
+            FT_UINT64, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_node_get_free_memory_ret,\
           { "remote_node_get_free_memory_ret", "libvirt.remote_node_get_free_memory_ret",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_get_scheduler_type_args__dom,\
+          { "dom", "libvirt.remote_domain_get_scheduler_type_args.dom",\
+            FT_NONE, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_get_scheduler_type_args,\
           { "remote_domain_get_scheduler_type_args", "libvirt.remote_domain_get_scheduler_type_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_get_scheduler_type_ret__type,\
+          { "type", "libvirt.remote_domain_get_scheduler_type_ret.type",\
+            FT_INT32, BASE_DEC,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_get_scheduler_type_ret__nparams,\
+          { "nparams", "libvirt.remote_domain_get_scheduler_type_ret.nparams",\
+            FT_INT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_get_scheduler_type_ret,\
           { "remote_domain_get_scheduler_type_ret", "libvirt.remote_domain_get_scheduler_type_ret",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_get_scheduler_parameters_args__dom,\
+          { "dom", "libvirt.remote_domain_get_scheduler_parameters_args.dom",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_get_scheduler_parameters_args__nparams,\
+          { "nparams", "libvirt.remote_domain_get_scheduler_parameters_args.nparams",\
+            FT_INT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_get_scheduler_parameters_args,\
           { "remote_domain_get_scheduler_parameters_args", "libvirt.remote_domain_get_scheduler_parameters_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
-        { &hf_remote_domain_get_scheduler_parameters_ret_ANONTYPE_params,\
-          { "remote_domain_get_scheduler_parameters_ret_ANONTYPE_params", "libvirt.remote_domain_get_scheduler_parameters_ret_ANONTYPE_params",\
-            FT_STRING, BASE_NONE,\
+        { &hf_remote_domain_get_scheduler_parameters_ret__params,\
+          { "params", "libvirt.remote_domain_get_scheduler_parameters_ret.params",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_get_scheduler_parameters_ret__params___ELEMENT_,\
+          { "_ELEMENT_", "libvirt.remote_domain_get_scheduler_parameters_ret.params._ELEMENT_",\
+            FT_NONE, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_get_scheduler_parameters_ret,\
           { "remote_domain_get_scheduler_parameters_ret", "libvirt.remote_domain_get_scheduler_parameters_ret",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_get_scheduler_parameters_flags_args__dom,\
+          { "dom", "libvirt.remote_domain_get_scheduler_parameters_flags_args.dom",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_get_scheduler_parameters_flags_args__nparams,\
+          { "nparams", "libvirt.remote_domain_get_scheduler_parameters_flags_args.nparams",\
+            FT_INT32, BASE_DEC,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_get_scheduler_parameters_flags_args__flags,\
+          { "flags", "libvirt.remote_domain_get_scheduler_parameters_flags_args.flags",\
+            FT_UINT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_get_scheduler_parameters_flags_args,\
           { "remote_domain_get_scheduler_parameters_flags_args", "libvirt.remote_domain_get_scheduler_parameters_flags_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
-        { &hf_remote_domain_get_scheduler_parameters_flags_ret_ANONTYPE_params,\
-          { "remote_domain_get_scheduler_parameters_flags_ret_ANONTYPE_params", "libvirt.remote_domain_get_scheduler_parameters_flags_ret_ANONTYPE_params",\
-            FT_STRING, BASE_NONE,\
+        { &hf_remote_domain_get_scheduler_parameters_flags_ret__params,\
+          { "params", "libvirt.remote_domain_get_scheduler_parameters_flags_ret.params",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_get_scheduler_parameters_flags_ret__params___ELEMENT_,\
+          { "_ELEMENT_", "libvirt.remote_domain_get_scheduler_parameters_flags_ret.params._ELEMENT_",\
+            FT_NONE, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_get_scheduler_parameters_flags_ret,\
           { "remote_domain_get_scheduler_parameters_flags_ret", "libvirt.remote_domain_get_scheduler_parameters_flags_ret",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
-        { &hf_remote_domain_set_scheduler_parameters_args_ANONTYPE_params,\
-          { "remote_domain_set_scheduler_parameters_args_ANONTYPE_params", "libvirt.remote_domain_set_scheduler_parameters_args_ANONTYPE_params",\
-            FT_STRING, BASE_NONE,\
+        { &hf_remote_domain_set_scheduler_parameters_args__dom,\
+          { "dom", "libvirt.remote_domain_set_scheduler_parameters_args.dom",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_set_scheduler_parameters_args__params,\
+          { "params", "libvirt.remote_domain_set_scheduler_parameters_args.params",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_set_scheduler_parameters_args__params___ELEMENT_,\
+          { "_ELEMENT_", "libvirt.remote_domain_set_scheduler_parameters_args.params._ELEMENT_",\
+            FT_NONE, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_set_scheduler_parameters_args,\
           { "remote_domain_set_scheduler_parameters_args", "libvirt.remote_domain_set_scheduler_parameters_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
-        { &hf_remote_domain_set_scheduler_parameters_flags_args_ANONTYPE_params,\
-          { "remote_domain_set_scheduler_parameters_flags_args_ANONTYPE_params", "libvirt.remote_domain_set_scheduler_parameters_flags_args_ANONTYPE_params",\
-            FT_STRING, BASE_NONE,\
+        { &hf_remote_domain_set_scheduler_parameters_flags_args__dom,\
+          { "dom", "libvirt.remote_domain_set_scheduler_parameters_flags_args.dom",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_set_scheduler_parameters_flags_args__params,\
+          { "params", "libvirt.remote_domain_set_scheduler_parameters_flags_args.params",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_set_scheduler_parameters_flags_args__params___ELEMENT_,\
+          { "_ELEMENT_", "libvirt.remote_domain_set_scheduler_parameters_flags_args.params._ELEMENT_",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_set_scheduler_parameters_flags_args__flags,\
+          { "flags", "libvirt.remote_domain_set_scheduler_parameters_flags_args.flags",\
+            FT_UINT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_set_scheduler_parameters_flags_args,\
           { "remote_domain_set_scheduler_parameters_flags_args", "libvirt.remote_domain_set_scheduler_parameters_flags_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
-        { &hf_remote_domain_set_blkio_parameters_args_ANONTYPE_params,\
-          { "remote_domain_set_blkio_parameters_args_ANONTYPE_params", "libvirt.remote_domain_set_blkio_parameters_args_ANONTYPE_params",\
-            FT_STRING, BASE_NONE,\
+        { &hf_remote_domain_set_blkio_parameters_args__dom,\
+          { "dom", "libvirt.remote_domain_set_blkio_parameters_args.dom",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_set_blkio_parameters_args__params,\
+          { "params", "libvirt.remote_domain_set_blkio_parameters_args.params",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_set_blkio_parameters_args__params___ELEMENT_,\
+          { "_ELEMENT_", "libvirt.remote_domain_set_blkio_parameters_args.params._ELEMENT_",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_set_blkio_parameters_args__flags,\
+          { "flags", "libvirt.remote_domain_set_blkio_parameters_args.flags",\
+            FT_UINT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_set_blkio_parameters_args,\
           { "remote_domain_set_blkio_parameters_args", "libvirt.remote_domain_set_blkio_parameters_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_get_blkio_parameters_args__dom,\
+          { "dom", "libvirt.remote_domain_get_blkio_parameters_args.dom",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_get_blkio_parameters_args__nparams,\
+          { "nparams", "libvirt.remote_domain_get_blkio_parameters_args.nparams",\
+            FT_INT32, BASE_DEC,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_get_blkio_parameters_args__flags,\
+          { "flags", "libvirt.remote_domain_get_blkio_parameters_args.flags",\
+            FT_UINT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_get_blkio_parameters_args,\
           { "remote_domain_get_blkio_parameters_args", "libvirt.remote_domain_get_blkio_parameters_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
-        { &hf_remote_domain_get_blkio_parameters_ret_ANONTYPE_params,\
-          { "remote_domain_get_blkio_parameters_ret_ANONTYPE_params", "libvirt.remote_domain_get_blkio_parameters_ret_ANONTYPE_params",\
-            FT_STRING, BASE_NONE,\
+        { &hf_remote_domain_get_blkio_parameters_ret__params,\
+          { "params", "libvirt.remote_domain_get_blkio_parameters_ret.params",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_get_blkio_parameters_ret__params___ELEMENT_,\
+          { "_ELEMENT_", "libvirt.remote_domain_get_blkio_parameters_ret.params._ELEMENT_",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_get_blkio_parameters_ret__nparams,\
+          { "nparams", "libvirt.remote_domain_get_blkio_parameters_ret.nparams",\
+            FT_INT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_get_blkio_parameters_ret,\
           { "remote_domain_get_blkio_parameters_ret", "libvirt.remote_domain_get_blkio_parameters_ret",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
-        { &hf_remote_domain_set_memory_parameters_args_ANONTYPE_params,\
-          { "remote_domain_set_memory_parameters_args_ANONTYPE_params", "libvirt.remote_domain_set_memory_parameters_args_ANONTYPE_params",\
-            FT_STRING, BASE_NONE,\
+        { &hf_remote_domain_set_memory_parameters_args__dom,\
+          { "dom", "libvirt.remote_domain_set_memory_parameters_args.dom",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_set_memory_parameters_args__params,\
+          { "params", "libvirt.remote_domain_set_memory_parameters_args.params",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_set_memory_parameters_args__params___ELEMENT_,\
+          { "_ELEMENT_", "libvirt.remote_domain_set_memory_parameters_args.params._ELEMENT_",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_set_memory_parameters_args__flags,\
+          { "flags", "libvirt.remote_domain_set_memory_parameters_args.flags",\
+            FT_UINT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_set_memory_parameters_args,\
           { "remote_domain_set_memory_parameters_args", "libvirt.remote_domain_set_memory_parameters_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_get_memory_parameters_args__dom,\
+          { "dom", "libvirt.remote_domain_get_memory_parameters_args.dom",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_get_memory_parameters_args__nparams,\
+          { "nparams", "libvirt.remote_domain_get_memory_parameters_args.nparams",\
+            FT_INT32, BASE_DEC,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_get_memory_parameters_args__flags,\
+          { "flags", "libvirt.remote_domain_get_memory_parameters_args.flags",\
+            FT_UINT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_get_memory_parameters_args,\
           { "remote_domain_get_memory_parameters_args", "libvirt.remote_domain_get_memory_parameters_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
-        { &hf_remote_domain_get_memory_parameters_ret_ANONTYPE_params,\
-          { "remote_domain_get_memory_parameters_ret_ANONTYPE_params", "libvirt.remote_domain_get_memory_parameters_ret_ANONTYPE_params",\
-            FT_STRING, BASE_NONE,\
+        { &hf_remote_domain_get_memory_parameters_ret__params,\
+          { "params", "libvirt.remote_domain_get_memory_parameters_ret.params",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_get_memory_parameters_ret__params___ELEMENT_,\
+          { "_ELEMENT_", "libvirt.remote_domain_get_memory_parameters_ret.params._ELEMENT_",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_get_memory_parameters_ret__nparams,\
+          { "nparams", "libvirt.remote_domain_get_memory_parameters_ret.nparams",\
+            FT_INT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_get_memory_parameters_ret,\
           { "remote_domain_get_memory_parameters_ret", "libvirt.remote_domain_get_memory_parameters_ret",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_block_resize_args__dom,\
+          { "dom", "libvirt.remote_domain_block_resize_args.dom",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_block_resize_args__disk,\
+          { "disk", "libvirt.remote_domain_block_resize_args.disk",\
             FT_STRING, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_block_resize_args__size,\
+          { "size", "libvirt.remote_domain_block_resize_args.size",\
+            FT_UINT64, BASE_DEC,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_block_resize_args__flags,\
+          { "flags", "libvirt.remote_domain_block_resize_args.flags",\
+            FT_UINT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_block_resize_args,\
           { "remote_domain_block_resize_args", "libvirt.remote_domain_block_resize_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
-        { &hf_remote_domain_set_numa_parameters_args_ANONTYPE_params,\
-          { "remote_domain_set_numa_parameters_args_ANONTYPE_params", "libvirt.remote_domain_set_numa_parameters_args_ANONTYPE_params",\
-            FT_STRING, BASE_NONE,\
+        { &hf_remote_domain_set_numa_parameters_args__dom,\
+          { "dom", "libvirt.remote_domain_set_numa_parameters_args.dom",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_set_numa_parameters_args__params,\
+          { "params", "libvirt.remote_domain_set_numa_parameters_args.params",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_set_numa_parameters_args__params___ELEMENT_,\
+          { "_ELEMENT_", "libvirt.remote_domain_set_numa_parameters_args.params._ELEMENT_",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_set_numa_parameters_args__flags,\
+          { "flags", "libvirt.remote_domain_set_numa_parameters_args.flags",\
+            FT_UINT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_set_numa_parameters_args,\
           { "remote_domain_set_numa_parameters_args", "libvirt.remote_domain_set_numa_parameters_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_get_numa_parameters_args__dom,\
+          { "dom", "libvirt.remote_domain_get_numa_parameters_args.dom",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_get_numa_parameters_args__nparams,\
+          { "nparams", "libvirt.remote_domain_get_numa_parameters_args.nparams",\
+            FT_INT32, BASE_DEC,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_get_numa_parameters_args__flags,\
+          { "flags", "libvirt.remote_domain_get_numa_parameters_args.flags",\
+            FT_UINT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_get_numa_parameters_args,\
           { "remote_domain_get_numa_parameters_args", "libvirt.remote_domain_get_numa_parameters_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
-        { &hf_remote_domain_get_numa_parameters_ret_ANONTYPE_params,\
-          { "remote_domain_get_numa_parameters_ret_ANONTYPE_params", "libvirt.remote_domain_get_numa_parameters_ret_ANONTYPE_params",\
-            FT_STRING, BASE_NONE,\
+        { &hf_remote_domain_get_numa_parameters_ret__params,\
+          { "params", "libvirt.remote_domain_get_numa_parameters_ret.params",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_get_numa_parameters_ret__params___ELEMENT_,\
+          { "_ELEMENT_", "libvirt.remote_domain_get_numa_parameters_ret.params._ELEMENT_",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_get_numa_parameters_ret__nparams,\
+          { "nparams", "libvirt.remote_domain_get_numa_parameters_ret.nparams",\
+            FT_INT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_get_numa_parameters_ret,\
           { "remote_domain_get_numa_parameters_ret", "libvirt.remote_domain_get_numa_parameters_ret",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_block_stats_args__dom,\
+          { "dom", "libvirt.remote_domain_block_stats_args.dom",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_block_stats_args__path,\
+          { "path", "libvirt.remote_domain_block_stats_args.path",\
             FT_STRING, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_block_stats_args,\
           { "remote_domain_block_stats_args", "libvirt.remote_domain_block_stats_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_block_stats_ret__rd_req,\
+          { "rd_req", "libvirt.remote_domain_block_stats_ret.rd_req",\
+            FT_INT64, BASE_DEC,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_block_stats_ret__rd_bytes,\
+          { "rd_bytes", "libvirt.remote_domain_block_stats_ret.rd_bytes",\
+            FT_INT64, BASE_DEC,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_block_stats_ret__wr_req,\
+          { "wr_req", "libvirt.remote_domain_block_stats_ret.wr_req",\
+            FT_INT64, BASE_DEC,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_block_stats_ret__wr_bytes,\
+          { "wr_bytes", "libvirt.remote_domain_block_stats_ret.wr_bytes",\
+            FT_INT64, BASE_DEC,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_block_stats_ret__errs,\
+          { "errs", "libvirt.remote_domain_block_stats_ret.errs",\
+            FT_INT64, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_block_stats_ret,\
           { "remote_domain_block_stats_ret", "libvirt.remote_domain_block_stats_ret",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_block_stats_flags_args__dom,\
+          { "dom", "libvirt.remote_domain_block_stats_flags_args.dom",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_block_stats_flags_args__path,\
+          { "path", "libvirt.remote_domain_block_stats_flags_args.path",\
             FT_STRING, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_block_stats_flags_args__nparams,\
+          { "nparams", "libvirt.remote_domain_block_stats_flags_args.nparams",\
+            FT_INT32, BASE_DEC,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_block_stats_flags_args__flags,\
+          { "flags", "libvirt.remote_domain_block_stats_flags_args.flags",\
+            FT_UINT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_block_stats_flags_args,\
           { "remote_domain_block_stats_flags_args", "libvirt.remote_domain_block_stats_flags_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
-        { &hf_remote_domain_block_stats_flags_ret_ANONTYPE_params,\
-          { "remote_domain_block_stats_flags_ret_ANONTYPE_params", "libvirt.remote_domain_block_stats_flags_ret_ANONTYPE_params",\
-            FT_STRING, BASE_NONE,\
+        { &hf_remote_domain_block_stats_flags_ret__params,\
+          { "params", "libvirt.remote_domain_block_stats_flags_ret.params",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_block_stats_flags_ret__params___ELEMENT_,\
+          { "_ELEMENT_", "libvirt.remote_domain_block_stats_flags_ret.params._ELEMENT_",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_block_stats_flags_ret__nparams,\
+          { "nparams", "libvirt.remote_domain_block_stats_flags_ret.nparams",\
+            FT_INT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_block_stats_flags_ret,\
           { "remote_domain_block_stats_flags_ret", "libvirt.remote_domain_block_stats_flags_ret",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_interface_stats_args__dom,\
+          { "dom", "libvirt.remote_domain_interface_stats_args.dom",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_interface_stats_args__path,\
+          { "path", "libvirt.remote_domain_interface_stats_args.path",\
             FT_STRING, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_interface_stats_args,\
           { "remote_domain_interface_stats_args", "libvirt.remote_domain_interface_stats_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_interface_stats_ret__rx_bytes,\
+          { "rx_bytes", "libvirt.remote_domain_interface_stats_ret.rx_bytes",\
+            FT_INT64, BASE_DEC,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_interface_stats_ret__rx_packets,\
+          { "rx_packets", "libvirt.remote_domain_interface_stats_ret.rx_packets",\
+            FT_INT64, BASE_DEC,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_interface_stats_ret__rx_errs,\
+          { "rx_errs", "libvirt.remote_domain_interface_stats_ret.rx_errs",\
+            FT_INT64, BASE_DEC,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_interface_stats_ret__rx_drop,\
+          { "rx_drop", "libvirt.remote_domain_interface_stats_ret.rx_drop",\
+            FT_INT64, BASE_DEC,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_interface_stats_ret__tx_bytes,\
+          { "tx_bytes", "libvirt.remote_domain_interface_stats_ret.tx_bytes",\
+            FT_INT64, BASE_DEC,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_interface_stats_ret__tx_packets,\
+          { "tx_packets", "libvirt.remote_domain_interface_stats_ret.tx_packets",\
+            FT_INT64, BASE_DEC,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_interface_stats_ret__tx_errs,\
+          { "tx_errs", "libvirt.remote_domain_interface_stats_ret.tx_errs",\
+            FT_INT64, BASE_DEC,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_interface_stats_ret__tx_drop,\
+          { "tx_drop", "libvirt.remote_domain_interface_stats_ret.tx_drop",\
+            FT_INT64, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_interface_stats_ret,\
           { "remote_domain_interface_stats_ret", "libvirt.remote_domain_interface_stats_ret",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_set_interface_parameters_args__dom,\
+          { "dom", "libvirt.remote_domain_set_interface_parameters_args.dom",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_set_interface_parameters_args__device,\
+          { "device", "libvirt.remote_domain_set_interface_parameters_args.device",\
             FT_STRING, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
-        { &hf_remote_domain_set_interface_parameters_args_ANONTYPE_params,\
-          { "remote_domain_set_interface_parameters_args_ANONTYPE_params", "libvirt.remote_domain_set_interface_parameters_args_ANONTYPE_params",\
-            FT_STRING, BASE_NONE,\
+        { &hf_remote_domain_set_interface_parameters_args__params,\
+          { "params", "libvirt.remote_domain_set_interface_parameters_args.params",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_set_interface_parameters_args__params___ELEMENT_,\
+          { "_ELEMENT_", "libvirt.remote_domain_set_interface_parameters_args.params._ELEMENT_",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_set_interface_parameters_args__flags,\
+          { "flags", "libvirt.remote_domain_set_interface_parameters_args.flags",\
+            FT_UINT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_set_interface_parameters_args,\
           { "remote_domain_set_interface_parameters_args", "libvirt.remote_domain_set_interface_parameters_args",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_get_interface_parameters_args__dom,\
+          { "dom", "libvirt.remote_domain_get_interface_parameters_args.dom",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_get_interface_parameters_args__device,\
+          { "device", "libvirt.remote_domain_get_interface_parameters_args.device",\
             FT_STRING, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_get_interface_parameters_args__nparams,\
+          { "nparams", "libvirt.remote_domain_get_interface_parameters_args.nparams",\
+            FT_INT32, BASE_DEC,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_get_interface_parameters_args__flags,\
+          { "flags", "libvirt.remote_domain_get_interface_parameters_args.flags",\
+            FT_UINT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_get_interface_parameters_args,\
           { "remote_domain_get_interface_parameters_args", "libvirt.remote_domain_get_interface_parameters_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
-        { &hf_remote_domain_get_interface_parameters_ret_ANONTYPE_params,\
-          { "remote_domain_get_interface_parameters_ret_ANONTYPE_params", "libvirt.remote_domain_get_interface_parameters_ret_ANONTYPE_params",\
-            FT_STRING, BASE_NONE,\
+        { &hf_remote_domain_get_interface_parameters_ret__params,\
+          { "params", "libvirt.remote_domain_get_interface_parameters_ret.params",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_get_interface_parameters_ret__params___ELEMENT_,\
+          { "_ELEMENT_", "libvirt.remote_domain_get_interface_parameters_ret.params._ELEMENT_",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_get_interface_parameters_ret__nparams,\
+          { "nparams", "libvirt.remote_domain_get_interface_parameters_ret.nparams",\
+            FT_INT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_get_interface_parameters_ret,\
           { "remote_domain_get_interface_parameters_ret", "libvirt.remote_domain_get_interface_parameters_ret",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_memory_stats_args__dom,\
+          { "dom", "libvirt.remote_domain_memory_stats_args.dom",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_memory_stats_args__maxStats,\
+          { "maxStats", "libvirt.remote_domain_memory_stats_args.maxStats",\
+            FT_UINT32, BASE_DEC,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_memory_stats_args__flags,\
+          { "flags", "libvirt.remote_domain_memory_stats_args.flags",\
+            FT_UINT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_memory_stats_args,\
           { "remote_domain_memory_stats_args", "libvirt.remote_domain_memory_stats_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_memory_stat__tag,\
+          { "tag", "libvirt.remote_domain_memory_stat.tag",\
+            FT_INT32, BASE_DEC,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_memory_stat__val,\
+          { "val", "libvirt.remote_domain_memory_stat.val",\
+            FT_UINT64, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_memory_stat,\
           { "remote_domain_memory_stat", "libvirt.remote_domain_memory_stat",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
-        { &hf_remote_domain_memory_stats_ret_ANONTYPE_stats,\
-          { "remote_domain_memory_stats_ret_ANONTYPE_stats", "libvirt.remote_domain_memory_stats_ret_ANONTYPE_stats",\
-            FT_STRING, BASE_NONE,\
+        { &hf_remote_domain_memory_stats_ret__stats,\
+          { "stats", "libvirt.remote_domain_memory_stats_ret.stats",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_memory_stats_ret__stats___ELEMENT_,\
+          { "_ELEMENT_", "libvirt.remote_domain_memory_stats_ret.stats._ELEMENT_",\
+            FT_NONE, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_memory_stats_ret,\
           { "remote_domain_memory_stats_ret", "libvirt.remote_domain_memory_stats_ret",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_block_peek_args__dom,\
+          { "dom", "libvirt.remote_domain_block_peek_args.dom",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_block_peek_args__path,\
+          { "path", "libvirt.remote_domain_block_peek_args.path",\
             FT_STRING, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_block_peek_args__offset,\
+          { "offset", "libvirt.remote_domain_block_peek_args.offset",\
+            FT_UINT64, BASE_DEC,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_block_peek_args__size,\
+          { "size", "libvirt.remote_domain_block_peek_args.size",\
+            FT_UINT32, BASE_DEC,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_block_peek_args__flags,\
+          { "flags", "libvirt.remote_domain_block_peek_args.flags",\
+            FT_UINT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_block_peek_args,\
           { "remote_domain_block_peek_args", "libvirt.remote_domain_block_peek_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_block_peek_ret__buffer,\
+          { "buffer", "libvirt.remote_domain_block_peek_ret.buffer",\
+            FT_BYTES, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_block_peek_ret,\
           { "remote_domain_block_peek_ret", "libvirt.remote_domain_block_peek_ret",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_memory_peek_args__dom,\
+          { "dom", "libvirt.remote_domain_memory_peek_args.dom",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_memory_peek_args__offset,\
+          { "offset", "libvirt.remote_domain_memory_peek_args.offset",\
+            FT_UINT64, BASE_DEC,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_memory_peek_args__size,\
+          { "size", "libvirt.remote_domain_memory_peek_args.size",\
+            FT_UINT32, BASE_DEC,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_memory_peek_args__flags,\
+          { "flags", "libvirt.remote_domain_memory_peek_args.flags",\
+            FT_UINT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_memory_peek_args,\
           { "remote_domain_memory_peek_args", "libvirt.remote_domain_memory_peek_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_memory_peek_ret__buffer,\
+          { "buffer", "libvirt.remote_domain_memory_peek_ret.buffer",\
+            FT_BYTES, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_memory_peek_ret,\
           { "remote_domain_memory_peek_ret", "libvirt.remote_domain_memory_peek_ret",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_get_block_info_args__dom,\
+          { "dom", "libvirt.remote_domain_get_block_info_args.dom",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_get_block_info_args__path,\
+          { "path", "libvirt.remote_domain_get_block_info_args.path",\
             FT_STRING, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_get_block_info_args__flags,\
+          { "flags", "libvirt.remote_domain_get_block_info_args.flags",\
+            FT_UINT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_get_block_info_args,\
           { "remote_domain_get_block_info_args", "libvirt.remote_domain_get_block_info_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_get_block_info_ret__allocation,\
+          { "allocation", "libvirt.remote_domain_get_block_info_ret.allocation",\
+            FT_UINT64, BASE_DEC,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_get_block_info_ret__capacity,\
+          { "capacity", "libvirt.remote_domain_get_block_info_ret.capacity",\
+            FT_UINT64, BASE_DEC,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_get_block_info_ret__physical,\
+          { "physical", "libvirt.remote_domain_get_block_info_ret.physical",\
+            FT_UINT64, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_get_block_info_ret,\
           { "remote_domain_get_block_info_ret", "libvirt.remote_domain_get_block_info_ret",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_connect_list_domains_args__maxids,\
+          { "maxids", "libvirt.remote_connect_list_domains_args.maxids",\
+            FT_INT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_connect_list_domains_args,\
           { "remote_connect_list_domains_args", "libvirt.remote_connect_list_domains_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
-        { &hf_remote_connect_list_domains_ret_ANONTYPE_ids,\
-          { "remote_connect_list_domains_ret_ANONTYPE_ids", "libvirt.remote_connect_list_domains_ret_ANONTYPE_ids",\
-            FT_STRING, BASE_NONE,\
+        { &hf_remote_connect_list_domains_ret__ids,\
+          { "ids", "libvirt.remote_connect_list_domains_ret.ids",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_connect_list_domains_ret__ids___ELEMENT_,\
+          { "_ELEMENT_", "libvirt.remote_connect_list_domains_ret.ids._ELEMENT_",\
+            FT_INT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_connect_list_domains_ret,\
           { "remote_connect_list_domains_ret", "libvirt.remote_connect_list_domains_ret",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_connect_num_of_domains_ret__num,\
+          { "num", "libvirt.remote_connect_num_of_domains_ret.num",\
+            FT_INT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_connect_num_of_domains_ret,\
           { "remote_connect_num_of_domains_ret", "libvirt.remote_connect_num_of_domains_ret",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_create_xml_args__xml_desc,\
+          { "xml_desc", "libvirt.remote_domain_create_xml_args.xml_desc",\
             FT_STRING, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_create_xml_args__flags,\
+          { "flags", "libvirt.remote_domain_create_xml_args.flags",\
+            FT_UINT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_create_xml_args,\
           { "remote_domain_create_xml_args", "libvirt.remote_domain_create_xml_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_create_xml_ret__dom,\
+          { "dom", "libvirt.remote_domain_create_xml_ret.dom",\
+            FT_NONE, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_create_xml_ret,\
           { "remote_domain_create_xml_ret", "libvirt.remote_domain_create_xml_ret",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_lookup_by_id_args__id,\
+          { "id", "libvirt.remote_domain_lookup_by_id_args.id",\
+            FT_INT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_lookup_by_id_args,\
           { "remote_domain_lookup_by_id_args", "libvirt.remote_domain_lookup_by_id_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_lookup_by_id_ret__dom,\
+          { "dom", "libvirt.remote_domain_lookup_by_id_ret.dom",\
+            FT_NONE, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_lookup_by_id_ret,\
           { "remote_domain_lookup_by_id_ret", "libvirt.remote_domain_lookup_by_id_ret",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_lookup_by_uuid_args__uuid,\
+          { "uuid", "libvirt.remote_domain_lookup_by_uuid_args.uuid",\
+            FT_BYTES, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_lookup_by_uuid_args,\
           { "remote_domain_lookup_by_uuid_args", "libvirt.remote_domain_lookup_by_uuid_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_lookup_by_uuid_ret__dom,\
+          { "dom", "libvirt.remote_domain_lookup_by_uuid_ret.dom",\
+            FT_NONE, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_lookup_by_uuid_ret,\
           { "remote_domain_lookup_by_uuid_ret", "libvirt.remote_domain_lookup_by_uuid_ret",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_lookup_by_name_args__name,\
+          { "name", "libvirt.remote_domain_lookup_by_name_args.name",\
             FT_STRING, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_lookup_by_name_args,\
           { "remote_domain_lookup_by_name_args", "libvirt.remote_domain_lookup_by_name_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_lookup_by_name_ret__dom,\
+          { "dom", "libvirt.remote_domain_lookup_by_name_ret.dom",\
+            FT_NONE, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_lookup_by_name_ret,\
           { "remote_domain_lookup_by_name_ret", "libvirt.remote_domain_lookup_by_name_ret",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_suspend_args__dom,\
+          { "dom", "libvirt.remote_domain_suspend_args.dom",\
+            FT_NONE, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_suspend_args,\
           { "remote_domain_suspend_args", "libvirt.remote_domain_suspend_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_resume_args__dom,\
+          { "dom", "libvirt.remote_domain_resume_args.dom",\
+            FT_NONE, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_resume_args,\
           { "remote_domain_resume_args", "libvirt.remote_domain_resume_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_pm_suspend_for_duration_args__dom,\
+          { "dom", "libvirt.remote_domain_pm_suspend_for_duration_args.dom",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_pm_suspend_for_duration_args__target,\
+          { "target", "libvirt.remote_domain_pm_suspend_for_duration_args.target",\
+            FT_UINT32, BASE_DEC,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_pm_suspend_for_duration_args__duration,\
+          { "duration", "libvirt.remote_domain_pm_suspend_for_duration_args.duration",\
+            FT_UINT64, BASE_DEC,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_pm_suspend_for_duration_args__flags,\
+          { "flags", "libvirt.remote_domain_pm_suspend_for_duration_args.flags",\
+            FT_UINT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_pm_suspend_for_duration_args,\
           { "remote_domain_pm_suspend_for_duration_args", "libvirt.remote_domain_pm_suspend_for_duration_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_pm_wakeup_args__dom,\
+          { "dom", "libvirt.remote_domain_pm_wakeup_args.dom",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_pm_wakeup_args__flags,\
+          { "flags", "libvirt.remote_domain_pm_wakeup_args.flags",\
+            FT_UINT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_pm_wakeup_args,\
           { "remote_domain_pm_wakeup_args", "libvirt.remote_domain_pm_wakeup_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_shutdown_args__dom,\
+          { "dom", "libvirt.remote_domain_shutdown_args.dom",\
+            FT_NONE, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_shutdown_args,\
           { "remote_domain_shutdown_args", "libvirt.remote_domain_shutdown_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_reboot_args__dom,\
+          { "dom", "libvirt.remote_domain_reboot_args.dom",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_reboot_args__flags,\
+          { "flags", "libvirt.remote_domain_reboot_args.flags",\
+            FT_UINT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_reboot_args,\
           { "remote_domain_reboot_args", "libvirt.remote_domain_reboot_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_reset_args__dom,\
+          { "dom", "libvirt.remote_domain_reset_args.dom",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_reset_args__flags,\
+          { "flags", "libvirt.remote_domain_reset_args.flags",\
+            FT_UINT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_reset_args,\
           { "remote_domain_reset_args", "libvirt.remote_domain_reset_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_destroy_args__dom,\
+          { "dom", "libvirt.remote_domain_destroy_args.dom",\
+            FT_NONE, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_destroy_args,\
           { "remote_domain_destroy_args", "libvirt.remote_domain_destroy_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_destroy_flags_args__dom,\
+          { "dom", "libvirt.remote_domain_destroy_flags_args.dom",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_destroy_flags_args__flags,\
+          { "flags", "libvirt.remote_domain_destroy_flags_args.flags",\
+            FT_UINT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_destroy_flags_args,\
           { "remote_domain_destroy_flags_args", "libvirt.remote_domain_destroy_flags_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_get_os_type_args__dom,\
+          { "dom", "libvirt.remote_domain_get_os_type_args.dom",\
+            FT_NONE, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_get_os_type_args,\
           { "remote_domain_get_os_type_args", "libvirt.remote_domain_get_os_type_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_get_os_type_ret__type,\
+          { "type", "libvirt.remote_domain_get_os_type_ret.type",\
+            FT_INT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_get_os_type_ret,\
           { "remote_domain_get_os_type_ret", "libvirt.remote_domain_get_os_type_ret",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_get_max_memory_args__dom,\
+          { "dom", "libvirt.remote_domain_get_max_memory_args.dom",\
+            FT_NONE, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_get_max_memory_args,\
           { "remote_domain_get_max_memory_args", "libvirt.remote_domain_get_max_memory_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_get_max_memory_ret__memory,\
+          { "memory", "libvirt.remote_domain_get_max_memory_ret.memory",\
+            FT_UINT64, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_get_max_memory_ret,\
           { "remote_domain_get_max_memory_ret", "libvirt.remote_domain_get_max_memory_ret",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_set_max_memory_args__dom,\
+          { "dom", "libvirt.remote_domain_set_max_memory_args.dom",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_set_max_memory_args__memory,\
+          { "memory", "libvirt.remote_domain_set_max_memory_args.memory",\
+            FT_UINT64, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_set_max_memory_args,\
           { "remote_domain_set_max_memory_args", "libvirt.remote_domain_set_max_memory_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_set_memory_args__dom,\
+          { "dom", "libvirt.remote_domain_set_memory_args.dom",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_set_memory_args__memory,\
+          { "memory", "libvirt.remote_domain_set_memory_args.memory",\
+            FT_UINT64, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_set_memory_args,\
           { "remote_domain_set_memory_args", "libvirt.remote_domain_set_memory_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_set_memory_flags_args__dom,\
+          { "dom", "libvirt.remote_domain_set_memory_flags_args.dom",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_set_memory_flags_args__memory,\
+          { "memory", "libvirt.remote_domain_set_memory_flags_args.memory",\
+            FT_UINT64, BASE_DEC,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_set_memory_flags_args__flags,\
+          { "flags", "libvirt.remote_domain_set_memory_flags_args.flags",\
+            FT_UINT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_set_memory_flags_args,\
           { "remote_domain_set_memory_flags_args", "libvirt.remote_domain_set_memory_flags_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_get_info_args__dom,\
+          { "dom", "libvirt.remote_domain_get_info_args.dom",\
+            FT_NONE, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_get_info_args,\
           { "remote_domain_get_info_args", "libvirt.remote_domain_get_info_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_get_info_ret__state,\
+          { "state", "libvirt.remote_domain_get_info_ret.state",\
+            FT_UINT8, BASE_DEC,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_get_info_ret__maxMem,\
+          { "maxMem", "libvirt.remote_domain_get_info_ret.maxMem",\
+            FT_UINT64, BASE_DEC,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_get_info_ret__memory,\
+          { "memory", "libvirt.remote_domain_get_info_ret.memory",\
+            FT_UINT64, BASE_DEC,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_get_info_ret__nrVirtCpu,\
+          { "nrVirtCpu", "libvirt.remote_domain_get_info_ret.nrVirtCpu",\
+            FT_UINT16, BASE_DEC,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_get_info_ret__cpuTime,\
+          { "cpuTime", "libvirt.remote_domain_get_info_ret.cpuTime",\
+            FT_UINT64, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_get_info_ret,\
           { "remote_domain_get_info_ret", "libvirt.remote_domain_get_info_ret",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_save_args__dom,\
+          { "dom", "libvirt.remote_domain_save_args.dom",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_save_args__to,\
+          { "to", "libvirt.remote_domain_save_args.to",\
             FT_STRING, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_save_args,\
           { "remote_domain_save_args", "libvirt.remote_domain_save_args",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_save_flags_args__dom,\
+          { "dom", "libvirt.remote_domain_save_flags_args.dom",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_save_flags_args__to,\
+          { "to", "libvirt.remote_domain_save_flags_args.to",\
             FT_STRING, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_save_flags_args__dxml,\
+          { "dxml", "libvirt.remote_domain_save_flags_args.dxml",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_save_flags_args__flags,\
+          { "flags", "libvirt.remote_domain_save_flags_args.flags",\
+            FT_UINT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_save_flags_args,\
           { "remote_domain_save_flags_args", "libvirt.remote_domain_save_flags_args",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_restore_args__from,\
+          { "from", "libvirt.remote_domain_restore_args.from",\
             FT_STRING, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_restore_args,\
           { "remote_domain_restore_args", "libvirt.remote_domain_restore_args",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_restore_flags_args__from,\
+          { "from", "libvirt.remote_domain_restore_flags_args.from",\
             FT_STRING, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_restore_flags_args__dxml,\
+          { "dxml", "libvirt.remote_domain_restore_flags_args.dxml",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_restore_flags_args__flags,\
+          { "flags", "libvirt.remote_domain_restore_flags_args.flags",\
+            FT_UINT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_restore_flags_args,\
           { "remote_domain_restore_flags_args", "libvirt.remote_domain_restore_flags_args",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_save_image_get_xml_desc_args__file,\
+          { "file", "libvirt.remote_domain_save_image_get_xml_desc_args.file",\
             FT_STRING, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_save_image_get_xml_desc_args__flags,\
+          { "flags", "libvirt.remote_domain_save_image_get_xml_desc_args.flags",\
+            FT_UINT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_save_image_get_xml_desc_args,\
           { "remote_domain_save_image_get_xml_desc_args", "libvirt.remote_domain_save_image_get_xml_desc_args",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_save_image_get_xml_desc_ret__xml,\
+          { "xml", "libvirt.remote_domain_save_image_get_xml_desc_ret.xml",\
             FT_STRING, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_save_image_get_xml_desc_ret,\
           { "remote_domain_save_image_get_xml_desc_ret", "libvirt.remote_domain_save_image_get_xml_desc_ret",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_save_image_define_xml_args__file,\
+          { "file", "libvirt.remote_domain_save_image_define_xml_args.file",\
             FT_STRING, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_save_image_define_xml_args__dxml,\
+          { "dxml", "libvirt.remote_domain_save_image_define_xml_args.dxml",\
+            FT_STRING, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_save_image_define_xml_args__flags,\
+          { "flags", "libvirt.remote_domain_save_image_define_xml_args.flags",\
+            FT_UINT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_save_image_define_xml_args,\
           { "remote_domain_save_image_define_xml_args", "libvirt.remote_domain_save_image_define_xml_args",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_core_dump_args__dom,\
+          { "dom", "libvirt.remote_domain_core_dump_args.dom",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_core_dump_args__to,\
+          { "to", "libvirt.remote_domain_core_dump_args.to",\
             FT_STRING, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_core_dump_args__flags,\
+          { "flags", "libvirt.remote_domain_core_dump_args.flags",\
+            FT_UINT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_core_dump_args,\
           { "remote_domain_core_dump_args", "libvirt.remote_domain_core_dump_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_screenshot_args__dom,\
+          { "dom", "libvirt.remote_domain_screenshot_args.dom",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_screenshot_args__screen,\
+          { "screen", "libvirt.remote_domain_screenshot_args.screen",\
+            FT_UINT32, BASE_DEC,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_screenshot_args__flags,\
+          { "flags", "libvirt.remote_domain_screenshot_args.flags",\
+            FT_UINT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_screenshot_args,\
           { "remote_domain_screenshot_args", "libvirt.remote_domain_screenshot_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_screenshot_ret__mime,\
+          { "mime", "libvirt.remote_domain_screenshot_ret.mime",\
+            FT_NONE, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_screenshot_ret,\
           { "remote_domain_screenshot_ret", "libvirt.remote_domain_screenshot_ret",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_get_xml_desc_args__dom,\
+          { "dom", "libvirt.remote_domain_get_xml_desc_args.dom",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_get_xml_desc_args__flags,\
+          { "flags", "libvirt.remote_domain_get_xml_desc_args.flags",\
+            FT_UINT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_get_xml_desc_args,\
           { "remote_domain_get_xml_desc_args", "libvirt.remote_domain_get_xml_desc_args",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_get_xml_desc_ret__xml,\
+          { "xml", "libvirt.remote_domain_get_xml_desc_ret.xml",\
             FT_STRING, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_get_xml_desc_ret,\
           { "remote_domain_get_xml_desc_ret", "libvirt.remote_domain_get_xml_desc_ret",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_migrate_prepare_args__uri_in,\
+          { "uri_in", "libvirt.remote_domain_migrate_prepare_args.uri_in",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_migrate_prepare_args__flags,\
+          { "flags", "libvirt.remote_domain_migrate_prepare_args.flags",\
+            FT_UINT64, BASE_DEC,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_migrate_prepare_args__dname,\
+          { "dname", "libvirt.remote_domain_migrate_prepare_args.dname",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_migrate_prepare_args__resource,\
+          { "resource", "libvirt.remote_domain_migrate_prepare_args.resource",\
+            FT_UINT64, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_migrate_prepare_args,\
           { "remote_domain_migrate_prepare_args", "libvirt.remote_domain_migrate_prepare_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_migrate_prepare_ret__cookie,\
+          { "cookie", "libvirt.remote_domain_migrate_prepare_ret.cookie",\
+            FT_BYTES, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_migrate_prepare_ret__uri_out,\
+          { "uri_out", "libvirt.remote_domain_migrate_prepare_ret.uri_out",\
+            FT_NONE, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_migrate_prepare_ret,\
           { "remote_domain_migrate_prepare_ret", "libvirt.remote_domain_migrate_prepare_ret",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_migrate_perform_args__dom,\
+          { "dom", "libvirt.remote_domain_migrate_perform_args.dom",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_migrate_perform_args__cookie,\
+          { "cookie", "libvirt.remote_domain_migrate_perform_args.cookie",\
+            FT_BYTES, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_migrate_perform_args__uri,\
+          { "uri", "libvirt.remote_domain_migrate_perform_args.uri",\
             FT_STRING, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_migrate_perform_args__flags,\
+          { "flags", "libvirt.remote_domain_migrate_perform_args.flags",\
+            FT_UINT64, BASE_DEC,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_migrate_perform_args__dname,\
+          { "dname", "libvirt.remote_domain_migrate_perform_args.dname",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_migrate_perform_args__resource,\
+          { "resource", "libvirt.remote_domain_migrate_perform_args.resource",\
+            FT_UINT64, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_migrate_perform_args,\
           { "remote_domain_migrate_perform_args", "libvirt.remote_domain_migrate_perform_args",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_migrate_finish_args__dname,\
+          { "dname", "libvirt.remote_domain_migrate_finish_args.dname",\
             FT_STRING, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_migrate_finish_args__cookie,\
+          { "cookie", "libvirt.remote_domain_migrate_finish_args.cookie",\
+            FT_BYTES, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_migrate_finish_args__uri,\
+          { "uri", "libvirt.remote_domain_migrate_finish_args.uri",\
+            FT_STRING, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_migrate_finish_args__flags,\
+          { "flags", "libvirt.remote_domain_migrate_finish_args.flags",\
+            FT_UINT64, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_migrate_finish_args,\
           { "remote_domain_migrate_finish_args", "libvirt.remote_domain_migrate_finish_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_migrate_finish_ret__ddom,\
+          { "ddom", "libvirt.remote_domain_migrate_finish_ret.ddom",\
+            FT_NONE, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_migrate_finish_ret,\
           { "remote_domain_migrate_finish_ret", "libvirt.remote_domain_migrate_finish_ret",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_migrate_prepare2_args__uri_in,\
+          { "uri_in", "libvirt.remote_domain_migrate_prepare2_args.uri_in",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_migrate_prepare2_args__flags,\
+          { "flags", "libvirt.remote_domain_migrate_prepare2_args.flags",\
+            FT_UINT64, BASE_DEC,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_migrate_prepare2_args__dname,\
+          { "dname", "libvirt.remote_domain_migrate_prepare2_args.dname",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_migrate_prepare2_args__resource,\
+          { "resource", "libvirt.remote_domain_migrate_prepare2_args.resource",\
+            FT_UINT64, BASE_DEC,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_migrate_prepare2_args__dom_xml,\
+          { "dom_xml", "libvirt.remote_domain_migrate_prepare2_args.dom_xml",\
             FT_STRING, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_migrate_prepare2_args,\
           { "remote_domain_migrate_prepare2_args", "libvirt.remote_domain_migrate_prepare2_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_migrate_prepare2_ret__cookie,\
+          { "cookie", "libvirt.remote_domain_migrate_prepare2_ret.cookie",\
+            FT_BYTES, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_migrate_prepare2_ret__uri_out,\
+          { "uri_out", "libvirt.remote_domain_migrate_prepare2_ret.uri_out",\
+            FT_NONE, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_migrate_prepare2_ret,\
           { "remote_domain_migrate_prepare2_ret", "libvirt.remote_domain_migrate_prepare2_ret",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_migrate_finish2_args__dname,\
+          { "dname", "libvirt.remote_domain_migrate_finish2_args.dname",\
             FT_STRING, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_migrate_finish2_args__cookie,\
+          { "cookie", "libvirt.remote_domain_migrate_finish2_args.cookie",\
+            FT_BYTES, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_migrate_finish2_args__uri,\
+          { "uri", "libvirt.remote_domain_migrate_finish2_args.uri",\
+            FT_STRING, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_migrate_finish2_args__flags,\
+          { "flags", "libvirt.remote_domain_migrate_finish2_args.flags",\
+            FT_UINT64, BASE_DEC,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_migrate_finish2_args__retcode,\
+          { "retcode", "libvirt.remote_domain_migrate_finish2_args.retcode",\
+            FT_INT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_migrate_finish2_args,\
           { "remote_domain_migrate_finish2_args", "libvirt.remote_domain_migrate_finish2_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_migrate_finish2_ret__ddom,\
+          { "ddom", "libvirt.remote_domain_migrate_finish2_ret.ddom",\
+            FT_NONE, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_migrate_finish2_ret,\
           { "remote_domain_migrate_finish2_ret", "libvirt.remote_domain_migrate_finish2_ret",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_connect_list_defined_domains_args__maxnames,\
+          { "maxnames", "libvirt.remote_connect_list_defined_domains_args.maxnames",\
+            FT_INT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_connect_list_defined_domains_args,\
           { "remote_connect_list_defined_domains_args", "libvirt.remote_connect_list_defined_domains_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
-        { &hf_remote_connect_list_defined_domains_ret_ANONTYPE_names,\
-          { "remote_connect_list_defined_domains_ret_ANONTYPE_names", "libvirt.remote_connect_list_defined_domains_ret_ANONTYPE_names",\
+        { &hf_remote_connect_list_defined_domains_ret__names,\
+          { "names", "libvirt.remote_connect_list_defined_domains_ret.names",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_connect_list_defined_domains_ret__names___ELEMENT_,\
+          { "_ELEMENT_", "libvirt.remote_connect_list_defined_domains_ret.names._ELEMENT_",\
             FT_STRING, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_connect_list_defined_domains_ret,\
           { "remote_connect_list_defined_domains_ret", "libvirt.remote_connect_list_defined_domains_ret",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_connect_num_of_defined_domains_ret__num,\
+          { "num", "libvirt.remote_connect_num_of_defined_domains_ret.num",\
+            FT_INT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_connect_num_of_defined_domains_ret,\
           { "remote_connect_num_of_defined_domains_ret", "libvirt.remote_connect_num_of_defined_domains_ret",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_create_args__dom,\
+          { "dom", "libvirt.remote_domain_create_args.dom",\
+            FT_NONE, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_create_args,\
           { "remote_domain_create_args", "libvirt.remote_domain_create_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_create_with_flags_args__dom,\
+          { "dom", "libvirt.remote_domain_create_with_flags_args.dom",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_create_with_flags_args__flags,\
+          { "flags", "libvirt.remote_domain_create_with_flags_args.flags",\
+            FT_UINT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_create_with_flags_args,\
           { "remote_domain_create_with_flags_args", "libvirt.remote_domain_create_with_flags_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_create_with_flags_ret__dom,\
+          { "dom", "libvirt.remote_domain_create_with_flags_ret.dom",\
+            FT_NONE, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_create_with_flags_ret,\
           { "remote_domain_create_with_flags_ret", "libvirt.remote_domain_create_with_flags_ret",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_define_xml_args__xml,\
+          { "xml", "libvirt.remote_domain_define_xml_args.xml",\
             FT_STRING, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_define_xml_args,\
           { "remote_domain_define_xml_args", "libvirt.remote_domain_define_xml_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_define_xml_ret__dom,\
+          { "dom", "libvirt.remote_domain_define_xml_ret.dom",\
+            FT_NONE, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_define_xml_ret,\
           { "remote_domain_define_xml_ret", "libvirt.remote_domain_define_xml_ret",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_undefine_args__dom,\
+          { "dom", "libvirt.remote_domain_undefine_args.dom",\
+            FT_NONE, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_undefine_args,\
           { "remote_domain_undefine_args", "libvirt.remote_domain_undefine_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_undefine_flags_args__dom,\
+          { "dom", "libvirt.remote_domain_undefine_flags_args.dom",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_undefine_flags_args__flags,\
+          { "flags", "libvirt.remote_domain_undefine_flags_args.flags",\
+            FT_UINT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_undefine_flags_args,\
           { "remote_domain_undefine_flags_args", "libvirt.remote_domain_undefine_flags_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_inject_nmi_args__dom,\
+          { "dom", "libvirt.remote_domain_inject_nmi_args.dom",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_inject_nmi_args__flags,\
+          { "flags", "libvirt.remote_domain_inject_nmi_args.flags",\
+            FT_UINT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_inject_nmi_args,\
           { "remote_domain_inject_nmi_args", "libvirt.remote_domain_inject_nmi_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
-        { &hf_remote_domain_send_key_args_ANONTYPE_keycodes,\
-          { "remote_domain_send_key_args_ANONTYPE_keycodes", "libvirt.remote_domain_send_key_args_ANONTYPE_keycodes",\
-            FT_STRING, BASE_NONE,\
+        { &hf_remote_domain_send_key_args__dom,\
+          { "dom", "libvirt.remote_domain_send_key_args.dom",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_send_key_args__codeset,\
+          { "codeset", "libvirt.remote_domain_send_key_args.codeset",\
+            FT_UINT32, BASE_DEC,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_send_key_args__holdtime,\
+          { "holdtime", "libvirt.remote_domain_send_key_args.holdtime",\
+            FT_UINT32, BASE_DEC,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_send_key_args__keycodes,\
+          { "keycodes", "libvirt.remote_domain_send_key_args.keycodes",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_send_key_args__keycodes___ELEMENT_,\
+          { "_ELEMENT_", "libvirt.remote_domain_send_key_args.keycodes._ELEMENT_",\
+            FT_UINT32, BASE_DEC,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_send_key_args__flags,\
+          { "flags", "libvirt.remote_domain_send_key_args.flags",\
+            FT_UINT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_send_key_args,\
           { "remote_domain_send_key_args", "libvirt.remote_domain_send_key_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_send_process_signal_args__dom,\
+          { "dom", "libvirt.remote_domain_send_process_signal_args.dom",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_send_process_signal_args__pid_value,\
+          { "pid_value", "libvirt.remote_domain_send_process_signal_args.pid_value",\
+            FT_INT64, BASE_DEC,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_send_process_signal_args__signum,\
+          { "signum", "libvirt.remote_domain_send_process_signal_args.signum",\
+            FT_UINT32, BASE_DEC,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_send_process_signal_args__flags,\
+          { "flags", "libvirt.remote_domain_send_process_signal_args.flags",\
+            FT_UINT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_send_process_signal_args,\
           { "remote_domain_send_process_signal_args", "libvirt.remote_domain_send_process_signal_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_set_vcpus_args__dom,\
+          { "dom", "libvirt.remote_domain_set_vcpus_args.dom",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_set_vcpus_args__nvcpus,\
+          { "nvcpus", "libvirt.remote_domain_set_vcpus_args.nvcpus",\
+            FT_UINT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_set_vcpus_args,\
           { "remote_domain_set_vcpus_args", "libvirt.remote_domain_set_vcpus_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_set_vcpus_flags_args__dom,\
+          { "dom", "libvirt.remote_domain_set_vcpus_flags_args.dom",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_set_vcpus_flags_args__nvcpus,\
+          { "nvcpus", "libvirt.remote_domain_set_vcpus_flags_args.nvcpus",\
+            FT_UINT32, BASE_DEC,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_set_vcpus_flags_args__flags,\
+          { "flags", "libvirt.remote_domain_set_vcpus_flags_args.flags",\
+            FT_UINT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_set_vcpus_flags_args,\
           { "remote_domain_set_vcpus_flags_args", "libvirt.remote_domain_set_vcpus_flags_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_get_vcpus_flags_args__dom,\
+          { "dom", "libvirt.remote_domain_get_vcpus_flags_args.dom",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_get_vcpus_flags_args__flags,\
+          { "flags", "libvirt.remote_domain_get_vcpus_flags_args.flags",\
+            FT_UINT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_get_vcpus_flags_args,\
           { "remote_domain_get_vcpus_flags_args", "libvirt.remote_domain_get_vcpus_flags_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_get_vcpus_flags_ret__num,\
+          { "num", "libvirt.remote_domain_get_vcpus_flags_ret.num",\
+            FT_INT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_get_vcpus_flags_ret,\
           { "remote_domain_get_vcpus_flags_ret", "libvirt.remote_domain_get_vcpus_flags_ret",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_pin_vcpu_args__dom,\
+          { "dom", "libvirt.remote_domain_pin_vcpu_args.dom",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_pin_vcpu_args__vcpu,\
+          { "vcpu", "libvirt.remote_domain_pin_vcpu_args.vcpu",\
+            FT_UINT32, BASE_DEC,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_pin_vcpu_args__cpumap,\
+          { "cpumap", "libvirt.remote_domain_pin_vcpu_args.cpumap",\
+            FT_BYTES, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_pin_vcpu_args,\
           { "remote_domain_pin_vcpu_args", "libvirt.remote_domain_pin_vcpu_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_pin_vcpu_flags_args__dom,\
+          { "dom", "libvirt.remote_domain_pin_vcpu_flags_args.dom",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_pin_vcpu_flags_args__vcpu,\
+          { "vcpu", "libvirt.remote_domain_pin_vcpu_flags_args.vcpu",\
+            FT_UINT32, BASE_DEC,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_pin_vcpu_flags_args__cpumap,\
+          { "cpumap", "libvirt.remote_domain_pin_vcpu_flags_args.cpumap",\
+            FT_BYTES, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_pin_vcpu_flags_args__flags,\
+          { "flags", "libvirt.remote_domain_pin_vcpu_flags_args.flags",\
+            FT_UINT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_pin_vcpu_flags_args,\
           { "remote_domain_pin_vcpu_flags_args", "libvirt.remote_domain_pin_vcpu_flags_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_get_vcpu_pin_info_args__dom,\
+          { "dom", "libvirt.remote_domain_get_vcpu_pin_info_args.dom",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_get_vcpu_pin_info_args__ncpumaps,\
+          { "ncpumaps", "libvirt.remote_domain_get_vcpu_pin_info_args.ncpumaps",\
+            FT_INT32, BASE_DEC,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_get_vcpu_pin_info_args__maplen,\
+          { "maplen", "libvirt.remote_domain_get_vcpu_pin_info_args.maplen",\
+            FT_INT32, BASE_DEC,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_get_vcpu_pin_info_args__flags,\
+          { "flags", "libvirt.remote_domain_get_vcpu_pin_info_args.flags",\
+            FT_UINT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_get_vcpu_pin_info_args,\
           { "remote_domain_get_vcpu_pin_info_args", "libvirt.remote_domain_get_vcpu_pin_info_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_get_vcpu_pin_info_ret__cpumaps,\
+          { "cpumaps", "libvirt.remote_domain_get_vcpu_pin_info_ret.cpumaps",\
+            FT_BYTES, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_get_vcpu_pin_info_ret__num,\
+          { "num", "libvirt.remote_domain_get_vcpu_pin_info_ret.num",\
+            FT_INT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_get_vcpu_pin_info_ret,\
           { "remote_domain_get_vcpu_pin_info_ret", "libvirt.remote_domain_get_vcpu_pin_info_ret",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_pin_emulator_args__dom,\
+          { "dom", "libvirt.remote_domain_pin_emulator_args.dom",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_pin_emulator_args__cpumap,\
+          { "cpumap", "libvirt.remote_domain_pin_emulator_args.cpumap",\
+            FT_BYTES, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_pin_emulator_args__flags,\
+          { "flags", "libvirt.remote_domain_pin_emulator_args.flags",\
+            FT_UINT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_pin_emulator_args,\
           { "remote_domain_pin_emulator_args", "libvirt.remote_domain_pin_emulator_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_get_emulator_pin_info_args__dom,\
+          { "dom", "libvirt.remote_domain_get_emulator_pin_info_args.dom",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_get_emulator_pin_info_args__maplen,\
+          { "maplen", "libvirt.remote_domain_get_emulator_pin_info_args.maplen",\
+            FT_INT32, BASE_DEC,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_get_emulator_pin_info_args__flags,\
+          { "flags", "libvirt.remote_domain_get_emulator_pin_info_args.flags",\
+            FT_UINT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_get_emulator_pin_info_args,\
           { "remote_domain_get_emulator_pin_info_args", "libvirt.remote_domain_get_emulator_pin_info_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_get_emulator_pin_info_ret__cpumaps,\
+          { "cpumaps", "libvirt.remote_domain_get_emulator_pin_info_ret.cpumaps",\
+            FT_BYTES, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_get_emulator_pin_info_ret__ret,\
+          { "ret", "libvirt.remote_domain_get_emulator_pin_info_ret.ret",\
+            FT_INT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_get_emulator_pin_info_ret,\
           { "remote_domain_get_emulator_pin_info_ret", "libvirt.remote_domain_get_emulator_pin_info_ret",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_get_vcpus_args__dom,\
+          { "dom", "libvirt.remote_domain_get_vcpus_args.dom",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_get_vcpus_args__maxinfo,\
+          { "maxinfo", "libvirt.remote_domain_get_vcpus_args.maxinfo",\
+            FT_INT32, BASE_DEC,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_get_vcpus_args__maplen,\
+          { "maplen", "libvirt.remote_domain_get_vcpus_args.maplen",\
+            FT_INT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_get_vcpus_args,\
           { "remote_domain_get_vcpus_args", "libvirt.remote_domain_get_vcpus_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
-        { &hf_remote_domain_get_vcpus_ret_ANONTYPE_info,\
-          { "remote_domain_get_vcpus_ret_ANONTYPE_info", "libvirt.remote_domain_get_vcpus_ret_ANONTYPE_info",\
-            FT_STRING, BASE_NONE,\
+        { &hf_remote_domain_get_vcpus_ret__info,\
+          { "info", "libvirt.remote_domain_get_vcpus_ret.info",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_get_vcpus_ret__info___ELEMENT_,\
+          { "_ELEMENT_", "libvirt.remote_domain_get_vcpus_ret.info._ELEMENT_",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_get_vcpus_ret__cpumaps,\
+          { "cpumaps", "libvirt.remote_domain_get_vcpus_ret.cpumaps",\
+            FT_BYTES, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_get_vcpus_ret,\
           { "remote_domain_get_vcpus_ret", "libvirt.remote_domain_get_vcpus_ret",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_get_max_vcpus_args__dom,\
+          { "dom", "libvirt.remote_domain_get_max_vcpus_args.dom",\
+            FT_NONE, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_get_max_vcpus_args,\
           { "remote_domain_get_max_vcpus_args", "libvirt.remote_domain_get_max_vcpus_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_get_max_vcpus_ret__num,\
+          { "num", "libvirt.remote_domain_get_max_vcpus_ret.num",\
+            FT_INT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_get_max_vcpus_ret,\
           { "remote_domain_get_max_vcpus_ret", "libvirt.remote_domain_get_max_vcpus_ret",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_get_security_label_args__dom,\
+          { "dom", "libvirt.remote_domain_get_security_label_args.dom",\
+            FT_NONE, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_get_security_label_args,\
           { "remote_domain_get_security_label_args", "libvirt.remote_domain_get_security_label_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
-        { &hf_remote_domain_get_security_label_ret_ANONTYPE_label,\
-          { "remote_domain_get_security_label_ret_ANONTYPE_label", "libvirt.remote_domain_get_security_label_ret_ANONTYPE_label",\
-            FT_STRING, BASE_NONE,\
+        { &hf_remote_domain_get_security_label_ret__label,\
+          { "label", "libvirt.remote_domain_get_security_label_ret.label",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_get_security_label_ret__label___ELEMENT_,\
+          { "_ELEMENT_", "libvirt.remote_domain_get_security_label_ret.label._ELEMENT_",\
+            FT_INT8, BASE_DEC,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_get_security_label_ret__enforcing,\
+          { "enforcing", "libvirt.remote_domain_get_security_label_ret.enforcing",\
+            FT_INT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_get_security_label_ret,\
           { "remote_domain_get_security_label_ret", "libvirt.remote_domain_get_security_label_ret",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_get_security_label_list_args__dom,\
+          { "dom", "libvirt.remote_domain_get_security_label_list_args.dom",\
+            FT_NONE, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_get_security_label_list_args,\
           { "remote_domain_get_security_label_list_args", "libvirt.remote_domain_get_security_label_list_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
-        { &hf_remote_domain_get_security_label_list_ret_ANONTYPE_labels,\
-          { "remote_domain_get_security_label_list_ret_ANONTYPE_labels", "libvirt.remote_domain_get_security_label_list_ret_ANONTYPE_labels",\
-            FT_STRING, BASE_NONE,\
+        { &hf_remote_domain_get_security_label_list_ret__labels,\
+          { "labels", "libvirt.remote_domain_get_security_label_list_ret.labels",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_get_security_label_list_ret__labels___ELEMENT_,\
+          { "_ELEMENT_", "libvirt.remote_domain_get_security_label_list_ret.labels._ELEMENT_",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_get_security_label_list_ret__ret,\
+          { "ret", "libvirt.remote_domain_get_security_label_list_ret.ret",\
+            FT_INT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_get_security_label_list_ret,\
           { "remote_domain_get_security_label_list_ret", "libvirt.remote_domain_get_security_label_list_ret",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
-        { &hf_remote_node_get_security_model_ret_ANONTYPE_model,\
-          { "remote_node_get_security_model_ret_ANONTYPE_model", "libvirt.remote_node_get_security_model_ret_ANONTYPE_model",\
-            FT_STRING, BASE_NONE,\
+        { &hf_remote_node_get_security_model_ret__model,\
+          { "model", "libvirt.remote_node_get_security_model_ret.model",\
+            FT_NONE, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
-        { &hf_remote_node_get_security_model_ret_ANONTYPE_doi,\
-          { "remote_node_get_security_model_ret_ANONTYPE_doi", "libvirt.remote_node_get_security_model_ret_ANONTYPE_doi",\
-            FT_STRING, BASE_NONE,\
+        { &hf_remote_node_get_security_model_ret__model___ELEMENT_,\
+          { "_ELEMENT_", "libvirt.remote_node_get_security_model_ret.model._ELEMENT_",\
+            FT_INT8, BASE_DEC,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_node_get_security_model_ret__doi,\
+          { "doi", "libvirt.remote_node_get_security_model_ret.doi",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_node_get_security_model_ret__doi___ELEMENT_,\
+          { "_ELEMENT_", "libvirt.remote_node_get_security_model_ret.doi._ELEMENT_",\
+            FT_INT8, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_node_get_security_model_ret,\
           { "remote_node_get_security_model_ret", "libvirt.remote_node_get_security_model_ret",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_attach_device_args__dom,\
+          { "dom", "libvirt.remote_domain_attach_device_args.dom",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_attach_device_args__xml,\
+          { "xml", "libvirt.remote_domain_attach_device_args.xml",\
             FT_STRING, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_attach_device_args,\
           { "remote_domain_attach_device_args", "libvirt.remote_domain_attach_device_args",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_attach_device_flags_args__dom,\
+          { "dom", "libvirt.remote_domain_attach_device_flags_args.dom",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_attach_device_flags_args__xml,\
+          { "xml", "libvirt.remote_domain_attach_device_flags_args.xml",\
             FT_STRING, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_attach_device_flags_args__flags,\
+          { "flags", "libvirt.remote_domain_attach_device_flags_args.flags",\
+            FT_UINT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_attach_device_flags_args,\
           { "remote_domain_attach_device_flags_args", "libvirt.remote_domain_attach_device_flags_args",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_detach_device_args__dom,\
+          { "dom", "libvirt.remote_domain_detach_device_args.dom",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_detach_device_args__xml,\
+          { "xml", "libvirt.remote_domain_detach_device_args.xml",\
             FT_STRING, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_detach_device_args,\
           { "remote_domain_detach_device_args", "libvirt.remote_domain_detach_device_args",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_detach_device_flags_args__dom,\
+          { "dom", "libvirt.remote_domain_detach_device_flags_args.dom",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_detach_device_flags_args__xml,\
+          { "xml", "libvirt.remote_domain_detach_device_flags_args.xml",\
             FT_STRING, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_detach_device_flags_args__flags,\
+          { "flags", "libvirt.remote_domain_detach_device_flags_args.flags",\
+            FT_UINT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_detach_device_flags_args,\
           { "remote_domain_detach_device_flags_args", "libvirt.remote_domain_detach_device_flags_args",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_update_device_flags_args__dom,\
+          { "dom", "libvirt.remote_domain_update_device_flags_args.dom",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_update_device_flags_args__xml,\
+          { "xml", "libvirt.remote_domain_update_device_flags_args.xml",\
             FT_STRING, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_update_device_flags_args__flags,\
+          { "flags", "libvirt.remote_domain_update_device_flags_args.flags",\
+            FT_UINT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_update_device_flags_args,\
           { "remote_domain_update_device_flags_args", "libvirt.remote_domain_update_device_flags_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_get_autostart_args__dom,\
+          { "dom", "libvirt.remote_domain_get_autostart_args.dom",\
+            FT_NONE, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_get_autostart_args,\
           { "remote_domain_get_autostart_args", "libvirt.remote_domain_get_autostart_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_get_autostart_ret__autostart,\
+          { "autostart", "libvirt.remote_domain_get_autostart_ret.autostart",\
+            FT_INT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_get_autostart_ret,\
           { "remote_domain_get_autostart_ret", "libvirt.remote_domain_get_autostart_ret",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_set_autostart_args__dom,\
+          { "dom", "libvirt.remote_domain_set_autostart_args.dom",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_set_autostart_args__autostart,\
+          { "autostart", "libvirt.remote_domain_set_autostart_args.autostart",\
+            FT_INT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_set_autostart_args,\
           { "remote_domain_set_autostart_args", "libvirt.remote_domain_set_autostart_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_set_metadata_args__dom,\
+          { "dom", "libvirt.remote_domain_set_metadata_args.dom",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_set_metadata_args__type,\
+          { "type", "libvirt.remote_domain_set_metadata_args.type",\
+            FT_INT32, BASE_DEC,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_set_metadata_args__metadata,\
+          { "metadata", "libvirt.remote_domain_set_metadata_args.metadata",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_set_metadata_args__key,\
+          { "key", "libvirt.remote_domain_set_metadata_args.key",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_set_metadata_args__uri,\
+          { "uri", "libvirt.remote_domain_set_metadata_args.uri",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_set_metadata_args__flags,\
+          { "flags", "libvirt.remote_domain_set_metadata_args.flags",\
+            FT_UINT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_set_metadata_args,\
           { "remote_domain_set_metadata_args", "libvirt.remote_domain_set_metadata_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_get_metadata_args__dom,\
+          { "dom", "libvirt.remote_domain_get_metadata_args.dom",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_get_metadata_args__type,\
+          { "type", "libvirt.remote_domain_get_metadata_args.type",\
+            FT_INT32, BASE_DEC,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_get_metadata_args__uri,\
+          { "uri", "libvirt.remote_domain_get_metadata_args.uri",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_get_metadata_args__flags,\
+          { "flags", "libvirt.remote_domain_get_metadata_args.flags",\
+            FT_UINT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_get_metadata_args,\
           { "remote_domain_get_metadata_args", "libvirt.remote_domain_get_metadata_args",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_get_metadata_ret__metadata,\
+          { "metadata", "libvirt.remote_domain_get_metadata_ret.metadata",\
             FT_STRING, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_get_metadata_ret,\
           { "remote_domain_get_metadata_ret", "libvirt.remote_domain_get_metadata_ret",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_block_job_abort_args__dom,\
+          { "dom", "libvirt.remote_domain_block_job_abort_args.dom",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_block_job_abort_args__path,\
+          { "path", "libvirt.remote_domain_block_job_abort_args.path",\
             FT_STRING, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_block_job_abort_args__flags,\
+          { "flags", "libvirt.remote_domain_block_job_abort_args.flags",\
+            FT_UINT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_block_job_abort_args,\
           { "remote_domain_block_job_abort_args", "libvirt.remote_domain_block_job_abort_args",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_get_block_job_info_args__dom,\
+          { "dom", "libvirt.remote_domain_get_block_job_info_args.dom",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_get_block_job_info_args__path,\
+          { "path", "libvirt.remote_domain_get_block_job_info_args.path",\
             FT_STRING, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_get_block_job_info_args__flags,\
+          { "flags", "libvirt.remote_domain_get_block_job_info_args.flags",\
+            FT_UINT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_get_block_job_info_args,\
           { "remote_domain_get_block_job_info_args", "libvirt.remote_domain_get_block_job_info_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_get_block_job_info_ret__found,\
+          { "found", "libvirt.remote_domain_get_block_job_info_ret.found",\
+            FT_INT32, BASE_DEC,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_get_block_job_info_ret__type,\
+          { "type", "libvirt.remote_domain_get_block_job_info_ret.type",\
+            FT_INT32, BASE_DEC,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_get_block_job_info_ret__bandwidth,\
+          { "bandwidth", "libvirt.remote_domain_get_block_job_info_ret.bandwidth",\
+            FT_UINT64, BASE_DEC,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_get_block_job_info_ret__cur,\
+          { "cur", "libvirt.remote_domain_get_block_job_info_ret.cur",\
+            FT_UINT64, BASE_DEC,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_get_block_job_info_ret__end,\
+          { "end", "libvirt.remote_domain_get_block_job_info_ret.end",\
+            FT_UINT64, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_get_block_job_info_ret,\
           { "remote_domain_get_block_job_info_ret", "libvirt.remote_domain_get_block_job_info_ret",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_block_job_set_speed_args__dom,\
+          { "dom", "libvirt.remote_domain_block_job_set_speed_args.dom",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_block_job_set_speed_args__path,\
+          { "path", "libvirt.remote_domain_block_job_set_speed_args.path",\
             FT_STRING, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_block_job_set_speed_args__bandwidth,\
+          { "bandwidth", "libvirt.remote_domain_block_job_set_speed_args.bandwidth",\
+            FT_UINT64, BASE_DEC,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_block_job_set_speed_args__flags,\
+          { "flags", "libvirt.remote_domain_block_job_set_speed_args.flags",\
+            FT_UINT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_block_job_set_speed_args,\
           { "remote_domain_block_job_set_speed_args", "libvirt.remote_domain_block_job_set_speed_args",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_block_pull_args__dom,\
+          { "dom", "libvirt.remote_domain_block_pull_args.dom",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_block_pull_args__path,\
+          { "path", "libvirt.remote_domain_block_pull_args.path",\
             FT_STRING, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_block_pull_args__bandwidth,\
+          { "bandwidth", "libvirt.remote_domain_block_pull_args.bandwidth",\
+            FT_UINT64, BASE_DEC,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_block_pull_args__flags,\
+          { "flags", "libvirt.remote_domain_block_pull_args.flags",\
+            FT_UINT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_block_pull_args,\
           { "remote_domain_block_pull_args", "libvirt.remote_domain_block_pull_args",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_block_rebase_args__dom,\
+          { "dom", "libvirt.remote_domain_block_rebase_args.dom",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_block_rebase_args__path,\
+          { "path", "libvirt.remote_domain_block_rebase_args.path",\
             FT_STRING, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_block_rebase_args__base,\
+          { "base", "libvirt.remote_domain_block_rebase_args.base",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_block_rebase_args__bandwidth,\
+          { "bandwidth", "libvirt.remote_domain_block_rebase_args.bandwidth",\
+            FT_UINT64, BASE_DEC,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_block_rebase_args__flags,\
+          { "flags", "libvirt.remote_domain_block_rebase_args.flags",\
+            FT_UINT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_block_rebase_args,\
           { "remote_domain_block_rebase_args", "libvirt.remote_domain_block_rebase_args",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_block_commit_args__dom,\
+          { "dom", "libvirt.remote_domain_block_commit_args.dom",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_block_commit_args__disk,\
+          { "disk", "libvirt.remote_domain_block_commit_args.disk",\
             FT_STRING, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_block_commit_args__base,\
+          { "base", "libvirt.remote_domain_block_commit_args.base",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_block_commit_args__top,\
+          { "top", "libvirt.remote_domain_block_commit_args.top",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_block_commit_args__bandwidth,\
+          { "bandwidth", "libvirt.remote_domain_block_commit_args.bandwidth",\
+            FT_UINT64, BASE_DEC,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_block_commit_args__flags,\
+          { "flags", "libvirt.remote_domain_block_commit_args.flags",\
+            FT_UINT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_block_commit_args,\
           { "remote_domain_block_commit_args", "libvirt.remote_domain_block_commit_args",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_set_block_io_tune_args__dom,\
+          { "dom", "libvirt.remote_domain_set_block_io_tune_args.dom",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_set_block_io_tune_args__disk,\
+          { "disk", "libvirt.remote_domain_set_block_io_tune_args.disk",\
             FT_STRING, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
-        { &hf_remote_domain_set_block_io_tune_args_ANONTYPE_params,\
-          { "remote_domain_set_block_io_tune_args_ANONTYPE_params", "libvirt.remote_domain_set_block_io_tune_args_ANONTYPE_params",\
-            FT_STRING, BASE_NONE,\
+        { &hf_remote_domain_set_block_io_tune_args__params,\
+          { "params", "libvirt.remote_domain_set_block_io_tune_args.params",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_set_block_io_tune_args__params___ELEMENT_,\
+          { "_ELEMENT_", "libvirt.remote_domain_set_block_io_tune_args.params._ELEMENT_",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_set_block_io_tune_args__flags,\
+          { "flags", "libvirt.remote_domain_set_block_io_tune_args.flags",\
+            FT_UINT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_set_block_io_tune_args,\
           { "remote_domain_set_block_io_tune_args", "libvirt.remote_domain_set_block_io_tune_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_get_block_io_tune_args__dom,\
+          { "dom", "libvirt.remote_domain_get_block_io_tune_args.dom",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_get_block_io_tune_args__disk,\
+          { "disk", "libvirt.remote_domain_get_block_io_tune_args.disk",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_get_block_io_tune_args__nparams,\
+          { "nparams", "libvirt.remote_domain_get_block_io_tune_args.nparams",\
+            FT_INT32, BASE_DEC,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_get_block_io_tune_args__flags,\
+          { "flags", "libvirt.remote_domain_get_block_io_tune_args.flags",\
+            FT_UINT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_get_block_io_tune_args,\
           { "remote_domain_get_block_io_tune_args", "libvirt.remote_domain_get_block_io_tune_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
-        { &hf_remote_domain_get_block_io_tune_ret_ANONTYPE_params,\
-          { "remote_domain_get_block_io_tune_ret_ANONTYPE_params", "libvirt.remote_domain_get_block_io_tune_ret_ANONTYPE_params",\
-            FT_STRING, BASE_NONE,\
+        { &hf_remote_domain_get_block_io_tune_ret__params,\
+          { "params", "libvirt.remote_domain_get_block_io_tune_ret.params",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_get_block_io_tune_ret__params___ELEMENT_,\
+          { "_ELEMENT_", "libvirt.remote_domain_get_block_io_tune_ret.params._ELEMENT_",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_get_block_io_tune_ret__nparams,\
+          { "nparams", "libvirt.remote_domain_get_block_io_tune_ret.nparams",\
+            FT_INT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_get_block_io_tune_ret,\
           { "remote_domain_get_block_io_tune_ret", "libvirt.remote_domain_get_block_io_tune_ret",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_get_cpu_stats_args__dom,\
+          { "dom", "libvirt.remote_domain_get_cpu_stats_args.dom",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_get_cpu_stats_args__nparams,\
+          { "nparams", "libvirt.remote_domain_get_cpu_stats_args.nparams",\
+            FT_UINT32, BASE_DEC,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_get_cpu_stats_args__start_cpu,\
+          { "start_cpu", "libvirt.remote_domain_get_cpu_stats_args.start_cpu",\
+            FT_INT32, BASE_DEC,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_get_cpu_stats_args__ncpus,\
+          { "ncpus", "libvirt.remote_domain_get_cpu_stats_args.ncpus",\
+            FT_UINT32, BASE_DEC,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_get_cpu_stats_args__flags,\
+          { "flags", "libvirt.remote_domain_get_cpu_stats_args.flags",\
+            FT_UINT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_get_cpu_stats_args,\
           { "remote_domain_get_cpu_stats_args", "libvirt.remote_domain_get_cpu_stats_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
-        { &hf_remote_domain_get_cpu_stats_ret_ANONTYPE_params,\
-          { "remote_domain_get_cpu_stats_ret_ANONTYPE_params", "libvirt.remote_domain_get_cpu_stats_ret_ANONTYPE_params",\
-            FT_STRING, BASE_NONE,\
+        { &hf_remote_domain_get_cpu_stats_ret__params,\
+          { "params", "libvirt.remote_domain_get_cpu_stats_ret.params",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_get_cpu_stats_ret__params___ELEMENT_,\
+          { "_ELEMENT_", "libvirt.remote_domain_get_cpu_stats_ret.params._ELEMENT_",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_get_cpu_stats_ret__nparams,\
+          { "nparams", "libvirt.remote_domain_get_cpu_stats_ret.nparams",\
+            FT_INT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_get_cpu_stats_ret,\
           { "remote_domain_get_cpu_stats_ret", "libvirt.remote_domain_get_cpu_stats_ret",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_get_hostname_args__dom,\
+          { "dom", "libvirt.remote_domain_get_hostname_args.dom",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_get_hostname_args__flags,\
+          { "flags", "libvirt.remote_domain_get_hostname_args.flags",\
+            FT_UINT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_get_hostname_args,\
           { "remote_domain_get_hostname_args", "libvirt.remote_domain_get_hostname_args",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_get_hostname_ret__hostname,\
+          { "hostname", "libvirt.remote_domain_get_hostname_ret.hostname",\
             FT_STRING, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_get_hostname_ret,\
           { "remote_domain_get_hostname_ret", "libvirt.remote_domain_get_hostname_ret",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_connect_num_of_networks_ret__num,\
+          { "num", "libvirt.remote_connect_num_of_networks_ret.num",\
+            FT_INT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_connect_num_of_networks_ret,\
           { "remote_connect_num_of_networks_ret", "libvirt.remote_connect_num_of_networks_ret",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_connect_list_networks_args__maxnames,\
+          { "maxnames", "libvirt.remote_connect_list_networks_args.maxnames",\
+            FT_INT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_connect_list_networks_args,\
           { "remote_connect_list_networks_args", "libvirt.remote_connect_list_networks_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
-        { &hf_remote_connect_list_networks_ret_ANONTYPE_names,\
-          { "remote_connect_list_networks_ret_ANONTYPE_names", "libvirt.remote_connect_list_networks_ret_ANONTYPE_names",\
+        { &hf_remote_connect_list_networks_ret__names,\
+          { "names", "libvirt.remote_connect_list_networks_ret.names",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_connect_list_networks_ret__names___ELEMENT_,\
+          { "_ELEMENT_", "libvirt.remote_connect_list_networks_ret.names._ELEMENT_",\
             FT_STRING, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_connect_list_networks_ret,\
           { "remote_connect_list_networks_ret", "libvirt.remote_connect_list_networks_ret",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_connect_num_of_defined_networks_ret__num,\
+          { "num", "libvirt.remote_connect_num_of_defined_networks_ret.num",\
+            FT_INT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_connect_num_of_defined_networks_ret,\
           { "remote_connect_num_of_defined_networks_ret", "libvirt.remote_connect_num_of_defined_networks_ret",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_connect_list_defined_networks_args__maxnames,\
+          { "maxnames", "libvirt.remote_connect_list_defined_networks_args.maxnames",\
+            FT_INT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_connect_list_defined_networks_args,\
           { "remote_connect_list_defined_networks_args", "libvirt.remote_connect_list_defined_networks_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
-        { &hf_remote_connect_list_defined_networks_ret_ANONTYPE_names,\
-          { "remote_connect_list_defined_networks_ret_ANONTYPE_names", "libvirt.remote_connect_list_defined_networks_ret_ANONTYPE_names",\
+        { &hf_remote_connect_list_defined_networks_ret__names,\
+          { "names", "libvirt.remote_connect_list_defined_networks_ret.names",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_connect_list_defined_networks_ret__names___ELEMENT_,\
+          { "_ELEMENT_", "libvirt.remote_connect_list_defined_networks_ret.names._ELEMENT_",\
             FT_STRING, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_connect_list_defined_networks_ret,\
           { "remote_connect_list_defined_networks_ret", "libvirt.remote_connect_list_defined_networks_ret",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_network_lookup_by_uuid_args__uuid,\
+          { "uuid", "libvirt.remote_network_lookup_by_uuid_args.uuid",\
+            FT_BYTES, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_network_lookup_by_uuid_args,\
           { "remote_network_lookup_by_uuid_args", "libvirt.remote_network_lookup_by_uuid_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_network_lookup_by_uuid_ret__net,\
+          { "net", "libvirt.remote_network_lookup_by_uuid_ret.net",\
+            FT_NONE, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_network_lookup_by_uuid_ret,\
           { "remote_network_lookup_by_uuid_ret", "libvirt.remote_network_lookup_by_uuid_ret",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_network_lookup_by_name_args__name,\
+          { "name", "libvirt.remote_network_lookup_by_name_args.name",\
             FT_STRING, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_network_lookup_by_name_args,\
           { "remote_network_lookup_by_name_args", "libvirt.remote_network_lookup_by_name_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_network_lookup_by_name_ret__net,\
+          { "net", "libvirt.remote_network_lookup_by_name_ret.net",\
+            FT_NONE, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_network_lookup_by_name_ret,\
           { "remote_network_lookup_by_name_ret", "libvirt.remote_network_lookup_by_name_ret",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_network_create_xml_args__xml,\
+          { "xml", "libvirt.remote_network_create_xml_args.xml",\
             FT_STRING, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_network_create_xml_args,\
           { "remote_network_create_xml_args", "libvirt.remote_network_create_xml_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_network_create_xml_ret__net,\
+          { "net", "libvirt.remote_network_create_xml_ret.net",\
+            FT_NONE, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_network_create_xml_ret,\
           { "remote_network_create_xml_ret", "libvirt.remote_network_create_xml_ret",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_network_define_xml_args__xml,\
+          { "xml", "libvirt.remote_network_define_xml_args.xml",\
             FT_STRING, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_network_define_xml_args,\
           { "remote_network_define_xml_args", "libvirt.remote_network_define_xml_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_network_define_xml_ret__net,\
+          { "net", "libvirt.remote_network_define_xml_ret.net",\
+            FT_NONE, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_network_define_xml_ret,\
           { "remote_network_define_xml_ret", "libvirt.remote_network_define_xml_ret",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_network_undefine_args__net,\
+          { "net", "libvirt.remote_network_undefine_args.net",\
+            FT_NONE, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_network_undefine_args,\
           { "remote_network_undefine_args", "libvirt.remote_network_undefine_args",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_network_update_args__net,\
+          { "net", "libvirt.remote_network_update_args.net",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_network_update_args__command,\
+          { "command", "libvirt.remote_network_update_args.command",\
+            FT_UINT32, BASE_DEC,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_network_update_args__section,\
+          { "section", "libvirt.remote_network_update_args.section",\
+            FT_UINT32, BASE_DEC,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_network_update_args__parentIndex,\
+          { "parentIndex", "libvirt.remote_network_update_args.parentIndex",\
+            FT_INT32, BASE_DEC,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_network_update_args__xml,\
+          { "xml", "libvirt.remote_network_update_args.xml",\
             FT_STRING, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_network_update_args__flags,\
+          { "flags", "libvirt.remote_network_update_args.flags",\
+            FT_UINT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_network_update_args,\
           { "remote_network_update_args", "libvirt.remote_network_update_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_network_create_args__net,\
+          { "net", "libvirt.remote_network_create_args.net",\
+            FT_NONE, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_network_create_args,\
           { "remote_network_create_args", "libvirt.remote_network_create_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_network_destroy_args__net,\
+          { "net", "libvirt.remote_network_destroy_args.net",\
+            FT_NONE, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_network_destroy_args,\
           { "remote_network_destroy_args", "libvirt.remote_network_destroy_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_network_get_xml_desc_args__net,\
+          { "net", "libvirt.remote_network_get_xml_desc_args.net",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_network_get_xml_desc_args__flags,\
+          { "flags", "libvirt.remote_network_get_xml_desc_args.flags",\
+            FT_UINT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_network_get_xml_desc_args,\
           { "remote_network_get_xml_desc_args", "libvirt.remote_network_get_xml_desc_args",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_network_get_xml_desc_ret__xml,\
+          { "xml", "libvirt.remote_network_get_xml_desc_ret.xml",\
             FT_STRING, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_network_get_xml_desc_ret,\
           { "remote_network_get_xml_desc_ret", "libvirt.remote_network_get_xml_desc_ret",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_network_get_bridge_name_args__net,\
+          { "net", "libvirt.remote_network_get_bridge_name_args.net",\
+            FT_NONE, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_network_get_bridge_name_args,\
           { "remote_network_get_bridge_name_args", "libvirt.remote_network_get_bridge_name_args",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_network_get_bridge_name_ret__name,\
+          { "name", "libvirt.remote_network_get_bridge_name_ret.name",\
             FT_STRING, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_network_get_bridge_name_ret,\
           { "remote_network_get_bridge_name_ret", "libvirt.remote_network_get_bridge_name_ret",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_network_get_autostart_args__net,\
+          { "net", "libvirt.remote_network_get_autostart_args.net",\
+            FT_NONE, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_network_get_autostart_args,\
           { "remote_network_get_autostart_args", "libvirt.remote_network_get_autostart_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_network_get_autostart_ret__autostart,\
+          { "autostart", "libvirt.remote_network_get_autostart_ret.autostart",\
+            FT_INT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_network_get_autostart_ret,\
           { "remote_network_get_autostart_ret", "libvirt.remote_network_get_autostart_ret",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_network_set_autostart_args__net,\
+          { "net", "libvirt.remote_network_set_autostart_args.net",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_network_set_autostart_args__autostart,\
+          { "autostart", "libvirt.remote_network_set_autostart_args.autostart",\
+            FT_INT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_network_set_autostart_args,\
           { "remote_network_set_autostart_args", "libvirt.remote_network_set_autostart_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_connect_num_of_nwfilters_ret__num,\
+          { "num", "libvirt.remote_connect_num_of_nwfilters_ret.num",\
+            FT_INT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_connect_num_of_nwfilters_ret,\
           { "remote_connect_num_of_nwfilters_ret", "libvirt.remote_connect_num_of_nwfilters_ret",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_connect_list_nwfilters_args__maxnames,\
+          { "maxnames", "libvirt.remote_connect_list_nwfilters_args.maxnames",\
+            FT_INT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_connect_list_nwfilters_args,\
           { "remote_connect_list_nwfilters_args", "libvirt.remote_connect_list_nwfilters_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
-        { &hf_remote_connect_list_nwfilters_ret_ANONTYPE_names,\
-          { "remote_connect_list_nwfilters_ret_ANONTYPE_names", "libvirt.remote_connect_list_nwfilters_ret_ANONTYPE_names",\
+        { &hf_remote_connect_list_nwfilters_ret__names,\
+          { "names", "libvirt.remote_connect_list_nwfilters_ret.names",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_connect_list_nwfilters_ret__names___ELEMENT_,\
+          { "_ELEMENT_", "libvirt.remote_connect_list_nwfilters_ret.names._ELEMENT_",\
             FT_STRING, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_connect_list_nwfilters_ret,\
           { "remote_connect_list_nwfilters_ret", "libvirt.remote_connect_list_nwfilters_ret",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_nwfilter_lookup_by_uuid_args__uuid,\
+          { "uuid", "libvirt.remote_nwfilter_lookup_by_uuid_args.uuid",\
+            FT_BYTES, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_nwfilter_lookup_by_uuid_args,\
           { "remote_nwfilter_lookup_by_uuid_args", "libvirt.remote_nwfilter_lookup_by_uuid_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_nwfilter_lookup_by_uuid_ret__nwfilter,\
+          { "nwfilter", "libvirt.remote_nwfilter_lookup_by_uuid_ret.nwfilter",\
+            FT_NONE, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_nwfilter_lookup_by_uuid_ret,\
           { "remote_nwfilter_lookup_by_uuid_ret", "libvirt.remote_nwfilter_lookup_by_uuid_ret",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_nwfilter_lookup_by_name_args__name,\
+          { "name", "libvirt.remote_nwfilter_lookup_by_name_args.name",\
             FT_STRING, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_nwfilter_lookup_by_name_args,\
           { "remote_nwfilter_lookup_by_name_args", "libvirt.remote_nwfilter_lookup_by_name_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_nwfilter_lookup_by_name_ret__nwfilter,\
+          { "nwfilter", "libvirt.remote_nwfilter_lookup_by_name_ret.nwfilter",\
+            FT_NONE, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_nwfilter_lookup_by_name_ret,\
           { "remote_nwfilter_lookup_by_name_ret", "libvirt.remote_nwfilter_lookup_by_name_ret",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_nwfilter_define_xml_args__xml,\
+          { "xml", "libvirt.remote_nwfilter_define_xml_args.xml",\
             FT_STRING, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_nwfilter_define_xml_args,\
           { "remote_nwfilter_define_xml_args", "libvirt.remote_nwfilter_define_xml_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_nwfilter_define_xml_ret__nwfilter,\
+          { "nwfilter", "libvirt.remote_nwfilter_define_xml_ret.nwfilter",\
+            FT_NONE, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_nwfilter_define_xml_ret,\
           { "remote_nwfilter_define_xml_ret", "libvirt.remote_nwfilter_define_xml_ret",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_nwfilter_undefine_args__nwfilter,\
+          { "nwfilter", "libvirt.remote_nwfilter_undefine_args.nwfilter",\
+            FT_NONE, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_nwfilter_undefine_args,\
           { "remote_nwfilter_undefine_args", "libvirt.remote_nwfilter_undefine_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_nwfilter_get_xml_desc_args__nwfilter,\
+          { "nwfilter", "libvirt.remote_nwfilter_get_xml_desc_args.nwfilter",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_nwfilter_get_xml_desc_args__flags,\
+          { "flags", "libvirt.remote_nwfilter_get_xml_desc_args.flags",\
+            FT_UINT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_nwfilter_get_xml_desc_args,\
           { "remote_nwfilter_get_xml_desc_args", "libvirt.remote_nwfilter_get_xml_desc_args",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_nwfilter_get_xml_desc_ret__xml,\
+          { "xml", "libvirt.remote_nwfilter_get_xml_desc_ret.xml",\
             FT_STRING, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_nwfilter_get_xml_desc_ret,\
           { "remote_nwfilter_get_xml_desc_ret", "libvirt.remote_nwfilter_get_xml_desc_ret",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_connect_num_of_interfaces_ret__num,\
+          { "num", "libvirt.remote_connect_num_of_interfaces_ret.num",\
+            FT_INT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_connect_num_of_interfaces_ret,\
           { "remote_connect_num_of_interfaces_ret", "libvirt.remote_connect_num_of_interfaces_ret",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_connect_list_interfaces_args__maxnames,\
+          { "maxnames", "libvirt.remote_connect_list_interfaces_args.maxnames",\
+            FT_INT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_connect_list_interfaces_args,\
           { "remote_connect_list_interfaces_args", "libvirt.remote_connect_list_interfaces_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
-        { &hf_remote_connect_list_interfaces_ret_ANONTYPE_names,\
-          { "remote_connect_list_interfaces_ret_ANONTYPE_names", "libvirt.remote_connect_list_interfaces_ret_ANONTYPE_names",\
+        { &hf_remote_connect_list_interfaces_ret__names,\
+          { "names", "libvirt.remote_connect_list_interfaces_ret.names",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_connect_list_interfaces_ret__names___ELEMENT_,\
+          { "_ELEMENT_", "libvirt.remote_connect_list_interfaces_ret.names._ELEMENT_",\
             FT_STRING, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_connect_list_interfaces_ret,\
           { "remote_connect_list_interfaces_ret", "libvirt.remote_connect_list_interfaces_ret",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_connect_num_of_defined_interfaces_ret__num,\
+          { "num", "libvirt.remote_connect_num_of_defined_interfaces_ret.num",\
+            FT_INT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_connect_num_of_defined_interfaces_ret,\
           { "remote_connect_num_of_defined_interfaces_ret", "libvirt.remote_connect_num_of_defined_interfaces_ret",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_connect_list_defined_interfaces_args__maxnames,\
+          { "maxnames", "libvirt.remote_connect_list_defined_interfaces_args.maxnames",\
+            FT_INT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_connect_list_defined_interfaces_args,\
           { "remote_connect_list_defined_interfaces_args", "libvirt.remote_connect_list_defined_interfaces_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
-        { &hf_remote_connect_list_defined_interfaces_ret_ANONTYPE_names,\
-          { "remote_connect_list_defined_interfaces_ret_ANONTYPE_names", "libvirt.remote_connect_list_defined_interfaces_ret_ANONTYPE_names",\
+        { &hf_remote_connect_list_defined_interfaces_ret__names,\
+          { "names", "libvirt.remote_connect_list_defined_interfaces_ret.names",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_connect_list_defined_interfaces_ret__names___ELEMENT_,\
+          { "_ELEMENT_", "libvirt.remote_connect_list_defined_interfaces_ret.names._ELEMENT_",\
             FT_STRING, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_connect_list_defined_interfaces_ret,\
           { "remote_connect_list_defined_interfaces_ret", "libvirt.remote_connect_list_defined_interfaces_ret",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_interface_lookup_by_name_args__name,\
+          { "name", "libvirt.remote_interface_lookup_by_name_args.name",\
             FT_STRING, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_interface_lookup_by_name_args,\
           { "remote_interface_lookup_by_name_args", "libvirt.remote_interface_lookup_by_name_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_interface_lookup_by_name_ret__iface,\
+          { "iface", "libvirt.remote_interface_lookup_by_name_ret.iface",\
+            FT_NONE, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_interface_lookup_by_name_ret,\
           { "remote_interface_lookup_by_name_ret", "libvirt.remote_interface_lookup_by_name_ret",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_interface_lookup_by_mac_string_args__mac,\
+          { "mac", "libvirt.remote_interface_lookup_by_mac_string_args.mac",\
             FT_STRING, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_interface_lookup_by_mac_string_args,\
           { "remote_interface_lookup_by_mac_string_args", "libvirt.remote_interface_lookup_by_mac_string_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_interface_lookup_by_mac_string_ret__iface,\
+          { "iface", "libvirt.remote_interface_lookup_by_mac_string_ret.iface",\
+            FT_NONE, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_interface_lookup_by_mac_string_ret,\
           { "remote_interface_lookup_by_mac_string_ret", "libvirt.remote_interface_lookup_by_mac_string_ret",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_interface_get_xml_desc_args__iface,\
+          { "iface", "libvirt.remote_interface_get_xml_desc_args.iface",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_interface_get_xml_desc_args__flags,\
+          { "flags", "libvirt.remote_interface_get_xml_desc_args.flags",\
+            FT_UINT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_interface_get_xml_desc_args,\
           { "remote_interface_get_xml_desc_args", "libvirt.remote_interface_get_xml_desc_args",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_interface_get_xml_desc_ret__xml,\
+          { "xml", "libvirt.remote_interface_get_xml_desc_ret.xml",\
             FT_STRING, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_interface_get_xml_desc_ret,\
           { "remote_interface_get_xml_desc_ret", "libvirt.remote_interface_get_xml_desc_ret",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_interface_define_xml_args__xml,\
+          { "xml", "libvirt.remote_interface_define_xml_args.xml",\
             FT_STRING, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_interface_define_xml_args__flags,\
+          { "flags", "libvirt.remote_interface_define_xml_args.flags",\
+            FT_UINT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_interface_define_xml_args,\
           { "remote_interface_define_xml_args", "libvirt.remote_interface_define_xml_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_interface_define_xml_ret__iface,\
+          { "iface", "libvirt.remote_interface_define_xml_ret.iface",\
+            FT_NONE, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_interface_define_xml_ret,\
           { "remote_interface_define_xml_ret", "libvirt.remote_interface_define_xml_ret",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_interface_undefine_args__iface,\
+          { "iface", "libvirt.remote_interface_undefine_args.iface",\
+            FT_NONE, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_interface_undefine_args,\
           { "remote_interface_undefine_args", "libvirt.remote_interface_undefine_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_interface_create_args__iface,\
+          { "iface", "libvirt.remote_interface_create_args.iface",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_interface_create_args__flags,\
+          { "flags", "libvirt.remote_interface_create_args.flags",\
+            FT_UINT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_interface_create_args,\
           { "remote_interface_create_args", "libvirt.remote_interface_create_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_interface_destroy_args__iface,\
+          { "iface", "libvirt.remote_interface_destroy_args.iface",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_interface_destroy_args__flags,\
+          { "flags", "libvirt.remote_interface_destroy_args.flags",\
+            FT_UINT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_interface_destroy_args,\
           { "remote_interface_destroy_args", "libvirt.remote_interface_destroy_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_interface_change_begin_args__flags,\
+          { "flags", "libvirt.remote_interface_change_begin_args.flags",\
+            FT_UINT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_interface_change_begin_args,\
           { "remote_interface_change_begin_args", "libvirt.remote_interface_change_begin_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_interface_change_commit_args__flags,\
+          { "flags", "libvirt.remote_interface_change_commit_args.flags",\
+            FT_UINT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_interface_change_commit_args,\
           { "remote_interface_change_commit_args", "libvirt.remote_interface_change_commit_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_interface_change_rollback_args__flags,\
+          { "flags", "libvirt.remote_interface_change_rollback_args.flags",\
+            FT_UINT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_interface_change_rollback_args,\
           { "remote_interface_change_rollback_args", "libvirt.remote_interface_change_rollback_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
-        { &hf_remote_auth_list_ret_ANONTYPE_types,\
-          { "remote_auth_list_ret_ANONTYPE_types", "libvirt.remote_auth_list_ret_ANONTYPE_types",\
-            FT_STRING, BASE_NONE,\
+        { &hf_remote_auth_list_ret__types,\
+          { "types", "libvirt.remote_auth_list_ret.types",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_auth_list_ret__types___ELEMENT_,\
+          { "_ELEMENT_", "libvirt.remote_auth_list_ret.types._ELEMENT_",\
+            FT_UINT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_auth_list_ret,\
           { "remote_auth_list_ret", "libvirt.remote_auth_list_ret",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_auth_sasl_init_ret__mechlist,\
+          { "mechlist", "libvirt.remote_auth_sasl_init_ret.mechlist",\
             FT_STRING, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_auth_sasl_init_ret,\
           { "remote_auth_sasl_init_ret", "libvirt.remote_auth_sasl_init_ret",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_auth_sasl_start_args__mech,\
+          { "mech", "libvirt.remote_auth_sasl_start_args.mech",\
             FT_STRING, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
-        { &hf_remote_auth_sasl_start_args_ANONTYPE_data,\
-          { "remote_auth_sasl_start_args_ANONTYPE_data", "libvirt.remote_auth_sasl_start_args_ANONTYPE_data",\
-            FT_STRING, BASE_NONE,\
+        { &hf_remote_auth_sasl_start_args__nil,\
+          { "nil", "libvirt.remote_auth_sasl_start_args.nil",\
+            FT_INT32, BASE_DEC,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_auth_sasl_start_args__data,\
+          { "data", "libvirt.remote_auth_sasl_start_args.data",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_auth_sasl_start_args__data___ELEMENT_,\
+          { "_ELEMENT_", "libvirt.remote_auth_sasl_start_args.data._ELEMENT_",\
+            FT_INT8, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_auth_sasl_start_args,\
           { "remote_auth_sasl_start_args", "libvirt.remote_auth_sasl_start_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
-        { &hf_remote_auth_sasl_start_ret_ANONTYPE_data,\
-          { "remote_auth_sasl_start_ret_ANONTYPE_data", "libvirt.remote_auth_sasl_start_ret_ANONTYPE_data",\
-            FT_STRING, BASE_NONE,\
+        { &hf_remote_auth_sasl_start_ret__complete,\
+          { "complete", "libvirt.remote_auth_sasl_start_ret.complete",\
+            FT_INT32, BASE_DEC,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_auth_sasl_start_ret__nil,\
+          { "nil", "libvirt.remote_auth_sasl_start_ret.nil",\
+            FT_INT32, BASE_DEC,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_auth_sasl_start_ret__data,\
+          { "data", "libvirt.remote_auth_sasl_start_ret.data",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_auth_sasl_start_ret__data___ELEMENT_,\
+          { "_ELEMENT_", "libvirt.remote_auth_sasl_start_ret.data._ELEMENT_",\
+            FT_INT8, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_auth_sasl_start_ret,\
           { "remote_auth_sasl_start_ret", "libvirt.remote_auth_sasl_start_ret",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
-        { &hf_remote_auth_sasl_step_args_ANONTYPE_data,\
-          { "remote_auth_sasl_step_args_ANONTYPE_data", "libvirt.remote_auth_sasl_step_args_ANONTYPE_data",\
-            FT_STRING, BASE_NONE,\
+        { &hf_remote_auth_sasl_step_args__nil,\
+          { "nil", "libvirt.remote_auth_sasl_step_args.nil",\
+            FT_INT32, BASE_DEC,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_auth_sasl_step_args__data,\
+          { "data", "libvirt.remote_auth_sasl_step_args.data",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_auth_sasl_step_args__data___ELEMENT_,\
+          { "_ELEMENT_", "libvirt.remote_auth_sasl_step_args.data._ELEMENT_",\
+            FT_INT8, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_auth_sasl_step_args,\
           { "remote_auth_sasl_step_args", "libvirt.remote_auth_sasl_step_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
-        { &hf_remote_auth_sasl_step_ret_ANONTYPE_data,\
-          { "remote_auth_sasl_step_ret_ANONTYPE_data", "libvirt.remote_auth_sasl_step_ret_ANONTYPE_data",\
-            FT_STRING, BASE_NONE,\
+        { &hf_remote_auth_sasl_step_ret__complete,\
+          { "complete", "libvirt.remote_auth_sasl_step_ret.complete",\
+            FT_INT32, BASE_DEC,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_auth_sasl_step_ret__nil,\
+          { "nil", "libvirt.remote_auth_sasl_step_ret.nil",\
+            FT_INT32, BASE_DEC,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_auth_sasl_step_ret__data,\
+          { "data", "libvirt.remote_auth_sasl_step_ret.data",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_auth_sasl_step_ret__data___ELEMENT_,\
+          { "_ELEMENT_", "libvirt.remote_auth_sasl_step_ret.data._ELEMENT_",\
+            FT_INT8, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_auth_sasl_step_ret,\
           { "remote_auth_sasl_step_ret", "libvirt.remote_auth_sasl_step_ret",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_auth_polkit_ret__complete,\
+          { "complete", "libvirt.remote_auth_polkit_ret.complete",\
+            FT_INT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_auth_polkit_ret,\
           { "remote_auth_polkit_ret", "libvirt.remote_auth_polkit_ret",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_connect_num_of_storage_pools_ret__num,\
+          { "num", "libvirt.remote_connect_num_of_storage_pools_ret.num",\
+            FT_INT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_connect_num_of_storage_pools_ret,\
           { "remote_connect_num_of_storage_pools_ret", "libvirt.remote_connect_num_of_storage_pools_ret",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_connect_list_storage_pools_args__maxnames,\
+          { "maxnames", "libvirt.remote_connect_list_storage_pools_args.maxnames",\
+            FT_INT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_connect_list_storage_pools_args,\
           { "remote_connect_list_storage_pools_args", "libvirt.remote_connect_list_storage_pools_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
-        { &hf_remote_connect_list_storage_pools_ret_ANONTYPE_names,\
-          { "remote_connect_list_storage_pools_ret_ANONTYPE_names", "libvirt.remote_connect_list_storage_pools_ret_ANONTYPE_names",\
+        { &hf_remote_connect_list_storage_pools_ret__names,\
+          { "names", "libvirt.remote_connect_list_storage_pools_ret.names",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_connect_list_storage_pools_ret__names___ELEMENT_,\
+          { "_ELEMENT_", "libvirt.remote_connect_list_storage_pools_ret.names._ELEMENT_",\
             FT_STRING, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_connect_list_storage_pools_ret,\
           { "remote_connect_list_storage_pools_ret", "libvirt.remote_connect_list_storage_pools_ret",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_connect_num_of_defined_storage_pools_ret__num,\
+          { "num", "libvirt.remote_connect_num_of_defined_storage_pools_ret.num",\
+            FT_INT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_connect_num_of_defined_storage_pools_ret,\
           { "remote_connect_num_of_defined_storage_pools_ret", "libvirt.remote_connect_num_of_defined_storage_pools_ret",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_connect_list_defined_storage_pools_args__maxnames,\
+          { "maxnames", "libvirt.remote_connect_list_defined_storage_pools_args.maxnames",\
+            FT_INT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_connect_list_defined_storage_pools_args,\
           { "remote_connect_list_defined_storage_pools_args", "libvirt.remote_connect_list_defined_storage_pools_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
-        { &hf_remote_connect_list_defined_storage_pools_ret_ANONTYPE_names,\
-          { "remote_connect_list_defined_storage_pools_ret_ANONTYPE_names", "libvirt.remote_connect_list_defined_storage_pools_ret_ANONTYPE_names",\
+        { &hf_remote_connect_list_defined_storage_pools_ret__names,\
+          { "names", "libvirt.remote_connect_list_defined_storage_pools_ret.names",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_connect_list_defined_storage_pools_ret__names___ELEMENT_,\
+          { "_ELEMENT_", "libvirt.remote_connect_list_defined_storage_pools_ret.names._ELEMENT_",\
             FT_STRING, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_connect_list_defined_storage_pools_ret,\
           { "remote_connect_list_defined_storage_pools_ret", "libvirt.remote_connect_list_defined_storage_pools_ret",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_connect_find_storage_pool_sources_args__type,\
+          { "type", "libvirt.remote_connect_find_storage_pool_sources_args.type",\
+            FT_INT32, BASE_DEC,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_connect_find_storage_pool_sources_args__srcSpec,\
+          { "srcSpec", "libvirt.remote_connect_find_storage_pool_sources_args.srcSpec",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_connect_find_storage_pool_sources_args__flags,\
+          { "flags", "libvirt.remote_connect_find_storage_pool_sources_args.flags",\
+            FT_UINT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_connect_find_storage_pool_sources_args,\
           { "remote_connect_find_storage_pool_sources_args", "libvirt.remote_connect_find_storage_pool_sources_args",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_connect_find_storage_pool_sources_ret__xml,\
+          { "xml", "libvirt.remote_connect_find_storage_pool_sources_ret.xml",\
             FT_STRING, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_connect_find_storage_pool_sources_ret,\
           { "remote_connect_find_storage_pool_sources_ret", "libvirt.remote_connect_find_storage_pool_sources_ret",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_storage_pool_lookup_by_uuid_args__uuid,\
+          { "uuid", "libvirt.remote_storage_pool_lookup_by_uuid_args.uuid",\
+            FT_BYTES, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_storage_pool_lookup_by_uuid_args,\
           { "remote_storage_pool_lookup_by_uuid_args", "libvirt.remote_storage_pool_lookup_by_uuid_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_storage_pool_lookup_by_uuid_ret__pool,\
+          { "pool", "libvirt.remote_storage_pool_lookup_by_uuid_ret.pool",\
+            FT_NONE, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_storage_pool_lookup_by_uuid_ret,\
           { "remote_storage_pool_lookup_by_uuid_ret", "libvirt.remote_storage_pool_lookup_by_uuid_ret",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_storage_pool_lookup_by_name_args__name,\
+          { "name", "libvirt.remote_storage_pool_lookup_by_name_args.name",\
             FT_STRING, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_storage_pool_lookup_by_name_args,\
           { "remote_storage_pool_lookup_by_name_args", "libvirt.remote_storage_pool_lookup_by_name_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_storage_pool_lookup_by_name_ret__pool,\
+          { "pool", "libvirt.remote_storage_pool_lookup_by_name_ret.pool",\
+            FT_NONE, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_storage_pool_lookup_by_name_ret,\
           { "remote_storage_pool_lookup_by_name_ret", "libvirt.remote_storage_pool_lookup_by_name_ret",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_storage_pool_lookup_by_volume_args__vol,\
+          { "vol", "libvirt.remote_storage_pool_lookup_by_volume_args.vol",\
+            FT_NONE, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_storage_pool_lookup_by_volume_args,\
           { "remote_storage_pool_lookup_by_volume_args", "libvirt.remote_storage_pool_lookup_by_volume_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_storage_pool_lookup_by_volume_ret__pool,\
+          { "pool", "libvirt.remote_storage_pool_lookup_by_volume_ret.pool",\
+            FT_NONE, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_storage_pool_lookup_by_volume_ret,\
           { "remote_storage_pool_lookup_by_volume_ret", "libvirt.remote_storage_pool_lookup_by_volume_ret",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_storage_pool_create_xml_args__xml,\
+          { "xml", "libvirt.remote_storage_pool_create_xml_args.xml",\
             FT_STRING, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_storage_pool_create_xml_args__flags,\
+          { "flags", "libvirt.remote_storage_pool_create_xml_args.flags",\
+            FT_UINT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_storage_pool_create_xml_args,\
           { "remote_storage_pool_create_xml_args", "libvirt.remote_storage_pool_create_xml_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_storage_pool_create_xml_ret__pool,\
+          { "pool", "libvirt.remote_storage_pool_create_xml_ret.pool",\
+            FT_NONE, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_storage_pool_create_xml_ret,\
           { "remote_storage_pool_create_xml_ret", "libvirt.remote_storage_pool_create_xml_ret",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_storage_pool_define_xml_args__xml,\
+          { "xml", "libvirt.remote_storage_pool_define_xml_args.xml",\
             FT_STRING, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_storage_pool_define_xml_args__flags,\
+          { "flags", "libvirt.remote_storage_pool_define_xml_args.flags",\
+            FT_UINT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_storage_pool_define_xml_args,\
           { "remote_storage_pool_define_xml_args", "libvirt.remote_storage_pool_define_xml_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_storage_pool_define_xml_ret__pool,\
+          { "pool", "libvirt.remote_storage_pool_define_xml_ret.pool",\
+            FT_NONE, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_storage_pool_define_xml_ret,\
           { "remote_storage_pool_define_xml_ret", "libvirt.remote_storage_pool_define_xml_ret",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_storage_pool_build_args__pool,\
+          { "pool", "libvirt.remote_storage_pool_build_args.pool",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_storage_pool_build_args__flags,\
+          { "flags", "libvirt.remote_storage_pool_build_args.flags",\
+            FT_UINT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_storage_pool_build_args,\
           { "remote_storage_pool_build_args", "libvirt.remote_storage_pool_build_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_storage_pool_undefine_args__pool,\
+          { "pool", "libvirt.remote_storage_pool_undefine_args.pool",\
+            FT_NONE, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_storage_pool_undefine_args,\
           { "remote_storage_pool_undefine_args", "libvirt.remote_storage_pool_undefine_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_storage_pool_create_args__pool,\
+          { "pool", "libvirt.remote_storage_pool_create_args.pool",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_storage_pool_create_args__flags,\
+          { "flags", "libvirt.remote_storage_pool_create_args.flags",\
+            FT_UINT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_storage_pool_create_args,\
           { "remote_storage_pool_create_args", "libvirt.remote_storage_pool_create_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_storage_pool_destroy_args__pool,\
+          { "pool", "libvirt.remote_storage_pool_destroy_args.pool",\
+            FT_NONE, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_storage_pool_destroy_args,\
           { "remote_storage_pool_destroy_args", "libvirt.remote_storage_pool_destroy_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_storage_pool_delete_args__pool,\
+          { "pool", "libvirt.remote_storage_pool_delete_args.pool",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_storage_pool_delete_args__flags,\
+          { "flags", "libvirt.remote_storage_pool_delete_args.flags",\
+            FT_UINT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_storage_pool_delete_args,\
           { "remote_storage_pool_delete_args", "libvirt.remote_storage_pool_delete_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_storage_pool_refresh_args__pool,\
+          { "pool", "libvirt.remote_storage_pool_refresh_args.pool",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_storage_pool_refresh_args__flags,\
+          { "flags", "libvirt.remote_storage_pool_refresh_args.flags",\
+            FT_UINT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_storage_pool_refresh_args,\
           { "remote_storage_pool_refresh_args", "libvirt.remote_storage_pool_refresh_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_storage_pool_get_xml_desc_args__pool,\
+          { "pool", "libvirt.remote_storage_pool_get_xml_desc_args.pool",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_storage_pool_get_xml_desc_args__flags,\
+          { "flags", "libvirt.remote_storage_pool_get_xml_desc_args.flags",\
+            FT_UINT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_storage_pool_get_xml_desc_args,\
           { "remote_storage_pool_get_xml_desc_args", "libvirt.remote_storage_pool_get_xml_desc_args",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_storage_pool_get_xml_desc_ret__xml,\
+          { "xml", "libvirt.remote_storage_pool_get_xml_desc_ret.xml",\
             FT_STRING, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_storage_pool_get_xml_desc_ret,\
           { "remote_storage_pool_get_xml_desc_ret", "libvirt.remote_storage_pool_get_xml_desc_ret",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_storage_pool_get_info_args__pool,\
+          { "pool", "libvirt.remote_storage_pool_get_info_args.pool",\
+            FT_NONE, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_storage_pool_get_info_args,\
           { "remote_storage_pool_get_info_args", "libvirt.remote_storage_pool_get_info_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_storage_pool_get_info_ret__state,\
+          { "state", "libvirt.remote_storage_pool_get_info_ret.state",\
+            FT_UINT8, BASE_DEC,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_storage_pool_get_info_ret__capacity,\
+          { "capacity", "libvirt.remote_storage_pool_get_info_ret.capacity",\
+            FT_UINT64, BASE_DEC,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_storage_pool_get_info_ret__allocation,\
+          { "allocation", "libvirt.remote_storage_pool_get_info_ret.allocation",\
+            FT_UINT64, BASE_DEC,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_storage_pool_get_info_ret__available,\
+          { "available", "libvirt.remote_storage_pool_get_info_ret.available",\
+            FT_UINT64, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_storage_pool_get_info_ret,\
           { "remote_storage_pool_get_info_ret", "libvirt.remote_storage_pool_get_info_ret",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_storage_pool_get_autostart_args__pool,\
+          { "pool", "libvirt.remote_storage_pool_get_autostart_args.pool",\
+            FT_NONE, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_storage_pool_get_autostart_args,\
           { "remote_storage_pool_get_autostart_args", "libvirt.remote_storage_pool_get_autostart_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_storage_pool_get_autostart_ret__autostart,\
+          { "autostart", "libvirt.remote_storage_pool_get_autostart_ret.autostart",\
+            FT_INT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_storage_pool_get_autostart_ret,\
           { "remote_storage_pool_get_autostart_ret", "libvirt.remote_storage_pool_get_autostart_ret",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_storage_pool_set_autostart_args__pool,\
+          { "pool", "libvirt.remote_storage_pool_set_autostart_args.pool",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_storage_pool_set_autostart_args__autostart,\
+          { "autostart", "libvirt.remote_storage_pool_set_autostart_args.autostart",\
+            FT_INT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_storage_pool_set_autostart_args,\
           { "remote_storage_pool_set_autostart_args", "libvirt.remote_storage_pool_set_autostart_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_storage_pool_num_of_volumes_args__pool,\
+          { "pool", "libvirt.remote_storage_pool_num_of_volumes_args.pool",\
+            FT_NONE, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_storage_pool_num_of_volumes_args,\
           { "remote_storage_pool_num_of_volumes_args", "libvirt.remote_storage_pool_num_of_volumes_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_storage_pool_num_of_volumes_ret__num,\
+          { "num", "libvirt.remote_storage_pool_num_of_volumes_ret.num",\
+            FT_INT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_storage_pool_num_of_volumes_ret,\
           { "remote_storage_pool_num_of_volumes_ret", "libvirt.remote_storage_pool_num_of_volumes_ret",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_storage_pool_list_volumes_args__pool,\
+          { "pool", "libvirt.remote_storage_pool_list_volumes_args.pool",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_storage_pool_list_volumes_args__maxnames,\
+          { "maxnames", "libvirt.remote_storage_pool_list_volumes_args.maxnames",\
+            FT_INT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_storage_pool_list_volumes_args,\
           { "remote_storage_pool_list_volumes_args", "libvirt.remote_storage_pool_list_volumes_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
-        { &hf_remote_storage_pool_list_volumes_ret_ANONTYPE_names,\
-          { "remote_storage_pool_list_volumes_ret_ANONTYPE_names", "libvirt.remote_storage_pool_list_volumes_ret_ANONTYPE_names",\
+        { &hf_remote_storage_pool_list_volumes_ret__names,\
+          { "names", "libvirt.remote_storage_pool_list_volumes_ret.names",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_storage_pool_list_volumes_ret__names___ELEMENT_,\
+          { "_ELEMENT_", "libvirt.remote_storage_pool_list_volumes_ret.names._ELEMENT_",\
             FT_STRING, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_storage_pool_list_volumes_ret,\
           { "remote_storage_pool_list_volumes_ret", "libvirt.remote_storage_pool_list_volumes_ret",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_storage_vol_lookup_by_name_args__pool,\
+          { "pool", "libvirt.remote_storage_vol_lookup_by_name_args.pool",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_storage_vol_lookup_by_name_args__name,\
+          { "name", "libvirt.remote_storage_vol_lookup_by_name_args.name",\
             FT_STRING, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_storage_vol_lookup_by_name_args,\
           { "remote_storage_vol_lookup_by_name_args", "libvirt.remote_storage_vol_lookup_by_name_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_storage_vol_lookup_by_name_ret__vol,\
+          { "vol", "libvirt.remote_storage_vol_lookup_by_name_ret.vol",\
+            FT_NONE, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_storage_vol_lookup_by_name_ret,\
           { "remote_storage_vol_lookup_by_name_ret", "libvirt.remote_storage_vol_lookup_by_name_ret",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_storage_vol_lookup_by_key_args__key,\
+          { "key", "libvirt.remote_storage_vol_lookup_by_key_args.key",\
             FT_STRING, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_storage_vol_lookup_by_key_args,\
           { "remote_storage_vol_lookup_by_key_args", "libvirt.remote_storage_vol_lookup_by_key_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_storage_vol_lookup_by_key_ret__vol,\
+          { "vol", "libvirt.remote_storage_vol_lookup_by_key_ret.vol",\
+            FT_NONE, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_storage_vol_lookup_by_key_ret,\
           { "remote_storage_vol_lookup_by_key_ret", "libvirt.remote_storage_vol_lookup_by_key_ret",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_storage_vol_lookup_by_path_args__path,\
+          { "path", "libvirt.remote_storage_vol_lookup_by_path_args.path",\
             FT_STRING, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_storage_vol_lookup_by_path_args,\
           { "remote_storage_vol_lookup_by_path_args", "libvirt.remote_storage_vol_lookup_by_path_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_storage_vol_lookup_by_path_ret__vol,\
+          { "vol", "libvirt.remote_storage_vol_lookup_by_path_ret.vol",\
+            FT_NONE, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_storage_vol_lookup_by_path_ret,\
           { "remote_storage_vol_lookup_by_path_ret", "libvirt.remote_storage_vol_lookup_by_path_ret",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_storage_vol_create_xml_args__pool,\
+          { "pool", "libvirt.remote_storage_vol_create_xml_args.pool",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_storage_vol_create_xml_args__xml,\
+          { "xml", "libvirt.remote_storage_vol_create_xml_args.xml",\
             FT_STRING, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_storage_vol_create_xml_args__flags,\
+          { "flags", "libvirt.remote_storage_vol_create_xml_args.flags",\
+            FT_UINT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_storage_vol_create_xml_args,\
           { "remote_storage_vol_create_xml_args", "libvirt.remote_storage_vol_create_xml_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_storage_vol_create_xml_ret__vol,\
+          { "vol", "libvirt.remote_storage_vol_create_xml_ret.vol",\
+            FT_NONE, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_storage_vol_create_xml_ret,\
           { "remote_storage_vol_create_xml_ret", "libvirt.remote_storage_vol_create_xml_ret",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_storage_vol_create_xml_from_args__pool,\
+          { "pool", "libvirt.remote_storage_vol_create_xml_from_args.pool",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_storage_vol_create_xml_from_args__xml,\
+          { "xml", "libvirt.remote_storage_vol_create_xml_from_args.xml",\
             FT_STRING, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_storage_vol_create_xml_from_args__clonevol,\
+          { "clonevol", "libvirt.remote_storage_vol_create_xml_from_args.clonevol",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_storage_vol_create_xml_from_args__flags,\
+          { "flags", "libvirt.remote_storage_vol_create_xml_from_args.flags",\
+            FT_UINT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_storage_vol_create_xml_from_args,\
           { "remote_storage_vol_create_xml_from_args", "libvirt.remote_storage_vol_create_xml_from_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_storage_vol_create_xml_from_ret__vol,\
+          { "vol", "libvirt.remote_storage_vol_create_xml_from_ret.vol",\
+            FT_NONE, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_storage_vol_create_xml_from_ret,\
           { "remote_storage_vol_create_xml_from_ret", "libvirt.remote_storage_vol_create_xml_from_ret",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_storage_vol_delete_args__vol,\
+          { "vol", "libvirt.remote_storage_vol_delete_args.vol",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_storage_vol_delete_args__flags,\
+          { "flags", "libvirt.remote_storage_vol_delete_args.flags",\
+            FT_UINT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_storage_vol_delete_args,\
           { "remote_storage_vol_delete_args", "libvirt.remote_storage_vol_delete_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_storage_vol_wipe_args__vol,\
+          { "vol", "libvirt.remote_storage_vol_wipe_args.vol",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_storage_vol_wipe_args__flags,\
+          { "flags", "libvirt.remote_storage_vol_wipe_args.flags",\
+            FT_UINT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_storage_vol_wipe_args,\
           { "remote_storage_vol_wipe_args", "libvirt.remote_storage_vol_wipe_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_storage_vol_wipe_pattern_args__vol,\
+          { "vol", "libvirt.remote_storage_vol_wipe_pattern_args.vol",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_storage_vol_wipe_pattern_args__algorithm,\
+          { "algorithm", "libvirt.remote_storage_vol_wipe_pattern_args.algorithm",\
+            FT_UINT32, BASE_DEC,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_storage_vol_wipe_pattern_args__flags,\
+          { "flags", "libvirt.remote_storage_vol_wipe_pattern_args.flags",\
+            FT_UINT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_storage_vol_wipe_pattern_args,\
           { "remote_storage_vol_wipe_pattern_args", "libvirt.remote_storage_vol_wipe_pattern_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_storage_vol_get_xml_desc_args__vol,\
+          { "vol", "libvirt.remote_storage_vol_get_xml_desc_args.vol",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_storage_vol_get_xml_desc_args__flags,\
+          { "flags", "libvirt.remote_storage_vol_get_xml_desc_args.flags",\
+            FT_UINT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_storage_vol_get_xml_desc_args,\
           { "remote_storage_vol_get_xml_desc_args", "libvirt.remote_storage_vol_get_xml_desc_args",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_storage_vol_get_xml_desc_ret__xml,\
+          { "xml", "libvirt.remote_storage_vol_get_xml_desc_ret.xml",\
             FT_STRING, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_storage_vol_get_xml_desc_ret,\
           { "remote_storage_vol_get_xml_desc_ret", "libvirt.remote_storage_vol_get_xml_desc_ret",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_storage_vol_get_info_args__vol,\
+          { "vol", "libvirt.remote_storage_vol_get_info_args.vol",\
+            FT_NONE, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_storage_vol_get_info_args,\
           { "remote_storage_vol_get_info_args", "libvirt.remote_storage_vol_get_info_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_storage_vol_get_info_ret__type,\
+          { "type", "libvirt.remote_storage_vol_get_info_ret.type",\
+            FT_INT32, BASE_DEC,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_storage_vol_get_info_ret__capacity,\
+          { "capacity", "libvirt.remote_storage_vol_get_info_ret.capacity",\
+            FT_UINT64, BASE_DEC,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_storage_vol_get_info_ret__allocation,\
+          { "allocation", "libvirt.remote_storage_vol_get_info_ret.allocation",\
+            FT_UINT64, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_storage_vol_get_info_ret,\
           { "remote_storage_vol_get_info_ret", "libvirt.remote_storage_vol_get_info_ret",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_storage_vol_get_path_args__vol,\
+          { "vol", "libvirt.remote_storage_vol_get_path_args.vol",\
+            FT_NONE, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_storage_vol_get_path_args,\
           { "remote_storage_vol_get_path_args", "libvirt.remote_storage_vol_get_path_args",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_storage_vol_get_path_ret__name,\
+          { "name", "libvirt.remote_storage_vol_get_path_ret.name",\
             FT_STRING, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_storage_vol_get_path_ret,\
           { "remote_storage_vol_get_path_ret", "libvirt.remote_storage_vol_get_path_ret",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_storage_vol_resize_args__vol,\
+          { "vol", "libvirt.remote_storage_vol_resize_args.vol",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_storage_vol_resize_args__capacity,\
+          { "capacity", "libvirt.remote_storage_vol_resize_args.capacity",\
+            FT_UINT64, BASE_DEC,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_storage_vol_resize_args__flags,\
+          { "flags", "libvirt.remote_storage_vol_resize_args.flags",\
+            FT_UINT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_storage_vol_resize_args,\
           { "remote_storage_vol_resize_args", "libvirt.remote_storage_vol_resize_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_node_num_of_devices_args__cap,\
+          { "cap", "libvirt.remote_node_num_of_devices_args.cap",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_node_num_of_devices_args__flags,\
+          { "flags", "libvirt.remote_node_num_of_devices_args.flags",\
+            FT_UINT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_node_num_of_devices_args,\
           { "remote_node_num_of_devices_args", "libvirt.remote_node_num_of_devices_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_node_num_of_devices_ret__num,\
+          { "num", "libvirt.remote_node_num_of_devices_ret.num",\
+            FT_INT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_node_num_of_devices_ret,\
           { "remote_node_num_of_devices_ret", "libvirt.remote_node_num_of_devices_ret",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_node_list_devices_args__cap,\
+          { "cap", "libvirt.remote_node_list_devices_args.cap",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_node_list_devices_args__maxnames,\
+          { "maxnames", "libvirt.remote_node_list_devices_args.maxnames",\
+            FT_INT32, BASE_DEC,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_node_list_devices_args__flags,\
+          { "flags", "libvirt.remote_node_list_devices_args.flags",\
+            FT_UINT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_node_list_devices_args,\
           { "remote_node_list_devices_args", "libvirt.remote_node_list_devices_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
-        { &hf_remote_node_list_devices_ret_ANONTYPE_names,\
-          { "remote_node_list_devices_ret_ANONTYPE_names", "libvirt.remote_node_list_devices_ret_ANONTYPE_names",\
+        { &hf_remote_node_list_devices_ret__names,\
+          { "names", "libvirt.remote_node_list_devices_ret.names",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_node_list_devices_ret__names___ELEMENT_,\
+          { "_ELEMENT_", "libvirt.remote_node_list_devices_ret.names._ELEMENT_",\
             FT_STRING, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_node_list_devices_ret,\
           { "remote_node_list_devices_ret", "libvirt.remote_node_list_devices_ret",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_node_device_lookup_by_name_args__name,\
+          { "name", "libvirt.remote_node_device_lookup_by_name_args.name",\
             FT_STRING, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_node_device_lookup_by_name_args,\
           { "remote_node_device_lookup_by_name_args", "libvirt.remote_node_device_lookup_by_name_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_node_device_lookup_by_name_ret__dev,\
+          { "dev", "libvirt.remote_node_device_lookup_by_name_ret.dev",\
+            FT_NONE, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_node_device_lookup_by_name_ret,\
           { "remote_node_device_lookup_by_name_ret", "libvirt.remote_node_device_lookup_by_name_ret",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_node_device_lookup_scsi_host_by_wwn_args__wwnn,\
+          { "wwnn", "libvirt.remote_node_device_lookup_scsi_host_by_wwn_args.wwnn",\
             FT_STRING, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_node_device_lookup_scsi_host_by_wwn_args__wwpn,\
+          { "wwpn", "libvirt.remote_node_device_lookup_scsi_host_by_wwn_args.wwpn",\
+            FT_STRING, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_node_device_lookup_scsi_host_by_wwn_args__flags,\
+          { "flags", "libvirt.remote_node_device_lookup_scsi_host_by_wwn_args.flags",\
+            FT_UINT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_node_device_lookup_scsi_host_by_wwn_args,\
           { "remote_node_device_lookup_scsi_host_by_wwn_args", "libvirt.remote_node_device_lookup_scsi_host_by_wwn_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_node_device_lookup_scsi_host_by_wwn_ret__dev,\
+          { "dev", "libvirt.remote_node_device_lookup_scsi_host_by_wwn_ret.dev",\
+            FT_NONE, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_node_device_lookup_scsi_host_by_wwn_ret,\
           { "remote_node_device_lookup_scsi_host_by_wwn_ret", "libvirt.remote_node_device_lookup_scsi_host_by_wwn_ret",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_node_device_get_xml_desc_args__name,\
+          { "name", "libvirt.remote_node_device_get_xml_desc_args.name",\
             FT_STRING, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_node_device_get_xml_desc_args__flags,\
+          { "flags", "libvirt.remote_node_device_get_xml_desc_args.flags",\
+            FT_UINT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_node_device_get_xml_desc_args,\
           { "remote_node_device_get_xml_desc_args", "libvirt.remote_node_device_get_xml_desc_args",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_node_device_get_xml_desc_ret__xml,\
+          { "xml", "libvirt.remote_node_device_get_xml_desc_ret.xml",\
             FT_STRING, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_node_device_get_xml_desc_ret,\
           { "remote_node_device_get_xml_desc_ret", "libvirt.remote_node_device_get_xml_desc_ret",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_node_device_get_parent_args__name,\
+          { "name", "libvirt.remote_node_device_get_parent_args.name",\
             FT_STRING, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_node_device_get_parent_args,\
           { "remote_node_device_get_parent_args", "libvirt.remote_node_device_get_parent_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_node_device_get_parent_ret__parent,\
+          { "parent", "libvirt.remote_node_device_get_parent_ret.parent",\
+            FT_NONE, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_node_device_get_parent_ret,\
           { "remote_node_device_get_parent_ret", "libvirt.remote_node_device_get_parent_ret",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_node_device_num_of_caps_args__name,\
+          { "name", "libvirt.remote_node_device_num_of_caps_args.name",\
             FT_STRING, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_node_device_num_of_caps_args,\
           { "remote_node_device_num_of_caps_args", "libvirt.remote_node_device_num_of_caps_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_node_device_num_of_caps_ret__num,\
+          { "num", "libvirt.remote_node_device_num_of_caps_ret.num",\
+            FT_INT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_node_device_num_of_caps_ret,\
           { "remote_node_device_num_of_caps_ret", "libvirt.remote_node_device_num_of_caps_ret",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_node_device_list_caps_args__name,\
+          { "name", "libvirt.remote_node_device_list_caps_args.name",\
             FT_STRING, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_node_device_list_caps_args__maxnames,\
+          { "maxnames", "libvirt.remote_node_device_list_caps_args.maxnames",\
+            FT_INT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_node_device_list_caps_args,\
           { "remote_node_device_list_caps_args", "libvirt.remote_node_device_list_caps_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
-        { &hf_remote_node_device_list_caps_ret_ANONTYPE_names,\
-          { "remote_node_device_list_caps_ret_ANONTYPE_names", "libvirt.remote_node_device_list_caps_ret_ANONTYPE_names",\
+        { &hf_remote_node_device_list_caps_ret__names,\
+          { "names", "libvirt.remote_node_device_list_caps_ret.names",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_node_device_list_caps_ret__names___ELEMENT_,\
+          { "_ELEMENT_", "libvirt.remote_node_device_list_caps_ret.names._ELEMENT_",\
             FT_STRING, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_node_device_list_caps_ret,\
           { "remote_node_device_list_caps_ret", "libvirt.remote_node_device_list_caps_ret",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_node_device_dettach_args__name,\
+          { "name", "libvirt.remote_node_device_dettach_args.name",\
             FT_STRING, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_node_device_dettach_args,\
           { "remote_node_device_dettach_args", "libvirt.remote_node_device_dettach_args",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_node_device_detach_flags_args__name,\
+          { "name", "libvirt.remote_node_device_detach_flags_args.name",\
             FT_STRING, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_node_device_detach_flags_args__driverName,\
+          { "driverName", "libvirt.remote_node_device_detach_flags_args.driverName",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_node_device_detach_flags_args__flags,\
+          { "flags", "libvirt.remote_node_device_detach_flags_args.flags",\
+            FT_UINT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_node_device_detach_flags_args,\
           { "remote_node_device_detach_flags_args", "libvirt.remote_node_device_detach_flags_args",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_node_device_re_attach_args__name,\
+          { "name", "libvirt.remote_node_device_re_attach_args.name",\
             FT_STRING, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_node_device_re_attach_args,\
           { "remote_node_device_re_attach_args", "libvirt.remote_node_device_re_attach_args",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_node_device_reset_args__name,\
+          { "name", "libvirt.remote_node_device_reset_args.name",\
             FT_STRING, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_node_device_reset_args,\
           { "remote_node_device_reset_args", "libvirt.remote_node_device_reset_args",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_node_device_create_xml_args__xml_desc,\
+          { "xml_desc", "libvirt.remote_node_device_create_xml_args.xml_desc",\
             FT_STRING, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_node_device_create_xml_args__flags,\
+          { "flags", "libvirt.remote_node_device_create_xml_args.flags",\
+            FT_UINT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_node_device_create_xml_args,\
           { "remote_node_device_create_xml_args", "libvirt.remote_node_device_create_xml_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_node_device_create_xml_ret__dev,\
+          { "dev", "libvirt.remote_node_device_create_xml_ret.dev",\
+            FT_NONE, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_node_device_create_xml_ret,\
           { "remote_node_device_create_xml_ret", "libvirt.remote_node_device_create_xml_ret",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_node_device_destroy_args__name,\
+          { "name", "libvirt.remote_node_device_destroy_args.name",\
             FT_STRING, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_node_device_destroy_args,\
           { "remote_node_device_destroy_args", "libvirt.remote_node_device_destroy_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_connect_domain_event_register_ret__cb_registered,\
+          { "cb_registered", "libvirt.remote_connect_domain_event_register_ret.cb_registered",\
+            FT_INT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_connect_domain_event_register_ret,\
           { "remote_connect_domain_event_register_ret", "libvirt.remote_connect_domain_event_register_ret",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_connect_domain_event_deregister_ret__cb_registered,\
+          { "cb_registered", "libvirt.remote_connect_domain_event_deregister_ret.cb_registered",\
+            FT_INT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_connect_domain_event_deregister_ret,\
           { "remote_connect_domain_event_deregister_ret", "libvirt.remote_connect_domain_event_deregister_ret",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_event_lifecycle_msg__dom,\
+          { "dom", "libvirt.remote_domain_event_lifecycle_msg.dom",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_event_lifecycle_msg__event,\
+          { "event", "libvirt.remote_domain_event_lifecycle_msg.event",\
+            FT_INT32, BASE_DEC,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_event_lifecycle_msg__detail,\
+          { "detail", "libvirt.remote_domain_event_lifecycle_msg.detail",\
+            FT_INT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_event_lifecycle_msg,\
           { "remote_domain_event_lifecycle_msg", "libvirt.remote_domain_event_lifecycle_msg",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_connect_domain_xml_from_native_args__nativeFormat,\
+          { "nativeFormat", "libvirt.remote_connect_domain_xml_from_native_args.nativeFormat",\
             FT_STRING, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_connect_domain_xml_from_native_args__nativeConfig,\
+          { "nativeConfig", "libvirt.remote_connect_domain_xml_from_native_args.nativeConfig",\
+            FT_STRING, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_connect_domain_xml_from_native_args__flags,\
+          { "flags", "libvirt.remote_connect_domain_xml_from_native_args.flags",\
+            FT_UINT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_connect_domain_xml_from_native_args,\
           { "remote_connect_domain_xml_from_native_args", "libvirt.remote_connect_domain_xml_from_native_args",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_connect_domain_xml_from_native_ret__domainXml,\
+          { "domainXml", "libvirt.remote_connect_domain_xml_from_native_ret.domainXml",\
             FT_STRING, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_connect_domain_xml_from_native_ret,\
           { "remote_connect_domain_xml_from_native_ret", "libvirt.remote_connect_domain_xml_from_native_ret",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_connect_domain_xml_to_native_args__nativeFormat,\
+          { "nativeFormat", "libvirt.remote_connect_domain_xml_to_native_args.nativeFormat",\
             FT_STRING, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_connect_domain_xml_to_native_args__domainXml,\
+          { "domainXml", "libvirt.remote_connect_domain_xml_to_native_args.domainXml",\
+            FT_STRING, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_connect_domain_xml_to_native_args__flags,\
+          { "flags", "libvirt.remote_connect_domain_xml_to_native_args.flags",\
+            FT_UINT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_connect_domain_xml_to_native_args,\
           { "remote_connect_domain_xml_to_native_args", "libvirt.remote_connect_domain_xml_to_native_args",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_connect_domain_xml_to_native_ret__nativeConfig,\
+          { "nativeConfig", "libvirt.remote_connect_domain_xml_to_native_ret.nativeConfig",\
             FT_STRING, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_connect_domain_xml_to_native_ret,\
           { "remote_connect_domain_xml_to_native_ret", "libvirt.remote_connect_domain_xml_to_native_ret",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_connect_num_of_secrets_ret__num,\
+          { "num", "libvirt.remote_connect_num_of_secrets_ret.num",\
+            FT_INT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_connect_num_of_secrets_ret,\
           { "remote_connect_num_of_secrets_ret", "libvirt.remote_connect_num_of_secrets_ret",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_connect_list_secrets_args__maxuuids,\
+          { "maxuuids", "libvirt.remote_connect_list_secrets_args.maxuuids",\
+            FT_INT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_connect_list_secrets_args,\
           { "remote_connect_list_secrets_args", "libvirt.remote_connect_list_secrets_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
-        { &hf_remote_connect_list_secrets_ret_ANONTYPE_uuids,\
-          { "remote_connect_list_secrets_ret_ANONTYPE_uuids", "libvirt.remote_connect_list_secrets_ret_ANONTYPE_uuids",\
+        { &hf_remote_connect_list_secrets_ret__uuids,\
+          { "uuids", "libvirt.remote_connect_list_secrets_ret.uuids",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_connect_list_secrets_ret__uuids___ELEMENT_,\
+          { "_ELEMENT_", "libvirt.remote_connect_list_secrets_ret.uuids._ELEMENT_",\
             FT_STRING, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_connect_list_secrets_ret,\
           { "remote_connect_list_secrets_ret", "libvirt.remote_connect_list_secrets_ret",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_secret_lookup_by_uuid_args__uuid,\
+          { "uuid", "libvirt.remote_secret_lookup_by_uuid_args.uuid",\
+            FT_BYTES, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_secret_lookup_by_uuid_args,\
           { "remote_secret_lookup_by_uuid_args", "libvirt.remote_secret_lookup_by_uuid_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_secret_lookup_by_uuid_ret__secret,\
+          { "secret", "libvirt.remote_secret_lookup_by_uuid_ret.secret",\
+            FT_NONE, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_secret_lookup_by_uuid_ret,\
           { "remote_secret_lookup_by_uuid_ret", "libvirt.remote_secret_lookup_by_uuid_ret",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_secret_define_xml_args__xml,\
+          { "xml", "libvirt.remote_secret_define_xml_args.xml",\
             FT_STRING, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_secret_define_xml_args__flags,\
+          { "flags", "libvirt.remote_secret_define_xml_args.flags",\
+            FT_UINT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_secret_define_xml_args,\
           { "remote_secret_define_xml_args", "libvirt.remote_secret_define_xml_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_secret_define_xml_ret__secret,\
+          { "secret", "libvirt.remote_secret_define_xml_ret.secret",\
+            FT_NONE, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_secret_define_xml_ret,\
           { "remote_secret_define_xml_ret", "libvirt.remote_secret_define_xml_ret",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_secret_get_xml_desc_args__secret,\
+          { "secret", "libvirt.remote_secret_get_xml_desc_args.secret",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_secret_get_xml_desc_args__flags,\
+          { "flags", "libvirt.remote_secret_get_xml_desc_args.flags",\
+            FT_UINT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_secret_get_xml_desc_args,\
           { "remote_secret_get_xml_desc_args", "libvirt.remote_secret_get_xml_desc_args",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_secret_get_xml_desc_ret__xml,\
+          { "xml", "libvirt.remote_secret_get_xml_desc_ret.xml",\
             FT_STRING, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_secret_get_xml_desc_ret,\
           { "remote_secret_get_xml_desc_ret", "libvirt.remote_secret_get_xml_desc_ret",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_secret_set_value_args__secret,\
+          { "secret", "libvirt.remote_secret_set_value_args.secret",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_secret_set_value_args__value,\
+          { "value", "libvirt.remote_secret_set_value_args.value",\
+            FT_BYTES, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_secret_set_value_args__flags,\
+          { "flags", "libvirt.remote_secret_set_value_args.flags",\
+            FT_UINT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_secret_set_value_args,\
           { "remote_secret_set_value_args", "libvirt.remote_secret_set_value_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_secret_get_value_args__secret,\
+          { "secret", "libvirt.remote_secret_get_value_args.secret",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_secret_get_value_args__flags,\
+          { "flags", "libvirt.remote_secret_get_value_args.flags",\
+            FT_UINT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_secret_get_value_args,\
           { "remote_secret_get_value_args", "libvirt.remote_secret_get_value_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_secret_get_value_ret__value,\
+          { "value", "libvirt.remote_secret_get_value_ret.value",\
+            FT_BYTES, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_secret_get_value_ret,\
           { "remote_secret_get_value_ret", "libvirt.remote_secret_get_value_ret",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_secret_undefine_args__secret,\
+          { "secret", "libvirt.remote_secret_undefine_args.secret",\
+            FT_NONE, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_secret_undefine_args,\
           { "remote_secret_undefine_args", "libvirt.remote_secret_undefine_args",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_secret_lookup_by_usage_args__usageType,\
+          { "usageType", "libvirt.remote_secret_lookup_by_usage_args.usageType",\
+            FT_INT32, BASE_DEC,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_secret_lookup_by_usage_args__usageID,\
+          { "usageID", "libvirt.remote_secret_lookup_by_usage_args.usageID",\
             FT_STRING, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_secret_lookup_by_usage_args,\
           { "remote_secret_lookup_by_usage_args", "libvirt.remote_secret_lookup_by_usage_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_secret_lookup_by_usage_ret__secret,\
+          { "secret", "libvirt.remote_secret_lookup_by_usage_ret.secret",\
+            FT_NONE, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_secret_lookup_by_usage_ret,\
           { "remote_secret_lookup_by_usage_ret", "libvirt.remote_secret_lookup_by_usage_ret",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_migrate_prepare_tunnel_args__flags,\
+          { "flags", "libvirt.remote_domain_migrate_prepare_tunnel_args.flags",\
+            FT_UINT64, BASE_DEC,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_migrate_prepare_tunnel_args__dname,\
+          { "dname", "libvirt.remote_domain_migrate_prepare_tunnel_args.dname",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_migrate_prepare_tunnel_args__resource,\
+          { "resource", "libvirt.remote_domain_migrate_prepare_tunnel_args.resource",\
+            FT_UINT64, BASE_DEC,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_migrate_prepare_tunnel_args__dom_xml,\
+          { "dom_xml", "libvirt.remote_domain_migrate_prepare_tunnel_args.dom_xml",\
             FT_STRING, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_migrate_prepare_tunnel_args,\
           { "remote_domain_migrate_prepare_tunnel_args", "libvirt.remote_domain_migrate_prepare_tunnel_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_connect_is_secure_ret__secure,\
+          { "secure", "libvirt.remote_connect_is_secure_ret.secure",\
+            FT_INT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_connect_is_secure_ret,\
           { "remote_connect_is_secure_ret", "libvirt.remote_connect_is_secure_ret",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_is_active_args__dom,\
+          { "dom", "libvirt.remote_domain_is_active_args.dom",\
+            FT_NONE, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_is_active_args,\
           { "remote_domain_is_active_args", "libvirt.remote_domain_is_active_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_is_active_ret__active,\
+          { "active", "libvirt.remote_domain_is_active_ret.active",\
+            FT_INT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_is_active_ret,\
           { "remote_domain_is_active_ret", "libvirt.remote_domain_is_active_ret",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_is_persistent_args__dom,\
+          { "dom", "libvirt.remote_domain_is_persistent_args.dom",\
+            FT_NONE, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_is_persistent_args,\
           { "remote_domain_is_persistent_args", "libvirt.remote_domain_is_persistent_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_is_persistent_ret__persistent,\
+          { "persistent", "libvirt.remote_domain_is_persistent_ret.persistent",\
+            FT_INT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_is_persistent_ret,\
           { "remote_domain_is_persistent_ret", "libvirt.remote_domain_is_persistent_ret",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_is_updated_args__dom,\
+          { "dom", "libvirt.remote_domain_is_updated_args.dom",\
+            FT_NONE, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_is_updated_args,\
           { "remote_domain_is_updated_args", "libvirt.remote_domain_is_updated_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_is_updated_ret__updated,\
+          { "updated", "libvirt.remote_domain_is_updated_ret.updated",\
+            FT_INT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_is_updated_ret,\
           { "remote_domain_is_updated_ret", "libvirt.remote_domain_is_updated_ret",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_network_is_active_args__net,\
+          { "net", "libvirt.remote_network_is_active_args.net",\
+            FT_NONE, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_network_is_active_args,\
           { "remote_network_is_active_args", "libvirt.remote_network_is_active_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_network_is_active_ret__active,\
+          { "active", "libvirt.remote_network_is_active_ret.active",\
+            FT_INT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_network_is_active_ret,\
           { "remote_network_is_active_ret", "libvirt.remote_network_is_active_ret",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_network_is_persistent_args__net,\
+          { "net", "libvirt.remote_network_is_persistent_args.net",\
+            FT_NONE, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_network_is_persistent_args,\
           { "remote_network_is_persistent_args", "libvirt.remote_network_is_persistent_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_network_is_persistent_ret__persistent,\
+          { "persistent", "libvirt.remote_network_is_persistent_ret.persistent",\
+            FT_INT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_network_is_persistent_ret,\
           { "remote_network_is_persistent_ret", "libvirt.remote_network_is_persistent_ret",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_storage_pool_is_active_args__pool,\
+          { "pool", "libvirt.remote_storage_pool_is_active_args.pool",\
+            FT_NONE, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_storage_pool_is_active_args,\
           { "remote_storage_pool_is_active_args", "libvirt.remote_storage_pool_is_active_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_storage_pool_is_active_ret__active,\
+          { "active", "libvirt.remote_storage_pool_is_active_ret.active",\
+            FT_INT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_storage_pool_is_active_ret,\
           { "remote_storage_pool_is_active_ret", "libvirt.remote_storage_pool_is_active_ret",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_storage_pool_is_persistent_args__pool,\
+          { "pool", "libvirt.remote_storage_pool_is_persistent_args.pool",\
+            FT_NONE, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_storage_pool_is_persistent_args,\
           { "remote_storage_pool_is_persistent_args", "libvirt.remote_storage_pool_is_persistent_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_storage_pool_is_persistent_ret__persistent,\
+          { "persistent", "libvirt.remote_storage_pool_is_persistent_ret.persistent",\
+            FT_INT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_storage_pool_is_persistent_ret,\
           { "remote_storage_pool_is_persistent_ret", "libvirt.remote_storage_pool_is_persistent_ret",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_interface_is_active_args__iface,\
+          { "iface", "libvirt.remote_interface_is_active_args.iface",\
+            FT_NONE, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_interface_is_active_args,\
           { "remote_interface_is_active_args", "libvirt.remote_interface_is_active_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_interface_is_active_ret__active,\
+          { "active", "libvirt.remote_interface_is_active_ret.active",\
+            FT_INT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_interface_is_active_ret,\
           { "remote_interface_is_active_ret", "libvirt.remote_interface_is_active_ret",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_connect_compare_cpu_args__xml,\
+          { "xml", "libvirt.remote_connect_compare_cpu_args.xml",\
             FT_STRING, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_connect_compare_cpu_args__flags,\
+          { "flags", "libvirt.remote_connect_compare_cpu_args.flags",\
+            FT_UINT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_connect_compare_cpu_args,\
           { "remote_connect_compare_cpu_args", "libvirt.remote_connect_compare_cpu_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_connect_compare_cpu_ret__result,\
+          { "result", "libvirt.remote_connect_compare_cpu_ret.result",\
+            FT_INT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_connect_compare_cpu_ret,\
           { "remote_connect_compare_cpu_ret", "libvirt.remote_connect_compare_cpu_ret",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_connect_baseline_cpu_args__xmlCPUs,\
+          { "xmlCPUs", "libvirt.remote_connect_baseline_cpu_args.xmlCPUs",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_connect_baseline_cpu_args__xmlCPUs___ELEMENT_,\
+          { "_ELEMENT_", "libvirt.remote_connect_baseline_cpu_args.xmlCPUs._ELEMENT_",\
             FT_STRING, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
-        { &hf_remote_connect_baseline_cpu_args_ANONTYPE_xmlCPUs,\
-          { "remote_connect_baseline_cpu_args_ANONTYPE_xmlCPUs", "libvirt.remote_connect_baseline_cpu_args_ANONTYPE_xmlCPUs",\
-            FT_STRING, BASE_NONE,\
+        { &hf_remote_connect_baseline_cpu_args__flags,\
+          { "flags", "libvirt.remote_connect_baseline_cpu_args.flags",\
+            FT_UINT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_connect_baseline_cpu_args,\
           { "remote_connect_baseline_cpu_args", "libvirt.remote_connect_baseline_cpu_args",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_connect_baseline_cpu_ret__cpu,\
+          { "cpu", "libvirt.remote_connect_baseline_cpu_ret.cpu",\
             FT_STRING, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_connect_baseline_cpu_ret,\
           { "remote_connect_baseline_cpu_ret", "libvirt.remote_connect_baseline_cpu_ret",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_get_job_info_args__dom,\
+          { "dom", "libvirt.remote_domain_get_job_info_args.dom",\
+            FT_NONE, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_get_job_info_args,\
           { "remote_domain_get_job_info_args", "libvirt.remote_domain_get_job_info_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_get_job_info_ret__type,\
+          { "type", "libvirt.remote_domain_get_job_info_ret.type",\
+            FT_INT32, BASE_DEC,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_get_job_info_ret__timeElapsed,\
+          { "timeElapsed", "libvirt.remote_domain_get_job_info_ret.timeElapsed",\
+            FT_UINT64, BASE_DEC,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_get_job_info_ret__timeRemaining,\
+          { "timeRemaining", "libvirt.remote_domain_get_job_info_ret.timeRemaining",\
+            FT_UINT64, BASE_DEC,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_get_job_info_ret__dataTotal,\
+          { "dataTotal", "libvirt.remote_domain_get_job_info_ret.dataTotal",\
+            FT_UINT64, BASE_DEC,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_get_job_info_ret__dataProcessed,\
+          { "dataProcessed", "libvirt.remote_domain_get_job_info_ret.dataProcessed",\
+            FT_UINT64, BASE_DEC,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_get_job_info_ret__dataRemaining,\
+          { "dataRemaining", "libvirt.remote_domain_get_job_info_ret.dataRemaining",\
+            FT_UINT64, BASE_DEC,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_get_job_info_ret__memTotal,\
+          { "memTotal", "libvirt.remote_domain_get_job_info_ret.memTotal",\
+            FT_UINT64, BASE_DEC,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_get_job_info_ret__memProcessed,\
+          { "memProcessed", "libvirt.remote_domain_get_job_info_ret.memProcessed",\
+            FT_UINT64, BASE_DEC,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_get_job_info_ret__memRemaining,\
+          { "memRemaining", "libvirt.remote_domain_get_job_info_ret.memRemaining",\
+            FT_UINT64, BASE_DEC,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_get_job_info_ret__fileTotal,\
+          { "fileTotal", "libvirt.remote_domain_get_job_info_ret.fileTotal",\
+            FT_UINT64, BASE_DEC,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_get_job_info_ret__fileProcessed,\
+          { "fileProcessed", "libvirt.remote_domain_get_job_info_ret.fileProcessed",\
+            FT_UINT64, BASE_DEC,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_get_job_info_ret__fileRemaining,\
+          { "fileRemaining", "libvirt.remote_domain_get_job_info_ret.fileRemaining",\
+            FT_UINT64, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_get_job_info_ret,\
           { "remote_domain_get_job_info_ret", "libvirt.remote_domain_get_job_info_ret",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_get_job_stats_args__dom,\
+          { "dom", "libvirt.remote_domain_get_job_stats_args.dom",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_get_job_stats_args__flags,\
+          { "flags", "libvirt.remote_domain_get_job_stats_args.flags",\
+            FT_UINT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_get_job_stats_args,\
           { "remote_domain_get_job_stats_args", "libvirt.remote_domain_get_job_stats_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
-        { &hf_remote_domain_get_job_stats_ret_ANONTYPE_params,\
-          { "remote_domain_get_job_stats_ret_ANONTYPE_params", "libvirt.remote_domain_get_job_stats_ret_ANONTYPE_params",\
-            FT_STRING, BASE_NONE,\
+        { &hf_remote_domain_get_job_stats_ret__type,\
+          { "type", "libvirt.remote_domain_get_job_stats_ret.type",\
+            FT_INT32, BASE_DEC,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_get_job_stats_ret__params,\
+          { "params", "libvirt.remote_domain_get_job_stats_ret.params",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_get_job_stats_ret__params___ELEMENT_,\
+          { "_ELEMENT_", "libvirt.remote_domain_get_job_stats_ret.params._ELEMENT_",\
+            FT_NONE, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_get_job_stats_ret,\
           { "remote_domain_get_job_stats_ret", "libvirt.remote_domain_get_job_stats_ret",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_abort_job_args__dom,\
+          { "dom", "libvirt.remote_domain_abort_job_args.dom",\
+            FT_NONE, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_abort_job_args,\
           { "remote_domain_abort_job_args", "libvirt.remote_domain_abort_job_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_migrate_set_max_downtime_args__dom,\
+          { "dom", "libvirt.remote_domain_migrate_set_max_downtime_args.dom",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_migrate_set_max_downtime_args__downtime,\
+          { "downtime", "libvirt.remote_domain_migrate_set_max_downtime_args.downtime",\
+            FT_UINT64, BASE_DEC,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_migrate_set_max_downtime_args__flags,\
+          { "flags", "libvirt.remote_domain_migrate_set_max_downtime_args.flags",\
+            FT_UINT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_migrate_set_max_downtime_args,\
           { "remote_domain_migrate_set_max_downtime_args", "libvirt.remote_domain_migrate_set_max_downtime_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_migrate_get_compression_cache_args__dom,\
+          { "dom", "libvirt.remote_domain_migrate_get_compression_cache_args.dom",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_migrate_get_compression_cache_args__flags,\
+          { "flags", "libvirt.remote_domain_migrate_get_compression_cache_args.flags",\
+            FT_UINT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_migrate_get_compression_cache_args,\
           { "remote_domain_migrate_get_compression_cache_args", "libvirt.remote_domain_migrate_get_compression_cache_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_migrate_get_compression_cache_ret__cacheSize,\
+          { "cacheSize", "libvirt.remote_domain_migrate_get_compression_cache_ret.cacheSize",\
+            FT_UINT64, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_migrate_get_compression_cache_ret,\
           { "remote_domain_migrate_get_compression_cache_ret", "libvirt.remote_domain_migrate_get_compression_cache_ret",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_migrate_set_compression_cache_args__dom,\
+          { "dom", "libvirt.remote_domain_migrate_set_compression_cache_args.dom",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_migrate_set_compression_cache_args__cacheSize,\
+          { "cacheSize", "libvirt.remote_domain_migrate_set_compression_cache_args.cacheSize",\
+            FT_UINT64, BASE_DEC,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_migrate_set_compression_cache_args__flags,\
+          { "flags", "libvirt.remote_domain_migrate_set_compression_cache_args.flags",\
+            FT_UINT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_migrate_set_compression_cache_args,\
           { "remote_domain_migrate_set_compression_cache_args", "libvirt.remote_domain_migrate_set_compression_cache_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_migrate_set_max_speed_args__dom,\
+          { "dom", "libvirt.remote_domain_migrate_set_max_speed_args.dom",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_migrate_set_max_speed_args__bandwidth,\
+          { "bandwidth", "libvirt.remote_domain_migrate_set_max_speed_args.bandwidth",\
+            FT_UINT64, BASE_DEC,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_migrate_set_max_speed_args__flags,\
+          { "flags", "libvirt.remote_domain_migrate_set_max_speed_args.flags",\
+            FT_UINT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_migrate_set_max_speed_args,\
           { "remote_domain_migrate_set_max_speed_args", "libvirt.remote_domain_migrate_set_max_speed_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_migrate_get_max_speed_args__dom,\
+          { "dom", "libvirt.remote_domain_migrate_get_max_speed_args.dom",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_migrate_get_max_speed_args__flags,\
+          { "flags", "libvirt.remote_domain_migrate_get_max_speed_args.flags",\
+            FT_UINT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_migrate_get_max_speed_args,\
           { "remote_domain_migrate_get_max_speed_args", "libvirt.remote_domain_migrate_get_max_speed_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_migrate_get_max_speed_ret__bandwidth,\
+          { "bandwidth", "libvirt.remote_domain_migrate_get_max_speed_ret.bandwidth",\
+            FT_UINT64, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_migrate_get_max_speed_ret,\
           { "remote_domain_migrate_get_max_speed_ret", "libvirt.remote_domain_migrate_get_max_speed_ret",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_connect_domain_event_register_any_args__eventID,\
+          { "eventID", "libvirt.remote_connect_domain_event_register_any_args.eventID",\
+            FT_INT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_connect_domain_event_register_any_args,\
           { "remote_connect_domain_event_register_any_args", "libvirt.remote_connect_domain_event_register_any_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_connect_domain_event_deregister_any_args__eventID,\
+          { "eventID", "libvirt.remote_connect_domain_event_deregister_any_args.eventID",\
+            FT_INT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_connect_domain_event_deregister_any_args,\
           { "remote_connect_domain_event_deregister_any_args", "libvirt.remote_connect_domain_event_deregister_any_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_event_reboot_msg__dom,\
+          { "dom", "libvirt.remote_domain_event_reboot_msg.dom",\
+            FT_NONE, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_event_reboot_msg,\
           { "remote_domain_event_reboot_msg", "libvirt.remote_domain_event_reboot_msg",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_event_rtc_change_msg__dom,\
+          { "dom", "libvirt.remote_domain_event_rtc_change_msg.dom",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_event_rtc_change_msg__offset,\
+          { "offset", "libvirt.remote_domain_event_rtc_change_msg.offset",\
+            FT_INT64, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_event_rtc_change_msg,\
           { "remote_domain_event_rtc_change_msg", "libvirt.remote_domain_event_rtc_change_msg",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_event_watchdog_msg__dom,\
+          { "dom", "libvirt.remote_domain_event_watchdog_msg.dom",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_event_watchdog_msg__action,\
+          { "action", "libvirt.remote_domain_event_watchdog_msg.action",\
+            FT_INT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_event_watchdog_msg,\
           { "remote_domain_event_watchdog_msg", "libvirt.remote_domain_event_watchdog_msg",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_event_io_error_msg__dom,\
+          { "dom", "libvirt.remote_domain_event_io_error_msg.dom",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_event_io_error_msg__srcPath,\
+          { "srcPath", "libvirt.remote_domain_event_io_error_msg.srcPath",\
             FT_STRING, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_event_io_error_msg__devAlias,\
+          { "devAlias", "libvirt.remote_domain_event_io_error_msg.devAlias",\
+            FT_STRING, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_event_io_error_msg__action,\
+          { "action", "libvirt.remote_domain_event_io_error_msg.action",\
+            FT_INT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_event_io_error_msg,\
           { "remote_domain_event_io_error_msg", "libvirt.remote_domain_event_io_error_msg",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_event_io_error_reason_msg__dom,\
+          { "dom", "libvirt.remote_domain_event_io_error_reason_msg.dom",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_event_io_error_reason_msg__srcPath,\
+          { "srcPath", "libvirt.remote_domain_event_io_error_reason_msg.srcPath",\
+            FT_STRING, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_event_io_error_reason_msg__devAlias,\
+          { "devAlias", "libvirt.remote_domain_event_io_error_reason_msg.devAlias",\
+            FT_STRING, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_event_io_error_reason_msg__action,\
+          { "action", "libvirt.remote_domain_event_io_error_reason_msg.action",\
+            FT_INT32, BASE_DEC,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_event_io_error_reason_msg__reason,\
+          { "reason", "libvirt.remote_domain_event_io_error_reason_msg.reason",\
             FT_STRING, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_event_io_error_reason_msg,\
           { "remote_domain_event_io_error_reason_msg", "libvirt.remote_domain_event_io_error_reason_msg",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_event_graphics_address__family,\
+          { "family", "libvirt.remote_domain_event_graphics_address.family",\
+            FT_INT32, BASE_DEC,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_event_graphics_address__node,\
+          { "node", "libvirt.remote_domain_event_graphics_address.node",\
+            FT_STRING, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_event_graphics_address__service,\
+          { "service", "libvirt.remote_domain_event_graphics_address.service",\
             FT_STRING, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_event_graphics_address,\
           { "remote_domain_event_graphics_address", "libvirt.remote_domain_event_graphics_address",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_event_graphics_identity__type,\
+          { "type", "libvirt.remote_domain_event_graphics_identity.type",\
+            FT_INT32, BASE_DEC,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_event_graphics_identity__name,\
+          { "name", "libvirt.remote_domain_event_graphics_identity.name",\
             FT_STRING, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_event_graphics_identity,\
           { "remote_domain_event_graphics_identity", "libvirt.remote_domain_event_graphics_identity",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_event_graphics_msg__dom,\
+          { "dom", "libvirt.remote_domain_event_graphics_msg.dom",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_event_graphics_msg__phase,\
+          { "phase", "libvirt.remote_domain_event_graphics_msg.phase",\
+            FT_INT32, BASE_DEC,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_event_graphics_msg__local,\
+          { "local", "libvirt.remote_domain_event_graphics_msg.local",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_event_graphics_msg__remote,\
+          { "remote", "libvirt.remote_domain_event_graphics_msg.remote",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_event_graphics_msg__authScheme,\
+          { "authScheme", "libvirt.remote_domain_event_graphics_msg.authScheme",\
             FT_STRING, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
-        { &hf_remote_domain_event_graphics_msg_ANONTYPE_subject,\
-          { "remote_domain_event_graphics_msg_ANONTYPE_subject", "libvirt.remote_domain_event_graphics_msg_ANONTYPE_subject",\
-            FT_STRING, BASE_NONE,\
+        { &hf_remote_domain_event_graphics_msg__subject,\
+          { "subject", "libvirt.remote_domain_event_graphics_msg.subject",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_event_graphics_msg__subject___ELEMENT_,\
+          { "_ELEMENT_", "libvirt.remote_domain_event_graphics_msg.subject._ELEMENT_",\
+            FT_NONE, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_event_graphics_msg,\
           { "remote_domain_event_graphics_msg", "libvirt.remote_domain_event_graphics_msg",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_event_block_job_msg__dom,\
+          { "dom", "libvirt.remote_domain_event_block_job_msg.dom",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_event_block_job_msg__path,\
+          { "path", "libvirt.remote_domain_event_block_job_msg.path",\
             FT_STRING, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_event_block_job_msg__type,\
+          { "type", "libvirt.remote_domain_event_block_job_msg.type",\
+            FT_INT32, BASE_DEC,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_event_block_job_msg__status,\
+          { "status", "libvirt.remote_domain_event_block_job_msg.status",\
+            FT_INT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_event_block_job_msg,\
           { "remote_domain_event_block_job_msg", "libvirt.remote_domain_event_block_job_msg",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_event_disk_change_msg__dom,\
+          { "dom", "libvirt.remote_domain_event_disk_change_msg.dom",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_event_disk_change_msg__oldSrcPath,\
+          { "oldSrcPath", "libvirt.remote_domain_event_disk_change_msg.oldSrcPath",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_event_disk_change_msg__newSrcPath,\
+          { "newSrcPath", "libvirt.remote_domain_event_disk_change_msg.newSrcPath",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_event_disk_change_msg__devAlias,\
+          { "devAlias", "libvirt.remote_domain_event_disk_change_msg.devAlias",\
             FT_STRING, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_event_disk_change_msg__reason,\
+          { "reason", "libvirt.remote_domain_event_disk_change_msg.reason",\
+            FT_INT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_event_disk_change_msg,\
           { "remote_domain_event_disk_change_msg", "libvirt.remote_domain_event_disk_change_msg",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_event_tray_change_msg__dom,\
+          { "dom", "libvirt.remote_domain_event_tray_change_msg.dom",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_event_tray_change_msg__devAlias,\
+          { "devAlias", "libvirt.remote_domain_event_tray_change_msg.devAlias",\
             FT_STRING, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_event_tray_change_msg__reason,\
+          { "reason", "libvirt.remote_domain_event_tray_change_msg.reason",\
+            FT_INT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_event_tray_change_msg,\
           { "remote_domain_event_tray_change_msg", "libvirt.remote_domain_event_tray_change_msg",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_event_pmwakeup_msg__dom,\
+          { "dom", "libvirt.remote_domain_event_pmwakeup_msg.dom",\
+            FT_NONE, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_event_pmwakeup_msg,\
           { "remote_domain_event_pmwakeup_msg", "libvirt.remote_domain_event_pmwakeup_msg",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_event_pmsuspend_msg__dom,\
+          { "dom", "libvirt.remote_domain_event_pmsuspend_msg.dom",\
+            FT_NONE, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_event_pmsuspend_msg,\
           { "remote_domain_event_pmsuspend_msg", "libvirt.remote_domain_event_pmsuspend_msg",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_event_balloon_change_msg__dom,\
+          { "dom", "libvirt.remote_domain_event_balloon_change_msg.dom",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_event_balloon_change_msg__actual,\
+          { "actual", "libvirt.remote_domain_event_balloon_change_msg.actual",\
+            FT_UINT64, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_event_balloon_change_msg,\
           { "remote_domain_event_balloon_change_msg", "libvirt.remote_domain_event_balloon_change_msg",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_event_pmsuspend_disk_msg__dom,\
+          { "dom", "libvirt.remote_domain_event_pmsuspend_disk_msg.dom",\
+            FT_NONE, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_event_pmsuspend_disk_msg,\
           { "remote_domain_event_pmsuspend_disk_msg", "libvirt.remote_domain_event_pmsuspend_disk_msg",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_managed_save_args__dom,\
+          { "dom", "libvirt.remote_domain_managed_save_args.dom",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_managed_save_args__flags,\
+          { "flags", "libvirt.remote_domain_managed_save_args.flags",\
+            FT_UINT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_managed_save_args,\
           { "remote_domain_managed_save_args", "libvirt.remote_domain_managed_save_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_has_managed_save_image_args__dom,\
+          { "dom", "libvirt.remote_domain_has_managed_save_image_args.dom",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_has_managed_save_image_args__flags,\
+          { "flags", "libvirt.remote_domain_has_managed_save_image_args.flags",\
+            FT_UINT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_has_managed_save_image_args,\
           { "remote_domain_has_managed_save_image_args", "libvirt.remote_domain_has_managed_save_image_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_has_managed_save_image_ret__result,\
+          { "result", "libvirt.remote_domain_has_managed_save_image_ret.result",\
+            FT_INT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_has_managed_save_image_ret,\
           { "remote_domain_has_managed_save_image_ret", "libvirt.remote_domain_has_managed_save_image_ret",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_managed_save_remove_args__dom,\
+          { "dom", "libvirt.remote_domain_managed_save_remove_args.dom",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_managed_save_remove_args__flags,\
+          { "flags", "libvirt.remote_domain_managed_save_remove_args.flags",\
+            FT_UINT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_managed_save_remove_args,\
           { "remote_domain_managed_save_remove_args", "libvirt.remote_domain_managed_save_remove_args",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_snapshot_create_xml_args__dom,\
+          { "dom", "libvirt.remote_domain_snapshot_create_xml_args.dom",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_snapshot_create_xml_args__xml_desc,\
+          { "xml_desc", "libvirt.remote_domain_snapshot_create_xml_args.xml_desc",\
             FT_STRING, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_snapshot_create_xml_args__flags,\
+          { "flags", "libvirt.remote_domain_snapshot_create_xml_args.flags",\
+            FT_UINT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_snapshot_create_xml_args,\
           { "remote_domain_snapshot_create_xml_args", "libvirt.remote_domain_snapshot_create_xml_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_snapshot_create_xml_ret__snap,\
+          { "snap", "libvirt.remote_domain_snapshot_create_xml_ret.snap",\
+            FT_NONE, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_snapshot_create_xml_ret,\
           { "remote_domain_snapshot_create_xml_ret", "libvirt.remote_domain_snapshot_create_xml_ret",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_snapshot_get_xml_desc_args__snap,\
+          { "snap", "libvirt.remote_domain_snapshot_get_xml_desc_args.snap",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_snapshot_get_xml_desc_args__flags,\
+          { "flags", "libvirt.remote_domain_snapshot_get_xml_desc_args.flags",\
+            FT_UINT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_snapshot_get_xml_desc_args,\
           { "remote_domain_snapshot_get_xml_desc_args", "libvirt.remote_domain_snapshot_get_xml_desc_args",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_snapshot_get_xml_desc_ret__xml,\
+          { "xml", "libvirt.remote_domain_snapshot_get_xml_desc_ret.xml",\
             FT_STRING, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_snapshot_get_xml_desc_ret,\
           { "remote_domain_snapshot_get_xml_desc_ret", "libvirt.remote_domain_snapshot_get_xml_desc_ret",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_snapshot_num_args__dom,\
+          { "dom", "libvirt.remote_domain_snapshot_num_args.dom",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_snapshot_num_args__flags,\
+          { "flags", "libvirt.remote_domain_snapshot_num_args.flags",\
+            FT_UINT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_snapshot_num_args,\
           { "remote_domain_snapshot_num_args", "libvirt.remote_domain_snapshot_num_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_snapshot_num_ret__num,\
+          { "num", "libvirt.remote_domain_snapshot_num_ret.num",\
+            FT_INT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_snapshot_num_ret,\
           { "remote_domain_snapshot_num_ret", "libvirt.remote_domain_snapshot_num_ret",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_snapshot_list_names_args__dom,\
+          { "dom", "libvirt.remote_domain_snapshot_list_names_args.dom",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_snapshot_list_names_args__maxnames,\
+          { "maxnames", "libvirt.remote_domain_snapshot_list_names_args.maxnames",\
+            FT_INT32, BASE_DEC,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_snapshot_list_names_args__flags,\
+          { "flags", "libvirt.remote_domain_snapshot_list_names_args.flags",\
+            FT_UINT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_snapshot_list_names_args,\
           { "remote_domain_snapshot_list_names_args", "libvirt.remote_domain_snapshot_list_names_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
-        { &hf_remote_domain_snapshot_list_names_ret_ANONTYPE_names,\
-          { "remote_domain_snapshot_list_names_ret_ANONTYPE_names", "libvirt.remote_domain_snapshot_list_names_ret_ANONTYPE_names",\
+        { &hf_remote_domain_snapshot_list_names_ret__names,\
+          { "names", "libvirt.remote_domain_snapshot_list_names_ret.names",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_snapshot_list_names_ret__names___ELEMENT_,\
+          { "_ELEMENT_", "libvirt.remote_domain_snapshot_list_names_ret.names._ELEMENT_",\
             FT_STRING, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_snapshot_list_names_ret,\
           { "remote_domain_snapshot_list_names_ret", "libvirt.remote_domain_snapshot_list_names_ret",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_list_all_snapshots_args__dom,\
+          { "dom", "libvirt.remote_domain_list_all_snapshots_args.dom",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_list_all_snapshots_args__need_results,\
+          { "need_results", "libvirt.remote_domain_list_all_snapshots_args.need_results",\
+            FT_INT32, BASE_DEC,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_list_all_snapshots_args__flags,\
+          { "flags", "libvirt.remote_domain_list_all_snapshots_args.flags",\
+            FT_UINT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_list_all_snapshots_args,\
           { "remote_domain_list_all_snapshots_args", "libvirt.remote_domain_list_all_snapshots_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
-        { &hf_remote_domain_list_all_snapshots_ret_ANONTYPE_snapshots,\
-          { "remote_domain_list_all_snapshots_ret_ANONTYPE_snapshots", "libvirt.remote_domain_list_all_snapshots_ret_ANONTYPE_snapshots",\
-            FT_STRING, BASE_NONE,\
+        { &hf_remote_domain_list_all_snapshots_ret__snapshots,\
+          { "snapshots", "libvirt.remote_domain_list_all_snapshots_ret.snapshots",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_list_all_snapshots_ret__snapshots___ELEMENT_,\
+          { "_ELEMENT_", "libvirt.remote_domain_list_all_snapshots_ret.snapshots._ELEMENT_",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_list_all_snapshots_ret__ret,\
+          { "ret", "libvirt.remote_domain_list_all_snapshots_ret.ret",\
+            FT_INT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_list_all_snapshots_ret,\
           { "remote_domain_list_all_snapshots_ret", "libvirt.remote_domain_list_all_snapshots_ret",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_snapshot_num_children_args__snap,\
+          { "snap", "libvirt.remote_domain_snapshot_num_children_args.snap",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_snapshot_num_children_args__flags,\
+          { "flags", "libvirt.remote_domain_snapshot_num_children_args.flags",\
+            FT_UINT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_snapshot_num_children_args,\
           { "remote_domain_snapshot_num_children_args", "libvirt.remote_domain_snapshot_num_children_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_snapshot_num_children_ret__num,\
+          { "num", "libvirt.remote_domain_snapshot_num_children_ret.num",\
+            FT_INT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_snapshot_num_children_ret,\
           { "remote_domain_snapshot_num_children_ret", "libvirt.remote_domain_snapshot_num_children_ret",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_snapshot_list_children_names_args__snap,\
+          { "snap", "libvirt.remote_domain_snapshot_list_children_names_args.snap",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_snapshot_list_children_names_args__maxnames,\
+          { "maxnames", "libvirt.remote_domain_snapshot_list_children_names_args.maxnames",\
+            FT_INT32, BASE_DEC,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_snapshot_list_children_names_args__flags,\
+          { "flags", "libvirt.remote_domain_snapshot_list_children_names_args.flags",\
+            FT_UINT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_snapshot_list_children_names_args,\
           { "remote_domain_snapshot_list_children_names_args", "libvirt.remote_domain_snapshot_list_children_names_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
-        { &hf_remote_domain_snapshot_list_children_names_ret_ANONTYPE_names,\
-          { "remote_domain_snapshot_list_children_names_ret_ANONTYPE_names", "libvirt.remote_domain_snapshot_list_children_names_ret_ANONTYPE_names",\
+        { &hf_remote_domain_snapshot_list_children_names_ret__names,\
+          { "names", "libvirt.remote_domain_snapshot_list_children_names_ret.names",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_snapshot_list_children_names_ret__names___ELEMENT_,\
+          { "_ELEMENT_", "libvirt.remote_domain_snapshot_list_children_names_ret.names._ELEMENT_",\
             FT_STRING, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_snapshot_list_children_names_ret,\
           { "remote_domain_snapshot_list_children_names_ret", "libvirt.remote_domain_snapshot_list_children_names_ret",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_snapshot_list_all_children_args__snapshot,\
+          { "snapshot", "libvirt.remote_domain_snapshot_list_all_children_args.snapshot",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_snapshot_list_all_children_args__need_results,\
+          { "need_results", "libvirt.remote_domain_snapshot_list_all_children_args.need_results",\
+            FT_INT32, BASE_DEC,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_snapshot_list_all_children_args__flags,\
+          { "flags", "libvirt.remote_domain_snapshot_list_all_children_args.flags",\
+            FT_UINT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_snapshot_list_all_children_args,\
           { "remote_domain_snapshot_list_all_children_args", "libvirt.remote_domain_snapshot_list_all_children_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
-        { &hf_remote_domain_snapshot_list_all_children_ret_ANONTYPE_snapshots,\
-          { "remote_domain_snapshot_list_all_children_ret_ANONTYPE_snapshots", "libvirt.remote_domain_snapshot_list_all_children_ret_ANONTYPE_snapshots",\
-            FT_STRING, BASE_NONE,\
+        { &hf_remote_domain_snapshot_list_all_children_ret__snapshots,\
+          { "snapshots", "libvirt.remote_domain_snapshot_list_all_children_ret.snapshots",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_snapshot_list_all_children_ret__snapshots___ELEMENT_,\
+          { "_ELEMENT_", "libvirt.remote_domain_snapshot_list_all_children_ret.snapshots._ELEMENT_",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_snapshot_list_all_children_ret__ret,\
+          { "ret", "libvirt.remote_domain_snapshot_list_all_children_ret.ret",\
+            FT_INT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_snapshot_list_all_children_ret,\
           { "remote_domain_snapshot_list_all_children_ret", "libvirt.remote_domain_snapshot_list_all_children_ret",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_snapshot_lookup_by_name_args__dom,\
+          { "dom", "libvirt.remote_domain_snapshot_lookup_by_name_args.dom",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_snapshot_lookup_by_name_args__name,\
+          { "name", "libvirt.remote_domain_snapshot_lookup_by_name_args.name",\
             FT_STRING, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_snapshot_lookup_by_name_args__flags,\
+          { "flags", "libvirt.remote_domain_snapshot_lookup_by_name_args.flags",\
+            FT_UINT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_snapshot_lookup_by_name_args,\
           { "remote_domain_snapshot_lookup_by_name_args", "libvirt.remote_domain_snapshot_lookup_by_name_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_snapshot_lookup_by_name_ret__snap,\
+          { "snap", "libvirt.remote_domain_snapshot_lookup_by_name_ret.snap",\
+            FT_NONE, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_snapshot_lookup_by_name_ret,\
           { "remote_domain_snapshot_lookup_by_name_ret", "libvirt.remote_domain_snapshot_lookup_by_name_ret",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_has_current_snapshot_args__dom,\
+          { "dom", "libvirt.remote_domain_has_current_snapshot_args.dom",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_has_current_snapshot_args__flags,\
+          { "flags", "libvirt.remote_domain_has_current_snapshot_args.flags",\
+            FT_UINT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_has_current_snapshot_args,\
           { "remote_domain_has_current_snapshot_args", "libvirt.remote_domain_has_current_snapshot_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_has_current_snapshot_ret__result,\
+          { "result", "libvirt.remote_domain_has_current_snapshot_ret.result",\
+            FT_INT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_has_current_snapshot_ret,\
           { "remote_domain_has_current_snapshot_ret", "libvirt.remote_domain_has_current_snapshot_ret",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_snapshot_get_parent_args__snap,\
+          { "snap", "libvirt.remote_domain_snapshot_get_parent_args.snap",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_snapshot_get_parent_args__flags,\
+          { "flags", "libvirt.remote_domain_snapshot_get_parent_args.flags",\
+            FT_UINT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_snapshot_get_parent_args,\
           { "remote_domain_snapshot_get_parent_args", "libvirt.remote_domain_snapshot_get_parent_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_snapshot_get_parent_ret__snap,\
+          { "snap", "libvirt.remote_domain_snapshot_get_parent_ret.snap",\
+            FT_NONE, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_snapshot_get_parent_ret,\
           { "remote_domain_snapshot_get_parent_ret", "libvirt.remote_domain_snapshot_get_parent_ret",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_snapshot_current_args__dom,\
+          { "dom", "libvirt.remote_domain_snapshot_current_args.dom",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_snapshot_current_args__flags,\
+          { "flags", "libvirt.remote_domain_snapshot_current_args.flags",\
+            FT_UINT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_snapshot_current_args,\
           { "remote_domain_snapshot_current_args", "libvirt.remote_domain_snapshot_current_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_snapshot_current_ret__snap,\
+          { "snap", "libvirt.remote_domain_snapshot_current_ret.snap",\
+            FT_NONE, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_snapshot_current_ret,\
           { "remote_domain_snapshot_current_ret", "libvirt.remote_domain_snapshot_current_ret",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_snapshot_is_current_args__snap,\
+          { "snap", "libvirt.remote_domain_snapshot_is_current_args.snap",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_snapshot_is_current_args__flags,\
+          { "flags", "libvirt.remote_domain_snapshot_is_current_args.flags",\
+            FT_UINT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_snapshot_is_current_args,\
           { "remote_domain_snapshot_is_current_args", "libvirt.remote_domain_snapshot_is_current_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_snapshot_is_current_ret__current,\
+          { "current", "libvirt.remote_domain_snapshot_is_current_ret.current",\
+            FT_INT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_snapshot_is_current_ret,\
           { "remote_domain_snapshot_is_current_ret", "libvirt.remote_domain_snapshot_is_current_ret",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_snapshot_has_metadata_args__snap,\
+          { "snap", "libvirt.remote_domain_snapshot_has_metadata_args.snap",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_snapshot_has_metadata_args__flags,\
+          { "flags", "libvirt.remote_domain_snapshot_has_metadata_args.flags",\
+            FT_UINT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_snapshot_has_metadata_args,\
           { "remote_domain_snapshot_has_metadata_args", "libvirt.remote_domain_snapshot_has_metadata_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_snapshot_has_metadata_ret__metadata,\
+          { "metadata", "libvirt.remote_domain_snapshot_has_metadata_ret.metadata",\
+            FT_INT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_snapshot_has_metadata_ret,\
           { "remote_domain_snapshot_has_metadata_ret", "libvirt.remote_domain_snapshot_has_metadata_ret",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_revert_to_snapshot_args__snap,\
+          { "snap", "libvirt.remote_domain_revert_to_snapshot_args.snap",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_revert_to_snapshot_args__flags,\
+          { "flags", "libvirt.remote_domain_revert_to_snapshot_args.flags",\
+            FT_UINT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_revert_to_snapshot_args,\
           { "remote_domain_revert_to_snapshot_args", "libvirt.remote_domain_revert_to_snapshot_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_snapshot_delete_args__snap,\
+          { "snap", "libvirt.remote_domain_snapshot_delete_args.snap",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_snapshot_delete_args__flags,\
+          { "flags", "libvirt.remote_domain_snapshot_delete_args.flags",\
+            FT_UINT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_snapshot_delete_args,\
           { "remote_domain_snapshot_delete_args", "libvirt.remote_domain_snapshot_delete_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_open_console_args__dom,\
+          { "dom", "libvirt.remote_domain_open_console_args.dom",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_open_console_args__dev_name,\
+          { "dev_name", "libvirt.remote_domain_open_console_args.dev_name",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_open_console_args__flags,\
+          { "flags", "libvirt.remote_domain_open_console_args.flags",\
+            FT_UINT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_open_console_args,\
           { "remote_domain_open_console_args", "libvirt.remote_domain_open_console_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_open_channel_args__dom,\
+          { "dom", "libvirt.remote_domain_open_channel_args.dom",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_open_channel_args__name,\
+          { "name", "libvirt.remote_domain_open_channel_args.name",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_open_channel_args__flags,\
+          { "flags", "libvirt.remote_domain_open_channel_args.flags",\
+            FT_UINT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_open_channel_args,\
           { "remote_domain_open_channel_args", "libvirt.remote_domain_open_channel_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_storage_vol_upload_args__vol,\
+          { "vol", "libvirt.remote_storage_vol_upload_args.vol",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_storage_vol_upload_args__offset,\
+          { "offset", "libvirt.remote_storage_vol_upload_args.offset",\
+            FT_UINT64, BASE_DEC,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_storage_vol_upload_args__length,\
+          { "length", "libvirt.remote_storage_vol_upload_args.length",\
+            FT_UINT64, BASE_DEC,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_storage_vol_upload_args__flags,\
+          { "flags", "libvirt.remote_storage_vol_upload_args.flags",\
+            FT_UINT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_storage_vol_upload_args,\
           { "remote_storage_vol_upload_args", "libvirt.remote_storage_vol_upload_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_storage_vol_download_args__vol,\
+          { "vol", "libvirt.remote_storage_vol_download_args.vol",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_storage_vol_download_args__offset,\
+          { "offset", "libvirt.remote_storage_vol_download_args.offset",\
+            FT_UINT64, BASE_DEC,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_storage_vol_download_args__length,\
+          { "length", "libvirt.remote_storage_vol_download_args.length",\
+            FT_UINT64, BASE_DEC,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_storage_vol_download_args__flags,\
+          { "flags", "libvirt.remote_storage_vol_download_args.flags",\
+            FT_UINT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_storage_vol_download_args,\
           { "remote_storage_vol_download_args", "libvirt.remote_storage_vol_download_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_get_state_args__dom,\
+          { "dom", "libvirt.remote_domain_get_state_args.dom",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_get_state_args__flags,\
+          { "flags", "libvirt.remote_domain_get_state_args.flags",\
+            FT_UINT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_get_state_args,\
           { "remote_domain_get_state_args", "libvirt.remote_domain_get_state_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_get_state_ret__state,\
+          { "state", "libvirt.remote_domain_get_state_ret.state",\
+            FT_INT32, BASE_DEC,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_get_state_ret__reason,\
+          { "reason", "libvirt.remote_domain_get_state_ret.reason",\
+            FT_INT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_get_state_ret,\
           { "remote_domain_get_state_ret", "libvirt.remote_domain_get_state_ret",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_migrate_begin3_args__dom,\
+          { "dom", "libvirt.remote_domain_migrate_begin3_args.dom",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_migrate_begin3_args__xmlin,\
+          { "xmlin", "libvirt.remote_domain_migrate_begin3_args.xmlin",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_migrate_begin3_args__flags,\
+          { "flags", "libvirt.remote_domain_migrate_begin3_args.flags",\
+            FT_UINT64, BASE_DEC,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_migrate_begin3_args__dname,\
+          { "dname", "libvirt.remote_domain_migrate_begin3_args.dname",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_migrate_begin3_args__resource,\
+          { "resource", "libvirt.remote_domain_migrate_begin3_args.resource",\
+            FT_UINT64, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_migrate_begin3_args,\
           { "remote_domain_migrate_begin3_args", "libvirt.remote_domain_migrate_begin3_args",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_migrate_begin3_ret__cookie_out,\
+          { "cookie_out", "libvirt.remote_domain_migrate_begin3_ret.cookie_out",\
+            FT_BYTES, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_migrate_begin3_ret__xml,\
+          { "xml", "libvirt.remote_domain_migrate_begin3_ret.xml",\
             FT_STRING, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_migrate_begin3_ret,\
           { "remote_domain_migrate_begin3_ret", "libvirt.remote_domain_migrate_begin3_ret",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_migrate_prepare3_args__cookie_in,\
+          { "cookie_in", "libvirt.remote_domain_migrate_prepare3_args.cookie_in",\
+            FT_BYTES, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_migrate_prepare3_args__uri_in,\
+          { "uri_in", "libvirt.remote_domain_migrate_prepare3_args.uri_in",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_migrate_prepare3_args__flags,\
+          { "flags", "libvirt.remote_domain_migrate_prepare3_args.flags",\
+            FT_UINT64, BASE_DEC,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_migrate_prepare3_args__dname,\
+          { "dname", "libvirt.remote_domain_migrate_prepare3_args.dname",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_migrate_prepare3_args__resource,\
+          { "resource", "libvirt.remote_domain_migrate_prepare3_args.resource",\
+            FT_UINT64, BASE_DEC,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_migrate_prepare3_args__dom_xml,\
+          { "dom_xml", "libvirt.remote_domain_migrate_prepare3_args.dom_xml",\
             FT_STRING, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_migrate_prepare3_args,\
           { "remote_domain_migrate_prepare3_args", "libvirt.remote_domain_migrate_prepare3_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_migrate_prepare3_ret__cookie_out,\
+          { "cookie_out", "libvirt.remote_domain_migrate_prepare3_ret.cookie_out",\
+            FT_BYTES, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_migrate_prepare3_ret__uri_out,\
+          { "uri_out", "libvirt.remote_domain_migrate_prepare3_ret.uri_out",\
+            FT_NONE, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_migrate_prepare3_ret,\
           { "remote_domain_migrate_prepare3_ret", "libvirt.remote_domain_migrate_prepare3_ret",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_migrate_prepare_tunnel3_args__cookie_in,\
+          { "cookie_in", "libvirt.remote_domain_migrate_prepare_tunnel3_args.cookie_in",\
+            FT_BYTES, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_migrate_prepare_tunnel3_args__flags,\
+          { "flags", "libvirt.remote_domain_migrate_prepare_tunnel3_args.flags",\
+            FT_UINT64, BASE_DEC,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_migrate_prepare_tunnel3_args__dname,\
+          { "dname", "libvirt.remote_domain_migrate_prepare_tunnel3_args.dname",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_migrate_prepare_tunnel3_args__resource,\
+          { "resource", "libvirt.remote_domain_migrate_prepare_tunnel3_args.resource",\
+            FT_UINT64, BASE_DEC,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_migrate_prepare_tunnel3_args__dom_xml,\
+          { "dom_xml", "libvirt.remote_domain_migrate_prepare_tunnel3_args.dom_xml",\
             FT_STRING, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_migrate_prepare_tunnel3_args,\
           { "remote_domain_migrate_prepare_tunnel3_args", "libvirt.remote_domain_migrate_prepare_tunnel3_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_migrate_prepare_tunnel3_ret__cookie_out,\
+          { "cookie_out", "libvirt.remote_domain_migrate_prepare_tunnel3_ret.cookie_out",\
+            FT_BYTES, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_migrate_prepare_tunnel3_ret,\
           { "remote_domain_migrate_prepare_tunnel3_ret", "libvirt.remote_domain_migrate_prepare_tunnel3_ret",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_migrate_perform3_args__dom,\
+          { "dom", "libvirt.remote_domain_migrate_perform3_args.dom",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_migrate_perform3_args__xmlin,\
+          { "xmlin", "libvirt.remote_domain_migrate_perform3_args.xmlin",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_migrate_perform3_args__cookie_in,\
+          { "cookie_in", "libvirt.remote_domain_migrate_perform3_args.cookie_in",\
+            FT_BYTES, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_migrate_perform3_args__dconnuri,\
+          { "dconnuri", "libvirt.remote_domain_migrate_perform3_args.dconnuri",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_migrate_perform3_args__uri,\
+          { "uri", "libvirt.remote_domain_migrate_perform3_args.uri",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_migrate_perform3_args__flags,\
+          { "flags", "libvirt.remote_domain_migrate_perform3_args.flags",\
+            FT_UINT64, BASE_DEC,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_migrate_perform3_args__dname,\
+          { "dname", "libvirt.remote_domain_migrate_perform3_args.dname",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_migrate_perform3_args__resource,\
+          { "resource", "libvirt.remote_domain_migrate_perform3_args.resource",\
+            FT_UINT64, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_migrate_perform3_args,\
           { "remote_domain_migrate_perform3_args", "libvirt.remote_domain_migrate_perform3_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_migrate_perform3_ret__cookie_out,\
+          { "cookie_out", "libvirt.remote_domain_migrate_perform3_ret.cookie_out",\
+            FT_BYTES, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_migrate_perform3_ret,\
           { "remote_domain_migrate_perform3_ret", "libvirt.remote_domain_migrate_perform3_ret",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_migrate_finish3_args__dname,\
+          { "dname", "libvirt.remote_domain_migrate_finish3_args.dname",\
             FT_STRING, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_migrate_finish3_args__cookie_in,\
+          { "cookie_in", "libvirt.remote_domain_migrate_finish3_args.cookie_in",\
+            FT_BYTES, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_migrate_finish3_args__dconnuri,\
+          { "dconnuri", "libvirt.remote_domain_migrate_finish3_args.dconnuri",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_migrate_finish3_args__uri,\
+          { "uri", "libvirt.remote_domain_migrate_finish3_args.uri",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_migrate_finish3_args__flags,\
+          { "flags", "libvirt.remote_domain_migrate_finish3_args.flags",\
+            FT_UINT64, BASE_DEC,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_migrate_finish3_args__cancelled,\
+          { "cancelled", "libvirt.remote_domain_migrate_finish3_args.cancelled",\
+            FT_INT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_migrate_finish3_args,\
           { "remote_domain_migrate_finish3_args", "libvirt.remote_domain_migrate_finish3_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_migrate_finish3_ret__dom,\
+          { "dom", "libvirt.remote_domain_migrate_finish3_ret.dom",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_migrate_finish3_ret__cookie_out,\
+          { "cookie_out", "libvirt.remote_domain_migrate_finish3_ret.cookie_out",\
+            FT_BYTES, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_migrate_finish3_ret,\
           { "remote_domain_migrate_finish3_ret", "libvirt.remote_domain_migrate_finish3_ret",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_migrate_confirm3_args__dom,\
+          { "dom", "libvirt.remote_domain_migrate_confirm3_args.dom",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_migrate_confirm3_args__cookie_in,\
+          { "cookie_in", "libvirt.remote_domain_migrate_confirm3_args.cookie_in",\
+            FT_BYTES, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_migrate_confirm3_args__flags,\
+          { "flags", "libvirt.remote_domain_migrate_confirm3_args.flags",\
+            FT_UINT64, BASE_DEC,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_migrate_confirm3_args__cancelled,\
+          { "cancelled", "libvirt.remote_domain_migrate_confirm3_args.cancelled",\
+            FT_INT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_migrate_confirm3_args,\
           { "remote_domain_migrate_confirm3_args", "libvirt.remote_domain_migrate_confirm3_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_event_control_error_msg__dom,\
+          { "dom", "libvirt.remote_domain_event_control_error_msg.dom",\
+            FT_NONE, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_event_control_error_msg,\
           { "remote_domain_event_control_error_msg", "libvirt.remote_domain_event_control_error_msg",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_get_control_info_args__dom,\
+          { "dom", "libvirt.remote_domain_get_control_info_args.dom",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_get_control_info_args__flags,\
+          { "flags", "libvirt.remote_domain_get_control_info_args.flags",\
+            FT_UINT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_get_control_info_args,\
           { "remote_domain_get_control_info_args", "libvirt.remote_domain_get_control_info_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_get_control_info_ret__state,\
+          { "state", "libvirt.remote_domain_get_control_info_ret.state",\
+            FT_UINT32, BASE_DEC,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_get_control_info_ret__details,\
+          { "details", "libvirt.remote_domain_get_control_info_ret.details",\
+            FT_UINT32, BASE_DEC,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_get_control_info_ret__stateTime,\
+          { "stateTime", "libvirt.remote_domain_get_control_info_ret.stateTime",\
+            FT_UINT64, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_get_control_info_ret,\
           { "remote_domain_get_control_info_ret", "libvirt.remote_domain_get_control_info_ret",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_open_graphics_args__dom,\
+          { "dom", "libvirt.remote_domain_open_graphics_args.dom",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_open_graphics_args__idx,\
+          { "idx", "libvirt.remote_domain_open_graphics_args.idx",\
+            FT_UINT32, BASE_DEC,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_open_graphics_args__flags,\
+          { "flags", "libvirt.remote_domain_open_graphics_args.flags",\
+            FT_UINT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_open_graphics_args,\
           { "remote_domain_open_graphics_args", "libvirt.remote_domain_open_graphics_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_node_suspend_for_duration_args__target,\
+          { "target", "libvirt.remote_node_suspend_for_duration_args.target",\
+            FT_UINT32, BASE_DEC,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_node_suspend_for_duration_args__duration,\
+          { "duration", "libvirt.remote_node_suspend_for_duration_args.duration",\
+            FT_UINT64, BASE_DEC,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_node_suspend_for_duration_args__flags,\
+          { "flags", "libvirt.remote_node_suspend_for_duration_args.flags",\
+            FT_UINT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_node_suspend_for_duration_args,\
           { "remote_node_suspend_for_duration_args", "libvirt.remote_node_suspend_for_duration_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_shutdown_flags_args__dom,\
+          { "dom", "libvirt.remote_domain_shutdown_flags_args.dom",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_shutdown_flags_args__flags,\
+          { "flags", "libvirt.remote_domain_shutdown_flags_args.flags",\
+            FT_UINT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_shutdown_flags_args,\
           { "remote_domain_shutdown_flags_args", "libvirt.remote_domain_shutdown_flags_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_get_disk_errors_args__dom,\
+          { "dom", "libvirt.remote_domain_get_disk_errors_args.dom",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_get_disk_errors_args__maxerrors,\
+          { "maxerrors", "libvirt.remote_domain_get_disk_errors_args.maxerrors",\
+            FT_UINT32, BASE_DEC,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_get_disk_errors_args__flags,\
+          { "flags", "libvirt.remote_domain_get_disk_errors_args.flags",\
+            FT_UINT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_get_disk_errors_args,\
           { "remote_domain_get_disk_errors_args", "libvirt.remote_domain_get_disk_errors_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
-        { &hf_remote_domain_get_disk_errors_ret_ANONTYPE_errors,\
-          { "remote_domain_get_disk_errors_ret_ANONTYPE_errors", "libvirt.remote_domain_get_disk_errors_ret_ANONTYPE_errors",\
-            FT_STRING, BASE_NONE,\
+        { &hf_remote_domain_get_disk_errors_ret__errors,\
+          { "errors", "libvirt.remote_domain_get_disk_errors_ret.errors",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_get_disk_errors_ret__errors___ELEMENT_,\
+          { "_ELEMENT_", "libvirt.remote_domain_get_disk_errors_ret.errors._ELEMENT_",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_get_disk_errors_ret__nerrors,\
+          { "nerrors", "libvirt.remote_domain_get_disk_errors_ret.nerrors",\
+            FT_INT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_get_disk_errors_ret,\
           { "remote_domain_get_disk_errors_ret", "libvirt.remote_domain_get_disk_errors_ret",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_connect_list_all_domains_args__need_results,\
+          { "need_results", "libvirt.remote_connect_list_all_domains_args.need_results",\
+            FT_INT32, BASE_DEC,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_connect_list_all_domains_args__flags,\
+          { "flags", "libvirt.remote_connect_list_all_domains_args.flags",\
+            FT_UINT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_connect_list_all_domains_args,\
           { "remote_connect_list_all_domains_args", "libvirt.remote_connect_list_all_domains_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
-        { &hf_remote_connect_list_all_domains_ret_ANONTYPE_domains,\
-          { "remote_connect_list_all_domains_ret_ANONTYPE_domains", "libvirt.remote_connect_list_all_domains_ret_ANONTYPE_domains",\
-            FT_STRING, BASE_NONE,\
+        { &hf_remote_connect_list_all_domains_ret__domains,\
+          { "domains", "libvirt.remote_connect_list_all_domains_ret.domains",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_connect_list_all_domains_ret__domains___ELEMENT_,\
+          { "_ELEMENT_", "libvirt.remote_connect_list_all_domains_ret.domains._ELEMENT_",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_connect_list_all_domains_ret__ret,\
+          { "ret", "libvirt.remote_connect_list_all_domains_ret.ret",\
+            FT_UINT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_connect_list_all_domains_ret,\
           { "remote_connect_list_all_domains_ret", "libvirt.remote_connect_list_all_domains_ret",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_connect_list_all_storage_pools_args__need_results,\
+          { "need_results", "libvirt.remote_connect_list_all_storage_pools_args.need_results",\
+            FT_INT32, BASE_DEC,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_connect_list_all_storage_pools_args__flags,\
+          { "flags", "libvirt.remote_connect_list_all_storage_pools_args.flags",\
+            FT_UINT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_connect_list_all_storage_pools_args,\
           { "remote_connect_list_all_storage_pools_args", "libvirt.remote_connect_list_all_storage_pools_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
-        { &hf_remote_connect_list_all_storage_pools_ret_ANONTYPE_pools,\
-          { "remote_connect_list_all_storage_pools_ret_ANONTYPE_pools", "libvirt.remote_connect_list_all_storage_pools_ret_ANONTYPE_pools",\
-            FT_STRING, BASE_NONE,\
+        { &hf_remote_connect_list_all_storage_pools_ret__pools,\
+          { "pools", "libvirt.remote_connect_list_all_storage_pools_ret.pools",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_connect_list_all_storage_pools_ret__pools___ELEMENT_,\
+          { "_ELEMENT_", "libvirt.remote_connect_list_all_storage_pools_ret.pools._ELEMENT_",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_connect_list_all_storage_pools_ret__ret,\
+          { "ret", "libvirt.remote_connect_list_all_storage_pools_ret.ret",\
+            FT_UINT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_connect_list_all_storage_pools_ret,\
           { "remote_connect_list_all_storage_pools_ret", "libvirt.remote_connect_list_all_storage_pools_ret",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_storage_pool_list_all_volumes_args__pool,\
+          { "pool", "libvirt.remote_storage_pool_list_all_volumes_args.pool",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_storage_pool_list_all_volumes_args__need_results,\
+          { "need_results", "libvirt.remote_storage_pool_list_all_volumes_args.need_results",\
+            FT_INT32, BASE_DEC,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_storage_pool_list_all_volumes_args__flags,\
+          { "flags", "libvirt.remote_storage_pool_list_all_volumes_args.flags",\
+            FT_UINT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_storage_pool_list_all_volumes_args,\
           { "remote_storage_pool_list_all_volumes_args", "libvirt.remote_storage_pool_list_all_volumes_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
-        { &hf_remote_storage_pool_list_all_volumes_ret_ANONTYPE_vols,\
-          { "remote_storage_pool_list_all_volumes_ret_ANONTYPE_vols", "libvirt.remote_storage_pool_list_all_volumes_ret_ANONTYPE_vols",\
-            FT_STRING, BASE_NONE,\
+        { &hf_remote_storage_pool_list_all_volumes_ret__vols,\
+          { "vols", "libvirt.remote_storage_pool_list_all_volumes_ret.vols",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_storage_pool_list_all_volumes_ret__vols___ELEMENT_,\
+          { "_ELEMENT_", "libvirt.remote_storage_pool_list_all_volumes_ret.vols._ELEMENT_",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_storage_pool_list_all_volumes_ret__ret,\
+          { "ret", "libvirt.remote_storage_pool_list_all_volumes_ret.ret",\
+            FT_UINT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_storage_pool_list_all_volumes_ret,\
           { "remote_storage_pool_list_all_volumes_ret", "libvirt.remote_storage_pool_list_all_volumes_ret",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_connect_list_all_networks_args__need_results,\
+          { "need_results", "libvirt.remote_connect_list_all_networks_args.need_results",\
+            FT_INT32, BASE_DEC,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_connect_list_all_networks_args__flags,\
+          { "flags", "libvirt.remote_connect_list_all_networks_args.flags",\
+            FT_UINT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_connect_list_all_networks_args,\
           { "remote_connect_list_all_networks_args", "libvirt.remote_connect_list_all_networks_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
-        { &hf_remote_connect_list_all_networks_ret_ANONTYPE_nets,\
-          { "remote_connect_list_all_networks_ret_ANONTYPE_nets", "libvirt.remote_connect_list_all_networks_ret_ANONTYPE_nets",\
-            FT_STRING, BASE_NONE,\
+        { &hf_remote_connect_list_all_networks_ret__nets,\
+          { "nets", "libvirt.remote_connect_list_all_networks_ret.nets",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_connect_list_all_networks_ret__nets___ELEMENT_,\
+          { "_ELEMENT_", "libvirt.remote_connect_list_all_networks_ret.nets._ELEMENT_",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_connect_list_all_networks_ret__ret,\
+          { "ret", "libvirt.remote_connect_list_all_networks_ret.ret",\
+            FT_UINT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_connect_list_all_networks_ret,\
           { "remote_connect_list_all_networks_ret", "libvirt.remote_connect_list_all_networks_ret",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_connect_list_all_interfaces_args__need_results,\
+          { "need_results", "libvirt.remote_connect_list_all_interfaces_args.need_results",\
+            FT_INT32, BASE_DEC,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_connect_list_all_interfaces_args__flags,\
+          { "flags", "libvirt.remote_connect_list_all_interfaces_args.flags",\
+            FT_UINT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_connect_list_all_interfaces_args,\
           { "remote_connect_list_all_interfaces_args", "libvirt.remote_connect_list_all_interfaces_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
-        { &hf_remote_connect_list_all_interfaces_ret_ANONTYPE_ifaces,\
-          { "remote_connect_list_all_interfaces_ret_ANONTYPE_ifaces", "libvirt.remote_connect_list_all_interfaces_ret_ANONTYPE_ifaces",\
-            FT_STRING, BASE_NONE,\
+        { &hf_remote_connect_list_all_interfaces_ret__ifaces,\
+          { "ifaces", "libvirt.remote_connect_list_all_interfaces_ret.ifaces",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_connect_list_all_interfaces_ret__ifaces___ELEMENT_,\
+          { "_ELEMENT_", "libvirt.remote_connect_list_all_interfaces_ret.ifaces._ELEMENT_",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_connect_list_all_interfaces_ret__ret,\
+          { "ret", "libvirt.remote_connect_list_all_interfaces_ret.ret",\
+            FT_UINT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_connect_list_all_interfaces_ret,\
           { "remote_connect_list_all_interfaces_ret", "libvirt.remote_connect_list_all_interfaces_ret",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_connect_list_all_node_devices_args__need_results,\
+          { "need_results", "libvirt.remote_connect_list_all_node_devices_args.need_results",\
+            FT_INT32, BASE_DEC,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_connect_list_all_node_devices_args__flags,\
+          { "flags", "libvirt.remote_connect_list_all_node_devices_args.flags",\
+            FT_UINT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_connect_list_all_node_devices_args,\
           { "remote_connect_list_all_node_devices_args", "libvirt.remote_connect_list_all_node_devices_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
-        { &hf_remote_connect_list_all_node_devices_ret_ANONTYPE_devices,\
-          { "remote_connect_list_all_node_devices_ret_ANONTYPE_devices", "libvirt.remote_connect_list_all_node_devices_ret_ANONTYPE_devices",\
-            FT_STRING, BASE_NONE,\
+        { &hf_remote_connect_list_all_node_devices_ret__devices,\
+          { "devices", "libvirt.remote_connect_list_all_node_devices_ret.devices",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_connect_list_all_node_devices_ret__devices___ELEMENT_,\
+          { "_ELEMENT_", "libvirt.remote_connect_list_all_node_devices_ret.devices._ELEMENT_",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_connect_list_all_node_devices_ret__ret,\
+          { "ret", "libvirt.remote_connect_list_all_node_devices_ret.ret",\
+            FT_UINT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_connect_list_all_node_devices_ret,\
           { "remote_connect_list_all_node_devices_ret", "libvirt.remote_connect_list_all_node_devices_ret",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_connect_list_all_nwfilters_args__need_results,\
+          { "need_results", "libvirt.remote_connect_list_all_nwfilters_args.need_results",\
+            FT_INT32, BASE_DEC,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_connect_list_all_nwfilters_args__flags,\
+          { "flags", "libvirt.remote_connect_list_all_nwfilters_args.flags",\
+            FT_UINT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_connect_list_all_nwfilters_args,\
           { "remote_connect_list_all_nwfilters_args", "libvirt.remote_connect_list_all_nwfilters_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
-        { &hf_remote_connect_list_all_nwfilters_ret_ANONTYPE_filters,\
-          { "remote_connect_list_all_nwfilters_ret_ANONTYPE_filters", "libvirt.remote_connect_list_all_nwfilters_ret_ANONTYPE_filters",\
-            FT_STRING, BASE_NONE,\
+        { &hf_remote_connect_list_all_nwfilters_ret__filters,\
+          { "filters", "libvirt.remote_connect_list_all_nwfilters_ret.filters",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_connect_list_all_nwfilters_ret__filters___ELEMENT_,\
+          { "_ELEMENT_", "libvirt.remote_connect_list_all_nwfilters_ret.filters._ELEMENT_",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_connect_list_all_nwfilters_ret__ret,\
+          { "ret", "libvirt.remote_connect_list_all_nwfilters_ret.ret",\
+            FT_UINT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_connect_list_all_nwfilters_ret,\
           { "remote_connect_list_all_nwfilters_ret", "libvirt.remote_connect_list_all_nwfilters_ret",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_connect_list_all_secrets_args__need_results,\
+          { "need_results", "libvirt.remote_connect_list_all_secrets_args.need_results",\
+            FT_INT32, BASE_DEC,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_connect_list_all_secrets_args__flags,\
+          { "flags", "libvirt.remote_connect_list_all_secrets_args.flags",\
+            FT_UINT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_connect_list_all_secrets_args,\
           { "remote_connect_list_all_secrets_args", "libvirt.remote_connect_list_all_secrets_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
-        { &hf_remote_connect_list_all_secrets_ret_ANONTYPE_secrets,\
-          { "remote_connect_list_all_secrets_ret_ANONTYPE_secrets", "libvirt.remote_connect_list_all_secrets_ret_ANONTYPE_secrets",\
-            FT_STRING, BASE_NONE,\
+        { &hf_remote_connect_list_all_secrets_ret__secrets,\
+          { "secrets", "libvirt.remote_connect_list_all_secrets_ret.secrets",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_connect_list_all_secrets_ret__secrets___ELEMENT_,\
+          { "_ELEMENT_", "libvirt.remote_connect_list_all_secrets_ret.secrets._ELEMENT_",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_connect_list_all_secrets_ret__ret,\
+          { "ret", "libvirt.remote_connect_list_all_secrets_ret.ret",\
+            FT_UINT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_connect_list_all_secrets_ret,\
           { "remote_connect_list_all_secrets_ret", "libvirt.remote_connect_list_all_secrets_ret",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
-        { &hf_remote_node_set_memory_parameters_args_ANONTYPE_params,\
-          { "remote_node_set_memory_parameters_args_ANONTYPE_params", "libvirt.remote_node_set_memory_parameters_args_ANONTYPE_params",\
-            FT_STRING, BASE_NONE,\
+        { &hf_remote_node_set_memory_parameters_args__params,\
+          { "params", "libvirt.remote_node_set_memory_parameters_args.params",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_node_set_memory_parameters_args__params___ELEMENT_,\
+          { "_ELEMENT_", "libvirt.remote_node_set_memory_parameters_args.params._ELEMENT_",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_node_set_memory_parameters_args__flags,\
+          { "flags", "libvirt.remote_node_set_memory_parameters_args.flags",\
+            FT_UINT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_node_set_memory_parameters_args,\
           { "remote_node_set_memory_parameters_args", "libvirt.remote_node_set_memory_parameters_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_node_get_memory_parameters_args__nparams,\
+          { "nparams", "libvirt.remote_node_get_memory_parameters_args.nparams",\
+            FT_INT32, BASE_DEC,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_node_get_memory_parameters_args__flags,\
+          { "flags", "libvirt.remote_node_get_memory_parameters_args.flags",\
+            FT_UINT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_node_get_memory_parameters_args,\
           { "remote_node_get_memory_parameters_args", "libvirt.remote_node_get_memory_parameters_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
-        { &hf_remote_node_get_memory_parameters_ret_ANONTYPE_params,\
-          { "remote_node_get_memory_parameters_ret_ANONTYPE_params", "libvirt.remote_node_get_memory_parameters_ret_ANONTYPE_params",\
-            FT_STRING, BASE_NONE,\
+        { &hf_remote_node_get_memory_parameters_ret__params,\
+          { "params", "libvirt.remote_node_get_memory_parameters_ret.params",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_node_get_memory_parameters_ret__params___ELEMENT_,\
+          { "_ELEMENT_", "libvirt.remote_node_get_memory_parameters_ret.params._ELEMENT_",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_node_get_memory_parameters_ret__nparams,\
+          { "nparams", "libvirt.remote_node_get_memory_parameters_ret.nparams",\
+            FT_INT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_node_get_memory_parameters_ret,\
           { "remote_node_get_memory_parameters_ret", "libvirt.remote_node_get_memory_parameters_ret",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_node_get_cpu_map_args__need_map,\
+          { "need_map", "libvirt.remote_node_get_cpu_map_args.need_map",\
+            FT_INT32, BASE_DEC,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_node_get_cpu_map_args__need_online,\
+          { "need_online", "libvirt.remote_node_get_cpu_map_args.need_online",\
+            FT_INT32, BASE_DEC,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_node_get_cpu_map_args__flags,\
+          { "flags", "libvirt.remote_node_get_cpu_map_args.flags",\
+            FT_UINT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_node_get_cpu_map_args,\
           { "remote_node_get_cpu_map_args", "libvirt.remote_node_get_cpu_map_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_node_get_cpu_map_ret__cpumap,\
+          { "cpumap", "libvirt.remote_node_get_cpu_map_ret.cpumap",\
+            FT_BYTES, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_node_get_cpu_map_ret__online,\
+          { "online", "libvirt.remote_node_get_cpu_map_ret.online",\
+            FT_UINT32, BASE_DEC,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_node_get_cpu_map_ret__ret,\
+          { "ret", "libvirt.remote_node_get_cpu_map_ret.ret",\
+            FT_INT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_node_get_cpu_map_ret,\
           { "remote_node_get_cpu_map_ret", "libvirt.remote_node_get_cpu_map_ret",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_fstrim_args__dom,\
+          { "dom", "libvirt.remote_domain_fstrim_args.dom",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_fstrim_args__mountPoint,\
+          { "mountPoint", "libvirt.remote_domain_fstrim_args.mountPoint",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_fstrim_args__minimum,\
+          { "minimum", "libvirt.remote_domain_fstrim_args.minimum",\
+            FT_UINT64, BASE_DEC,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_fstrim_args__flags,\
+          { "flags", "libvirt.remote_domain_fstrim_args.flags",\
+            FT_UINT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_fstrim_args,\
           { "remote_domain_fstrim_args", "libvirt.remote_domain_fstrim_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
-        { &hf_remote_domain_migrate_begin3_params_args_ANONTYPE_params,\
-          { "remote_domain_migrate_begin3_params_args_ANONTYPE_params", "libvirt.remote_domain_migrate_begin3_params_args_ANONTYPE_params",\
-            FT_STRING, BASE_NONE,\
+        { &hf_remote_domain_migrate_begin3_params_args__dom,\
+          { "dom", "libvirt.remote_domain_migrate_begin3_params_args.dom",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_migrate_begin3_params_args__params,\
+          { "params", "libvirt.remote_domain_migrate_begin3_params_args.params",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_migrate_begin3_params_args__params___ELEMENT_,\
+          { "_ELEMENT_", "libvirt.remote_domain_migrate_begin3_params_args.params._ELEMENT_",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_migrate_begin3_params_args__flags,\
+          { "flags", "libvirt.remote_domain_migrate_begin3_params_args.flags",\
+            FT_UINT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_migrate_begin3_params_args,\
           { "remote_domain_migrate_begin3_params_args", "libvirt.remote_domain_migrate_begin3_params_args",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_migrate_begin3_params_ret__cookie_out,\
+          { "cookie_out", "libvirt.remote_domain_migrate_begin3_params_ret.cookie_out",\
+            FT_BYTES, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_migrate_begin3_params_ret__xml,\
+          { "xml", "libvirt.remote_domain_migrate_begin3_params_ret.xml",\
             FT_STRING, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_migrate_begin3_params_ret,\
           { "remote_domain_migrate_begin3_params_ret", "libvirt.remote_domain_migrate_begin3_params_ret",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
-        { &hf_remote_domain_migrate_prepare3_params_args_ANONTYPE_params,\
-          { "remote_domain_migrate_prepare3_params_args_ANONTYPE_params", "libvirt.remote_domain_migrate_prepare3_params_args_ANONTYPE_params",\
-            FT_STRING, BASE_NONE,\
+        { &hf_remote_domain_migrate_prepare3_params_args__params,\
+          { "params", "libvirt.remote_domain_migrate_prepare3_params_args.params",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_migrate_prepare3_params_args__params___ELEMENT_,\
+          { "_ELEMENT_", "libvirt.remote_domain_migrate_prepare3_params_args.params._ELEMENT_",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_migrate_prepare3_params_args__cookie_in,\
+          { "cookie_in", "libvirt.remote_domain_migrate_prepare3_params_args.cookie_in",\
+            FT_BYTES, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_migrate_prepare3_params_args__flags,\
+          { "flags", "libvirt.remote_domain_migrate_prepare3_params_args.flags",\
+            FT_UINT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_migrate_prepare3_params_args,\
           { "remote_domain_migrate_prepare3_params_args", "libvirt.remote_domain_migrate_prepare3_params_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_migrate_prepare3_params_ret__cookie_out,\
+          { "cookie_out", "libvirt.remote_domain_migrate_prepare3_params_ret.cookie_out",\
+            FT_BYTES, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_migrate_prepare3_params_ret__uri_out,\
+          { "uri_out", "libvirt.remote_domain_migrate_prepare3_params_ret.uri_out",\
+            FT_NONE, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_migrate_prepare3_params_ret,\
           { "remote_domain_migrate_prepare3_params_ret", "libvirt.remote_domain_migrate_prepare3_params_ret",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
-        { &hf_remote_domain_migrate_prepare_tunnel3_params_args_ANONTYPE_params,\
-          { "remote_domain_migrate_prepare_tunnel3_params_args_ANONTYPE_params", "libvirt.remote_domain_migrate_prepare_tunnel3_params_args_ANONTYPE_params",\
-            FT_STRING, BASE_NONE,\
+        { &hf_remote_domain_migrate_prepare_tunnel3_params_args__params,\
+          { "params", "libvirt.remote_domain_migrate_prepare_tunnel3_params_args.params",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_migrate_prepare_tunnel3_params_args__params___ELEMENT_,\
+          { "_ELEMENT_", "libvirt.remote_domain_migrate_prepare_tunnel3_params_args.params._ELEMENT_",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_migrate_prepare_tunnel3_params_args__cookie_in,\
+          { "cookie_in", "libvirt.remote_domain_migrate_prepare_tunnel3_params_args.cookie_in",\
+            FT_BYTES, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_migrate_prepare_tunnel3_params_args__flags,\
+          { "flags", "libvirt.remote_domain_migrate_prepare_tunnel3_params_args.flags",\
+            FT_UINT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_migrate_prepare_tunnel3_params_args,\
           { "remote_domain_migrate_prepare_tunnel3_params_args", "libvirt.remote_domain_migrate_prepare_tunnel3_params_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_migrate_prepare_tunnel3_params_ret__cookie_out,\
+          { "cookie_out", "libvirt.remote_domain_migrate_prepare_tunnel3_params_ret.cookie_out",\
+            FT_BYTES, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_migrate_prepare_tunnel3_params_ret,\
           { "remote_domain_migrate_prepare_tunnel3_params_ret", "libvirt.remote_domain_migrate_prepare_tunnel3_params_ret",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
-        { &hf_remote_domain_migrate_perform3_params_args_ANONTYPE_params,\
-          { "remote_domain_migrate_perform3_params_args_ANONTYPE_params", "libvirt.remote_domain_migrate_perform3_params_args_ANONTYPE_params",\
-            FT_STRING, BASE_NONE,\
+        { &hf_remote_domain_migrate_perform3_params_args__dom,\
+          { "dom", "libvirt.remote_domain_migrate_perform3_params_args.dom",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_migrate_perform3_params_args__dconnuri,\
+          { "dconnuri", "libvirt.remote_domain_migrate_perform3_params_args.dconnuri",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_migrate_perform3_params_args__params,\
+          { "params", "libvirt.remote_domain_migrate_perform3_params_args.params",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_migrate_perform3_params_args__params___ELEMENT_,\
+          { "_ELEMENT_", "libvirt.remote_domain_migrate_perform3_params_args.params._ELEMENT_",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_migrate_perform3_params_args__cookie_in,\
+          { "cookie_in", "libvirt.remote_domain_migrate_perform3_params_args.cookie_in",\
+            FT_BYTES, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_migrate_perform3_params_args__flags,\
+          { "flags", "libvirt.remote_domain_migrate_perform3_params_args.flags",\
+            FT_UINT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_migrate_perform3_params_args,\
           { "remote_domain_migrate_perform3_params_args", "libvirt.remote_domain_migrate_perform3_params_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_migrate_perform3_params_ret__cookie_out,\
+          { "cookie_out", "libvirt.remote_domain_migrate_perform3_params_ret.cookie_out",\
+            FT_BYTES, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_migrate_perform3_params_ret,\
           { "remote_domain_migrate_perform3_params_ret", "libvirt.remote_domain_migrate_perform3_params_ret",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
-        { &hf_remote_domain_migrate_finish3_params_args_ANONTYPE_params,\
-          { "remote_domain_migrate_finish3_params_args_ANONTYPE_params", "libvirt.remote_domain_migrate_finish3_params_args_ANONTYPE_params",\
-            FT_STRING, BASE_NONE,\
+        { &hf_remote_domain_migrate_finish3_params_args__params,\
+          { "params", "libvirt.remote_domain_migrate_finish3_params_args.params",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_migrate_finish3_params_args__params___ELEMENT_,\
+          { "_ELEMENT_", "libvirt.remote_domain_migrate_finish3_params_args.params._ELEMENT_",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_migrate_finish3_params_args__cookie_in,\
+          { "cookie_in", "libvirt.remote_domain_migrate_finish3_params_args.cookie_in",\
+            FT_BYTES, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_migrate_finish3_params_args__flags,\
+          { "flags", "libvirt.remote_domain_migrate_finish3_params_args.flags",\
+            FT_UINT32, BASE_DEC,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_migrate_finish3_params_args__cancelled,\
+          { "cancelled", "libvirt.remote_domain_migrate_finish3_params_args.cancelled",\
+            FT_INT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_migrate_finish3_params_args,\
           { "remote_domain_migrate_finish3_params_args", "libvirt.remote_domain_migrate_finish3_params_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_migrate_finish3_params_ret__dom,\
+          { "dom", "libvirt.remote_domain_migrate_finish3_params_ret.dom",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_migrate_finish3_params_ret__cookie_out,\
+          { "cookie_out", "libvirt.remote_domain_migrate_finish3_params_ret.cookie_out",\
+            FT_BYTES, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_migrate_finish3_params_ret,\
           { "remote_domain_migrate_finish3_params_ret", "libvirt.remote_domain_migrate_finish3_params_ret",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
-        { &hf_remote_domain_migrate_confirm3_params_args_ANONTYPE_params,\
-          { "remote_domain_migrate_confirm3_params_args_ANONTYPE_params", "libvirt.remote_domain_migrate_confirm3_params_args_ANONTYPE_params",\
-            FT_STRING, BASE_NONE,\
+        { &hf_remote_domain_migrate_confirm3_params_args__dom,\
+          { "dom", "libvirt.remote_domain_migrate_confirm3_params_args.dom",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_migrate_confirm3_params_args__params,\
+          { "params", "libvirt.remote_domain_migrate_confirm3_params_args.params",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_migrate_confirm3_params_args__params___ELEMENT_,\
+          { "_ELEMENT_", "libvirt.remote_domain_migrate_confirm3_params_args.params._ELEMENT_",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_migrate_confirm3_params_args__cookie_in,\
+          { "cookie_in", "libvirt.remote_domain_migrate_confirm3_params_args.cookie_in",\
+            FT_BYTES, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_migrate_confirm3_params_args__flags,\
+          { "flags", "libvirt.remote_domain_migrate_confirm3_params_args.flags",\
+            FT_UINT32, BASE_DEC,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_remote_domain_migrate_confirm3_params_args__cancelled,\
+          { "cancelled", "libvirt.remote_domain_migrate_confirm3_params_args.cancelled",\
+            FT_INT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_remote_domain_migrate_confirm3_params_args,\
           { "remote_domain_migrate_confirm3_params_args", "libvirt.remote_domain_migrate_confirm3_params_args",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_qemu_domain_monitor_command_args__dom,\
+          { "dom", "libvirt.qemu_domain_monitor_command_args.dom",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_qemu_domain_monitor_command_args__cmd,\
+          { "cmd", "libvirt.qemu_domain_monitor_command_args.cmd",\
             FT_STRING, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_qemu_domain_monitor_command_args__flags,\
+          { "flags", "libvirt.qemu_domain_monitor_command_args.flags",\
+            FT_UINT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_qemu_domain_monitor_command_args,\
           { "qemu_domain_monitor_command_args", "libvirt.qemu_domain_monitor_command_args",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_qemu_domain_monitor_command_ret__result,\
+          { "result", "libvirt.qemu_domain_monitor_command_ret.result",\
             FT_STRING, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_qemu_domain_monitor_command_ret,\
           { "qemu_domain_monitor_command_ret", "libvirt.qemu_domain_monitor_command_ret",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_qemu_domain_attach_args__pid_value,\
+          { "pid_value", "libvirt.qemu_domain_attach_args.pid_value",\
+            FT_UINT32, BASE_DEC,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_qemu_domain_attach_args__flags,\
+          { "flags", "libvirt.qemu_domain_attach_args.flags",\
+            FT_UINT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_qemu_domain_attach_args,\
           { "qemu_domain_attach_args", "libvirt.qemu_domain_attach_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_qemu_domain_attach_ret__dom,\
+          { "dom", "libvirt.qemu_domain_attach_ret.dom",\
+            FT_NONE, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_qemu_domain_attach_ret,\
           { "qemu_domain_attach_ret", "libvirt.qemu_domain_attach_ret",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_qemu_domain_agent_command_args__dom,\
+          { "dom", "libvirt.qemu_domain_agent_command_args.dom",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_qemu_domain_agent_command_args__cmd,\
+          { "cmd", "libvirt.qemu_domain_agent_command_args.cmd",\
             FT_STRING, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_qemu_domain_agent_command_args__timeout,\
+          { "timeout", "libvirt.qemu_domain_agent_command_args.timeout",\
+            FT_INT32, BASE_DEC,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_qemu_domain_agent_command_args__flags,\
+          { "flags", "libvirt.qemu_domain_agent_command_args.flags",\
+            FT_UINT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_qemu_domain_agent_command_args,\
           { "qemu_domain_agent_command_args", "libvirt.qemu_domain_agent_command_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_qemu_domain_agent_command_ret__result,\
+          { "result", "libvirt.qemu_domain_agent_command_ret.result",\
+            FT_NONE, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_qemu_domain_agent_command_ret,\
           { "qemu_domain_agent_command_ret", "libvirt.qemu_domain_agent_command_ret",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_lxc_domain_open_namespace_args__dom,\
+          { "dom", "libvirt.lxc_domain_open_namespace_args.dom",\
+            FT_NONE, BASE_NONE,\
+            NULL, 0x0,\
+            NULL, HFILL}\
+        },\
+        { &hf_lxc_domain_open_namespace_args__flags,\
+          { "flags", "libvirt.lxc_domain_open_namespace_args.flags",\
+            FT_UINT32, BASE_DEC,\
             NULL, 0x0,\
             NULL, HFILL}\
         },\
         { &hf_lxc_domain_open_namespace_args,\
           { "lxc_domain_open_namespace_args", "libvirt.lxc_domain_open_namespace_args",\
-            FT_STRING, BASE_NONE,\
+            FT_NONE, BASE_NONE,\
             NULL, 0x0,\
             NULL, HFILL}\
         },
@@ -3436,62 +9520,62 @@
 &ett_remote_connect_get_uri_ret,\
 &ett_remote_connect_get_max_vcpus_args,\
 &ett_remote_connect_get_max_vcpus_ret,\
-&ett_remote_node_get_info_ret_ANONTYPE_model,\
+&ett_remote_node_get_info_ret__model,\
 &ett_remote_node_get_info_ret,\
 &ett_remote_connect_get_capabilities_ret,\
 &ett_remote_node_get_cpu_stats_args,\
-&ett_remote_node_get_cpu_stats_ret_ANONTYPE_params,\
+&ett_remote_node_get_cpu_stats_ret__params,\
 &ett_remote_node_get_cpu_stats_ret,\
 &ett_remote_node_get_memory_stats_args,\
-&ett_remote_node_get_memory_stats_ret_ANONTYPE_params,\
+&ett_remote_node_get_memory_stats_ret__params,\
 &ett_remote_node_get_memory_stats_ret,\
 &ett_remote_node_get_cells_free_memory_args,\
-&ett_remote_node_get_cells_free_memory_ret_ANONTYPE_cells,\
+&ett_remote_node_get_cells_free_memory_ret__cells,\
 &ett_remote_node_get_cells_free_memory_ret,\
 &ett_remote_node_get_free_memory_ret,\
 &ett_remote_domain_get_scheduler_type_args,\
 &ett_remote_domain_get_scheduler_type_ret,\
 &ett_remote_domain_get_scheduler_parameters_args,\
-&ett_remote_domain_get_scheduler_parameters_ret_ANONTYPE_params,\
+&ett_remote_domain_get_scheduler_parameters_ret__params,\
 &ett_remote_domain_get_scheduler_parameters_ret,\
 &ett_remote_domain_get_scheduler_parameters_flags_args,\
-&ett_remote_domain_get_scheduler_parameters_flags_ret_ANONTYPE_params,\
+&ett_remote_domain_get_scheduler_parameters_flags_ret__params,\
 &ett_remote_domain_get_scheduler_parameters_flags_ret,\
-&ett_remote_domain_set_scheduler_parameters_args_ANONTYPE_params,\
+&ett_remote_domain_set_scheduler_parameters_args__params,\
 &ett_remote_domain_set_scheduler_parameters_args,\
-&ett_remote_domain_set_scheduler_parameters_flags_args_ANONTYPE_params,\
+&ett_remote_domain_set_scheduler_parameters_flags_args__params,\
 &ett_remote_domain_set_scheduler_parameters_flags_args,\
-&ett_remote_domain_set_blkio_parameters_args_ANONTYPE_params,\
+&ett_remote_domain_set_blkio_parameters_args__params,\
 &ett_remote_domain_set_blkio_parameters_args,\
 &ett_remote_domain_get_blkio_parameters_args,\
-&ett_remote_domain_get_blkio_parameters_ret_ANONTYPE_params,\
+&ett_remote_domain_get_blkio_parameters_ret__params,\
 &ett_remote_domain_get_blkio_parameters_ret,\
-&ett_remote_domain_set_memory_parameters_args_ANONTYPE_params,\
+&ett_remote_domain_set_memory_parameters_args__params,\
 &ett_remote_domain_set_memory_parameters_args,\
 &ett_remote_domain_get_memory_parameters_args,\
-&ett_remote_domain_get_memory_parameters_ret_ANONTYPE_params,\
+&ett_remote_domain_get_memory_parameters_ret__params,\
 &ett_remote_domain_get_memory_parameters_ret,\
 &ett_remote_domain_block_resize_args,\
-&ett_remote_domain_set_numa_parameters_args_ANONTYPE_params,\
+&ett_remote_domain_set_numa_parameters_args__params,\
 &ett_remote_domain_set_numa_parameters_args,\
 &ett_remote_domain_get_numa_parameters_args,\
-&ett_remote_domain_get_numa_parameters_ret_ANONTYPE_params,\
+&ett_remote_domain_get_numa_parameters_ret__params,\
 &ett_remote_domain_get_numa_parameters_ret,\
 &ett_remote_domain_block_stats_args,\
 &ett_remote_domain_block_stats_ret,\
 &ett_remote_domain_block_stats_flags_args,\
-&ett_remote_domain_block_stats_flags_ret_ANONTYPE_params,\
+&ett_remote_domain_block_stats_flags_ret__params,\
 &ett_remote_domain_block_stats_flags_ret,\
 &ett_remote_domain_interface_stats_args,\
 &ett_remote_domain_interface_stats_ret,\
-&ett_remote_domain_set_interface_parameters_args_ANONTYPE_params,\
+&ett_remote_domain_set_interface_parameters_args__params,\
 &ett_remote_domain_set_interface_parameters_args,\
 &ett_remote_domain_get_interface_parameters_args,\
-&ett_remote_domain_get_interface_parameters_ret_ANONTYPE_params,\
+&ett_remote_domain_get_interface_parameters_ret__params,\
 &ett_remote_domain_get_interface_parameters_ret,\
 &ett_remote_domain_memory_stats_args,\
 &ett_remote_domain_memory_stat,\
-&ett_remote_domain_memory_stats_ret_ANONTYPE_stats,\
+&ett_remote_domain_memory_stats_ret__stats,\
 &ett_remote_domain_memory_stats_ret,\
 &ett_remote_domain_block_peek_args,\
 &ett_remote_domain_block_peek_ret,\
@@ -3500,7 +9584,7 @@
 &ett_remote_domain_get_block_info_args,\
 &ett_remote_domain_get_block_info_ret,\
 &ett_remote_connect_list_domains_args,\
-&ett_remote_connect_list_domains_ret_ANONTYPE_ids,\
+&ett_remote_connect_list_domains_ret__ids,\
 &ett_remote_connect_list_domains_ret,\
 &ett_remote_connect_num_of_domains_ret,\
 &ett_remote_domain_create_xml_args,\
@@ -3551,7 +9635,7 @@
 &ett_remote_domain_migrate_finish2_args,\
 &ett_remote_domain_migrate_finish2_ret,\
 &ett_remote_connect_list_defined_domains_args,\
-&ett_remote_connect_list_defined_domains_ret_ANONTYPE_names,\
+&ett_remote_connect_list_defined_domains_ret__names,\
 &ett_remote_connect_list_defined_domains_ret,\
 &ett_remote_connect_num_of_defined_domains_ret,\
 &ett_remote_domain_create_args,\
@@ -3562,7 +9646,7 @@
 &ett_remote_domain_undefine_args,\
 &ett_remote_domain_undefine_flags_args,\
 &ett_remote_domain_inject_nmi_args,\
-&ett_remote_domain_send_key_args_ANONTYPE_keycodes,\
+&ett_remote_domain_send_key_args__keycodes,\
 &ett_remote_domain_send_key_args,\
 &ett_remote_domain_send_process_signal_args,\
 &ett_remote_domain_set_vcpus_args,\
@@ -3577,18 +9661,18 @@
 &ett_remote_domain_get_emulator_pin_info_args,\
 &ett_remote_domain_get_emulator_pin_info_ret,\
 &ett_remote_domain_get_vcpus_args,\
-&ett_remote_domain_get_vcpus_ret_ANONTYPE_info,\
+&ett_remote_domain_get_vcpus_ret__info,\
 &ett_remote_domain_get_vcpus_ret,\
 &ett_remote_domain_get_max_vcpus_args,\
 &ett_remote_domain_get_max_vcpus_ret,\
 &ett_remote_domain_get_security_label_args,\
-&ett_remote_domain_get_security_label_ret_ANONTYPE_label,\
+&ett_remote_domain_get_security_label_ret__label,\
 &ett_remote_domain_get_security_label_ret,\
 &ett_remote_domain_get_security_label_list_args,\
-&ett_remote_domain_get_security_label_list_ret_ANONTYPE_labels,\
+&ett_remote_domain_get_security_label_list_ret__labels,\
 &ett_remote_domain_get_security_label_list_ret,\
-&ett_remote_node_get_security_model_ret_ANONTYPE_model,\
-&ett_remote_node_get_security_model_ret_ANONTYPE_doi,\
+&ett_remote_node_get_security_model_ret__model,\
+&ett_remote_node_get_security_model_ret__doi,\
 &ett_remote_node_get_security_model_ret,\
 &ett_remote_domain_attach_device_args,\
 &ett_remote_domain_attach_device_flags_args,\
@@ -3608,23 +9692,23 @@
 &ett_remote_domain_block_pull_args,\
 &ett_remote_domain_block_rebase_args,\
 &ett_remote_domain_block_commit_args,\
-&ett_remote_domain_set_block_io_tune_args_ANONTYPE_params,\
+&ett_remote_domain_set_block_io_tune_args__params,\
 &ett_remote_domain_set_block_io_tune_args,\
 &ett_remote_domain_get_block_io_tune_args,\
-&ett_remote_domain_get_block_io_tune_ret_ANONTYPE_params,\
+&ett_remote_domain_get_block_io_tune_ret__params,\
 &ett_remote_domain_get_block_io_tune_ret,\
 &ett_remote_domain_get_cpu_stats_args,\
-&ett_remote_domain_get_cpu_stats_ret_ANONTYPE_params,\
+&ett_remote_domain_get_cpu_stats_ret__params,\
 &ett_remote_domain_get_cpu_stats_ret,\
 &ett_remote_domain_get_hostname_args,\
 &ett_remote_domain_get_hostname_ret,\
 &ett_remote_connect_num_of_networks_ret,\
 &ett_remote_connect_list_networks_args,\
-&ett_remote_connect_list_networks_ret_ANONTYPE_names,\
+&ett_remote_connect_list_networks_ret__names,\
 &ett_remote_connect_list_networks_ret,\
 &ett_remote_connect_num_of_defined_networks_ret,\
 &ett_remote_connect_list_defined_networks_args,\
-&ett_remote_connect_list_defined_networks_ret_ANONTYPE_names,\
+&ett_remote_connect_list_defined_networks_ret__names,\
 &ett_remote_connect_list_defined_networks_ret,\
 &ett_remote_network_lookup_by_uuid_args,\
 &ett_remote_network_lookup_by_uuid_ret,\
@@ -3647,7 +9731,7 @@
 &ett_remote_network_set_autostart_args,\
 &ett_remote_connect_num_of_nwfilters_ret,\
 &ett_remote_connect_list_nwfilters_args,\
-&ett_remote_connect_list_nwfilters_ret_ANONTYPE_names,\
+&ett_remote_connect_list_nwfilters_ret__names,\
 &ett_remote_connect_list_nwfilters_ret,\
 &ett_remote_nwfilter_lookup_by_uuid_args,\
 &ett_remote_nwfilter_lookup_by_uuid_ret,\
@@ -3660,11 +9744,11 @@
 &ett_remote_nwfilter_get_xml_desc_ret,\
 &ett_remote_connect_num_of_interfaces_ret,\
 &ett_remote_connect_list_interfaces_args,\
-&ett_remote_connect_list_interfaces_ret_ANONTYPE_names,\
+&ett_remote_connect_list_interfaces_ret__names,\
 &ett_remote_connect_list_interfaces_ret,\
 &ett_remote_connect_num_of_defined_interfaces_ret,\
 &ett_remote_connect_list_defined_interfaces_args,\
-&ett_remote_connect_list_defined_interfaces_ret_ANONTYPE_names,\
+&ett_remote_connect_list_defined_interfaces_ret__names,\
 &ett_remote_connect_list_defined_interfaces_ret,\
 &ett_remote_interface_lookup_by_name_args,\
 &ett_remote_interface_lookup_by_name_ret,\
@@ -3680,25 +9764,25 @@
 &ett_remote_interface_change_begin_args,\
 &ett_remote_interface_change_commit_args,\
 &ett_remote_interface_change_rollback_args,\
-&ett_remote_auth_list_ret_ANONTYPE_types,\
+&ett_remote_auth_list_ret__types,\
 &ett_remote_auth_list_ret,\
 &ett_remote_auth_sasl_init_ret,\
-&ett_remote_auth_sasl_start_args_ANONTYPE_data,\
+&ett_remote_auth_sasl_start_args__data,\
 &ett_remote_auth_sasl_start_args,\
-&ett_remote_auth_sasl_start_ret_ANONTYPE_data,\
+&ett_remote_auth_sasl_start_ret__data,\
 &ett_remote_auth_sasl_start_ret,\
-&ett_remote_auth_sasl_step_args_ANONTYPE_data,\
+&ett_remote_auth_sasl_step_args__data,\
 &ett_remote_auth_sasl_step_args,\
-&ett_remote_auth_sasl_step_ret_ANONTYPE_data,\
+&ett_remote_auth_sasl_step_ret__data,\
 &ett_remote_auth_sasl_step_ret,\
 &ett_remote_auth_polkit_ret,\
 &ett_remote_connect_num_of_storage_pools_ret,\
 &ett_remote_connect_list_storage_pools_args,\
-&ett_remote_connect_list_storage_pools_ret_ANONTYPE_names,\
+&ett_remote_connect_list_storage_pools_ret__names,\
 &ett_remote_connect_list_storage_pools_ret,\
 &ett_remote_connect_num_of_defined_storage_pools_ret,\
 &ett_remote_connect_list_defined_storage_pools_args,\
-&ett_remote_connect_list_defined_storage_pools_ret_ANONTYPE_names,\
+&ett_remote_connect_list_defined_storage_pools_ret__names,\
 &ett_remote_connect_list_defined_storage_pools_ret,\
 &ett_remote_connect_find_storage_pool_sources_args,\
 &ett_remote_connect_find_storage_pool_sources_ret,\
@@ -3728,7 +9812,7 @@
 &ett_remote_storage_pool_num_of_volumes_args,\
 &ett_remote_storage_pool_num_of_volumes_ret,\
 &ett_remote_storage_pool_list_volumes_args,\
-&ett_remote_storage_pool_list_volumes_ret_ANONTYPE_names,\
+&ett_remote_storage_pool_list_volumes_ret__names,\
 &ett_remote_storage_pool_list_volumes_ret,\
 &ett_remote_storage_vol_lookup_by_name_args,\
 &ett_remote_storage_vol_lookup_by_name_ret,\
@@ -3753,7 +9837,7 @@
 &ett_remote_node_num_of_devices_args,\
 &ett_remote_node_num_of_devices_ret,\
 &ett_remote_node_list_devices_args,\
-&ett_remote_node_list_devices_ret_ANONTYPE_names,\
+&ett_remote_node_list_devices_ret__names,\
 &ett_remote_node_list_devices_ret,\
 &ett_remote_node_device_lookup_by_name_args,\
 &ett_remote_node_device_lookup_by_name_ret,\
@@ -3766,7 +9850,7 @@
 &ett_remote_node_device_num_of_caps_args,\
 &ett_remote_node_device_num_of_caps_ret,\
 &ett_remote_node_device_list_caps_args,\
-&ett_remote_node_device_list_caps_ret_ANONTYPE_names,\
+&ett_remote_node_device_list_caps_ret__names,\
 &ett_remote_node_device_list_caps_ret,\
 &ett_remote_node_device_dettach_args,\
 &ett_remote_node_device_detach_flags_args,\
@@ -3784,7 +9868,7 @@
 &ett_remote_connect_domain_xml_to_native_ret,\
 &ett_remote_connect_num_of_secrets_ret,\
 &ett_remote_connect_list_secrets_args,\
-&ett_remote_connect_list_secrets_ret_ANONTYPE_uuids,\
+&ett_remote_connect_list_secrets_ret__uuids,\
 &ett_remote_connect_list_secrets_ret,\
 &ett_remote_secret_lookup_by_uuid_args,\
 &ett_remote_secret_lookup_by_uuid_ret,\
@@ -3818,13 +9902,13 @@
 &ett_remote_interface_is_active_ret,\
 &ett_remote_connect_compare_cpu_args,\
 &ett_remote_connect_compare_cpu_ret,\
-&ett_remote_connect_baseline_cpu_args_ANONTYPE_xmlCPUs,\
+&ett_remote_connect_baseline_cpu_args__xmlCPUs,\
 &ett_remote_connect_baseline_cpu_args,\
 &ett_remote_connect_baseline_cpu_ret,\
 &ett_remote_domain_get_job_info_args,\
 &ett_remote_domain_get_job_info_ret,\
 &ett_remote_domain_get_job_stats_args,\
-&ett_remote_domain_get_job_stats_ret_ANONTYPE_params,\
+&ett_remote_domain_get_job_stats_ret__params,\
 &ett_remote_domain_get_job_stats_ret,\
 &ett_remote_domain_abort_job_args,\
 &ett_remote_domain_migrate_set_max_downtime_args,\
@@ -3843,7 +9927,7 @@
 &ett_remote_domain_event_io_error_reason_msg,\
 &ett_remote_domain_event_graphics_address,\
 &ett_remote_domain_event_graphics_identity,\
-&ett_remote_domain_event_graphics_msg_ANONTYPE_subject,\
+&ett_remote_domain_event_graphics_msg__subject,\
 &ett_remote_domain_event_graphics_msg,\
 &ett_remote_domain_event_block_job_msg,\
 &ett_remote_domain_event_disk_change_msg,\
@@ -3863,18 +9947,18 @@
 &ett_remote_domain_snapshot_num_args,\
 &ett_remote_domain_snapshot_num_ret,\
 &ett_remote_domain_snapshot_list_names_args,\
-&ett_remote_domain_snapshot_list_names_ret_ANONTYPE_names,\
+&ett_remote_domain_snapshot_list_names_ret__names,\
 &ett_remote_domain_snapshot_list_names_ret,\
 &ett_remote_domain_list_all_snapshots_args,\
-&ett_remote_domain_list_all_snapshots_ret_ANONTYPE_snapshots,\
+&ett_remote_domain_list_all_snapshots_ret__snapshots,\
 &ett_remote_domain_list_all_snapshots_ret,\
 &ett_remote_domain_snapshot_num_children_args,\
 &ett_remote_domain_snapshot_num_children_ret,\
 &ett_remote_domain_snapshot_list_children_names_args,\
-&ett_remote_domain_snapshot_list_children_names_ret_ANONTYPE_names,\
+&ett_remote_domain_snapshot_list_children_names_ret__names,\
 &ett_remote_domain_snapshot_list_children_names_ret,\
 &ett_remote_domain_snapshot_list_all_children_args,\
-&ett_remote_domain_snapshot_list_all_children_ret_ANONTYPE_snapshots,\
+&ett_remote_domain_snapshot_list_all_children_ret__snapshots,\
 &ett_remote_domain_snapshot_list_all_children_ret,\
 &ett_remote_domain_snapshot_lookup_by_name_args,\
 &ett_remote_domain_snapshot_lookup_by_name_ret,\
@@ -3914,56 +9998,56 @@
 &ett_remote_node_suspend_for_duration_args,\
 &ett_remote_domain_shutdown_flags_args,\
 &ett_remote_domain_get_disk_errors_args,\
-&ett_remote_domain_get_disk_errors_ret_ANONTYPE_errors,\
+&ett_remote_domain_get_disk_errors_ret__errors,\
 &ett_remote_domain_get_disk_errors_ret,\
 &ett_remote_connect_list_all_domains_args,\
-&ett_remote_connect_list_all_domains_ret_ANONTYPE_domains,\
+&ett_remote_connect_list_all_domains_ret__domains,\
 &ett_remote_connect_list_all_domains_ret,\
 &ett_remote_connect_list_all_storage_pools_args,\
-&ett_remote_connect_list_all_storage_pools_ret_ANONTYPE_pools,\
+&ett_remote_connect_list_all_storage_pools_ret__pools,\
 &ett_remote_connect_list_all_storage_pools_ret,\
 &ett_remote_storage_pool_list_all_volumes_args,\
-&ett_remote_storage_pool_list_all_volumes_ret_ANONTYPE_vols,\
+&ett_remote_storage_pool_list_all_volumes_ret__vols,\
 &ett_remote_storage_pool_list_all_volumes_ret,\
 &ett_remote_connect_list_all_networks_args,\
-&ett_remote_connect_list_all_networks_ret_ANONTYPE_nets,\
+&ett_remote_connect_list_all_networks_ret__nets,\
 &ett_remote_connect_list_all_networks_ret,\
 &ett_remote_connect_list_all_interfaces_args,\
-&ett_remote_connect_list_all_interfaces_ret_ANONTYPE_ifaces,\
+&ett_remote_connect_list_all_interfaces_ret__ifaces,\
 &ett_remote_connect_list_all_interfaces_ret,\
 &ett_remote_connect_list_all_node_devices_args,\
-&ett_remote_connect_list_all_node_devices_ret_ANONTYPE_devices,\
+&ett_remote_connect_list_all_node_devices_ret__devices,\
 &ett_remote_connect_list_all_node_devices_ret,\
 &ett_remote_connect_list_all_nwfilters_args,\
-&ett_remote_connect_list_all_nwfilters_ret_ANONTYPE_filters,\
+&ett_remote_connect_list_all_nwfilters_ret__filters,\
 &ett_remote_connect_list_all_nwfilters_ret,\
 &ett_remote_connect_list_all_secrets_args,\
-&ett_remote_connect_list_all_secrets_ret_ANONTYPE_secrets,\
+&ett_remote_connect_list_all_secrets_ret__secrets,\
 &ett_remote_connect_list_all_secrets_ret,\
-&ett_remote_node_set_memory_parameters_args_ANONTYPE_params,\
+&ett_remote_node_set_memory_parameters_args__params,\
 &ett_remote_node_set_memory_parameters_args,\
 &ett_remote_node_get_memory_parameters_args,\
-&ett_remote_node_get_memory_parameters_ret_ANONTYPE_params,\
+&ett_remote_node_get_memory_parameters_ret__params,\
 &ett_remote_node_get_memory_parameters_ret,\
 &ett_remote_node_get_cpu_map_args,\
 &ett_remote_node_get_cpu_map_ret,\
 &ett_remote_domain_fstrim_args,\
-&ett_remote_domain_migrate_begin3_params_args_ANONTYPE_params,\
+&ett_remote_domain_migrate_begin3_params_args__params,\
 &ett_remote_domain_migrate_begin3_params_args,\
 &ett_remote_domain_migrate_begin3_params_ret,\
-&ett_remote_domain_migrate_prepare3_params_args_ANONTYPE_params,\
+&ett_remote_domain_migrate_prepare3_params_args__params,\
 &ett_remote_domain_migrate_prepare3_params_args,\
 &ett_remote_domain_migrate_prepare3_params_ret,\
-&ett_remote_domain_migrate_prepare_tunnel3_params_args_ANONTYPE_params,\
+&ett_remote_domain_migrate_prepare_tunnel3_params_args__params,\
 &ett_remote_domain_migrate_prepare_tunnel3_params_args,\
 &ett_remote_domain_migrate_prepare_tunnel3_params_ret,\
-&ett_remote_domain_migrate_perform3_params_args_ANONTYPE_params,\
+&ett_remote_domain_migrate_perform3_params_args__params,\
 &ett_remote_domain_migrate_perform3_params_args,\
 &ett_remote_domain_migrate_perform3_params_ret,\
-&ett_remote_domain_migrate_finish3_params_args_ANONTYPE_params,\
+&ett_remote_domain_migrate_finish3_params_args__params,\
 &ett_remote_domain_migrate_finish3_params_args,\
 &ett_remote_domain_migrate_finish3_params_ret,\
-&ett_remote_domain_migrate_confirm3_params_args_ANONTYPE_params,\
+&ett_remote_domain_migrate_confirm3_params_args__params,\
 &ett_remote_domain_migrate_confirm3_params_args,\
 &ett_qemu_domain_monitor_command_args,\
 &ett_qemu_domain_monitor_command_ret,\
