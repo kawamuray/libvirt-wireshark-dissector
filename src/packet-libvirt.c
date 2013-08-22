@@ -156,7 +156,9 @@ dissect_xdr_pointer(tvbuff_t *tvb, proto_tree *tree, XDR *xdrs, int hf,
         return FALSE;
     }
     if (isnull) {
-        proto_item_append_text(proto_tree_add_item(tree, hf, tvb, start, xdr_getpos(xdrs) - start + VIR_HEADER_LEN, ENC_NA), "(NULL)");
+        proto_item *ti;
+        ti = proto_tree_add_item(tree, hf, tvb, start, xdr_getpos(xdrs) - start + VIR_HEADER_LEN, ENC_NA);
+        proto_item_append_text(ti, ": (null)");
         return TRUE;
     } else {
         return dp(tvb, tree, xdrs, hf);
