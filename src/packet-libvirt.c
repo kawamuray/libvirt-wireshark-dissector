@@ -165,7 +165,7 @@ dissect_xdr_pointer(tvbuff_t *tvb, proto_tree *tree, XDR *xdrs, int hf,
     }
 }
 
-static void annotate_index(proto_node *ch, gpointer *ip)
+static void annotate_index(proto_node *ch, gpointer ip)
 {
     proto_item_prepend_text((proto_item *)ch, "[%d]", (*(gint *)ip)++);
 }
