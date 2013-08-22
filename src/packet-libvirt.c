@@ -271,7 +271,7 @@ dissect_libvirt_num_of_fds(tvbuff_t *tvb, proto_tree *tree)
 static void
 dissect_libvirt_fds(tvbuff_t *tvb, gint start, gint32 nfds)
 {
-    /* TODO: NOP */
+    /* TODO: NOP for now */
 }
 
 static void
