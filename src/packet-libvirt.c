@@ -103,7 +103,7 @@ dissect_xdr_opaque(tvbuff_t *tvb, proto_tree *tree, XDR *xdrs, int hf,
 
     val = g_malloc(size);
     if (val == NULL) {
-        g_print("ERROR: memory allocation failed\n");
+        _D("ERROR: memory allocation failed");
         return FALSE;
     }
 
@@ -243,7 +243,7 @@ libvirt_find_xdr_dissector(guint32 proc, guint32 type,
     case VIR_NET_MESSAGE:
         return pd->msg;
     default:
-        g_print("ERROR: type = %u is not implemented\n", type);
+        _D("ERROR: type = %u is not implemented", type);
         return NULL;
     }
 }
@@ -288,7 +288,7 @@ dissect_libvirt_payload_xdr_data(tvbuff_t *tvb, proto_tree *tree, gint plsize,
 
     pdata = (caddr_t)tvb_memdup(tvb, start, plsize);
     if (pdata == NULL) {
-        g_print("ERROR: memory allocation failed\n");
+        _D("ERROR: memory allocation failed");
         return;
     }
     xdrmem_create(&xdrs, pdata, plsize, XDR_DECODE);
@@ -313,7 +313,7 @@ dissect_libvirt_payload(tvbuff_t *tvb, proto_tree *tree, gint plsize,
         VIR_PROG_SWITCH(prog);
 #undef VIR_PROG_CASE
         if (xd == NULL) {
-            g_print("ERROR: cannot find payload definition: Prog=%u, Proc=%u\n", prog, proc);
+            _D("ERROR: cannot find payload definition: Prog=%u, Proc=%u", prog, proc);
             return;
         }
 
@@ -323,7 +323,7 @@ dissect_libvirt_payload(tvbuff_t *tvb, proto_tree *tree, gint plsize,
     } else if (type == VIR_NET_STREAM) { /* implicitly, status == VIR_NET_CONTINUE */
         dissect_libvirt_stream(tvb, tree, plsize);
     } else {
-        g_print("ERROR: unknown status = %u is not implemented\n", status);
+        _D("ERROR: unknown status = %u is not implemented", status);
     }
 }
 
@@ -391,9 +391,9 @@ dissect_libvirt_message(tvbuff_t *tvb, packet_info *pinfo, proto_tree *tree)
         pld_length = tvb_get_ntohl(tvb, 0) - offset;
         if (pld_length > 0) {
             dissect_libvirt_payload(tvb, libvirt_tree, pld_length, prog, proc, type, status);
-            g_print("Dissecting libvirt payload END\n");
+            _D("Dissecting libvirt payload END");
         } else {
-            g_print("No payload\n");
+            _D("No payload");
         }
     }
 }

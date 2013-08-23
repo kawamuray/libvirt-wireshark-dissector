@@ -26,6 +26,13 @@
 
 #define VIR_HEADER_LEN 28
 
+#ifdef DEBUG
+# define _D(fmt, ...) \
+    g_print("[LIBVIRT] " fmt " at " __FILE__ " line %d\n", ##__VA_ARGS__, __LINE__)
+#else
+# define _D(fmt, ...)
+#endif
+
 typedef gboolean (*vir_xdr_dissector_t)(tvbuff_t *tvb, proto_tree *tree, XDR *xdrs, int hf);
 
 typedef struct vir_dissector_index vir_dissector_index_t;
