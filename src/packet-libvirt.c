@@ -321,47 +321,50 @@ dissect_libvirt_payload(tvbuff_t *tvb, proto_tree *tree, gint plsize,
 static void
 dissect_libvirt_message(tvbuff_t *tvb, packet_info *pinfo, proto_tree *tree)
 {
-    gint offset = 0;
-    /* Okay, these are magic constants, but
-     * they are just offsets where requested
-     * info is to be found */
-    guint32 prog = tvb_get_ntohl(tvb, 4);
-    guint32 proc = tvb_get_ntohl(tvb, 12);
-    guint32 type = tvb_get_ntohl(tvb, 16);
-    guint32 serial = tvb_get_ntohl(tvb, 20);
-    guint32 status = tvb_get_ntohl(tvb, 24);
+    goffset offset;
+    guint32 prog, proc, type, serial, status;
     const value_string *vs = NULL;
 
     col_set_str(pinfo->cinfo, COL_PROTOCOL, "Libvirt");
     col_clear(pinfo->cinfo, COL_INFO);
+
+    offset = 4; /* End of length field */
+    prog   = tvb_get_ntohl(tvb, offset); offset += 4;
+    offset += 4; /* Ignore version header field */
+    proc   = tvb_get_ntohl(tvb, offset); offset += 4;
+    type   = tvb_get_ntohl(tvb, offset); offset += 4;
+    serial = tvb_get_ntohl(tvb, offset); offset += 4;
+    status = tvb_get_ntohl(tvb, offset); offset += 4;
+
+    col_add_fstr(pinfo->cinfo, COL_INFO, "Prog=%s",
+                 val_to_str(prog, program_strings, "%x"));
 
 #define VIR_PROG_CASE(ps) vs = ps##_procedure_strings
     VIR_PROG_SWITCH(prog);
 #undef VIR_PROG_CASE
 
     if (vs == NULL) {
-        col_add_fstr(pinfo->cinfo, COL_INFO, "Proc=%u ", proc);
+        col_append_fstr(pinfo->cinfo, COL_INFO, " Proc=%u", proc);
     } else {
-        col_add_fstr(pinfo->cinfo, COL_INFO, "Proc=%s ", val_to_str(proc, vs, "%d"));
+        col_append_fstr(pinfo->cinfo, COL_INFO, " Proc=%s", val_to_str(proc, vs, "%d"));
     }
 
-    col_append_fstr(pinfo->cinfo, COL_INFO, "Type=%s Status=%s Prog=%s Serial=%u",
-        val_to_str(type, type_strings, "%d"),
-        val_to_str(status, status_strings, "%d"),
-        val_to_str(prog, program_strings, "%x"),
-        serial);
+    col_append_fstr(pinfo->cinfo, COL_INFO, " Type=%s Serial=%u Status=%s",
+                    val_to_str(type, type_strings, "%d"), serial,
+                    val_to_str(status, status_strings, "%d"));
 
     if (tree) {
-        int hf_proc = -1;
-        proto_item *ti = NULL;
-        proto_tree *libvirt_tree = NULL;
-        gint pld_length;
+        gint hf_proc = -1;
+        proto_item *ti;
+        proto_tree *libvirt_tree;
 
-        ti = proto_tree_add_item(tree, proto_libvirt, tvb, 0, -1, FALSE);
+        ti = proto_tree_add_item(tree, proto_libvirt, tvb, 0, tvb_length(tvb), ENC_NA);
         libvirt_tree = proto_item_add_subtree(ti, ett_libvirt);
-        proto_tree_add_item(libvirt_tree, hf_libvirt_length, tvb, offset, 4, FALSE); offset += 4;
-        proto_tree_add_item(libvirt_tree, hf_libvirt_program, tvb, offset, 4, FALSE); offset += 4;
-        proto_tree_add_item(libvirt_tree, hf_libvirt_version, tvb, offset, 4, FALSE); offset += 4;
+
+        offset = 0;
+        proto_tree_add_item(libvirt_tree, hf_libvirt_length,  tvb, offset, 4, ENC_NA); offset += 4;
+        proto_tree_add_item(libvirt_tree, hf_libvirt_program, tvb, offset, 4, ENC_NA); offset += 4;
+        proto_tree_add_item(libvirt_tree, hf_libvirt_version, tvb, offset, 4, ENC_NA); offset += 4;
 
 #define VIR_PROG_CASE(ps) hf_proc = hf_##ps##_procedure
         VIR_PROG_SWITCH(prog);
@@ -370,22 +373,16 @@ dissect_libvirt_message(tvbuff_t *tvb, packet_info *pinfo, proto_tree *tree)
         if (hf_proc == -1) {
             proto_tree_add_none_format(libvirt_tree, -1, tvb, offset, 4, "Unknown proc: %u", proc);
         } else {
-            proto_tree_add_item(libvirt_tree, hf_proc, tvb, offset, 4, FALSE);
+            proto_tree_add_item(libvirt_tree, hf_proc, tvb, offset, 4, ENC_NA);
         }
-
         offset += 4;
-        proto_tree_add_item(libvirt_tree, hf_libvirt_type, tvb, offset, 4, FALSE); offset += 4;
-        proto_tree_add_item(libvirt_tree, hf_libvirt_serial, tvb, offset, 4, FALSE); offset += 4;
-        proto_tree_add_item(libvirt_tree, hf_libvirt_status, tvb, offset, 4, FALSE); offset += 4;
 
-        /* Dissect packet payload */
-        pld_length = tvb_length(tvb) - offset;
-        if (pld_length > 0) {
-            dissect_libvirt_payload(tvb, libvirt_tree, pld_length, prog, proc, type, status);
-            dbg("Dissecting libvirt payload END");
-        } else {
-            dbg("No payload");
-        }
+        proto_tree_add_item(libvirt_tree, hf_libvirt_type,    tvb, offset, 4, ENC_NA); offset += 4;
+        proto_tree_add_item(libvirt_tree, hf_libvirt_serial,  tvb, offset, 4, ENC_NA); offset += 4;
+        proto_tree_add_item(libvirt_tree, hf_libvirt_status,  tvb, offset, 4, ENC_NA); offset += 4;
+
+        /* Dissect payload remaining */
+        dissect_libvirt_payload(tvb, libvirt_tree, prog, proc, type, status);
     }
 }
 
