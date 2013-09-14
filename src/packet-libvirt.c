@@ -140,7 +140,7 @@ dissect_xdr_bytes(tvbuff_t *tvb, proto_tree *tree, XDR *xdrs, int hf,
 
 static gboolean
 dissect_xdr_pointer(tvbuff_t *tvb, proto_tree *tree, XDR *xdrs, int hf,
-                    vir_xdr_dissector_t dp)
+                    vir_xdr_dissector_t dissect)
 {
     goffset start;
     bool_t isnull;
@@ -156,7 +156,7 @@ dissect_xdr_pointer(tvbuff_t *tvb, proto_tree *tree, XDR *xdrs, int hf,
         proto_item_append_text(ti, ": (null)");
         return TRUE;
     } else {
-        return dp(tvb, tree, xdrs, hf);
+        return dissect(tvb, tree, xdrs, hf);
     }
 }
 
@@ -167,7 +167,7 @@ static void annotate_index(proto_node *ch, gpointer ip)
 
 static gboolean
 dissect_xdr_vector(tvbuff_t *tvb, proto_tree *tree, XDR *xdrs, int hf, gint ett,
-                   int rhf, gchar *rtype, gint32 size, vir_xdr_dissector_t dp)
+                   int rhf, gchar *rtype, gint32 size, vir_xdr_dissector_t dissect)
 {
     goffset start;
     proto_item *ti;
@@ -178,7 +178,7 @@ dissect_xdr_vector(tvbuff_t *tvb, proto_tree *tree, XDR *xdrs, int hf, gint ett,
     proto_item_append_text(ti, " :: %s[%d]", rtype, size);
     tree = proto_item_add_subtree(ti, ett);
     for (i = 0; i < size; i++) {
-        if (!dp(tvb, tree, xdrs, rhf))
+        if (!dissect(tvb, tree, xdrs, rhf))
             return FALSE;
     }
     proto_item_set_len(ti, xdr_getpos(xdrs) - start + VIR_HEADER_LEN);
@@ -189,7 +189,7 @@ dissect_xdr_vector(tvbuff_t *tvb, proto_tree *tree, XDR *xdrs, int hf, gint ett,
 
 static gboolean
 dissect_xdr_array(tvbuff_t *tvb, proto_tree *tree, XDR *xdrs, int hf, gint ett,
-                  int rhf, gchar *rtype, gint32 maxlen, vir_xdr_dissector_t dp)
+                  int rhf, gchar *rtype, gint32 maxlen, vir_xdr_dissector_t dissect)
 {
     gint32 length;
 
@@ -197,7 +197,7 @@ dissect_xdr_array(tvbuff_t *tvb, proto_tree *tree, XDR *xdrs, int hf, gint ett,
         return FALSE;
     if (length > maxlen)
         return FALSE;
-    return dissect_xdr_vector(tvb, tree, xdrs, hf, ett, rhf, rtype, length, dp);
+    return dissect_xdr_vector(tvb, tree, xdrs, hf, ett, rhf, rtype, length, dissect);
 }
 
 static vir_xdr_dissector_t
@@ -267,7 +267,7 @@ dissect_libvirt_fds(tvbuff_t *tvb, gint start, gint32 nfds)
 
 static void
 dissect_libvirt_payload_xdr_data(tvbuff_t *tvb, proto_tree *tree, gint plsize,
-                                 gint32 status, vir_xdr_dissector_t dp)
+                                 gint32 status, vir_xdr_dissector_t dissect)
 {
     gint32 nfds = 0;
     gint start = VIR_HEADER_LEN;
@@ -284,7 +284,7 @@ dissect_libvirt_payload_xdr_data(tvbuff_t *tvb, proto_tree *tree, gint plsize,
     pdata = (caddr_t)tvb_memdup(tvb, start, plsize);
     xdrmem_create(&xdrs, pdata, plsize, XDR_DECODE);
 
-    dp(tvb, tree, &xdrs, hf_libvirt_payload);
+    dissect(payload_tvb, tree, &xdrs, hf_libvirt_payload);
 
     xdr_destroy(&xdrs);
     g_free(pdata);
