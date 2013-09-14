@@ -865,13 +865,13 @@ static gboolean dissect_xdr_<%= $ident %>(tvbuff_t *tvb, proto_tree *tree, XDR *
 {
     goffset start;
     proto_item *ti;
-    
+
     start = xdr_getpos(xdrs);
     ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
     proto_item_append_text(ti, " :: <%= $self->idstrip %>");
     tree = proto_item_add_subtree(ti, <%= $ettvar %>);
 <% for my $m (@{ $self->members }) { %>
-    
+
     hf = <%= $c->rinc('hf_'.$ident.'__'.$m->ident) %>;
     if (!<%= $m->type->render_caller($ident.'__'.$m->ident) %>) return FALSE;
 <% } %>
@@ -884,7 +884,7 @@ static gboolean dissect_xdr_<%= $ident %>(tvbuff_t *tvb, proto_tree *tree, XDR *
 {
     goffset start;
     enum { DUMMY } es;
-    
+
     start = xdr_getpos(xdrs);
     if (xdr_enum(xdrs, (enum_t *)&es)) {
         switch ((guint)es) {
@@ -909,7 +909,7 @@ static gboolean dissect_xdr_<%= $ident %>(tvbuff_t *tvb, proto_tree *tree, XDR *
     gboolean rc = TRUE;
     goffset start;
     <%= $decl_type %> type = 0;
-    
+
     start = xdr_getpos(xdrs);
     if (!xdr_<%= $decl_type %>(xdrs, &type))
         return FALSE;
