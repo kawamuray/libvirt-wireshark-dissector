@@ -65,3 +65,10 @@ mprivozn-build:
 
 	cd $(WIRESHARK_DIR) && \
 	patch -p1 --no-backup-if-mismatch -R < ../patch/dissector-mprivozn.patch
+
+clean:
+	$(MAKE) clean
+	-rm -rf Makefile Makefile.in aclocal.m4 autom4te.cache build-aux \
+                config.log config.status configure libtool src/.deps \
+                src/Makefile src/Makefile.in src/config.h src/config.h.in \
+                src/stamp-h1
