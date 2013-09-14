@@ -120,7 +120,7 @@ dissect_xdr_bytes(tvbuff_t *tvb, proto_tree *tree, XDR *xdrs, int hf,
     guint8 *val = NULL;
     guint length;
 
-    start = xdr_getpos(xdrs) + sizeof(length); /* XXX */
+    start = xdr_getpos(xdrs);
     if (xdr_bytes(xdrs, (char **)&val, &length, maxlen)) {
         proto_tree_add_bytes(tree, hf, tvb, start, xdr_getpos(xdrs) - start, val);
         /* XXX: maybe this is wrong way */
