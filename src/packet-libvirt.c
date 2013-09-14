@@ -102,11 +102,6 @@ dissect_xdr_opaque(tvbuff_t *tvb, proto_tree *tree, XDR *xdrs, int hf,
     guint8 *val;
 
     val = g_malloc(size);
-    if (val == NULL) {
-        _D("ERROR: memory allocation failed");
-        return FALSE;
-    }
-
     start = VIR_HEADER_LEN + xdr_getpos(xdrs);
     if ((rc = xdr_opaque(xdrs, (caddr_t)val, size))) {
         proto_tree_add_bytes(tree, hf, tvb, start,
@@ -287,10 +282,6 @@ dissect_libvirt_payload_xdr_data(tvbuff_t *tvb, proto_tree *tree, gint plsize,
     }
 
     pdata = (caddr_t)tvb_memdup(tvb, start, plsize);
-    if (pdata == NULL) {
-        _D("ERROR: memory allocation failed");
-        return;
-    }
     xdrmem_create(&xdrs, pdata, plsize, XDR_DECODE);
 
     dp(tvb, tree, &xdrs, hf_libvirt_payload);
