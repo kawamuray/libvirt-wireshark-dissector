@@ -866,7 +866,7 @@ static gboolean dissect_xdr_<%= $ident %>(tvbuff_t *tvb, proto_tree *tree, XDR *
     goffset start;
     proto_item *ti;
     
-    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    start = xdr_getpos(xdrs);
     ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
     proto_item_append_text(ti, " :: <%= $self->idstrip %>");
     tree = proto_item_add_subtree(ti, <%= $ettvar %>);
@@ -875,7 +875,7 @@ static gboolean dissect_xdr_<%= $ident %>(tvbuff_t *tvb, proto_tree *tree, XDR *
     hf = <%= $c->rinc('hf_'.$ident.'__'.$m->ident) %>;
     if (!<%= $m->type->render_caller($ident.'__'.$m->ident) %>) return FALSE;
 <% } %>
-    proto_item_set_len(ti, xdr_getpos(xdrs) - start + VIR_HEADER_LEN);
+    proto_item_set_len(ti, xdr_getpos(xdrs) - start);
     return TRUE;
 }
 @@ Sym::Type::Enum#render_dissector
@@ -885,12 +885,12 @@ static gboolean dissect_xdr_<%= $ident %>(tvbuff_t *tvb, proto_tree *tree, XDR *
     goffset start;
     enum { DUMMY } es;
     
-    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    start = xdr_getpos(xdrs);
     if (xdr_enum(xdrs, (enum_t *)&es)) {
         switch ((guint)es) {
 <% for my $m (@{ $self->members }) { %>
         case <%= $m->value %>:
-            proto_tree_add_uint_format_value(tree, hf, tvb, start, xdr_getpos(xdrs) - start + VIR_HEADER_LEN, (guint)es, "<%= $m->idstrip %>(<%= $m->value %>)");
+            proto_tree_add_uint_format_value(tree, hf, tvb, start, xdr_getpos(xdrs) - start, (guint)es, "<%= $m->idstrip %>(<%= $m->value %>)");
             return TRUE;
 <% } %>
         }
@@ -910,7 +910,7 @@ static gboolean dissect_xdr_<%= $ident %>(tvbuff_t *tvb, proto_tree *tree, XDR *
     goffset start;
     <%= $decl_type %> type = 0;
     
-    start = VIR_HEADER_LEN + xdr_getpos(xdrs);
+    start = xdr_getpos(xdrs);
     if (!xdr_<%= $decl_type %>(xdrs, &type))
         return FALSE;
     switch (type) {
