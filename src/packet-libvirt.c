@@ -204,12 +204,8 @@ find_payload_dissector(guint32 proc, guint32 type,
     const vir_dissector_index_t *pd;
     guint32 first, last, direction;
 
-    if (pds == NULL)
+    if (pds == NULL || length < 1)
         return NULL;
-        
-    if (length < 1) {
-        return NULL;
-    }
 
     first = pds[0].proc;
     last = pds[length-1].proc;
