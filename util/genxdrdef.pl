@@ -112,7 +112,7 @@ $c->add_header_file('protocol', sub {
     # value_string program_strings
     $c->print(PT->render('code.program_strings', { programs => $c->get_set('progs') }));
     $c->print("static int hf_$_\_procedure = -1;\n") for @{ $c->get_set('progs') };
-    $c->print(PT->render('macro.program_switch', { programs => $c->get_set('progs') }));
+    $c->print(PT->render('code.program_data', { programs => $c->get_set('progs') }));
 });
 
 $c->finalize; exit 0;
@@ -956,22 +956,13 @@ static gboolean dissect_xdr_<%= $ident %>(tvbuff_t *tvb, proto_tree *tree, XDR *
 <% } %>
 /* End of #define VIR_DYNAMIC_ETTSET */
 
-@@ macro.program_switch
-#define VIR_PROG_SWITCH(prog)\
-switch (prog) {\
-<% for my $prog (@{ $_->{programs} }) { %>
-case <%= uc($prog) %>_PROGRAM:\
-    VIR_PROG_CASE(<%= $prog %>);\
-    break;\
-<% } %>
-}
-/* End of #define VIR_PROG_SWITCH */
 @@ code.dissectorlist
 static const vir_dissector_index_t <%= $_->{name} %>_dissectors[] = {
 <% for my $d (@{ $_->{dissectors} }) { %>
     { <%= $d->{value} %>, <%= $d->{args} %>, <%= $d->{ret} %>, <%= $d->{msg} %> },
 <% } %>
 };
+static const gsize <%= $_->{name} %>_dissectors_len = array_length(<%= $_->{name} %>_dissectors);
 @@ code.procedure_strings
 static const value_string <%= $_->{name} %>_procedure_strings[] = {
 <% for my $proc (@{ $_->{procedures} }) {
@@ -989,3 +980,24 @@ static const value_string program_strings[] = {
 <% } %>
     { 0, NULL }
 };
+@@ code.program_data
+static const void *program_data[][VIR_PROGRAM_LAST] = {
+<% for my $p (@{ $_->{programs} }) { %>
+    { &hf_<%= $p %>_procedure, <%= $p %>_procedure_strings, <%= $p %>_dissectors, &<%= $p %>_dissectors_len },
+<% } %>
+};
+
+static const void *
+get_program_data(guint32 prog, enum vir_program_data_index index)
+{
+    if (index < VIR_PROGRAM_LAST) {
+        switch (prog) {
+<% my $i = 0; %>
+<% for my $prog (@{ $_->{programs} }) { %>
+        case <%= uc($prog) %>_PROGRAM:
+            return program_data[<%= $i++ %>][index];
+<% } %>
+        }
+    }
+    return NULL;
+}

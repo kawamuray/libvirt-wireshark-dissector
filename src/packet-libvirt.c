@@ -199,11 +199,14 @@ dissect_xdr_array(tvbuff_t *tvb, proto_tree *tree, XDR *xdrs, int hf, gint ett,
 
 static vir_xdr_dissector_t
 find_payload_dissector(guint32 proc, guint32 type,
-                           const vir_dissector_index_t *pds, gsize length)
+                       const vir_dissector_index_t *pds, gsize length)
 {
     const vir_dissector_index_t *pd;
     guint32 first, last, direction;
 
+    if (pds == NULL)
+        return NULL;
+        
     if (length < 1) {
         return NULL;
     }
@@ -304,15 +307,12 @@ dissect_libvirt_payload(tvbuff_t *tvb, proto_tree *tree,
         return; /* No payload */
 
     if (status == VIR_NET_OK) {
-        vir_xdr_dissector_t xd = NULL;
-#define VIR_PROG_CASE(ps) xd = find_payload_dissector(proc, type, ps##_dissectors, array_length(ps##_dissectors))
-        VIR_PROG_SWITCH(prog);
-#undef VIR_PROG_CASE
+        vir_xdr_dissector_t xd = find_payload_dissector(proc, type, get_program_data(prog, VIR_PROGRAM_DISSECTORS),
+                                                        *(gsize *)get_program_data(prog, VIR_PROGRAM_DISSECTORS_LEN));
         if (xd == NULL) {
             dbg("ERROR: cannot find payload definition: Prog=%u, Proc=%u", prog, proc);
             return;
         }
-
         dissect_libvirt_payload_xdr_data(tvb, tree, payload_length, status, xd);
     } else if (status == VIR_NET_ERROR) {
         dissect_libvirt_payload_xdr_data(tvb, tree, payload_length, status, VIR_ERROR_MESSAGE_DISSECTOR);
@@ -328,7 +328,7 @@ dissect_libvirt_message(tvbuff_t *tvb, packet_info *pinfo, proto_tree *tree)
 {
     goffset offset;
     guint32 prog, proc, type, serial, status;
-    const value_string *vs = NULL;
+    const value_string *vs;
 
     col_set_str(pinfo->cinfo, COL_PROTOCOL, "Libvirt");
     col_clear(pinfo->cinfo, COL_INFO);
@@ -344,10 +344,7 @@ dissect_libvirt_message(tvbuff_t *tvb, packet_info *pinfo, proto_tree *tree)
     col_add_fstr(pinfo->cinfo, COL_INFO, "Prog=%s",
                  val_to_str(prog, program_strings, "%x"));
 
-#define VIR_PROG_CASE(ps) vs = ps##_procedure_strings
-    VIR_PROG_SWITCH(prog);
-#undef VIR_PROG_CASE
-
+    vs = get_program_data(prog, VIR_PROGRAM_PROCSTRINGS);
     if (vs == NULL) {
         col_append_fstr(pinfo->cinfo, COL_INFO, " Proc=%u", proc);
     } else {
@@ -359,7 +356,7 @@ dissect_libvirt_message(tvbuff_t *tvb, packet_info *pinfo, proto_tree *tree)
                     val_to_str(status, status_strings, "%d"));
 
     if (tree) {
-        gint hf_proc = -1;
+        gint hf_proc;
         proto_item *ti;
         proto_tree *libvirt_tree;
 
@@ -371,10 +368,7 @@ dissect_libvirt_message(tvbuff_t *tvb, packet_info *pinfo, proto_tree *tree)
         proto_tree_add_item(libvirt_tree, hf_libvirt_program, tvb, offset, 4, ENC_NA); offset += 4;
         proto_tree_add_item(libvirt_tree, hf_libvirt_version, tvb, offset, 4, ENC_NA); offset += 4;
 
-#define VIR_PROG_CASE(ps) hf_proc = hf_##ps##_procedure
-        VIR_PROG_SWITCH(prog);
-#undef VIR_PROG_CASE
-
+        hf_proc = *(int *)get_program_data(prog, VIR_PROGRAM_PROCHFVAR);
         if (hf_proc == -1) {
             proto_tree_add_none_format(libvirt_tree, -1, tvb, offset, 4, "Unknown proc: %u", proc);
         } else {

@@ -58,6 +58,14 @@ enum vir_net_message_status {
     VIR_NET_CONTINUE = 2,
 };
 
+enum vir_program_data_index {
+    VIR_PROGRAM_PROCHFVAR,
+    VIR_PROGRAM_PROCSTRINGS,
+    VIR_PROGRAM_DISSECTORS,
+    VIR_PROGRAM_DISSECTORS_LEN,
+    VIR_PROGRAM_LAST,
+};
+
 static const value_string type_strings[] = {
     { VIR_NET_CALL,           "CALL"           },
     { VIR_NET_REPLY,          "REPLY"          },
