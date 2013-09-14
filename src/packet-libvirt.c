@@ -239,10 +239,10 @@ find_payload_dissector(guint32 proc, guint32 type,
 }
 
 static void
-dissect_libvirt_stream(tvbuff_t *tvb, proto_tree *tree, gint plsize)
+dissect_libvirt_stream(tvbuff_t *tvb, proto_tree *tree, gint payload_length)
 {
     proto_tree_add_item(tree, hf_libvirt_stream, tvb, VIR_HEADER_LEN,
-                        plsize - VIR_HEADER_LEN, ENC_NA);
+                        payload_length - VIR_HEADER_LEN, ENC_NA);
 }
 
 static gint32
@@ -261,7 +261,7 @@ dissect_libvirt_fds(tvbuff_t *tvb, gint start, gint32 nfds)
 }
 
 static void
-dissect_libvirt_payload_xdr_data(tvbuff_t *tvb, proto_tree *tree, gint plsize,
+dissect_libvirt_payload_xdr_data(tvbuff_t *tvb, proto_tree *tree, gint payload_length,
                                  gint32 status, vir_xdr_dissector_t dissect)
 {
     gint32 nfds = 0;
@@ -274,12 +274,12 @@ dissect_libvirt_payload_xdr_data(tvbuff_t *tvb, proto_tree *tree, gint plsize,
         status == VIR_NET_REPLY_WITH_FDS) {
         nfds = dissect_libvirt_num_of_fds(tvb, tree);
         start += 4;
-        plsize -= 4;
+        payload_length -= 4;
     }
 
-    payload_tvb = tvb_new_subset(tvb, start, -1, plsize);
-    payload_data = (caddr_t)tvb_memdup(payload_tvb, 0, plsize);
-    xdrmem_create(&xdrs, payload_data, plsize, XDR_DECODE);
+    payload_tvb = tvb_new_subset(tvb, start, -1, payload_length);
+    payload_data = (caddr_t)tvb_memdup(payload_tvb, 0, payload_length);
+    xdrmem_create(&xdrs, payload_data, payload_length, XDR_DECODE);
 
     dissect(payload_tvb, tree, &xdrs, hf_libvirt_payload);
 
