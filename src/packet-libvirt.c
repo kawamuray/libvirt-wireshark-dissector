@@ -123,10 +123,10 @@ dissect_xdr_bytes(tvbuff_t *tvb, proto_tree *tree, XDR *xdrs, int hf,
     start = xdr_getpos(xdrs);
     if (xdr_bytes(xdrs, (char **)&val, &length, maxlen)) {
         proto_tree_add_bytes(tree, hf, tvb, start, xdr_getpos(xdrs) - start, val);
-        /* XXX: maybe this is wrong way */
+        /* Seems I can't call xdr_free() for this case.
+           It will raises SEGV by referencing out of bounds argument stack */
         xdrs->x_op = XDR_FREE;
         xdr_bytes(xdrs, (char **)&val, &length, maxlen);
-        /* xdr_free((xdrproc_t)xdr_bytes, (char *)&val); */
         xdrs->x_op = XDR_DECODE;
         return TRUE;
     } else {
