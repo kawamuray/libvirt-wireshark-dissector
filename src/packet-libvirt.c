@@ -44,6 +44,7 @@ static int hf_libvirt_status = -1;
 static int hf_libvirt_payload = -1;
 static int hf_libvirt_stream = -1;
 static int hf_libvirt_num_of_fds = -1;
+static int hf_libvirt_unknown = -1;
 static gint ett_libvirt = -1;
 
 #define XDR_PRIMITIVE_DISSECTOR(xtype, ctype, ftype)                    \
@@ -57,7 +58,7 @@ static gint ett_libvirt = -1;
             proto_tree_add_##ftype(tree, hf, tvb, start, xdr_getpos(xdrs) - start, val); \
             return TRUE;                                                \
         } else {                                                        \
-            proto_tree_add_text(tree, tvb, start, -1, "(unknown)");     \
+            proto_tree_add_item(tree, hf_libvirt_unknown, tvb, start, -1, ENC_NA); \
             return FALSE;                                               \
         }                                                               \
     }
@@ -87,7 +88,7 @@ dissect_xdr_string(tvbuff_t *tvb, proto_tree *tree, XDR *xdrs, int hf,
         xdr_free((xdrproc_t)xdr_string, (char *)&val);
         return TRUE;
     } else {
-        proto_tree_add_text(tree, tvb, start, -1, "(unknown)");
+        proto_tree_add_item(tree, hf_libvirt_unknown, tvb, start, -1, ENC_NA);
         return FALSE;
     }
 }
@@ -105,7 +106,7 @@ dissect_xdr_opaque(tvbuff_t *tvb, proto_tree *tree, XDR *xdrs, int hf,
     if ((rc = xdr_opaque(xdrs, (caddr_t)val, size))) {
         proto_tree_add_bytes(tree, hf, tvb, start, xdr_getpos(xdrs) - start, val);
     } else {
-        proto_tree_add_text(tree, tvb, start, -1, "(unknown)");
+        proto_tree_add_item(tree, hf_libvirt_unknown, tvb, start, -1, ENC_NA);
     }
 
     g_free(val);
@@ -130,7 +131,7 @@ dissect_xdr_bytes(tvbuff_t *tvb, proto_tree *tree, XDR *xdrs, int hf,
         xdrs->x_op = XDR_DECODE;
         return TRUE;
     } else {
-        proto_tree_add_text(tree, tvb, start, -1, "(unknown)");
+        proto_tree_add_item(tree, hf_libvirt_unknown, tvb, start, -1, ENC_NA);
         return FALSE;
     }
 }
@@ -144,7 +145,7 @@ dissect_xdr_pointer(tvbuff_t *tvb, proto_tree *tree, XDR *xdrs, int hf,
 
     start = xdr_getpos(xdrs);
     if (!xdr_bool(xdrs, &isnull)) {
-        proto_tree_add_text(tree, tvb, start, -1, "(unknown)");
+        proto_tree_add_item(tree, hf_libvirt_unknown, tvb, start, -1, ENC_NA);
         return FALSE;
     }
     if (isnull) {
@@ -233,10 +234,8 @@ find_payload_dissector(guint32 proc, guint32 type,
         return pd->ret;
     case VIR_NET_MESSAGE:
         return pd->msg;
-    default:
-        dbg("ERROR: type = %u is not implemented", type);
-        return NULL;
     }
+    return NULL;
 }
 
 static void
@@ -305,18 +304,21 @@ dissect_libvirt_payload(tvbuff_t *tvb, proto_tree *tree,
     if (status == VIR_NET_OK) {
         vir_xdr_dissector_t xd = find_payload_dissector(proc, type, get_program_data(prog, VIR_PROGRAM_DISSECTORS),
                                                         *(gsize *)get_program_data(prog, VIR_PROGRAM_DISSECTORS_LEN));
-        if (xd == NULL) {
-            dbg("ERROR: cannot find payload definition: Prog=%u, Proc=%u", prog, proc);
-            return;
-        }
+        if (xd == NULL)
+            goto unknown;
         dissect_libvirt_payload_xdr_data(tvb, tree, payload_length, status, xd);
     } else if (status == VIR_NET_ERROR) {
         dissect_libvirt_payload_xdr_data(tvb, tree, payload_length, status, VIR_ERROR_MESSAGE_DISSECTOR);
     } else if (type == VIR_NET_STREAM) { /* implicitly, status == VIR_NET_CONTINUE */
         dissect_libvirt_stream(tvb, tree, payload_length);
     } else {
-        dbg("ERROR: unknown status = %u is not implemented", status);
+        goto unknown;
     }
+    return;
+
+unknown:
+    dbg("Cannot determine payload: Prog=%u, Proc=%u, Type=%u, Status=%u", prog, proc, type, status);
+    proto_tree_add_item(tree, hf_libvirt_unknown, tvb, VIR_HEADER_LEN, -1, ENC_NA);
 }
 
 static void
@@ -453,6 +455,12 @@ proto_register_libvirt(void)
         { &hf_libvirt_num_of_fds,
           { "num_of_fds", "libvirt.num_of_fds",
             FT_INT32, BASE_DEC,
+            NULL, 0x0,
+            NULL, HFILL}
+        },
+        { &hf_libvirt_unknown,
+          { "unknown", "libvirt.unknown",
+            FT_BYTES, BASE_NONE,
             NULL, 0x0,
             NULL, HFILL}
         },
