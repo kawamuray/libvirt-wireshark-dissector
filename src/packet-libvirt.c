@@ -238,7 +238,7 @@ find_payload_dissector(guint32 proc, guint32 type,
     case VIR_NET_MESSAGE:
         return pd->msg;
     default:
-        _D("ERROR: type = %u is not implemented", type);
+        dbg("ERROR: type = %u is not implemented", type);
         return NULL;
     }
 }
@@ -304,7 +304,7 @@ dissect_libvirt_payload(tvbuff_t *tvb, proto_tree *tree, gint plsize,
         VIR_PROG_SWITCH(prog);
 #undef VIR_PROG_CASE
         if (xd == NULL) {
-            _D("ERROR: cannot find payload definition: Prog=%u, Proc=%u", prog, proc);
+            dbg("ERROR: cannot find payload definition: Prog=%u, Proc=%u", prog, proc);
             return;
         }
 
@@ -314,7 +314,7 @@ dissect_libvirt_payload(tvbuff_t *tvb, proto_tree *tree, gint plsize,
     } else if (type == VIR_NET_STREAM) { /* implicitly, status == VIR_NET_CONTINUE */
         dissect_libvirt_stream(tvb, tree, plsize);
     } else {
-        _D("ERROR: unknown status = %u is not implemented", status);
+        dbg("ERROR: unknown status = %u is not implemented", status);
     }
 }
 
@@ -379,12 +379,12 @@ dissect_libvirt_message(tvbuff_t *tvb, packet_info *pinfo, proto_tree *tree)
         proto_tree_add_item(libvirt_tree, hf_libvirt_status, tvb, offset, 4, FALSE); offset += 4;
 
         /* Dissect packet payload */
-        pld_length = tvb_get_ntohl(tvb, 0) - offset;
+        pld_length = tvb_length(tvb) - offset;
         if (pld_length > 0) {
             dissect_libvirt_payload(tvb, libvirt_tree, pld_length, prog, proc, type, status);
-            _D("Dissecting libvirt payload END");
+            dbg("Dissecting libvirt payload END");
         } else {
-            _D("No payload");
+            dbg("No payload");
         }
     }
 }
