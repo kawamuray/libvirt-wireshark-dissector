@@ -295,9 +295,15 @@ dissect_libvirt_payload_xdr_data(tvbuff_t *tvb, proto_tree *tree, gint plsize,
 }
 
 static void
-dissect_libvirt_payload(tvbuff_t *tvb, proto_tree *tree, gint plsize,
+dissect_libvirt_payload(tvbuff_t *tvb, proto_tree *tree,
                         guint32 prog, guint32 proc, guint32 type, guint32 status)
 {
+    gssize payload_length;
+
+    payload_length = tvb_length(tvb) - VIR_HEADER_LEN;
+    if (payload_length <= 0)
+        return; /* No payload */
+
     if (status == VIR_NET_OK) {
         vir_xdr_dissector_t xd = NULL;
 #define VIR_PROG_CASE(ps) xd = find_payload_dissector(proc, type, ps##_dissectors, array_length(ps##_dissectors))
@@ -308,11 +314,11 @@ dissect_libvirt_payload(tvbuff_t *tvb, proto_tree *tree, gint plsize,
             return;
         }
 
-        dissect_libvirt_payload_xdr_data(tvb, tree, plsize, status, xd);
+        dissect_libvirt_payload_xdr_data(tvb, tree, payload_length, status, xd);
     } else if (status == VIR_NET_ERROR) {
-        dissect_libvirt_payload_xdr_data(tvb, tree, plsize, status, VIR_ERROR_MESSAGE_DISSECTOR);
+        dissect_libvirt_payload_xdr_data(tvb, tree, payload_length, status, VIR_ERROR_MESSAGE_DISSECTOR);
     } else if (type == VIR_NET_STREAM) { /* implicitly, status == VIR_NET_CONTINUE */
-        dissect_libvirt_stream(tvb, tree, plsize);
+        dissect_libvirt_stream(tvb, tree, payload_length);
     } else {
         dbg("ERROR: unknown status = %u is not implemented", status);
     }
