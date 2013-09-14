@@ -201,7 +201,7 @@ dissect_xdr_array(tvbuff_t *tvb, proto_tree *tree, XDR *xdrs, int hf, gint ett,
 }
 
 static vir_xdr_dissector_t
-libvirt_find_xdr_dissector(guint32 proc, guint32 type,
+find_payload_dissector(guint32 proc, guint32 type,
                            const vir_dissector_index_t *pds, gsize length)
 {
     const vir_dissector_index_t *pd;
@@ -300,7 +300,7 @@ dissect_libvirt_payload(tvbuff_t *tvb, proto_tree *tree, gint plsize,
 {
     if (status == VIR_NET_OK) {
         vir_xdr_dissector_t xd = NULL;
-#define VIR_PROG_CASE(ps) xd = libvirt_find_xdr_dissector(proc, type, ps##_dissectors, array_length(ps##_dissectors))
+#define VIR_PROG_CASE(ps) xd = find_payload_dissector(proc, type, ps##_dissectors, array_length(ps##_dissectors))
         VIR_PROG_SWITCH(prog);
 #undef VIR_PROG_CASE
         if (xd == NULL) {
