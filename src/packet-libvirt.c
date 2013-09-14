@@ -158,11 +158,6 @@ dissect_xdr_pointer(tvbuff_t *tvb, proto_tree *tree, XDR *xdrs, int hf,
     }
 }
 
-static void annotate_index(proto_node *ch, gpointer ip)
-{
-    proto_item_prepend_text((proto_item *)ch, "[%d]", (*(gint *)ip)++);
-}
-
 static gboolean
 dissect_xdr_vector(tvbuff_t *tvb, proto_tree *tree, XDR *xdrs, int hf, gint ett,
                    int rhf, gchar *rtype, gint32 size, vir_xdr_dissector_t dissect)
@@ -180,8 +175,6 @@ dissect_xdr_vector(tvbuff_t *tvb, proto_tree *tree, XDR *xdrs, int hf, gint ett,
             return FALSE;
     }
     proto_item_set_len(ti, xdr_getpos(xdrs) - start);
-    i = 0;
-    proto_tree_children_foreach(tree, annotate_index, &i);
     return TRUE;
 }
 
