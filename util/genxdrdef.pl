@@ -441,9 +441,10 @@ BEGIN{::register_profile(
 
 sub render_caller {
     my ($self, $hfid) = @_;
+    my ($pname) = reverse split /__/, $hfid;
     sprintf 'dissect_xdr_array(tvb, tree, xdrs, hf, %s, %s, "%s", %s, %s)',
         $c->rinc('ett_'.$self->idstrip),
-        $c->rinc("hf_$hfid\___ELEMENT_"),
+        $c->rinc("hf_$hfid\__$pname"),
         $self->reftype->idstrip,
         $self->length || '~0',
         $c->rinc('dissect_xdr_'.$self->reftype->idstrip);
@@ -451,7 +452,7 @@ sub render_caller {
 
 sub define_dissector {
     my ($self, @path) = @_;
-    $self->reftype->declare_hfvar(@path, '_ELEMENT_');
+    $self->reftype->declare_hfvar(@path, $path[-1]);
     $self->declare_ettvar;
     $self->SUPER::define_dissector(@path);
 }
@@ -469,9 +470,10 @@ BEGIN{::register_profile(
 
 sub render_caller {
     my ($self, $hfid) = @_;
+    my ($pname) = reverse split /__/, $hfid;
     sprintf 'dissect_xdr_vector(tvb, tree, xdrs, hf, %s, %s, "%s", %s, %s)',
         $c->rinc('ett_'.$self->idstrip),
-        $c->rinc("hf_$hfid\___ELEMENT_"),
+        $c->rinc("hf_$hfid\__$pname"),
         $self->reftype->idstrip,
         $self->length || '~0',
         $c->rinc('dissect_xdr_'.$self->reftype->idstrip);
