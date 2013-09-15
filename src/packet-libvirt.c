@@ -41,7 +41,6 @@ static int hf_libvirt_version = -1;
 static int hf_libvirt_type = -1;
 static int hf_libvirt_serial = -1;
 static int hf_libvirt_status = -1;
-static int hf_libvirt_payload = -1;
 static int hf_libvirt_stream = -1;
 static int hf_libvirt_num_of_fds = -1;
 static int hf_libvirt_unknown = -1;
@@ -274,7 +273,7 @@ dissect_libvirt_payload_xdr_data(tvbuff_t *tvb, proto_tree *tree, gint payload_l
     payload_data = (caddr_t)tvb_memdup(payload_tvb, 0, payload_length);
     xdrmem_create(&xdrs, payload_data, payload_length, XDR_DECODE);
 
-    dissect(payload_tvb, tree, &xdrs, hf_libvirt_payload);
+    dissect(payload_tvb, tree, &xdrs, -1);
 
     xdr_destroy(&xdrs);
     g_free(payload_data);
@@ -433,12 +432,6 @@ proto_register_libvirt(void)
 
         VIR_DYNAMIC_HFSET
 
-        { &hf_libvirt_payload,
-          { "payload", "libvirt.payload",
-            FT_STRING, BASE_NONE,
-            NULL, 0x0,
-            NULL, HFILL}
-        },
         { &hf_libvirt_stream,
           { "stream", "libvirt.stream",
             FT_BYTES, BASE_NONE,

@@ -857,9 +857,8 @@ static gboolean dissect_xdr_<%= $ident %>(tvbuff_t *tvb, proto_tree *tree, XDR *
     return <%= $self->dealias->render_caller($self->ident eq $ident ? undef : $ident) %>;
 }
 @@ Sym::Type::Struct#render_dissector
-<%
-my ($self, $ident) = @_;
-my $ettvar = $c->rinc('ett_'.$self->idstrip);
+<% my ($self, $ident) = @_;
+   my $hfvar = $c->rinc('hf_'.$self->idstrip);
 %>
 static gboolean dissect_xdr_<%= $ident %>(tvbuff_t *tvb, proto_tree *tree, XDR *xdrs, int hf)
 {
@@ -867,9 +866,15 @@ static gboolean dissect_xdr_<%= $ident %>(tvbuff_t *tvb, proto_tree *tree, XDR *
     proto_item *ti;
 
     start = xdr_getpos(xdrs);
-    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
-    proto_item_append_text(ti, " :: <%= $self->idstrip %>");
-    tree = proto_item_add_subtree(ti, <%= $ettvar %>);
+    if (hf == -1) {
+        ti = proto_tree_add_item(tree, <%= $hfvar %>, tvb, start, -1, ENC_NA);
+    } else {
+        header_field_info *hfinfo;
+        hfinfo = proto_registrar_get_nth(<%= $hfvar %>);
+        ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+        proto_item_append_text(ti, " :: %s", hfinfo->name);
+    }
+    tree = proto_item_add_subtree(ti, <%= $c->rinc('ett_'.$self->idstrip) %>);
 <% for my $m (@{ $self->members }) { %>
 
     hf = <%= $c->rinc('hf_'.$ident.'__'.$m->ident) %>;
