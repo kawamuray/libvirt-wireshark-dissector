@@ -300,7 +300,7 @@ dissect_libvirt_payload_xdr_data(tvbuff_t *tvb, proto_tree *tree, gint payload_l
     g_free(payload_data);
 
     if (nfds != 0) {
-        dissect_libvirt_fds(tvb, start, nfds); /* XXX: start? */
+        dissect_libvirt_fds(tvb, start + payload_length, nfds);
     }
 }
 
