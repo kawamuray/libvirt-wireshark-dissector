@@ -28,6 +28,7 @@
 #include <wireshark/epan/packet.h>
 #include <wireshark/epan/dissectors/packet-tcp.h>
 #include <glib.h>
+#include <glib/gprintf.h>
 #ifdef HAVE_RPC_TYPES_H
 #include <rpc/types.h>
 #endif
@@ -92,6 +93,24 @@ dissect_xdr_string(tvbuff_t *tvb, proto_tree *tree, XDR *xdrs, int hf,
     }
 }
 
+static gchar *
+format_xdr_bytes(guint8 *bytes, guint32 length)
+{
+    gchar *buf;
+    guint32 i;
+
+    if (length == 0)
+        return "";
+    buf = ep_alloc(length*2 + 1);
+    for (i = 0; i < length; i++) {
+        /* We know that buf has enought size to contain
+           2 * length + '\0' characters right? */
+        g_sprintf(buf, "%02x", bytes[i]);
+        buf += 2;
+    }
+    return buf - length*2;
+}
+
 static gboolean
 dissect_xdr_opaque(tvbuff_t *tvb, proto_tree *tree, XDR *xdrs, int hf,
                    gint32 size)
@@ -103,7 +122,8 @@ dissect_xdr_opaque(tvbuff_t *tvb, proto_tree *tree, XDR *xdrs, int hf,
     val = g_malloc(size);
     start = xdr_getpos(xdrs);
     if ((rc = xdr_opaque(xdrs, (caddr_t)val, size))) {
-        proto_tree_add_bytes(tree, hf, tvb, start, xdr_getpos(xdrs) - start, val);
+        proto_tree_add_bytes_format_value(tree, hf, tvb, start, xdr_getpos(xdrs) - start,
+                                          NULL, "%s", format_xdr_bytes(val, size));
     } else {
         proto_tree_add_item(tree, hf_libvirt_unknown, tvb, start, -1, ENC_NA);
     }
@@ -120,9 +140,10 @@ dissect_xdr_bytes(tvbuff_t *tvb, proto_tree *tree, XDR *xdrs, int hf,
     guint8 *val = NULL;
     guint32 length;
 
-    start = xdr_getpos(xdrs) + sizeof(length);
+    start = xdr_getpos(xdrs);
     if (xdr_bytes(xdrs, (char **)&val, &length, maxlen)) {
-        proto_tree_add_bytes(tree, hf, tvb, start, xdr_getpos(xdrs) - start, val);
+        proto_tree_add_bytes_format_value(tree, hf, tvb, start, xdr_getpos(xdrs) - start,
+                                          NULL, "%s", format_xdr_bytes(val, length));
         /* Seems I can't call xdr_free() for this case.
            It will raises SEGV by referencing out of bounds argument stack */
         xdrs->x_op = XDR_FREE;
