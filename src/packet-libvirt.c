@@ -77,7 +77,7 @@ XDR_PRIMITIVE_DISSECTOR(bool,    bool_t,  boolean)
 
 static gboolean
 dissect_xdr_string(tvbuff_t *tvb, proto_tree *tree, XDR *xdrs, int hf,
-                   gint32 maxlen)
+                   guint32 maxlen)
 {
     goffset start;
     gchar *val = NULL;
@@ -113,7 +113,7 @@ format_xdr_bytes(guint8 *bytes, guint32 length)
 
 static gboolean
 dissect_xdr_opaque(tvbuff_t *tvb, proto_tree *tree, XDR *xdrs, int hf,
-                   gint32 size)
+                   guint32 size)
 {
     goffset start;
     gboolean rc;
@@ -134,7 +134,7 @@ dissect_xdr_opaque(tvbuff_t *tvb, proto_tree *tree, XDR *xdrs, int hf,
 
 static gboolean
 dissect_xdr_bytes(tvbuff_t *tvb, proto_tree *tree, XDR *xdrs, int hf,
-                  gint32 maxlen)
+                  guint32 maxlen)
 {
     goffset start;
     guint8 *val = NULL;

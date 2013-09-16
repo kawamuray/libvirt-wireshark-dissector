@@ -112,15 +112,15 @@ static gboolean dissect_xdr_u_hyper(tvbuff_t *tvb, proto_tree *tree, XDR *xdrs, 
 static gboolean dissect_xdr_float(tvbuff_t *tvb, proto_tree *tree, XDR *xdrs, int hf);
 static gboolean dissect_xdr_double(tvbuff_t *tvb, proto_tree *tree, XDR *xdrs, int hf);
 static gboolean dissect_xdr_bool(tvbuff_t *tvb, proto_tree *tree, XDR *xdrs, int hf);
-static gboolean dissect_xdr_string(tvbuff_t *tvb, proto_tree *tree, XDR *xdrs, int hf, gint32 maxlen);
-static gboolean dissect_xdr_opaque(tvbuff_t *tvb, proto_tree *tree, XDR *xdrs, int hf, gint32 size);
-static gboolean dissect_xdr_bytes(tvbuff_t *tvb, proto_tree *tree, XDR *xdrs, int hf, gint32 maxlen);
+static gboolean dissect_xdr_string(tvbuff_t *tvb, proto_tree *tree, XDR *xdrs, int hf, guint32 maxlen);
+static gboolean dissect_xdr_opaque(tvbuff_t *tvb, proto_tree *tree, XDR *xdrs, int hf, guint32 size);
+static gboolean dissect_xdr_bytes(tvbuff_t *tvb, proto_tree *tree, XDR *xdrs, int hf, guint32 maxlen);
 static gboolean dissect_xdr_pointer(tvbuff_t *tvb, proto_tree *tree, XDR *xdrs, int hf,
                                     vir_xdr_dissector_t dp);
 static gboolean dissect_xdr_vector(tvbuff_t *tvb, proto_tree *tree, XDR *xdrs, int hf, gint ett, 
-                                   int rhf, gchar *rtype, gint32 size, vir_xdr_dissector_t dp);
+                                   int rhf, gchar *rtype, guint32 size, vir_xdr_dissector_t dp);
 static gboolean dissect_xdr_array(tvbuff_t *tvb, proto_tree *tree, XDR *xdrs, int hf, gint ett,
-                                  int rhf, gchar *rtype, gint32 maxlen, vir_xdr_dissector_t dp);
+                                  int rhf, gchar *rtype, guint32 maxlen, vir_xdr_dissector_t dp);
 
 #include "libvirt/protocol.h"
 
