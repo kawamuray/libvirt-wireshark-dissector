@@ -179,18 +179,14 @@ dissect_xdr_pointer(tvbuff_t *tvb, proto_tree *tree, XDR *xdrs, int hf,
 }
 
 static gboolean
-dissect_xdr_vector(tvbuff_t *tvb, proto_tree *tree, XDR *xdrs, int hf, gint ett,
-                   int rhf, gchar *rtype, gint32 size, vir_xdr_dissector_t dissect)
+dissect_xdr_iterable(tvbuff_t *tvb, proto_item *ti, XDR *xdrs, gint ett, int rhf,
+                     guint32 length, vir_xdr_dissector_t dissect, goffset start)
 {
-    goffset start;
-    proto_item *ti;
-    gint i;
+    proto_tree *tree;
+    guint32 i;
 
-    start = xdr_getpos(xdrs);
-    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
-    proto_item_append_text(ti, " :: %s[%d]", rtype, size);
     tree = proto_item_add_subtree(ti, ett);
-    for (i = 0; i < size; i++) {
+    for (i = 0; i < length; i++) {
         if (!dissect(tvb, tree, xdrs, rhf))
             return FALSE;
     }
@@ -199,16 +195,36 @@ dissect_xdr_vector(tvbuff_t *tvb, proto_tree *tree, XDR *xdrs, int hf, gint ett,
 }
 
 static gboolean
-dissect_xdr_array(tvbuff_t *tvb, proto_tree *tree, XDR *xdrs, int hf, gint ett,
-                  int rhf, gchar *rtype, gint32 maxlen, vir_xdr_dissector_t dissect)
+dissect_xdr_vector(tvbuff_t *tvb, proto_tree *tree, XDR *xdrs, int hf, gint ett,
+                   int rhf, gchar *rtype, guint32 size, vir_xdr_dissector_t dissect)
 {
-    gint32 length;
+    goffset start;
+    proto_item *ti;
 
-    if (!xdr_int(xdrs, &length))
+    start = xdr_getpos(xdrs);
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_append_text(ti, " :: %s[%u]", rtype, size);
+    return dissect_xdr_iterable(tvb, ti, xdrs, ett, rhf, size, dissect, start);
+}
+
+static gboolean
+dissect_xdr_array(tvbuff_t *tvb, proto_tree *tree, XDR *xdrs, int hf, gint ett,
+                  int rhf, gchar *rtype, guint32 maxlen, vir_xdr_dissector_t dissect)
+{
+    goffset start;
+    proto_item *ti;
+    guint32 length;
+
+    start = xdr_getpos(xdrs);
+
+    if (!xdr_u_int(xdrs, &length))
         return FALSE;
     if (length > maxlen)
         return FALSE;
-    return dissect_xdr_vector(tvb, tree, xdrs, hf, ett, rhf, rtype, length, dissect);
+    
+    ti = proto_tree_add_item(tree, hf, tvb, start, -1, ENC_NA);
+    proto_item_append_text(ti, " :: %s<%u>", rtype, length);
+    return dissect_xdr_iterable(tvb, ti, xdrs, ett, rhf, length, dissect, start);
 }
 
 static vir_xdr_dissector_t
