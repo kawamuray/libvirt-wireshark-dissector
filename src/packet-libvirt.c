@@ -103,8 +103,8 @@ format_xdr_bytes(guint8 *bytes, guint32 length)
         return "";
     buf = ep_alloc(length*2 + 1);
     for (i = 0; i < length; i++) {
-        /* We know that buf has enought size to contain
-           2 * length + '\0' characters right? */
+        /* We know that buf has enough size to contain
+           2 * length + '\0' characters. */
         g_sprintf(buf, "%02x", bytes[i]);
         buf += 2;
     }
