@@ -100,7 +100,7 @@ enum {
 /* / */
 
 #define VIR_ERROR_MESSAGE_DISSECTOR dissect_xdr_remote_error
-/* XXX: consider location */
+
 static gboolean dissect_xdr_int(tvbuff_t *tvb, proto_tree *tree, XDR *xdrs, int hf);
 static gboolean dissect_xdr_u_int(tvbuff_t *tvb, proto_tree *tree, XDR *xdrs, int hf);
 static gboolean dissect_xdr_short(tvbuff_t *tvb, proto_tree *tree, XDR *xdrs, int hf);
