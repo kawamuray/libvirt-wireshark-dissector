@@ -19,7 +19,8 @@
 
 plugin_LTLIBRARIES        = libvirt.la
 libvirt_la_SOURCES        = packet-libvirt.c plugin.c
-libvirt_la_LDFLAGS        = -avoid-version
+libvirt_la_LDFLAGS        = -avoid-version \
+                            -shrext '.so' # WS loads only *.so files
 
 packet-libvirt.c: packet-libvirt.h libvirt libvirt/protocol.h
 
