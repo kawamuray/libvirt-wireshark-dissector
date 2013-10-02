@@ -146,9 +146,7 @@ dissect_xdr_bytes(tvbuff_t *tvb, proto_tree *tree, XDR *xdrs, int hf,
                                           NULL, "%s", format_xdr_bytes(val, length));
         /* Seems I can't call xdr_free() for this case.
            It will raises SEGV by referencing out of bounds argument stack */
-        xdrs->x_op = XDR_FREE;
-        xdr_bytes(xdrs, (char **)&val, &length, maxlen);
-        xdrs->x_op = XDR_DECODE;
+        free(val);
         return TRUE;
     } else {
         proto_tree_add_item(tree, hf_libvirt_unknown, tvb, start, -1, ENC_NA);
