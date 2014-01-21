@@ -1,3 +1,5 @@
+\*\*CAUATION\*\*
+================
 <span style="color: red;font-size: 30px;">**This project was merged into libvirt project. This repository will not maintained anymore. Please refer to [libvirt.git](http://libvirt.org/git/?p=libvirt.git) repository for newest releases.**</span>
 
 About
