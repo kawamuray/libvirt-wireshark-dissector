@@ -1,3 +1,5 @@
+<span style="color: red;font-size: 30px;">**This project was merged into libvirt project. This repository will not maintained anymore. Please refer to [libvirt.git](http://libvirt.org/git/?p=libvirt.git) repository for newest releases.**</span>
+
 About
 =====
 This is the project of Google Summer of Code 2013 accepted by QEMU.org and libvirt community.
